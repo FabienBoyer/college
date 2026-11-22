@@ -1,0 +1,39 @@
+/*
+ * Polices du site /college/, hébergées dans ce dossier (aucun appel externe).
+ * Licence : SIL Open Font License 1.1 (voir les fichiers OFL-*.txt).
+ *
+ * Règle de la charte : tous les chiffres, exposants et signes mathématiques
+ * (+ = < > × ÷ − ± °) sont affichés en STIX Two Text, même dans le texte courant.
+ * Pour cela, « Atkinson Hyperlegible » ne couvre pas ces caractères
+ * (unicode-range ci-dessous) : le navigateur passe alors à la police suivante
+ * de la pile, qui doit être "STIX Two Text". Pile à utiliser pour le texte :
+ *   font-family: "Atkinson Hyperlegible", "STIX Two Text", "Segoe UI", system-ui, sans-serif;
+ * Effet secondaire voulu : le zéro barré d'Atkinson n'apparaît jamais.
+ * Les lettres mathématiques (x, f, a…) se balisent à part : <i class="m">x</i>.
+ */
+@font-face{font-family:"Atkinson Hyperlegible";font-style:normal;font-weight:400;font-display:swap;
+  src:url("atkinson-hyperlegible-400.woff2") format("woff2");
+  unicode-range:U+0000-002A,U+002C-002F,U+003A-003B,U+003F-00AF,U+00B4-00B8,U+00BA-00D6,U+00D8-00F6,U+00F8-206F,U+20A0-20CF}
+@font-face{font-family:"Atkinson Hyperlegible";font-style:normal;font-weight:700;font-display:swap;
+  src:url("atkinson-hyperlegible-700.woff2") format("woff2");
+  unicode-range:U+0000-002A,U+002C-002F,U+003A-003B,U+003F-00AF,U+00B4-00B8,U+00BA-00D6,U+00D8-00F6,U+00F8-206F,U+20A0-20CF}
+@font-face{font-family:"Atkinson Hyperlegible";font-style:italic;font-weight:400;font-display:swap;
+  src:url("atkinson-hyperlegible-400-italic.woff2") format("woff2");
+  unicode-range:U+0000-002A,U+002C-002F,U+003A-003B,U+003F-00AF,U+00B4-00B8,U+00BA-00D6,U+00D8-00F6,U+00F8-206F,U+20A0-20CF}
+@font-face{font-family:"Atkinson Hyperlegible";font-style:italic;font-weight:700;font-display:swap;
+  src:url("atkinson-hyperlegible-700-italic.woff2") format("woff2");
+  unicode-range:U+0000-002A,U+002C-002F,U+003A-003B,U+003F-00AF,U+00B4-00B8,U+00BA-00D6,U+00D8-00F6,U+00F8-206F,U+20A0-20CF}
+
+/* STIX Two Text (graisses 400 à 700) ; les symboles absents (≤ ≥ ≠ √ → ∅ △ ℕ…) viennent de STIX Two Math. */
+@font-face{font-family:"STIX Two Text";font-style:normal;font-weight:400 700;font-display:swap;
+  src:url("stix-two-text.woff2") format("woff2");unicode-range:U+0000-20FF}
+@font-face{font-family:"STIX Two Text";font-style:italic;font-weight:400 700;font-display:swap;
+  src:url("stix-two-text-italic.woff2") format("woff2");unicode-range:U+0000-20FF}
+@font-face{font-family:"STIX Two Text";font-style:normal;font-weight:400 700;font-display:swap;
+  src:url("stix-two-math-symboles.woff2") format("woff2");unicode-range:U+2100-2BFF}
+@font-face{font-family:"STIX Two Text";font-style:italic;font-weight:400 700;font-display:swap;
+  src:url("stix-two-math-symboles.woff2") format("woff2");unicode-range:U+2100-2BFF}
+
+/* Écriture manuscrite des copies Seyès (D.S. blancs). */
+@font-face{font-family:"Playwrite FR Moderne";font-style:normal;font-weight:100 400;font-display:swap;
+  src:url("playwrite-fr-moderne.woff2") format("woff2")}

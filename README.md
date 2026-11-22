@@ -1,64 +1,60 @@
 # Applications compagnon du cours — espace élèves
 
-Page autonome pour GitHub Pages. Aucun lien n’est à ajouter au menu du site compagnon.
-La page demande aux moteurs de recherche de ne pas l’indexer (`noindex, nofollow`).
-Cela ne constitue pas une protection : toute personne disposant du lien peut y accéder.
+Site autonome pour GitHub Pages, publié à l’adresse `https://fabienboyer.github.io/college/`.
+Aucun lien n’est à ajouter au menu du site compagnon.
+Chaque page demande aux moteurs de recherche de ne pas l’indexer (`noindex`).
+Cela ne constitue pas une protection : toute personne disposant du lien peut y accéder,
+et la balise ne s’applique pas aux PDF.
 
-## Publication à l’adresse /college/
+## Contenu du dépôt
 
-Pour obtenir `https://fabienboyer.github.io/college/`, créer un dépôt GitHub nommé
-`college`, y déposer le **contenu** de ce dossier à la racine, puis activer GitHub
-Pages sur la branche qui contient les fichiers (dossier racine).
+- `index.html`, `style.css`, `page.js` : l’accueil, qui affiche une section par niveau.
+- `applications.js` : la liste des fiches de l’accueil et la date de mise à jour.
+- `apps/` : une application par fichier HTML autonome :
+  Arithmétique, Équations, Fonctions (1), Triangles semblables (3e).
+- `devoirs-communs-4e/` : sujet et corrigé du devoir commun de 4e (PDF).
+- `fonts/` : les polices, hébergées dans le dépôt (aucun appel à Google Fonts).
 
-Si le dépôt `FabienBoyer.github.io` existe déjà, le dossier `college/` peut aussi
-être ajouté à sa racine. Ne pas ajouter ces fichiers au dépôt `site-compagnon`
-si l’on veut conserver l’adresse `/college/`.
+## Charte commune
+
+Fond papier `#fbf8f1` ligné, encre bleue `#1d3a8a`, titres rouges `#b8322a` soulignés,
+marge rouge `#e7a4a0` sur les cartes. Texte en Atkinson Hyperlegible, mathématiques en
+STIX Two Text. Une seule navigation de retour dans les apps : « Toutes les applications ».
+
+`fonts/polices.css` déclare les polices. Les chiffres, exposants et signes
+(+ = < > × ÷ − ± °) ne sont jamais pris dans Atkinson : ils s’affichent en STIX Two Text,
+même dans les consignes. Il n’y a donc plus de zéro barré. Pour cela, le texte doit
+utiliser la pile :
+
+```css
+font-family: "Atkinson Hyperlegible", "STIX Two Text", "Segoe UI", system-ui, sans-serif;
+```
+
+Dans chaque app, un petit script en fin de page affiche en italique STIX les lettres
+mathématiques du texte courant : `x` (seul ou après un chiffre, comme `3x` ou `x²`),
+`f` seule, et `g`, `h`, `p` suivies d’une parenthèse. Les autres lettres (a, b, A(x)…)
+se balisent à la main : `<i class="m">a</i>`.
 
 ## Ajouter une application
 
 1. Déposer le fichier HTML dans `apps/`, par exemple `apps/fractions.html`.
-2. Si l’application utilise d’autres fichiers (images, JS, CSS), conserver ses
-   sous-dossiers et ses liens relatifs. Une application avec plusieurs fichiers
-   peut être placée dans `apps/fractions/index.html`.
-3. Ajouter sa fiche dans `applications.js` :
+   Dans son `<head>`, charger les polices avec `<link rel="stylesheet" href="../fonts/polices.css">`.
+2. Ajouter sa fiche dans `applications.js` (le modèle est en tête du fichier) :
+   numéro de chapitre, titre, niveau, thème, description, liste des parties, adresse.
+3. Mettre à jour `MISE_A_JOUR` dans `applications.js`.
+4. Changer la valeur `v=` des références de `index.html` pour éviter les anciennes
+   versions en cache.
 
-```js
-window.APPLICATIONS_ELEVES = [
-  {
-    titre: "Fractions",
-    description: "Représenter et comparer des fractions.",
-    niveaux: ["6e", "5e"],
-    chapitre: "Nombres et calculs",
-    url: "apps/fractions.html",
-    symbole: "¾",
-    couleur: "orange"
-  }
-];
-```
-
-Plusieurs fiches sont séparées par des virgules. Les niveaux acceptés sont
-`6e`, `5e`, `4e`, `3e` ; `[]` signifie tous les niveaux. Les couleurs sont
-`bleu`, `vert`, `orange`, `violet`. Une adresse complète `https://…` fonctionne aussi.
-Le bouton « Ouvrir l’application » navigue directement vers le fichier HTML.
-Le petit bouton adjacent copie le lien direct à transmettre aux élèves.
-
-Ne mettre une fiche en ligne que lorsque son fichier est présent. L’application
-« Triangles semblables » est incluse pour les 3e ; la fiche « Fractions »
-ci-dessus reste un exemple.
-
-Quand la liste ou les fichiers CSS/JS sont modifiés, actualiser la valeur `v=`
-dans les trois références de `index.html` pour éviter les anciennes versions en cache.
+Les filtres par niveau et la recherche n’apparaissent qu’au-delà de dix fiches.
 
 ## Liens à partager après publication
 
-- Page : `https://fabienboyer.github.io/college/`
-- Vue 4e : `https://fabienboyer.github.io/college/?niveau=4e`
-- Application : `https://fabienboyer.github.io/college/apps/fractions.html`
-  (uniquement après avoir ajouté ce fichier).
+- Accueil : `https://fabienboyer.github.io/college/`
+- Accueil limité à un niveau : `https://fabienboyer.github.io/college/?niveau=3e`
+- Application : `https://fabienboyer.github.io/college/apps/equations.html`
 
 ## Vérifier localement
 
-Ouvrir `index.html` dans un navigateur pour vérifier la page. On peut aussi
-servir ce dossier avec `python -m http.server 8765` et ouvrir
-`http://localhost:8765/`. La page ne dépend d’aucune bibliothèque, police ou
-requête externe. Les applications ajoutées peuvent avoir leurs propres dépendances.
+Servir le dossier avec `python -m http.server 8765`, puis ouvrir `http://localhost:8765/`.
+En ouvrant `index.html` par un double-clic (adresse `file://`), Chrome et Edge bloquent
+les polices locales : la page s’affiche alors avec des polices de secours.

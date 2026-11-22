@@ -5,9 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Triangles semblables – Je prépare mon D.S.</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&family=Playwrite+FR+Moderne&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../fonts/polices.css">
 <style>
 :root{
   --paper:#fbf8f1; --card:#fffefa; --ink:#1d3a8a; --ink2:#2c4fb5; --red:#b8322a; --margin:#e7a4a0;
@@ -19,7 +17,7 @@ html{-webkit-text-size-adjust:100%}
 body{
   margin:0; color:var(--text); background:var(--paper);
   background-image:repeating-linear-gradient(to bottom, transparent 0 31px, #e6ecf7 31px 32px);
-  font:17px/1.55 "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  font:17px/1.55 "Atkinson Hyperlegible", "STIX Two Text", "Segoe UI", system-ui, sans-serif;
 }
 .m,.frac,.ang,svg text{font-family:"STIX Two Text","Cambria Math",Cambria,"Times New Roman",serif}
 .m{font-size:1.08em}
@@ -171,11 +169,12 @@ footer button{font:inherit;background:none;border:none;color:var(--muted);text-d
 @media (max-width:600px){.card{padding:18px 14px 20px 26px}.card::before{left:12px}header h1{font-size:1.5rem}}
 
 .back-home{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:0 0 16px;padding:8px 14px;border:2px solid var(--ink);border-radius:7px;background:var(--card);color:var(--ink);font:inherit;font-size:1rem;font-weight:700;text-decoration:none}.back-home:hover{background:#eef2fb}.back-home:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+i.m{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-style:italic;text-transform:none;letter-spacing:0}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header><a class="back-home" href="../">Retour à l’accueil du site</a>
+  <header><a class="back-home" href="../">← Toutes les applications</a>
     <h1><span>Chapitre 4 : Triangles semblables</span></h1>
     <p>Je prépare mon D.S. de fin de chapitre.</p>
     <nav id="tabs"></nav>
@@ -940,7 +939,7 @@ const app=document.getElementById("app"),tabs=document.getElementById("tabs");
 function go(page,o={}){Object.assign(VIEW,{page},o);render();try{window.scrollTo({top:0});}catch(e){}}
 function renderTabs(){
   tabs.innerHTML="";
-  [["home","Accueil"],["m1","1. Homologues"],["m2","2. Par les angles"],["m3","3. Par les longueurs"],["m4","4. Type brevet"],["m5","5. D.S. blanc"]].forEach(([p,l])=>{
+  [["home","Sommaire"],["m1","1. Homologues"],["m2","2. Par les angles"],["m3","3. Par les longueurs"],["m4","4. Type brevet"],["m5","5. D.S. blanc"]].forEach(([p,l])=>{
     const b=mkBtn(l,()=>go(p),VIEW.page===p?"on":"");tabs.append(b);});
 }
 function render(){
@@ -1210,6 +1209,53 @@ function renderDS(){
 }
 
 render();
+</script>
+<script>
+/* Charte : dans le texte courant, la lettre x (seule ou après un chiffre : 3x, x²),
+   la lettre f seule et g, h, p suivies d'une parenthèse sont des lettres mathématiques.
+   On les affiche en italique STIX pour ne pas confondre x avec le signe ×.
+   Le texte déjà en italique (<i>), le SVG et les champs de saisie ne sont pas touchés. */
+(() => {
+  "use strict";
+  const RE = /(^|[^\p{L}\p{M}])(x|f|[ghp](?=\())(?![\p{L}\p{M}])/gu;
+  const SKIP = "i, em, svg, code, pre, script, style, textarea, select, option, title, [contenteditable], .no-math";
+  function fix(text) {
+    const parent = text.parentElement;
+    if (!parent || parent.closest(SKIP)) return;
+    const value = text.data;
+    RE.lastIndex = 0;
+    if (!RE.test(value)) return;
+    const frag = document.createDocumentFragment();
+    let last = 0;
+    value.replace(RE, (all, before, letter, offset) => {
+      const start = offset + before.length;
+      if (start > last) frag.append(value.slice(last, start));
+      const i = document.createElement("i");
+      i.className = "m";
+      i.textContent = letter;
+      frag.append(i);
+      last = start + letter.length;
+      return all;
+    });
+    if (last < value.length) frag.append(value.slice(last));
+    text.replaceWith(frag);
+  }
+  function scan(root) {
+    if (root.nodeType === Node.TEXT_NODE) { fix(root); return; }
+    if (root.nodeType !== Node.ELEMENT_NODE || root.closest(SKIP)) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const texts = [];
+    while (walker.nextNode()) texts.push(walker.currentNode);
+    texts.forEach(fix);
+  }
+  scan(document.body);
+  new MutationObserver((records) => {
+    for (const r of records) {
+      if (r.type === "characterData") fix(r.target);
+      else r.addedNodes.forEach(scan);
+    }
+  }).observe(document.body, { childList: true, subtree: true, characterData: true });
+})();
 </script>
 </body>
 </html>

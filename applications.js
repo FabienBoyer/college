@@ -1,58 +1,74 @@
 /*
- * AJOUTER UNE APPLICATION
- * 1. Déposer son fichier HTML (et ses éventuels fichiers associés) dans apps/.
- * 2. Ajouter une fiche dans le tableau ci-dessous.
- * 3. Publier les fichiers dans le même dépôt GitHub Pages.
+ * LISTE DES APPLICATIONS ET DOCUMENTS DE L'ACCUEIL
  *
- * Exemple à adapter, puis à décommenter uniquement quand le fichier existe :
+ * Ajouter une application :
+ * 1. Déposer son fichier HTML dans apps/.
+ * 2. Ajouter une fiche dans le tableau ci-dessous (fiches séparées par des virgules).
+ * 3. Mettre à jour la date MISE_A_JOUR, puis publier.
+ *
+ * Fiche d'application :
  * {
- *   titre: "Mes fractions",
- *   description: "Représenter des fractions et comparer leurs valeurs.",
- *   niveaux: ["6e", "5e"],
- *   chapitre: "Fractions",
- *   url: "apps/mes-fractions.html",
- *   symbole: "¾",
- *   couleur: "orange"  // bleu, vert, orange ou violet
+ *   numero: 5,                          // numéro de chapitre, affiché en grand
+ *   titre: "Fractions",
+ *   niveau: "3e",                       // 6e, 5e, 4e ou 3e : une section par niveau
+ *   theme: "Nombres et calculs",
+ *   description: "Une ou deux phrases complètes.",
+ *   parties: ["Cours", "1. Comparer", "2. Calculer", "3. D.S. blanc"],  // onglets de l'app
+ *   url: "apps/fractions.html"
  * }
  *
- * Une URL complète https://… fonctionne aussi. Plusieurs fiches sont séparées
- * par des virgules. Un tableau niveaux vide [] signifie « tous les niveaux ».
+ * Fiche de document (PDF…) : mêmes champs, sans numero ni parties, avec
+ *   liens: [{ texte: "Ouvrir le sujet (PDF)", url: "…" }]
+ *
+ * Une adresse complète https://… fonctionne aussi.
  */
+window.MISE_A_JOUR = "2026-11-22";
+
 window.APPLICATIONS_ELEVES = [
   {
-    titre: "Chapitre 1 : Arithmétique",
-    description: "Cours, divisibilité, nombres premiers, décompositions, PGCD/PPCM et fractions irréductibles. Problèmes de partage et de cycles, entraînements et deux D.S. blancs.",
-    niveaux: ["3e"],
-    chapitre: "Nombres et calculs",
-    url: "apps/arithmetique.html",
-    symbole: "ℕ",
-    couleur: "bleu"
+    numero: 1,
+    titre: "Arithmétique",
+    niveau: "3e",
+    theme: "Nombres et calculs",
+    description: "Multiples, diviseurs, nombres premiers et PGCD, puis des problèmes de partage et de cycles. Le chapitre se termine par deux D.S. blancs.",
+    parties: ["Cours", "1. Divisibilité", "2. Nombres premiers", "3. PGCD / PPCM", "4. Fractions", "5. Problèmes", "6. D.S. blanc"],
+    url: "apps/arithmetique.html"
   },
   {
-    titre: "Chapitre 2 : Équations",
-    description: "Cours, tests de solutions, règles de transformation, résolutions et mises en équation. Exemples, entraînements guidés et deux D.S. blancs.",
-    niveaux: ["3e"],
-    chapitre: "Calcul littéral",
-    url: "apps/equations.html",
-    symbole: "x",
-    couleur: "bleu"
+    numero: 2,
+    titre: "Équations",
+    niveau: "3e",
+    theme: "Calcul littéral",
+    description: "Tester une solution, transformer et résoudre une équation, puis mettre un problème en équation. Le chapitre se termine par deux D.S. blancs.",
+    parties: ["Cours", "1. Tester", "2. Règles", "3. Résoudre", "4. Problèmes", "5. D.S. blanc"],
+    url: "apps/equations.html"
   },
   {
-    titre: "Chapitre 3 : Fonctions (1)",
-    description: "Cours, images et antécédents, lectures graphiques, calculs et programmes de calcul. Exemples, entraînements guidés et deux D.S. blancs.",
-    niveaux: ["3e"],
-    chapitre: "Fonctions",
-    url: "apps/fonctions-1.html",
-    symbole: "ƒ",
-    couleur: "bleu"
+    numero: 3,
+    titre: "Fonctions (1)",
+    niveau: "3e",
+    theme: "Fonctions",
+    description: "Images et antécédents, lecture graphique, calculs et programmes de calcul. Le chapitre se termine par deux D.S. blancs.",
+    parties: ["Cours", "1. Découvrir", "2. Vocabulaire", "3. Lecture graphique", "4. Calculs", "5. D.S. blanc"],
+    url: "apps/fonctions-1.html"
   },
   {
-    titre: "Chapitre 4 : Triangles semblables",
-    description: "Reconnaître les éléments homologues, démontrer la similitude et calculer des longueurs. Exercices guidés, problèmes type brevet et D.S. blanc.",
-    niveaux: ["3e"],
-    chapitre: "Géométrie",
-    url: "apps/triangles-semblables.html",
-    symbole: "△",
-    couleur: "bleu"
+    numero: 4,
+    titre: "Triangles semblables",
+    niveau: "3e",
+    theme: "Géométrie",
+    description: "Reconnaître les éléments homologues, démontrer que deux triangles sont semblables et calculer des longueurs. Le chapitre se termine par un D.S. blanc.",
+    parties: ["1. Homologues", "2. Par les angles", "3. Par les longueurs", "4. Type brevet", "5. D.S. blanc"],
+    url: "apps/triangles-semblables.html"
+  },
+  {
+    titre: "Devoir commun de mathématiques 2024-2025",
+    niveau: "4e",
+    theme: "Devoir commun",
+    description: "Le sujet compte 6 pages et 5 exercices. Il dure 1 h 30 et il est noté sur 50 points.",
+    liens: [
+      { texte: "Ouvrir le sujet (PDF)", url: "devoirs-communs-4e/devoir-commun-4e-2024-2025.pdf" },
+      { texte: "Ouvrir le corrigé (PDF)", url: "devoirs-communs-4e/corrige-devoir-commun-4e-2024-2025.pdf" }
+    ]
   }
 ];
