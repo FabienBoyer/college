@@ -4,60 +4,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="Les applications de mathématiques de Fabien Boyer pour ses élèves de collège.">
-  <meta name="theme-color" content="#193dad">
-  <title>L’atelier maths · Fabien Boyer</title>
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="description" content="Applications compagnon du cours de mathématiques, pour réviser et se préparer pour les D.S.">
+  <title>Applications compagnon du cours · Fabien Boyer</title>
   <link rel="stylesheet" href="style.css">
   <script src="applications.js" defer></script>
   <script src="page.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#activites">Aller aux activités</a>
-  <header class="header">
-    <div class="container header-inner">
-      <a class="brand" href="./" aria-label="L’atelier maths, accueil">
-        <span class="brand-mark" aria-hidden="true">m<span>·</span></span>
-        <span>L’atelier maths<span class="brand-subtitle">Fabien Boyer · Collège</span></span>
-      </a>
-      <a class="header-link" href="#activites">Les applications</a>
-    </div>
-  </header>
-
+  <a class="skip-link" href="#activites">Aller aux applications</a>
   <main class="container">
-    <section class="hero" aria-labelledby="page-title">
-      <div class="hero-copy">
-        <p class="eyebrow"><span aria-hidden="true"></span> Espace élèves</p>
-        <h1 id="page-title">Les maths,<br>à toi de <em>jouer.</em></h1>
-        <p class="intro">Des applications pour s’entraîner, explorer et comprendre. Choisis une activité et lance-toi.</p>
-        <a class="primary-link" href="#activites">Trouver une activité</a>
-      </div>
-      <div class="math-board" aria-hidden="true">
-        <div class="board-top"><span>Un peu de curiosité…</span><span class="board-symbol">+</span></div>
-        <div class="board-grid">
-          <div class="formula"><span>Explorer les nombres</span><strong>3 × <b>4</b> = 12</strong></div>
-          <div class="geometry">
-            <svg viewBox="0 0 200 150" fill="none">
-              <path d="M35 120H165L35 25Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
-              <path d="M35 103H52V120" stroke="currentColor" stroke-width="2"/>
-              <circle cx="35" cy="120" r="4" fill="currentColor"/>
-              <circle cx="165" cy="120" r="4" fill="currentColor"/>
-              <circle cx="35" cy="25" r="4" fill="currentColor"/>
-            </svg>
-            <span>Changer de point de vue</span>
-          </div>
-          <div class="fraction"><div><span>3</span><span>4</span></div><div class="fraction-tiles"><i></i><i></i><i></i><i></i></div></div>
-          <div class="board-note">Essayer.<br>Recommencer.<br><strong>Progresser.</strong></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="activites" class="activities" aria-labelledby="activities-title">
+    <header>
+      <p class="author">Fabien Boyer · Mathématiques · Collège</p>
+      <h1>Applications compagnon du cours</h1>
+      <p class="intro">Pour réviser et se préparer pour les D.S.</p>
+    </header>
+    <section id="activites" aria-labelledby="activities-title">
       <div class="section-heading">
-        <div><p class="eyebrow">À ton rythme</p><h2 id="activities-title">Les applications</h2></div>
-        <p id="results" class="results" role="status" aria-live="polite"></p>
+        <h2 id="activities-title">Applications disponibles</h2>
+        <p id="results" role="status" aria-live="polite"></p>
       </div>
-
       <div id="filters" class="filters" hidden>
         <fieldset class="levels"><legend class="sr-only">Filtrer par niveau</legend>
           <button type="button" data-level="tous" aria-pressed="true">Tous les niveaux</button>
@@ -67,24 +32,19 @@
           <button type="button" data-level="3e" aria-pressed="false">3<sup>e</sup></button>
         </fieldset>
         <div class="search-wrap"><label class="sr-only" for="search">Rechercher une application ou un chapitre</label>
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <input type="search" id="search" placeholder="Une application, un chapitre…" autocomplete="off">
+          <input type="search" id="search" placeholder="Rechercher une application…" autocomplete="off">
         </div>
       </div>
-
       <div id="app-grid" class="app-grid"></div>
       <div id="empty-state" class="empty-state" hidden>
-        <span class="empty-symbol" aria-hidden="true">x + y</span>
-        <h3 id="empty-title">Les activités arrivent bientôt</h3>
-        <p id="empty-text">Ton professeur ajoutera ici les applications à utiliser en classe ou à la maison.</p>
+        <h3 id="empty-title">Aucune application disponible</h3>
+        <p id="empty-text">Les applications seront ajoutées ici.</p>
         <button id="reset" class="reset" type="button" hidden>Afficher toutes les applications</button>
       </div>
-      <noscript><p class="notice">Active JavaScript dans ton navigateur pour afficher la liste des applications.</p></noscript>
+      <noscript><p>Active JavaScript dans ton navigateur pour afficher les applications.</p></noscript>
       <p id="copy-status" class="sr-only" role="status" aria-live="polite"></p>
     </section>
-
-    <aside class="tip"><span class="tip-icon" aria-hidden="true">?</span><p><strong>Tu ne sais pas par où commencer ?</strong><br>Retrouve l’activité indiquée par ton professeur, ou choisis ton niveau pour explorer les applications.</p></aside>
+    <footer>Fabien Boyer · Mathématiques</footer>
   </main>
-  <footer class="container footer"><span>L’atelier maths</span><p>Fabien Boyer · Des outils pour apprendre et pratiquer.</p></footer>
 </body>
 </html>

@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Triangles semblables – Je prépare mon D.S.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&family=Playwrite+FR+Moderne&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fbf8f1; --card:#fffefa; --ink:#1d3a8a; --ink2:#2c4fb5; --red:#b8322a; --margin:#e7a4a0;
+  --line:#dbe3f3; --text:#1b2333; --muted:#5b6478;
+  --ok:#1f7a4d; --okbg:#e7f5ed; --ko:#b8322a; --kobg:#fcecea; --warn:#7a5200; --warnbg:#fff4d6;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; color:var(--text); background:var(--paper);
+  background-image:repeating-linear-gradient(to bottom, transparent 0 31px, #e6ecf7 31px 32px);
+  font:17px/1.55 "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+}
+.m,.frac,.ang,svg text{font-family:"STIX Two Text","Cambria Math",Cambria,"Times New Roman",serif}
+.m{font-size:1.08em}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+header{padding:26px 0 10px}
+header h1{margin:0;color:var(--red);font-size:1.9rem;font-weight:700;letter-spacing:.2px}
+header h1 span{border-bottom:2px solid var(--red)}
+header p{margin:.35em 0 0;color:var(--muted)}
+nav{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 0;border-bottom:2px solid var(--ink)}
+nav button{font:inherit;font-size:.95rem;border:2px solid var(--ink);border-bottom:none;background:#eef2fb;color:var(--ink);
+  padding:.45em .9em;border-radius:10px 10px 0 0;cursor:pointer;margin-bottom:-2px}
+nav button.on{background:var(--card);font-weight:700}
+nav button:hover{background:#fff}
+main{padding:18px 0 40px}
+.card{background:var(--card);border:1px solid #e2e6ef;border-radius:4px 14px 14px 4px;padding:22px 24px 26px 34px;position:relative;
+  box-shadow:0 1px 0 rgba(0,0,0,.03),0 6px 18px -12px rgba(29,58,138,.35)}
+.card::before{content:"";position:absolute;left:18px;top:0;bottom:0;width:2px;background:var(--margin)}
+h2.ttl{margin:0 0 .6em;color:var(--red);font-size:1.45rem}
+h2.ttl span{border-bottom:2px solid var(--red)}
+h3{color:var(--ink);margin:1.2em 0 .4em}
+.retenir{border:2px solid var(--ink);border-radius:6px;padding:.6em .9em;margin:0 0 16px;color:var(--ink);background:#f6f8fe}
+.retenir b{display:block;color:var(--red);margin-bottom:.15em}
+.retenir ol,.retenir ul{margin:.2em 0 0;padding-left:1.3em}
+.subtabs{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px}
+.subtabs button,.levels button{font:inherit;font-size:.95rem;padding:.45em .9em;border-radius:999px;border:2px solid var(--ink2);background:#fff;color:var(--ink2);cursor:pointer}
+.subtabs button.on,.levels button.on{background:var(--ink2);color:#fff}
+.levels{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px}
+.levels .lab{color:var(--muted);margin-right:4px}
+.home{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.home .card h2{font-size:1.2rem;margin:0 0 .3em;color:var(--red)}
+.home .card p{margin:.2em 0 1em;color:var(--text)}
+.btn{font:inherit;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:.5em 1.05em;cursor:pointer;margin:.3em .4em .2em 0}
+.btn:hover{background:var(--ink2)}
+.btn.light{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.btn:disabled{opacity:.45;cursor:default}
+.consigne{margin:.2em 0 .6em}
+.question{margin:.6em 0;font-weight:700;color:var(--ink)}
+svg.fig{display:block;width:100%;max-width:600px;height:auto;margin:6px auto 4px}
+.step{background:#fff;border:1px solid #e3e8f2;border-left:5px solid var(--line);border-radius:4px 10px 10px 4px;padding:.65em 1em .75em;margin:.8em 0}
+.step.done{border-left-color:var(--ok)}
+.step.missed{border-left-color:#e0a63a}
+.step-n{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.step-q{margin:.15em 0 .45em}
+.step-a{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.opt{font:inherit;text-align:left;background:#fff;color:var(--text);border:2px solid #cfd8ea;border-radius:8px;padding:.45em .8em;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--ink2)}
+.opt.good{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--ko);background:var(--kobg)}
+.opt:disabled{cursor:default}
+.col{flex-direction:column;align-items:stretch}
+.col>.btn{align-self:flex-start}
+.numf{display:inline-flex;align-items:center;gap:6px;margin-right:10px}
+.numf input{font:inherit;font-family:"STIX Two Text",Cambria,serif;font-size:1.1em;width:6.2em;padding:.3em .45em;border:2px solid #cfd8ea;border-radius:6px;background:#fff}
+.numf input:focus{outline:none;border-color:var(--ink2)}
+.numf input.bad{border-color:var(--ko)}
+.unit{color:var(--muted)}
+select{font:inherit;font-family:"STIX Two Text",Cambria,serif;padding:.25em .35em;border:2px solid #cfd8ea;border-radius:6px;background:#fff}
+select.bad{border-color:var(--ko)}
+.fb{margin-top:.5em;border-radius:6px}
+.fb:empty{display:none}
+.fb.ok{background:var(--okbg);color:#123d28;padding:.45em .7em}
+.fb.ko{background:var(--kobg);color:#5c1712;padding:.45em .7em}
+.fb.warn{background:var(--warnbg);color:#4a3300;padding:.45em .7em}
+.fb .btn{margin-top:.5em}
+.model-a{color:var(--ink);font-weight:700;margin:.2em 0}
+.model-e{color:var(--text);background:#f4f6fb;border-radius:6px;padding:.35em .6em;margin:.3em 0 .4em}
+.corrige{margin:1em 0;border:2px solid var(--ink);border-radius:8px;padding:.7em 1em;background:#fff;color:var(--ink)}
+.corrige h4{margin:0 0 .4em;color:var(--red)}
+.corrige p{margin:.3em 0}
+.box{display:inline-block;border:2px solid var(--ink);border-radius:6px;padding:.1em .5em;margin-top:.2em;font-weight:700}
+.endmsg{margin:.8em 0 .2em;font-weight:700;color:var(--ink)}
+table.tab{border-collapse:collapse;margin:.4em 0;font-size:.97em}
+table.tab th,table.tab td{border:1.5px solid var(--ink2);padding:.3em .6em;text-align:center}
+table.tab th{font-weight:400;color:var(--ink)}
+.rankrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:.2em 0}
+.rankrow .rn{min-width:8.5em}
+.rankrow label{display:inline-flex;gap:4px;align-items:center;color:var(--muted)}
+.homorow{display:inline-flex;align-items:center;gap:6px;margin-right:16px}
+.pool,.answer{display:flex;flex-direction:column;gap:6px;width:100%}
+.answer:empty{display:none}
+.answer .opt{border-color:var(--ok);background:var(--okbg)}
+.shake{animation:sh .35s}
+@keyframes sh{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 .12em;font-size:1.02em;line-height:1.2}
+.frac>span:first-child{border-bottom:1.4px solid currentColor;padding:0 .2em}
+.frac>span:last-child{padding:0 .2em}
+.ang{position:relative;display:inline-block;padding:0 .04em}
+.ang::before{content:"";position:absolute;left:6%;right:6%;top:-.12em;height:.42em;border:1.4px solid currentColor;border-bottom:none;border-radius:50% 50% 0 0/100% 100% 0 0}
+.ang.one::before{left:-4%;right:-4%}
+.codebox{font-family:"STIX Two Text",Cambria,serif;font-size:1.6rem;letter-spacing:.08em;color:var(--ink);background:#fff;border:2px dashed var(--ink);border-radius:8px;padding:.3em .7em;display:inline-block;margin:.3em 0}
+.stats td,.stats th{text-align:left}
+.small{font-size:.9rem;color:var(--muted)}
+/* Correction sur papier Seyès (grands carreaux : interligne 8 px, ligne principale tous les 32 px) */
+.seyes{margin:1em 0;position:relative;color:#1d3a8a;background-color:#fff;border:1px solid #d6ddec;border-radius:4px;
+  padding:32px 18px 32px 64px;font-family:"Playwrite FR Moderne","Segoe Script","Comic Sans MS",cursive;font-size:15px;line-height:32px;
+  background-image:linear-gradient(90deg,transparent 0 50px,#e46d6d 50px 52px,transparent 52px),
+    repeating-linear-gradient(to bottom,transparent 0 31px,#8ea6d6 31px 32px),
+    repeating-linear-gradient(to bottom,transparent 0 7px,#dfe5f2 7px 8px);
+  background-position:0 var(--sy,6px)}
+.seyes h4{margin:0 0 32px;color:var(--red);font-weight:400;font-size:17px;line-height:32px;display:inline-block;border-bottom:1.5px solid var(--red);line-height:30px}
+.seyes p{margin:0;line-height:32px}
+.seyes p:has(.frac){line-height:64px;padding:16px 0}
+.seyes .frac{line-height:1.15;vertical-align:middle}
+.seyes b{font-weight:600}
+.seyes .m,.seyes .ang{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-size:1.38em}
+.seyes .frac{font-size:1.3em}
+.seyes .frac .m{font-size:1em}
+.seyes .box{border-color:#1d3a8a;font-weight:400;line-height:26px;margin:3px 0}
+.ds-tools{margin:0 0 6px}
+.ds-exo{border-top:2px solid var(--line);margin-top:18px;padding-top:4px}
+.ds-exo h3{color:var(--red);margin:.6em 0 .3em}
+.ds-title{color:var(--ink);font-size:1.25rem;margin:.8em 0 .2em}
+.ds-part h3{margin:1.2em 0 .1em;color:var(--ink);font-size:1.15rem;border-bottom:2px solid var(--ink);padding-bottom:.15em}
+.ds-info{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin:.2em 0;color:var(--muted)}
+.ds-info span{font-weight:700;color:var(--ink)}
+.ds-ans{background:#f6f8fe;border:2px solid var(--ink2);border-radius:8px;padding:.5em .8em;margin:.8em 0}
+.ds-ans b{color:var(--ink)}
+.ds-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:.35em 0}
+.ds-lab{min-width:2.5em}
+.ds-radios{display:inline-flex;flex-wrap:wrap;gap:8px}
+.ds-radios label{border:2px solid #cfd8ea;border-radius:8px;padding:.15em .6em;background:#fff;cursor:pointer}
+.ds-radios label.good{border-color:var(--ok);background:var(--okbg)}
+.okm{color:var(--ok);font-weight:700}.kom{color:var(--ko);font-weight:700}
+@media print{
+  body{background:#fff;font-size:12pt}
+  nav,footer,.btn,.ds-tools,.ds-ans,.ds-corr,header,.levels,.ds>.consigne,.ds>h2{display:none!important}
+  .ds-title{margin-top:0}
+  .card{box-shadow:none;border:none;padding:0}.card::before{display:none}
+  .ds-exo{break-inside:avoid;border-top:1px solid #999}
+  .ds-part{break-after:avoid}
+  svg.fig{max-width:430px}
+}
+.cl-line{margin:.35em 0;line-height:2.3}
+.blankw{position:relative;display:inline-block}
+.blank{font:inherit;min-width:3.2em;padding:.05em .5em;border:2px dashed var(--ink2);border-radius:6px;background:#f6f8fe;color:var(--ink);cursor:pointer}
+.blank.good,.cl-num.good{border-style:solid;border-color:var(--ok);background:var(--okbg)}
+.blank.bad,.cl-num.bad{border-style:solid;border-color:var(--ko);background:var(--kobg)}
+.blank.fixed,.cl-num.fixed{border-style:solid;border-color:#e0a63a;background:#fff4d6}
+.cl-num{width:4.5em!important}
+.blank-menu{position:absolute;left:0;top:calc(100% + 4px);z-index:20;display:flex;flex-direction:column;gap:4px;background:#fff;border:1px solid #cfd8ea;border-radius:8px;padding:6px;box-shadow:0 8px 24px -8px rgba(29,58,138,.45);min-width:max-content;max-width:min(560px,86vw);line-height:1.4}
+.blank-menu .opt{white-space:normal}
+.grille{margin:.8em 0;border:2px solid var(--ok);border-radius:8px;padding:.6em .9em;background:#f3faf6}
+.grille h4{margin:0 0 .2em;color:var(--ok)}
+.grille-item{display:flex;gap:.6em;align-items:flex-start;margin:.3em 0;cursor:pointer}
+.grille-item input{margin-top:.35em;width:1.1em;height:1.1em}
+.grille-msg{font-weight:700;color:var(--ok);margin:.3em 0 0}
+footer{padding:10px 0 30px;color:var(--muted);font-size:.9rem}
+footer button{font:inherit;background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;padding:0}
+@media (max-width:600px){.card{padding:18px 14px 20px 26px}.card::before{left:12px}header h1{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1><span>Chapitre 3 : Triangles semblables</span></h1>
+    <p>Je prépare mon D.S. de fin de chapitre.</p>
+    <nav id="tabs"></nav>
+  </header>
+  <main id="app"></main>
+  <footer>Collège La Rochefoucauld · Mathématiques 3<sup>e</sup></footer>
+</div>
+<script>
+"use strict";
+/* ================= Outils ================= */
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const POOL="ABCDEFGHJKLMNPRSTUVWXYZ".split("");
+const letters=n=>shuffle(POOL).slice(0,n);
+const round=(x,d=2)=>Number((x+(x>=0?1e-9:-1e-9)).toFixed(d));
+const fr=(x,d=2)=>String(round(x,d)).replace(".",",");
+const isDec=(x,d)=>Math.abs(x*10**d-Math.round(x*10**d))<1e-6;
+const norm=s=>s.split("").sort().join("");
+const m=s=>`<span class="m">${s}</span>`;
+const A3=s=>`<span class="ang">${s}</span>`;
+const A1=s=>`<span class="ang one">${s}</span>`;
+const F=(a,b)=>`<span class="frac"><span>${a}</span><span>${b}</span></span>`;
+const SEG=s=>m(`[${s}]`);
+const angName=(T,i)=>{const o=[0,1,2].filter(j=>j!==i).map(j=>T[j]);return o[0]+T[i]+o[1];};
+const oppSide=(T,i)=>[0,1,2].filter(j=>j!==i).map(j=>T[j]).join("");
+const sortedAngles=A=>A.slice().sort((x,y)=>y-x).map(x=>x+"°");
+const listFr=a=>a.length<2?a.join(""):a.slice(0,-1).join(", ")+" et "+a[a.length-1];
+function parseNum(s){s=String(s).replace(/\s/g,"").replace(/(cm|m|°)$/i,"").replace(",",".");return /^-?\d+(\.\d+)?$/.test(s)?Number(s):null;}
+function el(tag,cls,html){const e=document.createElement(tag);if(cls)e.className=cls;if(html!==undefined)e.innerHTML=html;return e;}
+function mkBtn(label,fn,cls="btn"){const b=el("button",cls,label);b.type="button";b.onclick=fn;return b;}
+
+/* ================= Géométrie ================= */
+const rad=x=>x*Math.PI/180;
+const sub=(a,b)=>[a[0]-b[0],a[1]-b[1]], add=(a,b)=>[a[0]+b[0],a[1]+b[1]], mul=(a,k)=>[a[0]*k,a[1]*k];
+const len=a=>Math.hypot(a[0],a[1]);
+const unit=a=>{const l=len(a)||1;return [a[0]/l,a[1]/l];};
+const rot=(p,t)=>[p[0]*Math.cos(t)-p[1]*Math.sin(t),p[0]*Math.sin(t)+p[1]*Math.cos(t)];
+const dir=t=>[Math.cos(t),Math.sin(t)];
+function triAngles(A){return [[0,0],[Math.sin(rad(A[2])),0],mul(dir(rad(A[0])),Math.sin(rad(A[1])))];}
+function triSides(d01,d02,d12){const x=(d01*d01+d02*d02-d12*d12)/(2*d01);return [[0,0],[d01,0],[x,Math.sqrt(Math.max(0,d02*d02-x*x))]];}
+function transform(pts,o={}){const t=o.t||0,k=o.k||1;return pts.map(p=>{let q=o.flip?[p[0],-p[1]]:p;q=rot(q,t);return [q[0]*k+(o.dx||0),q[1]*k+(o.dy||0)];});}
+function bbox(pts){const xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]);const b={minx:Math.min(...xs),maxx:Math.max(...xs),miny:Math.min(...ys),maxy:Math.max(...ys)};b.w=b.maxx-b.minx;b.h=b.maxy-b.miny;return b;}
+function sideBySide(p1,p2,gap=.35){const b1=bbox(p1),b2=bbox(p2);const s=Math.max(b1.w,b1.h,b2.w,b2.h);const dx=b1.maxx-b2.minx+gap*s,dy=(b1.miny+b1.maxy)/2-(b2.miny+b2.maxy)/2;return p2.map(p=>[p[0]+dx,p[1]+dy]);}
+function triangleAnglesFromSides(a01,a02,a12){const c=(x,y,z)=>Math.acos((x*x+y*y-z*z)/(2*x*y))*180/Math.PI;return [c(a01,a02,a12),c(a01,a12,a02),c(a02,a12,a01)];}
+
+/* ================= Figures SVG ================= */
+const COLS=["#2e9e5b","#d64541","#7d5bbf"];
+const INK="#1f2a44";
+const pt=p=>p[0].toFixed(1)+","+p[1].toFixed(1);
+function fig(spec){
+  const W=spec.W||600,H=spec.H||270,pad=spec.pad||38;
+  const P=spec.points,names=Object.keys(P);
+  const b=bbox(names.map(n=>P[n]));
+  const dx=b.w||1,dy=b.h||1,s=Math.min((W-2*pad)/dx,(H-2*pad)/dy);
+  const ox=(W-dx*s)/2,oy=(H-dy*s)/2;
+  const Q={};names.forEach(n=>{Q[n]=[ox+(P[n][0]-b.minx)*s,H-oy-(P[n][1]-b.miny)*s];});
+  const edges=[];
+  (spec.polys||[]).forEach(pl=>{for(let i=0;i<pl.length;i++)edges.push([pl[i],pl[(i+1)%pl.length],{}]);});
+  (spec.segs||[]).forEach(sg=>edges.push([sg[0],sg[1],sg[2]||{}]));
+  const nb={};edges.forEach(([a,c,o])=>{if(o.noLabel)return;(nb[a]=nb[a]||[]).push(c);(nb[c]=nb[c]||[]).push(a);});
+  const hidden=new Set(spec.hidden||[]);
+  const cen=(()=>{const vis=names.filter(n=>!hidden.has(n));return [vis.reduce((t,n)=>t+Q[n][0],0)/vis.length,vis.reduce((t,n)=>t+Q[n][1],0)/vis.length];})();
+  let out=`<svg viewBox="0 0 ${W} ${H}" class="fig" role="img" aria-label="${spec.aria||"Figure de géométrie"}">`;
+  const labels=[];
+  (spec.fills||[]).forEach(f=>{out+=`<polygon points="${f.pts.map(n=>pt(Q[n])).join(" ")}" fill="${f.fill}" stroke="none"/>`;});
+  (spec.angles||[]).forEach(a=>{
+    const V=Q[a.v],A=Q[a.p],B=Q[a.q];
+    const r0=Math.min(a.r||28,.42*Math.min(len(sub(A,V)),len(sub(B,V))));
+    const u=unit(sub(A,V)),w=unit(sub(B,V));
+    const sw=(u[0]*w[1]-u[1]*w[0])>0?1:0;const col=a.color||COLS[0];
+    const p1=add(V,mul(u,r0)),p2=add(V,mul(w,r0));
+    out+=`<path d="M${pt(V)} L${pt(p1)} A${r0.toFixed(1)} ${r0.toFixed(1)} 0 0 ${sw} ${pt(p2)} Z" fill="${col}" fill-opacity=".25" stroke="none"/>`;
+    for(let i=0;i<(a.arcs||1);i++){const r=Math.max(6,r0-i*5);const q1=add(V,mul(u,r)),q2=add(V,mul(w,r));
+      out+=`<path d="M${pt(q1)} A${r.toFixed(1)} ${r.toFixed(1)} 0 0 ${sw} ${pt(q2)}" fill="none" stroke="${col}" stroke-width="1.8"/>`;}
+    if(a.label){const bi=unit(add(u,w));const L=add(V,mul(bi,r0+15));labels.push(`<text x="${L[0].toFixed(1)}" y="${L[1].toFixed(1)}" font-size="14" text-anchor="middle" dominant-baseline="central" fill="${col}" style="paint-order:stroke;stroke:#fffefa;stroke-width:4px">${a.label}</text>`);}
+  });
+  edges.forEach(([a,c,o])=>{
+    const A=Q[a],C=Q[c];
+    const st=o.ground?`stroke="#8a6b3d" stroke-width="3"`:`stroke="${o.color||INK}" stroke-width="${o.w||1.8}"`;
+    out+=`<line x1="${A[0].toFixed(1)}" y1="${A[1].toFixed(1)}" x2="${C[0].toFixed(1)}" y2="${C[1].toFixed(1)}" ${st} ${o.dash?'stroke-dasharray="7 5"':""} stroke-linecap="round"/>`;
+  });
+  (spec.rights||[]).forEach(([v,p,q])=>{
+    const V=Q[v],u=unit(sub(Q[p],V)),w=unit(sub(Q[q],V));
+    const k=Math.min(11,.3*Math.min(len(sub(Q[p],V)),len(sub(Q[q],V))));
+    out+=`<path d="M${pt(add(V,mul(u,k)))} L${pt(add(add(V,mul(u,k)),mul(w,k)))} L${pt(add(V,mul(w,k)))}" fill="none" stroke="${INK}" stroke-width="1.5"/>`;
+  });
+  (spec.ticks||[]).forEach(([a,c,n])=>{
+    const A=Q[a],C=Q[c],mid=mul(add(A,C),.5),t=unit(sub(C,A)),nr=[-t[1],t[0]];
+    for(let i=0;i<n;i++){const o=add(mid,mul(t,(i-(n-1)/2)*5));out+=`<line x1="${(o[0]-nr[0]*6).toFixed(1)}" y1="${(o[1]-nr[1]*6).toFixed(1)}" x2="${(o[0]+nr[0]*6).toFixed(1)}" y2="${(o[1]+nr[1]*6).toFixed(1)}" stroke="${COLS[1]}" stroke-width="2"/>`;}
+  });
+  (spec.sides||[]).forEach(sd=>{
+    const A=Q[sd.a],C=Q[sd.b],mid=mul(add(A,C),.5),t=unit(sub(C,A));let nr=[-t[1],t[0]];
+    const ref=sd.ref?(()=>{const r=sd.ref.map(n=>Q[n]);return [r.reduce((x,p)=>x+p[0],0)/r.length,r.reduce((x,p)=>x+p[1],0)/r.length];})():cen;
+    if((mid[0]-ref[0])*nr[0]+(mid[1]-ref[1])*nr[1]<0)nr=mul(nr,-1);
+    const L=add(mid,mul(nr,13));
+    labels.push(`<text x="${L[0].toFixed(1)}" y="${L[1].toFixed(1)}" font-size="15" text-anchor="middle" dominant-baseline="central" fill="${sd.color||COLS[1]}" style="paint-order:stroke;stroke:#fffefa;stroke-width:4px">${sd.text}</text>`);
+  });
+  names.forEach(n=>{
+    if(hidden.has(n))return;
+    const V=Q[n];let d=[0,0];
+    (nb[n]||[]).forEach(o=>{d=add(d,unit(sub(Q[o],V)));});
+    d=mul(d,-1);
+    if(spec.labelDir&&spec.labelDir[n]){const ld=spec.labelDir[n];d=[ld[0],-ld[1]];}
+    else if(len(d)<.3)d=sub(V,cen);
+    const L=add(V,mul(unit(d),15));
+    out+=`<circle cx="${V[0].toFixed(1)}" cy="${V[1].toFixed(1)}" r="2" fill="${INK}"/>`;
+    labels.push(`<text x="${L[0].toFixed(1)}" y="${L[1].toFixed(1)}" font-size="17" text-anchor="middle" dominant-baseline="central" fill="${INK}" style="paint-order:stroke;stroke:#fffefa;stroke-width:4px">${n}</text>`);
+  });
+  return out+labels.join("")+"</svg>";
+}
+
+/* ================= Déroulement des étapes ================= */
+const RENDER={
+  choice(area,st,api){
+    area.classList.toggle("col",!!st.column);
+    const bs=st.options.map((h,i)=>{const b=mkBtn(h,()=>{const ok=i===st.correct;b.classList.add(ok?"good":"bad");if(!ok)b.disabled=true;api.judge(ok);if(api.over())bs[st.correct].classList.add("good");},"opt");area.append(b);return b;});
+  },
+  num(area,st,api){
+    const fs=st.fields||[{label:"",answer:st.answer,tol:st.tol}];
+    const ins=fs.map(f=>{const w=el("label","numf");if(f.label)w.append(el("span","",f.label+" ="));const i=el("input");i.type="text";i.inputMode="decimal";i.autocomplete="off";i.spellcheck=false;w.append(i);if(st.unit)w.append(el("span","unit",st.unit));area.append(w);return i;});
+    const b=mkBtn("Valider",()=>{
+      const v=ins.map(i=>parseNum(i.value));
+      if(v.some(x=>x===null)){api.warn("Écris un nombre dans chaque case (avec une virgule si besoin).");return;}
+      const good=fs.map((f,k)=>Math.abs(v[k]-f.answer)<=(f.tol!==undefined?f.tol:(st.tol!==undefined?st.tol:.011)));
+      ins.forEach((i,k)=>i.classList.toggle("bad",!good[k]));
+      api.judge(good.every(Boolean));
+    });
+    area.append(b);
+    ins.forEach(i=>i.addEventListener("keydown",e=>{if(e.key==="Enter")b.click();}));
+    setTimeout(()=>{try{ins[0].focus({preventScroll:true});}catch(e){}},60);
+  },
+  homo(area,st,api){
+    const sels=st.from.map((x,i)=>{const w=el("span","homorow",`${m(x)} ↔ `);const s=el("select");s.innerHTML=`<option value="">…</option>`+st.choices.map(c=>`<option value="${c}">${c}</option>`).join("");w.append(s);area.append(w);return s;});
+    area.append(mkBtn("Valider",()=>{
+      if(sels.some(s=>!s.value)){api.warn("Choisis un sommet dans chaque liste.");return;}
+      const good=sels.map((s,i)=>s.value===st.answer[i]);sels.forEach((s,i)=>s.classList.toggle("bad",!good[i]));api.judge(good.every(Boolean));
+    }));
+  },
+  rank(area,st,api){
+    area.classList.add("col");
+    const rows=st.rows.map(r=>{const w=el("div","rankrow",`<span class="rn">Triangle ${m(r.name)} :</span>`);
+      const sels=["petit","moyen","grand"].map(lab=>{const l=el("label","",lab+" ");const s=el("select");s.innerHTML=`<option value="">…</option>`+r.sides.map(sd=>`<option value="${sd.val}">[${sd.name}] = ${fr(sd.val)}</option>`).join("");l.append(s);w.append(l);return s;});
+      area.append(w);return sels;});
+    area.append(mkBtn("Valider",()=>{
+      if(rows.some(r=>r.some(s=>!s.value))){api.warn("Complète toutes les listes.");return;}
+      let all=true;rows.forEach((sels,ri)=>{const target=st.rows[ri].sides.map(x=>x.val).sort((a,b)=>a-b);sels.forEach((s,k)=>{const g=Number(s.value)===target[k];s.classList.toggle("bad",!g);if(!g)all=false;});});
+      api.judge(all);
+    }));
+  },
+  cloze(area,st,api){
+    area.classList.add("col");const blanks=[];
+    st.lines.forEach(line=>{const p=el("p","cl-line");
+      line.forEach(seg=>{
+        if(typeof seg==="string"){p.insertAdjacentHTML("beforeend",seg);return;}
+        if(seg.num!==undefined){const w=el("span","numf"),i=el("input");i.type="text";i.inputMode="decimal";i.autocomplete="off";i.className="cl-num";w.append(i);if(seg.unit)w.append(el("span","unit",seg.unit));p.append(w);
+          blanks.push({node:i,get:()=>parseNum(i.value),ok:v=>v!==null&&Math.abs(v-seg.num)<=.011,fill:()=>{i.value=fr(seg.num);}});return;}
+        const w=el("span","blankw"),b=el("button","blank","…");b.type="button";b.dataset.v="";w.append(b);p.append(w);
+        b.onclick=e=>{e.stopPropagation();const had=w.querySelector(".blank-menu");closeMenus();if(had||b.disabled)return;
+          const menu=el("div","blank-menu");seg.opts.forEach((h,k)=>{const o=mkBtn(h,ev=>{ev.stopPropagation();b.innerHTML=h;b.dataset.v=String(k);b.classList.remove("bad","good");menu.remove();},"opt");menu.append(o);});w.append(menu);};
+        blanks.push({node:b,get:()=>b.dataset.v===""?null:Number(b.dataset.v),ok:v=>v===seg.correct,fill:()=>{b.innerHTML=seg.opts[seg.correct];b.dataset.v=String(seg.correct);}});
+      });area.append(p);});
+    area.append(mkBtn("Valider ma rédaction",()=>{
+      closeMenus();const vals=blanks.map(x=>x.get());
+      if(vals.some(x=>x===null)){api.warn("Complète toutes les cases avant de valider.");return;}
+      let all=true;blanks.forEach((x,k)=>{const g=x.ok(vals[k]);x.node.classList.toggle("bad",!g);x.node.classList.toggle("good",g);if(!g)all=false;});
+      api.judge(all);
+      if(!all&&api.over())blanks.forEach((x,k)=>{if(!x.ok(vals[k])){x.fill();x.node.classList.remove("bad");x.node.classList.add("fixed");}});
+    }));
+  },
+  order(area,st,api){
+    area.classList.add("col");
+    const ans=el("div","answer"),pool=el("div","pool");area.append(ans,pool);
+    let next=0,err=0;
+    shuffle(st.items.map((h,i)=>({h,i}))).forEach(it=>{
+      const b=mkBtn(it.h,()=>{
+        if(it.i===next){ans.append(b);b.disabled=true;next++;if(next===st.items.length)api.complete(err>0?1:0);}
+        else{err++;b.classList.remove("shake");void b.offsetWidth;b.classList.add("shake");api.warn("Ce n'est pas la phrase suivante. Cherche celle qui vient juste après.");}
+      },"opt");pool.append(b);
+    });
+  }
+};
+function closeMenus(){document.querySelectorAll(".blank-menu").forEach(x=>x.remove());}
+document.addEventListener("click",closeMenus);
+function gridEl(items){
+  const g=el("div","grille",`<h4>Je vérifie ma copie</h4><p class="small">Coche seulement ce qui apparaît vraiment sur ta feuille. Pour chaque case vide, reprends ta copie à l'aide de la correction.</p>`);
+  const msg=el("p","grille-msg");
+  const boxes=items.map(t=>{const l=el("label","grille-item");const c=el("input");c.type="checkbox";l.append(c,el("span","",t));g.append(l);c.onchange=()=>{msg.textContent=boxes.every(x=>x.checked)?"Ta rédaction contient tous les éléments attendus.":"";};return c;});
+  g.append(msg);return g;
+}
+const GRID_ANG=["J'ai écrit deux égalités d'angles.","J'ai justifié chaque égalité (angles opposés par le sommet, angle commun, angles droits, parallèles…).","J'ai conclu par une phrase : « les triangles … sont semblables ».","J'ai écrit les sommets homologues.","J'ai écrit l'égalité des trois quotients.","J'ai remplacé par les longueurs connues et j'ai écrit le calcul.","J'ai donné le résultat avec son unité."];
+const GRID_LEN=["J'ai rangé les côtés de chaque triangle dans l'ordre croissant.","J'ai calculé les trois quotients.","J'ai dit si les quotients sont égaux ou non.","J'ai conclu par une phrase : semblables ou pas semblables."];
+const GRID_M2=["J'ai calculé les angles manquants en écrivant les calculs.","J'ai cité la propriété utilisée (somme des angles d'un triangle, triangle isocèle).","J'ai comparé les angles des deux triangles.","J'ai conclu par une phrase : semblables ou pas semblables."];
+function runSteps(box,steps,mode,maxTries,onEnd){
+  let idx=0,errors=0;
+  const next=()=>{
+    if(idx>=steps.length){onEnd(errors);return;}
+    const st=steps[idx];idx++;
+    const s=el("div","step",`<div class="step-n">Étape ${idx} sur ${steps.length}</div><div class="step-q">${st.prompt}</div>`);
+    box.append(s);
+    if(mode==="model"){
+      s.append(el("div","model-a",st.answerHtml));
+      if(st.explain)s.append(el("div","model-e",st.explain));
+      s.classList.add("done");
+      const b=mkBtn(idx<steps.length?"Étape suivante":"Voir la fin",()=>{b.remove();next();});s.append(b);
+    }else{
+      const area=el("div","step-a"),fb=el("div","fb");s.append(area,fb);
+      let tries=0,over=false;
+      const finish=err=>{over=true;area.querySelectorAll("button,input,select").forEach(x=>x.disabled=true);s.classList.add(err?"missed":"done");errors+=err;};
+      const api={
+        over:()=>over,
+        warn:msg=>{if(over)return;fb.className="fb warn";fb.innerHTML=msg;},
+        complete:err=>{fb.className="fb ok";fb.innerHTML=`<b>C'est terminé.</b> ${st.explain||""}`;finish(err);next();},
+        judge:ok=>{
+          if(over)return;
+          if(ok){fb.className="fb ok";fb.innerHTML=`<b>C'est juste.</b> ${st.explain||""}`;finish(tries>0?1:0);next();return;}
+          tries++;
+          if(tries<maxTries){fb.className="fb warn";fb.innerHTML=`<b>Pas encore.</b> ${st.hint||"Relis la consigne et réessaie."}`;return;}
+          fb.className="fb ko";fb.innerHTML=`<b>Réponse attendue :</b> ${st.answerHtml}${st.explain?`<div>${st.explain}</div>`:""}`;finish(1);
+          const b=mkBtn("Continuer",()=>{b.remove();next();});fb.append(b);
+        }
+      };
+      RENDER[st.type](area,st,api);
+    }
+    try{s.scrollIntoView({behavior:"smooth",block:"nearest"});}catch(e){}
+  };
+  next();
+}
+const YESNO=["Oui, ils sont semblables.","Non, ils ne sont pas semblables."];
+
+/* ================= Module 1 : homologues ================= */
+const RANG=["le plus petit côté","le côté moyen","le plus grand côté"],RANG_AU=["au plus petit côté","au côté moyen","au plus grand côté"];
+function genM1(kind){
+  const L=letters(6),T1=L.slice(0,3),T2=L.slice(3);
+  if(kind==="lengths"){
+    let s;do{const a=R(3,7),b=a+R(1,3),c=b+R(1,3);s=[a,b,c];}while(s[0]+s[1]<=s[2]+.8);
+    const k=pick([1.5,2,2.5,.5]),big=s.map(x=>round(x*k,2));
+    const pr=shuffle([0,1,2]);                       // rang du côté opposé au sommet i
+    const o1=pr.map(r=>s[r]),o2=pr.map(r=>big[r]);   // longueur du côté opposé au sommet i
+    const p1=transform(triSides(o1[2],o1[1],o1[0]),{t:rad(R(-20,20)),flip:Math.random()<.5});
+    let p2=transform(triSides(o2[2],o2[1],o2[0]),{t:rad(R(0,359)),flip:Math.random()<.5,k:(k>1?Math.min(1.5,k):Math.max(.7,k))/k});
+    p2=sideBySide(p1,p2);
+    const points={};T1.forEach((n,i)=>points[n]=p1[i]);T2.forEach((n,i)=>points[n]=p2[i]);
+    const sides=[];[[T1,o1],[T2,o2]].forEach(([T,o])=>[0,1,2].forEach(i=>{const n=oppSide(T,i);sides.push({a:n[0],b:n[1],text:fr(o[i]),ref:T});}));
+    return {kind,T1,T2,pr,o1,o2,svg:fig({points,polys:[T1,T2],sides,aria:"Deux triangles semblables avec les longueurs de leurs côtés"})};
+  }
+  let A;do{A=[R(35,85),R(35,85)];A.push(180-A[0]-A[1]);}while(A[2]<30||A[2]>100||Math.abs(A[0]-A[1])<12||Math.abs(A[0]-A[2])<12||Math.abs(A[1]-A[2])<12);
+  const p1=transform(triAngles(A),{t:rad(R(-25,25))});
+  let p2=transform(triAngles(A),{t:rad(R(0,359)),flip:Math.random()<.5,k:pick([.6,.7,.75,1.3,1.4,1.5])});
+  p2=sideBySide(p1,p2);
+  const points={};T1.forEach((n,i)=>points[n]=p1[i]);T2.forEach((n,i)=>points[n]=p2[i]);
+  // code[t][i] = style de l'angle i dans le triangle t (-1 : pas codé)
+  const st=shuffle([0,1,2]),code=[[-1,-1,-1],[-1,-1,-1]];
+  let i0=-1,i1=-1,i2=-1;
+  if(kind==="full")[0,1,2].forEach(i=>{code[0][i]=code[1][i]=st[i];});
+  else if(kind==="two"){const h=R(0,2);[0,1,2].forEach(i=>{if(i!==h)code[0][i]=code[1][i]=st[i];});}
+  else{[i0,i1,i2]=shuffle([0,1,2]);code[0][i0]=code[1][i0]=st[0];code[0][i1]=st[1];code[1][i2]=st[2];}
+  const angles=[];
+  [T1,T2].forEach((T,t)=>[0,1,2].forEach(i=>{const c=code[t][i];if(c<0)return;const o=[0,1,2].filter(x=>x!==i);angles.push({v:T[i],p:T[o[0]],q:T[o[1]],arcs:c+1,color:COLS[c]});}));
+  return {kind,T1,T2,code,i0,i1,i2,svg:fig({points,polys:[T1,T2],angles,aria:"Deux triangles semblables avec des angles codés"})};
+}
+function whyVertex(ex,X,Y,i){
+  const fwd=X===ex.T1,cx=ex.code?ex.code[fwd?0:1]:null,cy=ex.code?ex.code[fwd?1:0]:null;
+  if(ex.kind==="lengths"){const r=ex.pr[i];
+    return `Le sommet ${m(X[i])} est opposé au côté ${SEG(oppSide(X,i))}, ${RANG[r]} de son triangle. Le sommet homologue est opposé ${RANG_AU[r]} de l'autre triangle, ${SEG(oppSide(Y,i))} : c'est ${m(Y[i])}.`;}
+  const others=[0,1,2].filter(j=>j!==i);
+  if(cx[i]>=0&&cy[i]>=0)return `Les angles en ${m(X[i])} et en ${m(Y[i])} sont codés de la même façon : ces sommets sont homologues.`;
+  if(cx[i]>=0){const j=others.find(j=>cy[j]>=0&&cy[j]!==cx[i]&&cx[j]<0);
+    return `L'angle en ${m(X[i])} n'est pas codé comme l'angle en ${m(Y[j])} : ils ne sont pas homologues. Le sommet ${m(X[i])} correspond donc au sommet dont l'angle n'est pas codé, ${m(Y[i])}.`;}
+  return `L'angle en ${m(X[i])} n'est pas codé. Les deux autres sommets sont déjà associés : ${m(X[others[0]])} avec ${m(Y[others[0]])} et ${m(X[others[1]])} avec ${m(Y[others[1]])}. Il reste ${m(Y[i])}.`;
+}
+function hintM1(ex){
+  if(ex.kind==="lengths")return "Range les côtés de chaque triangle : petit, moyen, grand. Un sommet est en face d'un côté.";
+  if(ex.kind==="pair")return "Commence par les angles codés de la même façon. Deux angles codés différemment ne sont pas homologues.";
+  return "Cherche dans l'autre triangle l'angle codé de la même façon.";
+}
+function questionsM1(ex){
+  const {T1,T2}=ex,hint=hintM1(ex);
+  return shuffle(["sommet","cote","angle"]).map(type=>{
+    const fwd=Math.random()<.5,X=fwd?T1:T2,Y=fwd?T2:T1;
+    if(type==="sommet"){
+      const i=R(0,2),opts=shuffle([0,1,2]);
+      return {type:"choice",prompt:`Quel est le sommet homologue du sommet ${m(X[i])} ?`,options:opts.map(j=>m(Y[j])),correct:opts.indexOf(i),answerHtml:m(Y[i]),hint,explain:whyVertex(ex,X,Y,i)};
+    }
+    if(type==="cote"){
+      const [i,j]=pick([[0,1],[0,2],[1,2]]),opts=shuffle([[0,1],[0,2],[1,2]]),c=opts.findIndex(p=>p[0]===i&&p[1]===j);
+      const kk=[0,1,2].find(x=>x!==i&&x!==j);
+      const explain=ex.kind==="lengths"
+        ?`${SEG(X[i]+X[j])} mesure ${fr((fwd?ex.o1:ex.o2)[kk])} : c'est ${RANG[ex.pr[kk]]} de son triangle. Son homologue est ${RANG[ex.pr[kk]]} de l'autre triangle : ${SEG(Y[i]+Y[j])}, qui mesure ${fr((fwd?ex.o2:ex.o1)[kk])}.`
+        :`${m(X[i])} a pour homologue ${m(Y[i])} et ${m(X[j])} a pour homologue ${m(Y[j])}. Le côté homologue de ${SEG(X[i]+X[j])} est donc ${SEG(Y[i]+Y[j])}.`;
+      return {type:"choice",prompt:`Quel est le côté homologue du côté ${SEG(X[i]+X[j])} ?`,options:opts.map(p=>SEG(Y[p[0]]+Y[p[1]])),correct:c,answerHtml:SEG(Y[i]+Y[j]),
+        hint:ex.kind==="lengths"?"Range les côtés de chaque triangle : petit, moyen, grand. Les côtés de même rang sont homologues.":`Cherche d'abord les homologues des sommets ${m(X[i])} et ${m(X[j])}.`,explain};
+    }
+    const i=R(0,2),opts=shuffle([0,1,2]);
+    return {type:"choice",prompt:`Quel est l'angle homologue de l'angle ${A3(angName(X,i))} ?`,options:opts.map(j=>A3(angName(Y,j))),correct:opts.indexOf(i),answerHtml:A3(angName(Y,i)),
+      hint:"Le sommet d'un angle est la lettre du milieu. Cherche l'homologue de ce sommet.",
+      explain:`Le sommet de l'angle ${A3(angName(X,i))} est ${m(X[i])}. ${whyVertex(ex,X,Y,i)} L'angle homologue est donc ${A3(angName(Y,i))}.`};
+  });
+}
+const M1TXT={
+  full:"Les deux triangles sont semblables. Les angles codés de la même façon ont la même mesure.",
+  two:"Les deux triangles sont semblables. Les angles codés de la même façon ont la même mesure. Attention : un des angles n'est pas codé.",
+  pair:"Les deux triangles sont semblables. Les angles codés de la même façon ont la même mesure. Deux angles codés différemment n'ont pas la même mesure.",
+  lengths:"Les deux triangles sont semblables. Les longueurs sont en centimètres."
+};
+let M1EX=0;
+function exM1(sub){
+  const kind=sub==="exemple"?["full","pair","lengths"][M1EX++%3]:pick(sub==="seul"?["two","pair","lengths"]:["full","pair","lengths"]);
+  const ex=genM1(kind),{T1,T2}=ex;
+  const head=`<p class="consigne">${M1TXT[kind]}</p>${ex.svg}`;
+  const tab=`<table class="tab"><tr><th>Sommets homologues</th></tr>${[0,1,2].map(i=>`<tr><td>${m(T1[i])} et ${m(T2[i])}</td></tr>`).join("")}</table>`;
+  if(sub==="exemple"){
+    let first;
+    if(kind==="full")first=[{prompt:"Je repère les angles codés de la même façon dans les deux triangles.",answerHtml:tab,explain:"Deux angles codés de la même façon ont la même mesure. Leurs sommets sont homologues."}];
+    else if(kind==="pair"){const {i0,i1,i2}=ex;first=[
+      {prompt:"Je repère les angles codés de la même façon dans les deux triangles.",answerHtml:`${m(T1[i0])} et ${m(T2[i0])} sont homologues.`,explain:"Ces deux angles ont le même codage : ils ont la même mesure."},
+      {prompt:`Je regarde l'angle en ${m(T1[i1])}. Dans l'autre triangle, l'angle en ${m(T2[i2])} est codé autrement.`,answerHtml:`${m(T1[i1])} et ${m(T2[i2])} ne sont pas homologues, donc ${m(T1[i1])} correspond à ${m(T2[i1])}.`,explain:`Deux angles codés différemment n'ont pas la même mesure. Il reste un seul sommet possible pour ${m(T1[i1])} : celui dont l'angle n'est pas codé.`},
+      {prompt:"J'associe les deux derniers sommets.",answerHtml:tab,explain:`Il reste ${m(T1[i2])} et ${m(T2[i2])} : ils sont homologues.`}];}
+    else{const rk=`<table class="tab"><tr><th></th><th>petit</th><th>moyen</th><th>grand</th></tr>${[[T1,ex.o1],[T2,ex.o2]].map(([T,o])=>`<tr><th>Triangle ${m(T.join(""))}</th>${[0,1,2].map(r=>{const i=ex.pr.indexOf(r);return `<td>${SEG(oppSide(T,i))} = ${fr(o[i])}</td>`;}).join("")}</tr>`).join("")}</table>`;
+      const i=ex.pr.indexOf(0);first=[
+      {prompt:"Je range les côtés de chaque triangle, du plus petit au plus grand.",answerHtml:rk,explain:"Les côtés de même rang sont homologues : le plus petit avec le plus petit, et ainsi de suite."},
+      {prompt:`Je cherche le sommet homologue de ${m(T1[i])}.`,answerHtml:`Le sommet homologue est ${m(T2[i])}.`,explain:whyVertex(ex,T1,T2,i)}];}
+    return {head,steps:[...first,
+      {prompt:`Je cherche le côté homologue du côté ${SEG(T1[0]+T1[1])}.`,answerHtml:`Le côté homologue est ${SEG(T2[0]+T2[1])}.`,explain:`${m(T1[0])} a pour homologue ${m(T2[0])} et ${m(T1[1])} a pour homologue ${m(T2[1])}. Je relie ces deux sommets.`},
+      {prompt:`Je cherche l'angle homologue de l'angle ${A3(angName(T1,2))}.`,answerHtml:`L'angle homologue est ${A3(angName(T2,2))}.`,explain:`Le sommet de l'angle est la lettre du milieu, ${m(T1[2])}. Son homologue est ${m(T2[2])}.`}]};
+  }
+  return {head,steps:questionsM1(ex)};
+}
+/* ================= Module 2 : semblables par les angles ================= */
+function genM2(force){
+  const L=letters(6),T1=L.slice(0,3),T2=L.slice(3),n1=T1.join(""),n2=T2.join("");
+  const type=pick(["deux","deux","iso","rect"]),sim=force||Math.random()<.6;
+  let A1,A2,show1,show2,iso=false,ex1,ex2,p,q,q2,x,y;
+  if(type==="deux"){
+    let a,b,c;do{a=R(30,100);b=R(30,90);c=180-a-b;}while(c<25||Math.abs(a-b)<6||Math.abs(a-c)<6||Math.abs(b-c)<6);
+    A1=[a,b,c];show1=[0,1];
+    if(sim)A2=[a,b,c];else{let d;do{d=pick([-1,1])*R(6,14);}while(a-d<20||c+d<20||d===a-c||Math.abs(c+d-a)<3||Math.abs(a-d-b)<3);A2=[a-d,b,c+d];}
+    show2=[1,2];
+    ex1=`La somme des angles d'un triangle est égale à 180° : 180° − (${a}° + ${b}°) = ${c}°.`;
+    ex2=`La somme des angles d'un triangle est égale à 180° : 180° − (${A2[1]}° + ${A2[2]}°) = ${A2[0]}°.`;
+  }else if(type==="iso"){
+    iso=true;do{p=2*R(15,55);}while(p===60);q=(180-p)/2;A1=[p,q,q];show1=[0];
+    q2=q;if(!sim){do{q2=q+pick([-1,1])*R(4,10);}while(q2<20||q2>80||q2===p);}
+    A2=[180-2*q2,q2,q2];show2=[1];
+    ex1=`Le triangle ${m(n1)} est isocèle en ${m(T1[0])}, donc ses deux angles à la base ont la même mesure : (180° − ${p}°) : 2 = ${q}°.`;
+    ex2=`Le triangle ${m(n2)} est isocèle en ${m(T2[0])}, donc ${A3(angName(T2,2))} = ${A3(angName(T2,1))} = ${q2}°. Alors 180° − 2 × ${q2}° = ${A2[0]}°.`;
+  }else{
+    do{x=R(22,68);}while(x>=40&&x<=50);A1=[90,x,90-x];show1=[0,1];
+    y=90-x;if(!sim){do{y=90-x+pick([-1,1])*R(5,12);}while(y<15||y>75||y===x);}
+    A2=[90,90-y,y];show2=[0,2];
+    ex1=`La somme des angles d'un triangle est égale à 180° : 180° − (90° + ${x}°) = ${90-x}°.`;
+    ex2=`La somme des angles d'un triangle est égale à 180° : 180° − (90° + ${y}°) = ${90-y}°.`;
+  }
+  const i1=[0,1,2].find(i=>!show1.includes(i)),i2=[0,1,2].find(i=>!show2.includes(i));
+  // figure
+  const p1=transform(triAngles(A1),{t:rad(R(-20,20))});
+  let pp2=transform(triAngles(A2),{t:rad(R(0,359)),flip:Math.random()<.5,k:pick([.7,.75,1.3,1.4])});
+  pp2=sideBySide(p1,pp2);
+  const points={};T1.forEach((n,i)=>points[n]=p1[i]);T2.forEach((n,i)=>points[n]=pp2[i]);
+  const angles=[],rights=[],ticks=[];
+  [[T1,A1,show1],[T2,A2,show2]].forEach(([T,A,sh])=>{sh.forEach(i=>{const o=[0,1,2].filter(j=>j!==i);
+    if(A[i]===90)rights.push([T[i],T[o[0]],T[o[1]]]);else angles.push({v:T[i],p:T[o[0]],q:T[o[1]],color:"#2c4fb5",label:A[i]+"°",r:20});});});
+  if(iso){ticks.push([T1[0],T1[1],1],[T1[0],T1[2],1],[T2[0],T2[1],2],[T2[0],T2[2],2]);}
+  const svg=fig({points,polys:[T1,T2],angles,rights,ticks,aria:"Deux triangles avec des mesures d'angles"});
+  const steps=[
+    {type:"num",unit:"°",tol:.01,answer:A1[i1],answerHtml:`${A1[i1]}°`,explain:ex1,
+      prompt:iso?`Le triangle ${m(n1)} est isocèle en ${m(T1[0])}. Calcule la mesure de l'angle ${A3(angName(T1,i1))}.`:`Calcule la mesure de l'angle ${A3(angName(T1,i1))}.`,
+      hint:iso?"Les deux angles à la base d'un triangle isocèle ont la même mesure.":"La somme des angles d'un triangle est égale à 180°."},
+    {type:"num",unit:"°",tol:.01,answer:A2[i2],answerHtml:`${A2[i2]}°`,explain:ex2,
+      prompt:iso?`Le triangle ${m(n2)} est isocèle en ${m(T2[0])}. Calcule la mesure de l'angle ${A3(angName(T2,i2))}.`:`Calcule la mesure de l'angle ${A3(angName(T2,i2))}.`,
+      hint:iso?`Commence par trouver la mesure de l'autre angle à la base, puis utilise la somme des angles.`:"La somme des angles d'un triangle est égale à 180°."}
+  ];
+  const listA=`Les angles du triangle ${m(n1)} mesurent ${listFr(sortedAngles(A1))}. Ceux du triangle ${m(n2)} mesurent ${listFr(sortedAngles(A2))}.`;
+  const nonExpl=`${listA} Les deux triangles n'ont pas leurs angles deux à deux de même mesure : ils ne sont pas semblables.`;
+  steps.push({type:"choice",prompt:`Les triangles ${m(n1)} et ${m(n2)} sont-ils semblables ?`,options:YESNO,correct:sim?0:1,answerHtml:YESNO[sim?0:1],
+    explain:sim?`${listA} Ils ont deux paires d'angles de même mesure.`:nonExpl,hint:"Compare les mesures des angles des deux triangles."});
+  let sentences=null,clozeStep=null;
+  if(sim){
+    const concl=`Les triangles ${m(n1)} et ${m(n2)} ont deux paires d'angles de même mesure : ils sont donc semblables.`;
+    if(type==="deux")sentences=[`Dans le triangle ${m(n1)}, la somme des angles est égale à 180°.`,`Donc ${A3(angName(T1,2))} = 180° − (${A1[0]}° + ${A1[1]}°) = ${A1[2]}°.`,`On a ${A3(angName(T1,1))} = ${A3(angName(T2,1))} = ${A1[1]}° et ${A3(angName(T1,2))} = ${A3(angName(T2,2))} = ${A1[2]}°.`,concl];
+    else if(type==="iso")sentences=[`Le triangle ${m(n1)} est isocèle en ${m(T1[0])}, donc ses angles à la base ont la même mesure.`,`Donc ${A3(angName(T1,1))} = ${A3(angName(T1,2))} = (180° − ${p}°) : 2 = ${q}°.`,`Le triangle ${m(n2)} est isocèle en ${m(T2[0])}, donc ${A3(angName(T2,2))} = ${A3(angName(T2,1))} = ${q}°.`,concl];
+    else sentences=[`Dans le triangle ${m(n1)}, la somme des angles est égale à 180°.`,`Donc ${A3(angName(T1,2))} = 180° − (90° + ${x}°) = ${90-x}°.`,`On a ${A3(angName(T1,0))} = ${A3(angName(T2,0))} = 90° et ${A3(angName(T1,2))} = ${A3(angName(T2,2))} = ${90-x}°.`,concl];
+    steps.push({type:"order",prompt:"Remets la rédaction dans l'ordre en cliquant sur les phrases, de la première à la dernière.",items:sentences,
+      answerHtml:`<ol>${sentences.map(s=>`<li>${s}</li>`).join("")}</ol>`,explain:"Voilà une rédaction complète, comme dans un devoir."});
+    const AO=[0,1,2].map(i=>A3(angName(T2,i))),sel=i=>({opts:AO,correct:i});
+    const PROP={opts:["180°","90°","360°"],correct:0},CONC={opts:["deux paires d'angles de même mesure","un seul angle de même mesure","des côtés de même longueur"],correct:0};
+    const concL=[`Les triangles ${m(n1)} et ${m(n2)} ont `,CONC," : ils sont donc semblables."];
+    let lines;
+    if(type==="deux")lines=[[`Dans le triangle ${m(n1)}, la somme des angles est égale à `,PROP,"."],[`Donc ${A3(angName(T1,2))} = 180° − (${A1[0]}° + ${A1[1]}°) = `,{num:A1[2],unit:"°"},"."],
+      [`On a ${A3(angName(T1,1))} = `,sel(1),` = ${A1[1]}° et ${A3(angName(T1,2))} = `,sel(2),` = ${A1[2]}°.`],concL];
+    else if(type==="iso")lines=[[`Le triangle ${m(n1)} est isocèle en ${m(T1[0])}, donc `,{opts:["ses angles à la base ont la même mesure","ses trois angles ont la même mesure","il a un angle droit"],correct:0},"."],
+      [`Donc ${A3(angName(T1,1))} = ${A3(angName(T1,2))} = (180° − ${p}°) : 2 = `,{num:q,unit:"°"},"."],
+      [`Le triangle ${m(n2)} est isocèle en ${m(T2[0])}, donc ${A3(angName(T2,0))} = 180° − 2 × ${q}° = `,{num:p,unit:"°"},"."],
+      [`On a ${A3(angName(T1,0))} = `,sel(0),` = ${p}° et ${A3(angName(T1,1))} = ${A3(angName(T2,1))} = ${q}°.`],concL];
+    else lines=[[`Dans le triangle ${m(n1)}, la somme des angles est égale à `,PROP,"."],[`Donc ${A3(angName(T1,2))} = 180° − (90° + ${x}°) = `,{num:90-x,unit:"°"},"."],
+      [`On a ${A3(angName(T1,0))} = `,sel(0),` = 90° et ${A3(angName(T1,2))} = `,sel(2),` = ${90-x}°.`],concL];
+    clozeStep={type:"cloze",prompt:"Complète la rédaction : clique sur chaque case pour choisir, et écris les résultats des calculs.",lines,
+      answerHtml:"les cases corrigées sont maintenant en orange. Relis la rédaction entière avant de continuer.",hint:"Les cases en rouge sont fausses. Relis la figure, puis corrige-les."};
+  }
+  const corrige=sim?sentences.map(s=>`<p>${s}</p>`).join(""):`<p>${ex1}</p><p>${ex2}</p><p>${nonExpl}</p>`;
+  return {head:`<p class="consigne">Les mesures connues sont indiquées sur la figure, qui n'est pas en vraie grandeur.</p>${svg}`,steps,sim,corrige,n1,n2,clozeStep};
+}
+function exM2(sub){
+  const g=genM2(sub==="exemple");
+  if(sub==="seul")return {head:g.head+`<p class="question">Les triangles ${m(g.n1)} et ${m(g.n2)} sont-ils semblables ? Rédige ta réponse sur ton cahier, puis réponds.</p>`,corrige:g.corrige,grid:GRID_M2,
+    steps:[{type:"choice",prompt:"Ta réponse :",options:YESNO,correct:g.sim?0:1,answerHtml:YESNO[g.sim?0:1]}]};
+  if(sub==="aide"&&g.clozeStep)return {head:g.head,steps:[...g.steps.slice(0,3),g.clozeStep]};
+  return {head:g.head,steps:g.steps};
+}
+
+/* ================= Module 3 : semblables par les longueurs ================= */
+function genM3(force){
+  let s;do{const a=R(3,7),b=a+R(1,3),c=b+R(1,3);s=[a,b,c];}while(s[0]+s[1]<=s[2]+.8);
+  const k=pick([1.5,2,2.5,3,1.2,1.4,1.6]),sim=force||Math.random()<.6;
+  let big=s.map(x=>round(x*k,2));
+  if(!sim){let ok=false;while(!ok){const j=R(0,2),d=pick([-1,-.5,.5,1]),nb=big.slice();nb[j]=round(nb[j]+d,2);const so=nb.slice().sort((a,b)=>a-b);
+    ok=so[0]<so[1]&&so[1]<so[2]&&so[0]+so[1]>so[2]+.5&&!(Math.abs(so[0]/s[0]-so[1]/s[1])<1e-9&&Math.abs(so[1]/s[1]-so[2]/s[2])<1e-9);if(ok)big=nb;}}
+  const bigS=big.slice().sort((a,b)=>a-b),qs=bigS.map((v,i)=>v/s[i]);
+  const L=letters(6),Ts=L.slice(0,3),Tb=L.slice(3),ns=Ts.join(""),nbn=Tb.join("");
+  const mk=(T,vals)=>{const v=shuffle(vals);return {sides:[{name:T[0]+T[1],val:v[0]},{name:T[0]+T[2],val:v[1]},{name:T[1]+T[2],val:v[2]}],pts:triSides(v[0],v[1],v[2])};};
+  const S1=mk(Ts,s),S2=mk(Tb,big);
+  const first=Math.random()<.5;
+  let pa=transform(S1.pts,{t:rad(R(-20,20)),flip:Math.random()<.5}),pb=transform(S2.pts,{t:rad(R(0,359)),flip:Math.random()<.5,k:Math.min(1.6,Math.max(1.3,k))/k});
+  let points={},sidesLab=[];
+  if(first){pb=sideBySide(pa,pb);}else{pa=sideBySide(pb,pa);}
+  Ts.forEach((n,i)=>points[n]=pa[i]);Tb.forEach((n,i)=>points[n]=pb[i]);
+  [[S1,Ts],[S2,Tb]].forEach(([S,T])=>S.sides.forEach(sd=>sidesLab.push({a:sd.name[0],b:sd.name[1],text:fr(sd.val),ref:T})));
+  const svg=fig({points,polys:[Ts,Tb],sides:sidesLab,aria:"Deux triangles avec les longueurs de leurs côtés"});
+  const nameOf=(S,v)=>S.sides.find(x=>Math.abs(x.val-v)<1e-9).name;
+  const rankTab=`<table class="tab"><tr><th></th><th>petit</th><th>moyen</th><th>grand</th></tr>${(first?[[ns,S1,s],[nbn,S2,bigS]]:[[nbn,S2,bigS],[ns,S1,s]]).map(([n,S,arr])=>`<tr><th>Triangle ${m(n)}</th>${arr.map(v=>`<td>${m(nameOf(S,v))} = ${fr(v)}</td>`).join("")}</tr>`).join("")}</table>`;
+  const quotLine=bigS.map((v,i)=>`${F(fr(v),fr(s[i]))} ${Math.abs(qs[i]-round(qs[i],2))<1e-9?"=":"≈"} ${fr(qs[i])}`).join(" ; ");
+  const steps=[
+    {type:"rank",prompt:`Range les côtés de chaque triangle, du plus petit au plus grand. Les longueurs sont en centimètres.`,rows:(first?[[ns,S1],[nbn,S2]]:[[nbn,S2],[ns,S1]]).map(([n,S])=>({name:n,sides:S.sides})),
+      answerHtml:rankTab,hint:"Compare les trois longueurs de chaque triangle. La plus petite va dans la case « petit ».",explain:"Le plus petit côté d'un triangle correspond au plus petit côté de l'autre, et ainsi de suite."},
+    {type:"num",prompt:`Calcule les trois quotients : chaque longueur du triangle ${m(nbn)} divisée par la longueur correspondante du triangle ${m(ns)}. Arrondis au centième si besoin.`,
+      fields:bigS.map((v,i)=>({label:F(fr(v),fr(s[i])),answer:round(qs[i],2),tol:.011})),answerHtml:quotLine,hint:"Utilise ta calculatrice : grand côté divisé par grand côté, moyen par moyen, petit par petit.",explain:sim?"Les trois quotients sont égaux.":"Les trois quotients ne sont pas tous égaux."},
+    {type:"choice",prompt:`Les triangles ${m(ns)} et ${m(nbn)} sont-ils semblables ?`,options:YESNO,correct:sim?0:1,answerHtml:YESNO[sim?0:1],
+      explain:sim?"Les longueurs des côtés sont proportionnelles, donc les triangles sont semblables.":"Les longueurs des côtés ne sont pas proportionnelles, donc les triangles ne sont pas semblables.",hint:"Regarde si les trois quotients sont égaux."}
+  ];
+  let sentences=null;
+  if(sim){
+    sentences=[`On range les longueurs des côtés de chaque triangle dans l'ordre croissant.`,`On calcule les quotients : ${quotLine}.`,`Les quotients sont égaux : les longueurs des côtés sont proportionnelles.`,`Donc les triangles ${m(ns)} et ${m(nbn)} sont semblables.`];
+    steps.push({type:"order",prompt:"Remets la rédaction dans l'ordre en cliquant sur les phrases, de la première à la dernière.",items:sentences,answerHtml:`<ol>${sentences.map(x=>`<li>${x}</li>`).join("")}</ol>`,explain:"Voilà une rédaction complète, comme dans un devoir."});
+  }
+  const corrige=`<p>On range les longueurs dans l'ordre croissant :</p>${rankTab}<p>On calcule les quotients : ${quotLine}.</p>`+
+    (sim?`<p>Les quotients sont égaux : les longueurs des côtés sont proportionnelles. Donc <b>les triangles ${m(ns)} et ${m(nbn)} sont semblables</b>.</p><p>Le triangle ${m(nbn)} est un agrandissement du triangle ${m(ns)} de rapport ${fr(k)}.</p>`
+        :`<p>Les quotients ne sont pas tous égaux : les longueurs des côtés ne sont pas proportionnelles. Donc <b>les triangles ${m(ns)} et ${m(nbn)} ne sont pas semblables</b>.</p>`);
+  return {head:`<p class="consigne">Les longueurs sont en centimètres. La figure n'est pas en vraie grandeur.</p>${svg}`,steps,sim,k,ns,nbn,corrige};
+}
+function exM3(sub){
+  const g=genM3(sub==="exemple");
+  if(sub==="seul"){
+    const steps=[{type:"choice",prompt:`Les triangles ${m(g.ns)} et ${m(g.nbn)} sont-ils semblables ? Fais les calculs sur ton cahier, puis réponds.`,options:YESNO,correct:g.sim?0:1,answerHtml:YESNO[g.sim?0:1]}];
+    if(g.sim)steps.push({type:"num",prompt:`Le triangle ${m(g.nbn)} est un agrandissement du triangle ${m(g.ns)}. Quel est le rapport d'agrandissement ?`,answer:g.k,tol:.011,answerHtml:fr(g.k)});
+    return {head:g.head,steps,corrige:g.corrige,grid:GRID_LEN};
+  }
+  return {head:g.head,steps:g.steps};
+}
+
+/* ================= Module 4 : problèmes type brevet ================= */
+const REASONS={
+  commun:"Les deux triangles ont cet angle en commun.",
+  droit:"Ce sont deux angles droits.",
+  opp:"Ces angles sont opposés par le sommet.",
+  corr:"Ces angles sont correspondants et les droites sont parallèles.",
+  alt:"Ces angles sont alternes-internes et les droites sont parallèles.",
+  code:"Ces angles sont codés de la même façon sur la figure.",
+  mesure:"Ces deux angles ont la même mesure, donnée sur la figure.",
+  somme:"On a calculé sa mesure avec la somme des angles d'un triangle.",
+  iso:"Les angles à la base d'un triangle isocèle ont la même mesure, et on a calculé cette mesure."
+};
+function donnees(list,unit){return "On donne : "+listFr(list.map(([n,v])=>`${m(n)} = ${fr(v)} ${unit}`))+".";}
+function buildM4(c){
+  const {T1,T2,vals}=c,unit=c.unit||"cm",n1=T1.join(""),n2=T2.join("");
+  const pairs=[[0,1],[0,2],[1,2]].map(([i,j])=>[T1[i]+T1[j],T2[i]+T2[j]]);
+  const has=n=>vals[norm(n)]!==undefined,v=n=>vals[norm(n)],uN=norm(c.unknown);
+  const ui=pairs.findIndex(p=>norm(p[0])===uN||norm(p[1])===uN);
+  const ki=pairs.findIndex((p,i)=>i!==ui&&has(p[0])&&has(p[1]));
+  const [ks,kb]=pairs[ki],[us,ub]=pairs[ui];
+  const small=norm(us)===uN,uName=small?us:ub;
+  let ans,calc;
+  if(small){ans=v(ub)*v(ks)/v(kb);calc=`${m(uName)} = ${F(`${fr(v(ub))} × ${fr(v(ks))}`,fr(v(kb)))}`;}
+  else{ans=v(us)*v(kb)/v(ks);calc=`${m(uName)} = ${F(`${fr(v(us))} × ${fr(v(kb))}`,fr(v(ks)))}`;}
+  ans=round(ans,2);
+  const prodLine=small?`${fr(v(kb))} × ${m(uName)} = ${fr(v(ks))} × ${fr(v(ub))}`:`${fr(v(ks))} × ${m(uName)} = ${fr(v(kb))} × ${fr(v(us))}`;
+  const eqLine=`${F(fr(v(ks)),fr(v(kb)))} = ${small?F(m(uName),fr(v(ub))):F(fr(v(us)),m(uName))}`;
+  const qh=P=>P.map(([a,b])=>F(m(a),m(b))).join(" = ");
+  const qOpts=shuffle([{h:qh(pairs),ok:true},{h:qh([[pairs[0][0],pairs[1][1]],[pairs[1][0],pairs[0][1]],pairs[2]]),ok:false},{h:qh([pairs[0],[pairs[1][1],pairs[1][0]],pairs[2]]),ok:false}]);
+  const question=c.question?c.question(uName):`Calcule la longueur ${m(uName)}.`;
+  const reasonStep=eq=>{const others=shuffle(Object.keys(REASONS).filter(k=>k!==eq.key)).slice(0,3);const keys=shuffle([eq.key,...others]);
+    return {type:"choice",column:true,prompt:`Pourquoi a-t-on ${eq.html} ?`,options:keys.map(k=>REASONS[k]),correct:keys.indexOf(eq.key),answerHtml:REASONS[eq.key],explain:eq.explain,
+      hint:"Regarde la figure et relis l'énoncé : points alignés, parallèles, angles droits, codages…"};};
+  const conclOpts=[`Ils sont semblables, car ils ont deux paires d'angles de même mesure.`,`Ils sont semblables, car ils ont un angle commun.`,`Ils sont semblables, car les longueurs de leurs côtés sont proportionnelles.`];
+  const cOrder=shuffle([0,1,2]);
+  const steps=[...(c.pre||[]),reasonStep(c.eqs[0]),reasonStep(c.eqs[1]),
+    {type:"choice",column:true,prompt:`Que peux-tu en déduire pour les triangles ${m(n1)} et ${m(n2)} ?`,options:cOrder.map(i=>conclOpts[i]),correct:cOrder.indexOf(0),answerHtml:conclOpts[0],
+      explain:"Deux paires d'angles de même mesure suffisent pour prouver que deux triangles sont semblables.",hint:"Qu'as-tu démontré aux deux étapes précédentes ?"},
+    {type:"homo",prompt:`Complète les sommets homologues des triangles ${m(n1)} et ${m(n2)}.`,from:T1,choices:T2.slice().sort(),answer:T2,
+      answerHtml:T1.map((x,i)=>`${m(x)} ↔ ${m(T2[i])}`).join(" ; "),hint:"Deux sommets sont homologues quand leurs angles ont la même mesure.",
+      explain:"On associe les sommets des angles égaux. Le troisième sommet va avec le troisième."},
+    {type:"choice",prompt:"Quelle égalité de quotients peux-tu écrire ?",options:qOpts.map(o=>o.h),correct:qOpts.findIndex(o=>o.ok),answerHtml:qh(pairs),
+      explain:"Chaque quotient met en relation un côté et son côté homologue, toujours dans le même ordre.",hint:"Dans chaque quotient, le côté du haut et le côté du bas doivent être homologues, et le premier triangle reste toujours en haut."},
+    {type:"num",prompt:`${question} Donne le résultat en ${unit}.`,unit,answer:ans,tol:.011,answerHtml:`${m(uName)} = ${fr(ans)} ${unit}`,
+      hint:`Utilise l'égalité ${eqLine}. Si deux quotients ${F("a","b")} et ${F("c","d")} sont égaux, alors a × d = b × c.`,explain:`${eqLine}, donc ${prodLine}. Alors ${calc} = ${fr(ans)}.`}
+  ];
+  const corr=[...c.corrIntro,
+    `Les triangles ${m(n1)} et ${m(n2)} ont deux paires d'angles de même mesure : <b>ils sont semblables</b>.`,
+    `Les sommets homologues sont : ${listFr(T1.map((x,i)=>`${m(x)} et ${m(T2[i])}`))}.`,
+    `Les longueurs des côtés homologues sont donc proportionnelles : ${qh(pairs)}.`,
+    `On utilise : ${eqLine}.`,
+    `Donc ${prodLine}.`,
+    `${calc} = ${fr(ans)}`];
+  const RS={commun:"les deux triangles ont cet angle en commun",droit:"ce sont deux angles droits",opp:"ces angles sont opposés par le sommet",corr:"ces angles sont correspondants et les droites sont parallèles",
+    alt:"ces angles sont alternes-internes et les droites sont parallèles",code:"ces angles sont codés de la même façon sur la figure",mesure:"ces angles ont la même mesure, donnée sur la figure",
+    somme:"on a calculé cette mesure avec la somme des angles d'un triangle",iso:"les angles à la base d'un triangle isocèle ont la même mesure"};
+  const rb=eq=>{const keys=shuffle([eq.key,...shuffle(Object.keys(RS).filter(k=>k!==eq.key)).slice(0,3)]);return {opts:keys.map(k=>RS[k]),correct:keys.indexOf(eq.key)};};
+  const T2s=T2.slice().sort(),cc=cOrder;
+  const clozeLines=[[c.eqs[0].html," car ",rb(c.eqs[0]),"."],[c.eqs[1].html," car ",rb(c.eqs[1]),"."],
+    [`Les triangles ${m(n1)} et ${m(n2)} ont `,{opts:["deux paires d'angles de même mesure","un angle commun","des côtés proportionnels"],correct:0}," : ils sont semblables."],
+    ["Les sommets homologues sont : ",...T1.flatMap((x,i)=>[`${m(x)} et `,{opts:T2s.map(m),correct:T2s.indexOf(T2[i])},i<2?", ":"."])],
+    ["Les longueurs des côtés homologues sont proportionnelles : ",{opts:qOpts.map(o=>o.h),correct:qOpts.findIndex(o=>o.ok)},"."],
+    [`On utilise : ${eqLine}. Donc ${prodLine}.`],
+    [`${calc} = `,{num:ans,unit}]];
+  const clozeStep={type:"cloze",prompt:"Complète la rédaction : clique sur chaque case pour choisir, et écris le résultat du calcul.",lines:clozeLines,
+    answerHtml:"les cases corrigées sont maintenant en orange. Relis la rédaction entière avant de continuer.",hint:"Les cases en rouge sont fausses. Relis l'énoncé et la figure, puis corrige-les."};
+  return {head:`<p class="consigne">${c.enonce}</p>${c.svg}<p class="question">${question}</p>`,steps,ans,uName,unit,pre:c.pre||[],clozeStep,grid:[...(c.gridPre||[]),...GRID_ANG],
+    corrige:corr.map(l=>`<p>${l}</p>`).join("")+`<p><span class="box">${m(uName)} = ${fr(ans)} ${unit}</span></p>`};
+}
+const mirror=(pts,on)=>on?pts.map(p=>[-p[0],p[1]]):pts;
+function asPoints(names,pts){const o={};names.forEach((n,i)=>o[n]=pts[i]);return o;}
+
+// Niveau 1 : angle commun + angle droit
+function cfgA1(){
+  const [S,B,C,M,N]=letters(5);let SB,BC,k,SM,MN;
+  do{SB=R(5,12);BC=R(3,8);k=pick([.25,.4,.5,.6,.75,.8]);SM=round(k*SB,2);MN=round(k*BC,2);}while(!isDec(SM,2)||!isDec(MN,2)||BC>=SB+2);
+  const u=pick(["MN","BC","SB"]);
+  const all={[norm(S+M)]:SM,[norm(S+B)]:SB,[norm(M+N)]:MN,[norm(B+C)]:BC};
+  const gl=u==="MN"?[[S+M,SM],[S+B,SB],[B+C,BC]]:u==="BC"?[[S+M,SM],[S+B,SB],[M+N,MN]]:[[S+M,SM],[M+N,MN],[B+C,BC]];
+  const vals={};gl.forEach(([n,x])=>vals[norm(n)]=x);
+  const unk=u==="MN"?M+N:u==="BC"?B+C:S+B;
+  const pts=mirror([[0,0],[SB,0],[SB,BC],[SM,0],[SM,MN]],Math.random()<.5);
+  const svg=fig({points:asPoints([S,B,C,M,N],pts),polys:[[S,B,C]],segs:[[M,N]],rights:[[M,S,N],[B,S,C]],aria:"Triangle rectangle avec un segment perpendiculaire"});
+  return buildM4({T1:[S,M,N],T2:[S,B,C],vals,unknown:unk,svg,
+    enonce:`Sur la figure ci-dessous, qui n'est pas à l'échelle, le point ${m(M)} est sur le segment ${SEG(S+B)} et le point ${m(N)} est sur le segment ${SEG(S+C)}. Les angles codés sont droits. ${donnees(gl,"cm")}`,
+    eqs:[{html:`${A3(M+S+N)} = ${A3(B+S+C)}`,key:"commun",explain:`Les points ${m(M)} et ${m(N)} sont sur ${SEG(S+B)} et ${SEG(S+C)} : c'est le même angle, de sommet ${m(S)}.`},
+         {html:`${A3(S+M+N)} = ${A3(S+B+C)} = 90°`,key:"droit",explain:"Les deux angles sont codés comme des angles droits."}],
+    corrIntro:[`Les points ${m(M)} et ${m(N)} sont sur ${SEG(S+B)} et ${SEG(S+C)}, donc les triangles ${m(S+M+N)} et ${m(S+B+C)} ont l'angle ${A1(S)} en commun.`,`De plus, ${A3(S+M+N)} = ${A3(S+B+C)} = 90°.`]});
+}
+function nicePair(){let OA,OB,AB,phi;do{OA=R(3,7);OB=R(3,8);AB=R(3,10);const c=(OA*OA+OB*OB-AB*AB)/(2*OA*OB);phi=Math.acos(Math.max(-1,Math.min(1,c)))*180/Math.PI;}while(OA===OB||phi<45||phi>115||AB<=Math.abs(OA-OB)||AB>=OA+OB);return {OA,OB,AB,phi};}
+// Niveau 1 : opposés par le sommet + angles codés
+function cfgA2(){
+  const [O,A,B,C,D]=letters(5);const {OA,OB,AB,phi}=nicePair();const k=pick([1.5,2,.5,2.5,.8,1.2]);
+  const OC=round(k*OA,2),OD=round(k*OB,2),CD=round(k*AB,2);
+  const th=rad(180-phi/2+R(-12,12)),uA=dir(th),uB=dir(th+rad(phi));
+  const Ap=mul(uA,OA),Bp=mul(uB,OB),Cp=mul(uB,-k*OA),Dp=mul(uA,-k*OB);
+  const u=pick(["CD","OD","AB"]);
+  const gl=u==="CD"?[[O+A,OA],[O+C,OC],[A+B,AB]]:u==="OD"?[[O+A,OA],[O+C,OC],[O+B,OB]]:[[O+B,OB],[O+D,OD],[C+D,CD]];
+  const vals={};gl.forEach(([n,x])=>vals[norm(n)]=x);
+  const unk=u==="CD"?C+D:u==="OD"?O+D:A+B;
+  const svg=fig({points:asPoints([O,A,B,C,D],[[0,0],Ap,Bp,Cp,Dp]),polys:[[O,A,B],[O,C,D]],
+    angles:[{v:A,p:O,q:B,color:COLS[0],arcs:1},{v:C,p:O,q:D,color:COLS[0],arcs:1}],labelDir:{[O]:dir(th+rad(phi)/2+Math.PI/2)},aria:"Deux triangles opposés par un sommet"});
+  return buildM4({T1:[O,A,B],T2:[O,C,D],vals,unknown:unk,svg,
+    enonce:`Sur la figure ci-dessous, qui n'est pas à l'échelle, les points ${m(A)}, ${m(O)} et ${m(D)} sont alignés, ainsi que les points ${m(B)}, ${m(O)} et ${m(C)}. Les angles codés de la même façon ont la même mesure. ${donnees(gl,"cm")}`,
+    eqs:[{html:`${A3(A+O+B)} = ${A3(C+O+D)}`,key:"opp",explain:`Les droites (${A}${D}) et (${B}${C}) se coupent en ${m(O)} : ces angles sont opposés par le sommet, donc ils ont la même mesure.`},
+         {html:`${A3(O+A+B)} = ${A3(O+C+D)}`,key:"code",explain:"Ces deux angles sont codés de la même façon sur la figure."}],
+    corrIntro:[`Les points ${m(A)}, ${m(O)}, ${m(D)} sont alignés, ainsi que ${m(B)}, ${m(O)}, ${m(C)} : les angles ${A3(A+O+B)} et ${A3(C+O+D)} sont opposés par le sommet, donc ${A3(A+O+B)} = ${A3(C+O+D)}.`,`De plus, ${A3(O+A+B)} = ${A3(O+C+D)} d'après le codage de la figure.`]});
+}
+// Niveau 2 : somme des angles
+function cfgC2(){
+  const L=letters(6),T1=L.slice(0,3),T2=L.slice(3),n1=T1.join("");
+  const rect=Math.random()<.4;let A;
+  if(rect){let x;do{x=R(25,65);}while(x>=40&&x<=50);A=[90,x,90-x];}
+  else{let a,b,c;do{a=R(35,95);b=R(30,80);c=180-a-b;}while(c<30||Math.abs(a-b)<8||Math.abs(a-c)<8||Math.abs(b-c)<8);A=[a,b,c];}
+  const perm=shuffle([0,1,2]);A=perm.map(i=>A[i]);
+  let i,j,mi;
+  if(rect){i=A.indexOf(90);[j,mi]=shuffle([0,1,2].filter(x=>x!==i));}else[i,j,mi]=shuffle([0,1,2]);
+  const Lmax=R(6,10),sc=Lmax/Math.max(...A.map(a=>Math.sin(rad(a))));
+  const r=A.map(a=>Math.round(2*sc*Math.sin(rad(a)))/2);
+  const k=pick([1.5,2,2.5,3,.5]);
+  const [p,q]=shuffle([0,1,2]).slice(0,2);
+  const inT2=Math.random()<.6;
+  const vals={},sl=[];
+  vals[norm(oppSide(T1,p))]=r[p];vals[norm(oppSide(T2,p))]=round(k*r[p],2);
+  if(inT2)vals[norm(oppSide(T1,q))]=r[q];else vals[norm(oppSide(T2,q))]=round(k*r[q],2);
+  const unk=inT2?oppSide(T2,q):oppSide(T1,q);
+  [[T1,1],[T2,k]].forEach(([T,kk])=>[p,q].forEach(t=>{const n=oppSide(T,t);sl.push({a:n[0],b:n[1],text:vals[norm(n)]!==undefined?fr(vals[norm(n)]):"?",ref:T});}));
+  const p1=transform(triAngles(A),{t:rad(R(-15,15))});
+  let p2=transform(triAngles(A),{t:rad(R(0,359)),flip:Math.random()<.5,k:Math.min(1.6,Math.max(.65,k))});p2=sideBySide(p1,p2,.3);
+  const points={};T1.forEach((n,x)=>points[n]=p1[x]);T2.forEach((n,x)=>points[n]=p2[x]);
+  const angles=[],rights=[];
+  [[T1,[i,j]],[T2,[i,mi]]].forEach(([T,sh])=>sh.forEach(t=>{const o=[0,1,2].filter(x=>x!==t);if(A[t]===90)rights.push([T[t],T[o[0]],T[o[1]]]);else angles.push({v:T[t],p:T[o[0]],q:T[o[1]],color:"#2c4fb5",label:A[t]+"°",r:20});}));
+  const svg=fig({points,polys:[T1,T2],angles,rights,sides:sl,aria:"Deux triangles avec des mesures d'angles et de longueurs"});
+  const e1={html:`${A3(angName(T1,i))} = ${A3(angName(T2,i))} = ${A[i]}°`,key:A[i]===90?"droit":"mesure",explain:A[i]===90?"Les deux angles sont codés comme des angles droits.":`Ces deux angles mesurent ${A[i]}° d'après la figure.`};
+  const e2={html:`${A3(angName(T1,mi))} = ${A3(angName(T2,mi))} = ${A[mi]}°`,key:"somme",explain:`On a calculé ${A3(angName(T1,mi))} = ${A[mi]}°, et la figure indique ${A3(angName(T2,mi))} = ${A[mi]}°.`};
+  return buildM4({T1,T2,vals,unknown:unk,svg,
+    enonce:`Les deux triangles ci-dessous ne sont pas en vraie grandeur. Les longueurs sont en centimètres.`,
+    gridPre:["J'ai calculé l'angle manquant en écrivant le calcul et la propriété (somme des angles d'un triangle)."],
+    pre:[{type:"num",unit:"°",tol:.01,prompt:`Calcule la mesure de l'angle ${A3(angName(T1,mi))}.`,answer:A[mi],answerHtml:`${A[mi]}°`,hint:"La somme des angles d'un triangle est égale à 180°.",
+      explain:`La somme des angles d'un triangle est égale à 180° : 180° − (${A[i]}° + ${A[j]}°) = ${A[mi]}°.`}],
+    eqs:[e1,e2],
+    corrIntro:[`Dans le triangle ${m(n1)}, la somme des angles est égale à 180°, donc ${A3(angName(T1,mi))} = 180° − (${A[i]}° + ${A[j]}°) = ${A[mi]}°.`,`On a donc ${e1.html} et ${e2.html}.`]});
+}
+// Niveau 3 : parallèles et angle commun
+function cfgB1(){
+  const [S,B,C,M,N]=letters(5);let SB,SC,BC,ang;
+  do{SB=R(6,12);SC=R(6,12);BC=R(4,10);ang=BC<SB+SC&&SB<SC+BC&&SC<SB+BC?triangleAnglesFromSides(SB,SC,BC):[0];}while(Math.min(...ang)<28||SB===SC);
+  let k;do{k=pick([.25,.4,.5,.6,.75,.8]);}while(!isDec(k*SB,2));
+  const SM=round(k*SB,2),SN=round(k*SC,2),MN=round(k*BC,2);
+  const u=pick(["MN","SN","BC","SC"]);
+  const gl=u==="MN"?[[S+M,SM],[S+B,SB],[B+C,BC]]:u==="SN"?[[S+M,SM],[S+B,SB],[S+C,SC]]:u==="BC"?[[S+N,SN],[S+C,SC],[M+N,MN]]:[[S+M,SM],[S+B,SB],[S+N,SN]];
+  const vals={};gl.forEach(([n,x])=>vals[norm(n)]=x);
+  const unk=u==="MN"?M+N:u==="SN"?S+N:u==="BC"?B+C:S+C;
+  const base=mirror(triSides(SB,SC,BC),Math.random()<.5);
+  const Bp=base[1],Cp=base[2];
+  const svg=fig({points:asPoints([S,B,C,M,N],[[0,0],Bp,Cp,mul(Bp,k),mul(Cp,k)]),polys:[[S,B,C]],segs:[[M,N]],aria:"Triangle coupé par une parallèle à un côté"});
+  return buildM4({T1:[S,M,N],T2:[S,B,C],vals,unknown:unk,svg,
+    enonce:`Sur la figure ci-dessous, qui n'est pas à l'échelle, le point ${m(M)} est sur le segment ${SEG(S+B)} et le point ${m(N)} est sur le segment ${SEG(S+C)}. Les droites (${M}${N}) et (${B}${C}) sont parallèles. ${donnees(gl,"cm")}`,
+    eqs:[{html:`${A3(M+S+N)} = ${A3(B+S+C)}`,key:"commun",explain:`Les points ${m(M)} et ${m(N)} sont sur ${SEG(S+B)} et ${SEG(S+C)} : c'est le même angle, de sommet ${m(S)}.`},
+         {html:`${A3(S+M+N)} = ${A3(S+B+C)}`,key:"corr",explain:`Les droites (${M}${N}) et (${B}${C}) sont parallèles et la droite (${S}${B}) les coupe : ces angles sont correspondants, donc ils ont la même mesure.`}],
+    corrIntro:[`Les points ${m(M)} et ${m(N)} sont sur ${SEG(S+B)} et ${SEG(S+C)}, donc les triangles ${m(S+M+N)} et ${m(S+B+C)} ont l'angle ${A1(S)} en commun.`,`Les droites (${M}${N}) et (${B}${C}) sont parallèles et coupées par la sécante (${S}${B}) : les angles ${A3(S+M+N)} et ${A3(S+B+C)} sont correspondants, donc ${A3(S+M+N)} = ${A3(S+B+C)}.`]});
+}
+// Niveau 3 : papillon avec parallèles
+function cfgB2(){
+  const [O,A,B,C,D]=letters(5);const {OA,OB,AB,phi}=nicePair();const k=pick([1.5,2,.5,2.5,.8,1.2]);
+  const OC=round(k*OA,2),OD=round(k*OB,2),CD=round(k*AB,2);
+  const th=rad(180-phi/2+R(-12,12)),Ap=mul(dir(th),OA),Bp=mul(dir(th+rad(phi)),OB);
+  const u=pick(["CD","OD","AB"]);
+  const gl=u==="CD"?[[O+A,OA],[O+C,OC],[A+B,AB]]:u==="OD"?[[O+A,OA],[O+C,OC],[O+B,OB]]:[[O+B,OB],[O+D,OD],[C+D,CD]];
+  const vals={};gl.forEach(([n,x])=>vals[norm(n)]=x);
+  const unk=u==="CD"?C+D:u==="OD"?O+D:A+B;
+  const svg=fig({points:asPoints([O,A,B,C,D],[[0,0],Ap,Bp,mul(Ap,-k),mul(Bp,-k)]),polys:[[O,A,B],[O,C,D]],labelDir:{[O]:dir(th+rad(phi)/2+Math.PI/2)},aria:"Deux triangles opposés par un sommet avec des côtés parallèles"});
+  return buildM4({T1:[O,A,B],T2:[O,C,D],vals,unknown:unk,svg,
+    enonce:`Sur la figure ci-dessous, qui n'est pas à l'échelle, les segments ${SEG(A+C)} et ${SEG(B+D)} se coupent au point ${m(O)}. Les droites (${A}${B}) et (${C}${D}) sont parallèles. ${donnees(gl,"cm")}`,
+    eqs:[{html:`${A3(A+O+B)} = ${A3(C+O+D)}`,key:"opp",explain:`Les droites (${A}${C}) et (${B}${D}) se coupent en ${m(O)} : ces angles sont opposés par le sommet, donc ils ont la même mesure.`},
+         {html:`${A3(O+A+B)} = ${A3(O+C+D)}`,key:"alt",explain:`Les droites (${A}${B}) et (${C}${D}) sont parallèles et la droite (${A}${C}) les coupe : ces angles sont alternes-internes, donc ils ont la même mesure.`}],
+    corrIntro:[`Les points ${m(A)}, ${m(O)}, ${m(C)} sont alignés, ainsi que ${m(B)}, ${m(O)}, ${m(D)} : les angles ${A3(A+O+B)} et ${A3(C+O+D)} sont opposés par le sommet, donc ${A3(A+O+B)} = ${A3(C+O+D)}.`,`Les droites (${A}${B}) et (${C}${D}) sont parallèles et coupées par la sécante (${A}${C}) : les angles ${A3(O+A+B)} et ${A3(O+C+D)} sont alternes-internes, donc ${A3(O+A+B)} = ${A3(O+C+D)}.`]});
+}
+// Niveau 3 : ombres
+function cfgB3(){
+  const [S,P,O,T,Q,U]=letters(6);let QT,QU,k,PO,PS;
+  do{QT=pick([1,1.2,1.5,1.6,1.8]);QU=pick([.8,1.2,1.5,2,2.4]);k=pick([2.5,3,4,5,6]);PO=round(k*QU,2);PS=round(k*QT,2);}while(PS>12||PS<3);
+  return buildM4({T1:[T,Q,U],T2:[S,P,O],vals:{[norm(Q+T)]:QT,[norm(Q+U)]:QU,[norm(P+O)]:PO},unknown:P+S,unit:"m",svg:svgB3(S,P,O,T,Q,U,PS,PO,QT,QU),
+    question:n=>`Calcule la hauteur ${m(n)} du lampadaire.`,
+    enonce:`À la même heure, un lampadaire ${SEG(S+P)} et un bâton ${SEG(T+Q)} sont plantés verticalement dans un sol horizontal. Les rayons du soleil (${S}${O}) et (${T}${U}) sont parallèles. Le bâton mesure ${fr(QT)} m et son ombre ${SEG(Q+U)} mesure ${fr(QU)} m. L'ombre ${SEG(P+O)} du lampadaire mesure ${fr(PO)} m. La figure n'est pas à l'échelle.`,
+    eqs:[{html:`${A3(T+Q+U)} = ${A3(S+P+O)} = 90°`,key:"droit",explain:"Le bâton et le lampadaire sont verticaux et le sol est horizontal."},
+         {html:`${A3(T+U+Q)} = ${A3(S+O+P)}`,key:"corr",explain:`Les rayons (${T}${U}) et (${S}${O}) sont parallèles et la droite du sol les coupe : ces angles sont correspondants, donc ils ont la même mesure.`}],
+    corrIntro:[`Le bâton et le lampadaire sont verticaux et le sol est horizontal, donc ${A3(T+Q+U)} = ${A3(S+P+O)} = 90°.`,`Les rayons (${T}${U}) et (${S}${O}) sont parallèles et coupés par la droite du sol : les angles ${A3(T+U+Q)} et ${A3(S+O+P)} sont correspondants, donc ${A3(T+U+Q)} = ${A3(S+O+P)}.`]});
+}
+function svgB3(S,P,O,T,Q,U,PS,PO,QT,QU){
+  const g=.35*PO,qx=PO+g;
+  const pts=[[0,PS],[0,0],[PO,0],[qx,QT],[qx,0],[qx+QU,0],[-.08*PO,0],[qx+QU+.08*PO,0]];
+  return fig({H:250,points:asPoints([S,P,O,T,Q,U,"_g1","_g2"],pts),hidden:["_g1","_g2"],
+    segs:[["_g1","_g2",{ground:true,noLabel:true}],[S,P,{w:3.5}],[T,Q,{w:3.5}],[S,O,{dash:true,color:"#c98a00"}],[T,U,{dash:true,color:"#c98a00"}],[P,O,{noLabel:true}],[Q,U,{noLabel:true}]],
+    rights:[[P,S,O],[Q,T,U]],labelDir:{[P]:[-.4,-1],[Q]:[-.4,-1],[O]:[.3,-1],[U]:[.3,-1],[S]:[-1,.5],[T]:[-1,.5]},aria:"Un lampadaire et un bâton avec leurs ombres"});
+}
+// Niveau 3 : réciproque de Pythagore
+function cfgC1(){
+  const [A,B,C,H]=letters(4);
+  const mm=pick([.8,1.2,1.5,2,2.5,3]);
+  let [ac,bc]=Math.random()<.5?[3,4]:[4,3];
+  const AC=round(ac*mm,2),BC=round(bc*mm,2),AB=round(5*mm,2);
+  const u=pick(["CH","AH"]);
+  const vals={[norm(A+C)]:AC,[norm(B+C)]:BC,[norm(A+B)]:AB};
+  const cosA=AC/AB,Cp=mul([cosA,Math.sqrt(1-cosA*cosA)],AC),Hp=[AC*cosA,0];
+  const pts=mirror([[0,0],[AB,0],Cp,Hp],Math.random()<.5);
+  const svg=fig({points:asPoints([A,B,C,H],pts),polys:[[A,B,C]],segs:[[C,H]],rights:[[H,A,C]],aria:"Triangle avec une hauteur"});
+  const sq=x=>round(x*x,4);
+  const opts=[`Le triangle ${m(A+B+C)} est rectangle en ${m(C)}.`,`Le triangle ${m(A+B+C)} est rectangle en ${m(A)}.`,`Le triangle ${m(A+B+C)} est rectangle en ${m(B)}.`,`Le triangle ${m(A+B+C)} n'est pas rectangle.`];
+  const ord=shuffle([0,1,2,3]);
+  return buildM4({T1:[A,H,C],T2:[A,C,B],vals,unknown:u==="CH"?C+H:A+H,svg,
+    question:n=>`a. Démontre que le triangle ${m(A+B+C)} est rectangle. b. Calcule la longueur ${m(n)}.`,
+    gridPre:["J'ai calculé le carré du plus grand côté et la somme des carrés des deux autres côtés.","J'ai cité la réciproque du théorème de Pythagore et j'ai conclu que le triangle est rectangle."],
+    enonce:`Sur la figure ci-dessous, qui n'est pas à l'échelle, le point ${m(H)} est sur le segment ${SEG(A+B)} et la droite (${C}${H}) est perpendiculaire à la droite (${A}${B}). ${donnees([[A+C,AC],[B+C,BC],[A+B,AB]],"cm")}`,
+    pre:[
+      {type:"num",prompt:`Le plus grand côté est ${SEG(A+B)}. Calcule ${m(A+B)}².`,answer:sq(AB),tol:.011,answerHtml:`${m(A+B)}² = ${fr(AB)}² = ${fr(sq(AB),4)}`,hint:`Multiplie ${fr(AB)} par lui-même.`,explain:`${fr(AB)}² = ${fr(sq(AB),4)}.`},
+      {type:"num",prompt:`Calcule ${m(A+C)}² + ${m(B+C)}².`,answer:sq(AC)+sq(BC),tol:.011,answerHtml:`${fr(sq(AC),4)} + ${fr(sq(BC),4)} = ${fr(sq(AC)+sq(BC),4)}`,hint:"Calcule chaque carré, puis additionne.",explain:`${fr(AC)}² + ${fr(BC)}² = ${fr(sq(AC),4)} + ${fr(sq(BC),4)} = ${fr(sq(AC)+sq(BC),4)}.`},
+      {type:"choice",column:true,prompt:"Que peux-tu en conclure ?",options:ord.map(i=>opts[i]),correct:ord.indexOf(0),answerHtml:opts[0],hint:"Pense à la réciproque du théorème de Pythagore. L'angle droit est en face du plus grand côté.",
+        explain:`On a ${m(A+B)}² = ${m(A+C)}² + ${m(B+C)}². D'après la réciproque du théorème de Pythagore, le triangle est rectangle en ${m(C)}, le sommet opposé au plus grand côté.`}],
+    eqs:[{html:`${A3(H+A+C)} = ${A3(C+A+B)}`,key:"commun",explain:`Le point ${m(H)} est sur ${SEG(A+B)} : c'est le même angle, de sommet ${m(A)}.`},
+         {html:`${A3(A+H+C)} = ${A3(A+C+B)} = 90°`,key:"droit",explain:`L'angle en ${m(H)} est droit car (${C}${H}) est perpendiculaire à (${A}${B}), et on vient de démontrer que le triangle est rectangle en ${m(C)}.`}],
+    corrIntro:[`a. ${m(A+B)}² = ${fr(AB)}² = ${fr(sq(AB),4)} et ${m(A+C)}² + ${m(B+C)}² = ${fr(sq(AC),4)} + ${fr(sq(BC),4)} = ${fr(sq(AC)+sq(BC),4)}.`,
+      `Donc ${m(A+B)}² = ${m(A+C)}² + ${m(B+C)}². D'après la réciproque du théorème de Pythagore, <b>le triangle ${m(A+B+C)} est rectangle en ${m(C)}</b>.`,
+      `b. Le point ${m(H)} est sur ${SEG(A+B)}, donc les triangles ${m(A+H+C)} et ${m(A+C+B)} ont l'angle ${A1(A)} en commun.`,`De plus, ${A3(A+H+C)} = ${A3(A+C+B)} = 90°.`]});
+}
+// Niveau 1, contexte : rampe soutenue par un poteau vertical
+function cfgRampe(){
+  const [S,B,C,M,N]=letters(5);let SB,BC,k,SM,MN;
+  do{SB=pick([2,2.4,3,3.2,3.6,4,4.5]);BC=pick([.5,.6,.8,.9,1,1.2]);k=pick([.25,.4,.5,.6,.75]);SM=round(k*SB,2);MN=round(k*BC,2);}while(!isDec(SM,2)||!isDec(MN,2));
+  const gl=[[S+M,SM],[S+B,SB],[B+C,BC]],vals={};gl.forEach(([n,x])=>vals[norm(n)]=x);
+  const pts=mirror([[0,0],[SB,0],[SB,BC],[SM,0],[SM,MN]],Math.random()<.5);
+  const svg=fig({H:230,points:asPoints([S,B,C,M,N],pts),polys:[[S,B,C]],segs:[[M,N,{w:3}]],rights:[[M,S,N],[B,S,C]],aria:"Une rampe soutenue par un poteau vertical"});
+  return buildM4({T1:[S,M,N],T2:[S,B,C],vals,unknown:M+N,unit:"m",svg,question:n=>`Calcule la hauteur ${m(n)} du poteau.`,
+    enonce:`Une rampe d'accès ${SEG(S+C)} permet de monter sur une estrade. Elle est soutenue par un poteau vertical ${SEG(M+N)}. Le sol est horizontal et le bord ${SEG(B+C)} de l'estrade est vertical. Le point ${m(M)} est sur ${SEG(S+B)} et le point ${m(N)} est sur ${SEG(S+C)}. On donne : ${m(S+M)} = ${fr(SM)} m, ${m(S+B)} = ${fr(SB)} m et ${m(B+C)} = ${fr(BC)} m. La figure n'est pas à l'échelle.`,
+    eqs:[{html:`${A3(M+S+N)} = ${A3(B+S+C)}`,key:"commun",explain:`Les points ${m(M)} et ${m(N)} sont sur ${SEG(S+B)} et ${SEG(S+C)} : c'est le même angle, de sommet ${m(S)}.`},
+         {html:`${A3(S+M+N)} = ${A3(S+B+C)} = 90°`,key:"droit",explain:"Le poteau et le bord de l'estrade sont verticaux, et le sol est horizontal."}],
+    corrIntro:[`Les points ${m(M)} et ${m(N)} sont sur ${SEG(S+B)} et ${SEG(S+C)}, donc les triangles ${m(S+M+N)} et ${m(S+B+C)} ont l'angle ${A1(S)} en commun.`,`Le poteau et le bord de l'estrade sont verticaux et le sol est horizontal, donc ${A3(S+M+N)} = ${A3(S+B+C)} = 90°.`]});
+}
+// Niveau 1, contexte : largeur d'une rivière
+function cfgRiviere(){
+  const [A,B,O,C,D]=letters(5);let AB,BO,k,OC,CD;
+  do{AB=R(12,40);BO=pick([10,12,15,16,18,20,24,25]);k=pick([.2,.25,.4,.5]);OC=round(k*BO,2);CD=round(k*AB,2);}while(!isDec(OC,2)||!isDec(CD,2));
+  const w=BO+OC,pts=[[0,AB],[0,0],[BO,0],[w,0],[w,-CD],[-.35*w,0],[1.35*w,0],[1.35*w,AB],[-.35*w,AB]];
+  const svg=fig({H:280,points:asPoints([A,B,O,C,D,"_r1","_r2","_r3","_r4"],pts),hidden:["_r1","_r2","_r3","_r4"],fills:[{pts:["_r1","_r2","_r3","_r4"],fill:"#d7e8f7"}],
+    polys:[[A,B,O],[D,C,O]],rights:[[B,A,O],[C,O,D]],labelDir:{[O]:[-.25,-1],[B]:[-1,-.6],[C]:[1,.6],[A]:[-.6,1],[D]:[1,-.4]},aria:"Mesure de la largeur d'une rivière"});
+  return buildM4({T1:[A,B,O],T2:[D,C,O],vals:{[norm(B+O)]:BO,[norm(O+C)]:OC,[norm(C+D)]:CD},unknown:A+B,unit:"m",svg,question:n=>`Calcule la largeur ${m(n)} de la rivière.`,
+    enonce:`Pour mesurer la largeur d'une rivière sans la traverser, on repère un arbre ${m(A)} sur la rive d'en face et un point ${m(B)} juste en face de lui. On marche le long de la rive jusqu'à un piquet ${m(O)}, puis jusqu'au point ${m(C)}. On s'éloigne ensuite de la rive, perpendiculairement, jusqu'au point ${m(D)}, d'où l'on voit l'arbre ${m(A)} aligné avec le piquet ${m(O)}. On donne : ${m(B+O)} = ${fr(BO)} m, ${m(O+C)} = ${fr(OC)} m et ${m(C+D)} = ${fr(CD)} m. La figure n'est pas à l'échelle.`,
+    eqs:[{html:`${A3(A+O+B)} = ${A3(D+O+C)}`,key:"opp",explain:`Les points ${m(A)}, ${m(O)}, ${m(D)} sont alignés, ainsi que ${m(B)}, ${m(O)}, ${m(C)} : ces angles sont opposés par le sommet.`},
+         {html:`${A3(A+B+O)} = ${A3(D+C+O)} = 90°`,key:"droit",explain:`Les droites (${A}${B}) et (${C}${D}) sont perpendiculaires à la rive.`}],
+    corrIntro:[`Les points ${m(A)}, ${m(O)}, ${m(D)} sont alignés, ainsi que ${m(B)}, ${m(O)}, ${m(C)} : les angles ${A3(A+O+B)} et ${A3(D+O+C)} sont opposés par le sommet, donc ${A3(A+O+B)} = ${A3(D+O+C)}.`,`Les droites (${A}${B}) et (${C}${D}) sont perpendiculaires à la rive, donc ${A3(A+B+O)} = ${A3(D+C+O)} = 90°.`]});
+}
+// Niveau 2 : triangle isocèle
+function cfgC3(){
+  const L=letters(6),T1=L.slice(0,3),T2=L.slice(3),n1=T1.join("");
+  let p;do{p=2*R(15,50);}while(p===60);const q=(180-p)/2,A=[p,q,q];
+  const Lmax=R(6,10),sc=Lmax/Math.max(...A.map(a=>Math.sin(rad(a))));
+  const r=A.map(a=>Math.round(2*sc*Math.sin(rad(a)))/2);r[2]=r[1];
+  const k=pick([1.5,2,2.5,3,.5]),inT2=Math.random()<.6,vals={};
+  vals[norm(oppSide(T1,0))]=r[0];vals[norm(oppSide(T2,0))]=round(k*r[0],2);
+  if(inT2)vals[norm(oppSide(T1,1))]=r[1];else vals[norm(oppSide(T2,1))]=round(k*r[1],2);
+  const unk=inT2?oppSide(T2,1):oppSide(T1,1),sl=[];
+  [T1,T2].forEach(T=>[0,1].forEach(t=>{const n=oppSide(T,t);sl.push({a:n[0],b:n[1],text:vals[norm(n)]!==undefined?fr(vals[norm(n)]):"?",ref:T});}));
+  const p1=transform(triAngles(A),{t:rad(R(-15,15))});
+  let p2=transform(triAngles(A),{t:rad(R(0,359)),flip:Math.random()<.5,k:Math.min(1.6,Math.max(.65,k))});p2=sideBySide(p1,p2,.3);
+  const points={};T1.forEach((n,x)=>points[n]=p1[x]);T2.forEach((n,x)=>points[n]=p2[x]);
+  const ang=(T,t)=>{const o=[0,1,2].filter(x=>x!==t);return {v:T[t],p:T[o[0]],q:T[o[1]],color:"#2c4fb5",label:A[t]+"°",r:20};};
+  const svg=fig({points,polys:[T1,T2],angles:[ang(T1,0),ang(T2,0),ang(T2,1)],ticks:[[T1[0],T1[1],1],[T1[0],T1[2],1]],sides:sl,aria:"Un triangle isocèle et un autre triangle"});
+  const e1={html:`${A3(angName(T1,0))} = ${A3(angName(T2,0))} = ${p}°`,key:"mesure",explain:`Ces deux angles mesurent ${p}° d'après la figure.`};
+  const e2={html:`${A3(angName(T1,1))} = ${A3(angName(T2,1))} = ${q}°`,key:"iso",explain:`On a calculé ${A3(angName(T1,1))} = ${q}° grâce au triangle isocèle, et la figure indique ${A3(angName(T2,1))} = ${q}°.`};
+  return buildM4({T1,T2,vals,unknown:unk,svg,
+    enonce:`Les deux triangles ci-dessous ne sont pas en vraie grandeur. Le triangle ${m(n1)} est isocèle en ${m(T1[0])}. Les longueurs sont en centimètres.`,
+    gridPre:["J'ai calculé l'angle à la base en écrivant le calcul et la propriété du triangle isocèle."],
+    pre:[{type:"num",unit:"°",tol:.01,prompt:`Calcule la mesure de l'angle ${A3(angName(T1,1))}.`,answer:q,answerHtml:`${q}°`,hint:"Dans un triangle isocèle, les deux angles à la base ont la même mesure. La somme des angles est égale à 180°.",
+      explain:`Le triangle ${m(n1)} est isocèle en ${m(T1[0])}, donc ses deux angles à la base ont la même mesure : (180° − ${p}°) : 2 = ${q}°.`}],
+    eqs:[e1,e2],
+    corrIntro:[`Le triangle ${m(n1)} est isocèle en ${m(T1[0])}, donc ses angles à la base ont la même mesure : ${A3(angName(T1,1))} = ${A3(angName(T1,2))} = (180° − ${p}°) : 2 = ${q}°.`,`On a donc ${e1.html} et ${e2.html}.`]});
+}
+const LEVELS={1:[cfgA1,cfgA2,cfgRampe,cfgRiviere],2:[cfgC2,cfgC3],3:[cfgB1,cfgB2,cfgB3,cfgC1]};
+const LEVELTXT={1:"Niveau 1 : angle commun, angle droit, angles opposés par le sommet, avec ou sans contexte.",2:"Niveau 2 : il faut d'abord calculer un angle, avec la somme des angles ou un triangle isocèle.",3:"Niveau 3 (comme au brevet) : angles et parallèles (5e), réciproque du théorème de Pythagore (4e)."};
+function exM4(sub,level){
+  const g=pick(LEVELS[level])();
+  if(sub==="aide")return {head:g.head,steps:[...g.pre,g.clozeStep],corrige:g.corrige,seyes:true};
+  if(sub==="seul")return {head:g.head+`<p class="small">Rédige ta solution sur ton cahier, puis écris le résultat. Tu verras ensuite la rédaction attendue.</p>`,corrige:g.corrige,seyes:true,grid:g.grid,
+    steps:[{type:"num",prompt:`Ton résultat : ${m(g.uName)} =`,unit:g.unit,answer:g.ans,tol:.011,answerHtml:`${m(g.uName)} = ${fr(g.ans)} ${g.unit}`}]};
+  return {head:g.head,steps:g.steps,corrige:g.corrige,seyes:true};
+}
+
+/* ================= Pages ================= */
+const MODS={
+  m1:{title:"1. Reconnaître les homologues",card:"Retrouver les sommets, les côtés et les angles qui se correspondent dans deux triangles semblables.",
+    retenir:"<ul><li>Deux angles codés de la même façon ont la même mesure : leurs sommets sont <b style='display:inline;color:inherit'>homologues</b>. Deux angles codés différemment ne sont pas homologues.</li><li>Avec les longueurs, on range les côtés de chaque triangle (petit, moyen, grand) : les côtés de même rang sont homologues.</li><li>Le côté homologue de " + SEG("XY") + " relie les homologues de " + m("X") + " et de " + m("Y") + ".</li></ul>",ex:exM1},
+  m2:{title:"2. Prouver la similitude par les angles",card:"Calculer des angles et montrer que deux triangles ont deux paires d'angles de même mesure.",
+    retenir:"Pour prouver que deux triangles sont semblables, il suffit de montrer qu'ils ont <b style='display:inline;color:inherit'>deux paires d'angles</b> de même mesure. La somme des angles d'un triangle est égale à 180°.",ex:exM2},
+  m3:{title:"3. Prouver la similitude par les longueurs",card:"Ranger les côtés, calculer les quotients et conclure.",
+    retenir:"On range les côtés de chaque triangle du plus petit au plus grand, puis on calcule les trois quotients. S'ils sont égaux, les longueurs sont proportionnelles : les triangles sont semblables.",ex:exM3},
+  m4:{title:"4. Problèmes type brevet",card:"Montrer la similitude par les angles, puis calculer une longueur inconnue. Trois niveaux.",
+    retenir:"<ol><li>Je montre que deux paires d'angles ont la même mesure, en justifiant chaque égalité.</li><li>J'en déduis que les triangles sont semblables.</li><li>J'écris les sommets homologues.</li><li>J'écris l'égalité des quotients.</li><li>Je calcule la longueur : si deux quotients "+F("a","b")+" et "+F("c","d")+" sont égaux, alors a × d = b × c.</li></ol>",ex:null},
+  m5:{title:"5. D.S. blanc",card:"Un sujet complet en quatre exercices, à faire sur ta feuille, puis la correction.",ex:null}
+};
+const SUBS=[["exemple","Je regarde un exemple"],["aide","Je m'entraîne avec de l'aide"],["seul","Je m'entraîne seul"]];
+let VIEW={page:"home",sub:"exemple",level:1};
+const app=document.getElementById("app"),tabs=document.getElementById("tabs");
+function go(page,o={}){Object.assign(VIEW,{page},o);render();try{window.scrollTo({top:0});}catch(e){}}
+function renderTabs(){
+  tabs.innerHTML="";
+  [["home","Accueil"],["m1","1. Homologues"],["m2","2. Par les angles"],["m3","3. Par les longueurs"],["m4","4. Type brevet"],["m5","5. D.S. blanc"]].forEach(([p,l])=>{
+    const b=mkBtn(l,()=>go(p),VIEW.page===p?"on":"");tabs.append(b);});
+}
+function render(){
+  renderTabs();app.innerHTML="";
+  if(VIEW.page==="home")return renderHome();
+  if(VIEW.page==="m5")return renderDS();
+  renderModule(VIEW.page);
+}
+function renderHome(){
+  const g=el("div","home");
+  Object.entries(MODS).forEach(([k,mo])=>{const c=el("section","card",`<h2>${mo.title}</h2><p>${mo.card}</p>`);c.append(mkBtn("Commencer",()=>go(k,{sub:"exemple"})));g.append(c);});
+  app.append(g);
+}
+function renderModule(k){
+  const mo=MODS[k];const c=el("section","card");
+  c.innerHTML=`<h2 class="ttl"><span>${mo.title}</span></h2><div class="retenir"><b>À retenir</b>${mo.retenir}</div>`;
+  if(k==="m4"){
+    const lv=el("div","levels",`<span class="lab">Niveau :</span>`);
+    [1,2,3].forEach(n=>lv.append(mkBtn(n===3?"3 (brevet)":String(n),()=>{VIEW.level=n;render();},VIEW.level===n?"on":"")));
+    c.append(lv,el("p","small",LEVELTXT[VIEW.level]));
+  }
+  const st=el("div","subtabs");SUBS.forEach(([s,l])=>st.append(mkBtn(l,()=>{VIEW.sub=s;render();},VIEW.sub===s?"on":"")));
+  const panel=el("div","panel");c.append(st,panel);app.append(c);
+  startExercise(k,panel);
+}
+function startExercise(k,panel){
+  panel.innerHTML="";
+  const sub=VIEW.sub,ex=k==="m4"?exM4(sub,VIEW.level):MODS[k].ex(sub);
+  panel.append(el("div","exo-head",ex.head));
+  const box=el("div","steps");panel.append(box);
+  runSteps(box,ex.steps,sub==="exemple"?"model":"play",sub==="seul"?1:2,errors=>{
+    if(ex.corrige)panel.append(ex.seyes?el("div","seyes",`<h4>Correction</h4>${ex.corrige}`):el("div","corrige",`<h4>${sub==="exemple"?"La rédaction complète":"La rédaction attendue"}</h4>${ex.corrige}`));
+    if(ex.grid&&sub==="seul")panel.append(gridEl(ex.grid));
+    if(sub!=="exemple")panel.append(el("p","endmsg",errors===0?"Exercice réussi sans erreur.":"Exercice terminé. Relis bien la correction avant de passer au suivant."));
+    const b=mkBtn(sub==="exemple"?"Voir un autre exemple":"Nouvel exercice",()=>{startExercise(k,panel);try{panel.scrollIntoView({behavior:"smooth",block:"start"});}catch(e){}});
+    panel.append(b);
+  });
+}
+/* ================= 5. D.S. blanc ================= */
+let DSN=0,DSCHOICE="A";
+const ptsTxt=n=>`${String(n).replace(".",",")} point${n>1?"s":""}`;
+function radios(name,opts){return `<span class="ds-radios">${opts.map((h,i)=>`<label><input type="radio" name="${name}" value="${i}"> ${h}</label>`).join("")}</span>`;}
+function seyesBox(html){return `<div class="seyes"><h4>Correction</h4>${html}</div>`;}
+const P=s=>`<p>${s}</p>`;
+// --- Partie 1 : automatismes ---
+const FORMULES={
+  cercle:["Le périmètre d'un cercle","P = 2 × π × r, où r est le rayon du cercle (ou P = π × d, où d est le diamètre)."],
+  disque:["L'aire d'un disque","A = π × r², où r est le rayon du disque."],
+  triangle:["L'aire d'un triangle","A = (b × h) : 2, où b est la longueur d'un côté et h la hauteur relative à ce côté."],
+  rectP:["Le périmètre d'un rectangle","P = 2 × (L + l), où L est la longueur et l la largeur."],
+  rectA:["L'aire d'un rectangle","A = L × l, où L est la longueur et l la largeur."],
+  cylindre:["Le volume d'un cylindre de révolution","V = π × r² × h, où r est le rayon de la base et h la hauteur."],
+  cone:["Le volume d'un cône de révolution","V = (π × r² × h) : 3, où r est le rayon de la base et h la hauteur."],
+  pave:["Le volume d'un pavé droit","V = L × l × h, où L est la longueur, l la largeur et h la hauteur."],
+  pyramide:["Le volume d'une pyramide","V = (B × h) : 3, où B est l'aire de la base et h la hauteur."]
+};
+function exoFormules(keys){
+  return {title:"Exercice 2 (Formules)",pts:3,
+    head:P("Rappeler les formules suivantes, en précisant la signification des lettres utilisées.")+keys.map((k,i)=>P(`${i+1}. ${FORMULES[k][0]} (1 point)`)).join(""),
+    answers:[],note:"Écris les formules sur ta feuille, puis compare avec la correction.",
+    corr:keys.map((k,i)=>P(`${i+1}. ${FORMULES[k][0]} : ${FORMULES[k][1]}`)).join("")};
+}
+const sx=(a)=>a===1?"x":a===-1?"−x":`${String(a).replace("-","−")}x`;
+const sgn=n=>n<0?` − ${-n}`:` + ${n}`;
+const neg=n=>n<0?"−"+(-n):String(n);
+function eqAffine(a,b,c,d){ // a x + b = c x + d
+  const sol=(d-b)/(a-c),rhs=c===0?neg(d):sx(c)+(d===0?"":sgn(d));
+  const lines=[`${sx(a)}${sgn(b)} = ${rhs}`];
+  if(c!==0)lines.push(`${sx(a-c)}${sgn(b)} = ${neg(d)}`);
+  lines.push(`${sx(a-c)} = ${neg(d-b)}`);
+  if(a-c!==1){lines.push(`x = ${neg(d-b)} : ${a-c<0?"("+neg(a-c)+")":a-c}`);lines.push(`x = ${neg(sol)}`);}
+  return {txt:lines[0],sol,corr:lines.join("<br>")+`<br>La solution de l'équation est ${neg(sol)}.`};
+}
+function exoEquations(e1,e2){
+  return {title:"Exercice 1 (Équations)",pts:2,grid:["J'ai écrit chaque étape de la résolution, ligne par ligne.","J'ai donné la solution de chaque équation."],
+    head:P("Résoudre les équations suivantes.")+P(`1. ${m(e1.txt)} (1 point)`)+P(`2. ${m(e2.txt)} (1 point)`),
+    answers:[{label:"1. x =",kind:"num",unit:"",correct:e1.sol},{label:"2. x =",kind:"num",unit:"",correct:e2.sol}],
+    corr:P(`1. ${e1.corr}`)+P(`2. ${e2.corr}`)};
+}
+function randEq1(){let a,c,s,b,d;do{a=R(3,7);c=R(1,a-1);s=pick([2,3,4,5,6,-2,-3]);b=-R(1,9);d=(a-c)*s+b;}while(d===0);return eqAffine(a,b,c,d);}
+function randEq2(){const a=-R(2,6),s=pick([-9,-8,-7,-6,-5,-4,-3,3,4,5,6]),b=R(1,9);return eqAffine(a,b,0,a*s+b);}
+// --- Exercice : homologues donnés dans l'énoncé ---
+function exoHomoTexte(o){
+  // o.T1, o.T2 : lettres ; o.corr[i] = indice dans T2 de l'homologue de T1[i] ; o.A : angles de T1
+  const {T1,T2,corr,A}=o;
+  const p1=transform(triAngles(A),{t:rad(o.t1||0)});
+  let q=transform(triAngles(A),{t:rad(o.t2||0),flip:!!o.flip,k:o.k||1.35});
+  q=sideBySide(p1,q,.45);
+  const points={};T1.forEach((n,i)=>points[n]=p1[i]);T1.forEach((n,i)=>points[T2[corr[i]]]=q[i]);
+  const svg=fig({points,polys:[T1,T2],aria:"Deux triangles semblables"});
+  const homo=i=>T2[corr[i]];
+  const inv=j=>T1[corr.indexOf(j)];
+  const fromT1=o.tableFrom!=="T2",Fr=fromT1?T1:T2,To=fromT1?T2:T1;
+  const h=x=>T1.includes(x)?homo(T1.indexOf(x)):inv(T2.indexOf(x)),other=x=>T1.includes(x)?T2:T1;
+  const [sa,sb]=o.side,sideHom=h(sa)+h(sb),So=other(sa);
+  const otherSides=[[So[0],So[1]],[So[1],So[2]],[So[0],So[2]]].map(p=>p.join(""));
+  const sideOpts=otherSides.map(x=>SEG(x)),sideOk=otherSides.findIndex(x=>norm(x)===norm(sideHom));
+  const [a1,av,a2]=o.angle,angHom=h(a1)+h(av)+h(a2),Ao=other(av);
+  const angOpts=[0,1,2].map(i=>angName(Ao,i)),angOk=angOpts.findIndex(x=>x[1]===h(av));
+  const tab=`<table class="tab"><tr><th>Sommets de ${m(Fr.join(""))}</th>${Fr.map(x=>`<td>${m(x)}</td>`).join("")}</tr><tr><th>Sommets de ${m(To.join(""))}</th>${Fr.map(()=>"<td>…</td>").join("")}</tr></table>`;
+  const tabC=`<table class="tab"><tr><th>Sommets de ${m(Fr.join(""))}</th>${Fr.map(x=>`<td>${m(x)}</td>`).join("")}</tr><tr><th>Sommets de ${m(To.join(""))}</th>${Fr.map(x=>`<td>${m(h(x))}</td>`).join("")}</tr></table>`;
+  const pairs=listFr(T1.map((x,i)=>`(${m(x)} ; ${m(homo(i))})`));
+  return {title:o.title||"Exercice 3",pts:3,
+    head:P(`Les triangles ${m(T1.join(""))} et ${m(T2.join(""))} ci-dessous sont semblables. Les couples de sommets homologues sont ${pairs}.`)+svg+
+      P("1. Compléter le tableau des sommets homologues. (1,5 point)")+tab+
+      P(`2. Quel côté est homologue du côté ${SEG(sa+sb)} ? (0,5 point)`)+P(`3. Quel angle est homologue de l'angle ${A3(o.angle.join(""))} ? (1 point)`),
+    answers:[{label:"1.",kind:"selects",from:Fr,choices:To.slice().sort(),correct:Fr.map(h)},
+      {label:"2.",kind:"radio",opts:sideOpts,correct:sideOk},{label:"3.",kind:"radio",opts:angOpts.map(A3),correct:angOk}],
+    corr:P("1. On recopie les couples donnés dans l'énoncé :")+tabC+
+      P(`2. Le côté ${SEG(sa+sb)} relie les sommets ${m(sa)} et ${m(sb)}. Leurs homologues sont ${m(h(sa))} et ${m(h(sb))}, donc le côté homologue est <b>${SEG(h(sa)+h(sb))}</b>.`)+
+      P(`3. Le sommet de l'angle ${A3(o.angle.join(""))} est ${m(av)}. Son homologue est ${m(h(av))}, donc l'angle homologue est <b>${A3(angHom)}</b>.`)};
+}
+// --- Exercice : papillon (angles opposés par le sommet + une égalité d'angles donnée) ---
+function exoPapillon(o){
+  // triangle ABC (A,B,C), droites (AE) et (DC) sécantes en B ; angle BAC = angle BDE ; D homologue de A, E homologue de C
+  const {AB,AC,BC,BD}=o,k=BD/AB,DE=k*AC,BE=k*BC;
+  let tri=triSides(AB,AC,BC).map(p=>[p[0],-p[1]]);
+  const A_=tri[0],B_=tri[1],C_=tri[2];
+  const E_=add(B_,mul(unit(sub(B_,A_)),BE)),D_=add(B_,mul(unit(sub(B_,C_)),BD));
+  const sides=o.labels.map(([a,b,t])=>({a,b,text:t,color:INK}));
+  const svg=fig({H:280,points:{A:A_,B:B_,C:C_,D:D_,E:E_},polys:[["A","B","C"],["D","B","E"]],sides,labelDir:{B:[0,-1]},aria:"Deux triangles opposés par le sommet B"});
+  const ans=o.ask==="AC"?AC:DE;
+  const known=o.ask==="AC"
+    ?{eq:`${F(fr(AB),fr(BD))} = ${F(m("AC"),fr(DE))}`,prod:`${fr(BD)} × AC = ${fr(AB)} × ${fr(DE)}`,calc:`AC = ${F(`${fr(AB)} × ${fr(DE)}`,fr(BD))}`}
+    :{eq:`${F(fr(AB),fr(BD))} = ${F(fr(AC),m("DE"))}`,prod:`${fr(AB)} × DE = ${fr(BD)} × ${fr(AC)}`,calc:`DE = ${F(`${fr(BD)} × ${fr(AC)}`,fr(AB))}`};
+  return {title:"Exercice 4",pts:4,grid:GRID_ANG,
+    head:P(`Sur la figure ci-dessous, qui n'est pas en vraie grandeur, les droites (AE) et (DC) se coupent au point B. ${o.donnees}`)+P(`On sait que les angles ${A3("BAC")} et ${A3("BDE")} ont la même mesure.`)+svg+
+      P("1. Démontrer que les triangles ABC et DBE sont semblables. (2 points)")+P(`2. ${o.ask==="AC"?`Sachant que DE = ${fr(DE)} cm, calculer la longueur AC.`:"Calculer la longueur DE."} (2 points)`),
+    answers:[{label:`2. ${m(o.ask)} =`,kind:"num",unit:"cm",correct:round(ans,2)}],
+    corr:P(`1. Les droites (AE) et (DC) se coupent en B, donc les angles ${A3("ABC")} et ${A3("DBE")} sont opposés par le sommet : ${A3("ABC")} = ${A3("DBE")}.`)+
+      P(`De plus, ${A3("BAC")} = ${A3("BDE")} d'après l'énoncé.`)+
+      P(`Les triangles ABC et DBE ont deux paires d'angles de même mesure : <b>ils sont semblables</b>.`)+
+      P(`2. Les sommets homologues sont : A et D, B et B, C et E.`)+
+      P(`Les longueurs des côtés homologues sont proportionnelles : ${F("AB","DB")} = ${F("BC","BE")} = ${F("AC","DE")}.`)+
+      P(`On utilise : ${known.eq}.`)+P(`Donc ${known.prod}.`)+P(`${known.calc} = ${fr(ans)}`)+P(`<span class="box">${o.ask} = ${fr(ans)} cm</span>`)};
+}
+// --- Exercice : longueurs données sans figure ---
+function exoListe(o){
+  // o.T1,o.T2 : lettres ; o.L1,o.L2 : {côté: longueur}
+  const s1=Object.entries(o.L1).sort((a,b)=>a[1]-b[1]),s2=Object.entries(o.L2).sort((a,b)=>a[1]-b[1]);
+  const big2=s2[2][1]>s1[2][1],G=big2?s2:s1,Pt=big2?s1:s2,Gn=big2?o.T2:o.T1,Pn=big2?o.T1:o.T2;
+  const q=G.map((x,i)=>x[1]/Pt[i][1]),sim=Math.abs(q[0]-q[1])<1e-9&&Math.abs(q[1]-q[2])<1e-9;
+  const li=(L)=>Object.entries(L).map(([k,v])=>`${m(k)} = ${fr(v)} cm`).join(" ; ");
+  const tab=`<table class="tab"><tr><th></th><th>petit</th><th>moyen</th><th>grand</th></tr>${[[o.T1,s1],[o.T2,s2]].map(([n,s])=>`<tr><th>${m(n)}</th>${s.map(([k,v])=>`<td>${m(k)} = ${fr(v)}</td>`).join("")}</tr>`).join("")}</table>`;
+  const ql=G.map((x,i)=>`${F(fr(x[1]),fr(Pt[i][1]))} ${isDec(q[i],2)?"=":"≈"} ${fr(q[i])}`).join(" ; ");
+  return {title:"Exercice 5",pts:3,grid:GRID_LEN,
+    head:P(`On considère deux triangles ${m(o.T1)} et ${m(o.T2)} tels que :`)+`<ul><li>${li(o.L1)} ;</li><li>${li(o.L2)}.</li></ul>`+P("Ces deux triangles sont-ils semblables ? Justifier la réponse."),
+    answers:[{label:"Réponse :",kind:"radio",opts:YESNO,correct:sim?0:1}],
+    corr:P("On range les longueurs des côtés de chaque triangle dans l'ordre croissant :")+tab+
+      P(`On calcule les quotients (triangle ${m(Gn)} divisé par triangle ${m(Pn)}) : ${ql}.`)+
+      (sim?P(`Les quotients sont égaux : les longueurs des côtés sont proportionnelles. <b>Les triangles ${m(o.T1)} et ${m(o.T2)} sont semblables.</b>`)
+          :P(`Les quotients ne sont pas tous égaux : les longueurs des côtés ne sont pas proportionnelles. <b>Les triangles ${m(o.T1)} et ${m(o.T2)} ne sont pas semblables.</b>`))};
+}
+// --- Exercice type brevet 2018 : Pythagore, similitude par les longueurs, angle droit ---
+function exoDNB18(o){
+  // triangle BCD rectangle en B ; triangle BFE avec FE = k·BD, BF = k·BC, BE = k·CD ; C, B, E alignés
+  const {BC,CD,k}=o,BD=Math.sqrt(CD*CD-BC*BC),FE=round(k*BD,2),BF=round(k*BC,2),BE=round(k*CD,2);
+  const t=triSides(BE,BF,FE).map(p=>[-p[0],-p[1]]);
+  const points={B:[0,0],C:[BC,0],D:[0,BD],E:t[1],F:t[2]};
+  const sides=[{a:"C",b:"D",t:CD},{a:"B",b:"C",t:BC},{a:"E",b:"B",t:BE},{a:"B",b:"F",t:BF},{a:"E",b:"F",t:FE}].map(s=>({a:s.a,b:s.b,text:fr(s.t)+" cm",color:INK,ref:s.a==="C"&&s.b==="D"||s.a==="B"&&s.b==="C"?["B","C","D"]:["B","E","F"]}));
+  const svg=fig({H:270,points,polys:[["B","C","D"],["B","F","E"]],rights:[["B","C","D"]],sides,labelDir:{B:[.25,-1]},aria:"Deux triangles de part et d'autre du point B"});
+  const sq=x=>round(x*x,4);
+  return {title:"Exercice 6 (d'après le brevet, Métropole 2018)",pts:5,
+    grid:["Question 1 : j'ai cité le théorème de Pythagore et j'ai écrit l'égalité.","Question 1 : j'ai calculé BD² puis BD, avec l'unité.","Question 2 : j'ai rangé les côtés et calculé les trois quotients.","Question 2 : j'ai conclu que les triangles sont semblables.","Question 3 : j'ai trouvé l'angle homologue de l'angle droit.","Question 3 : j'ai conclu par une phrase sur l'affirmation de Sophie."],
+    head:P("La figure ci-dessous n'est pas représentée en vraie grandeur. Les points C, B et E sont alignés. Le triangle BCD est rectangle en B.")+svg+
+      P(`On donne les longueurs suivantes : BC = ${fr(BC)} cm ; CD = ${fr(CD)} cm ; BF = ${fr(BF)} cm ; BE = ${fr(BE)} cm ; FE = ${fr(FE)} cm.`)+
+      P(`1. Dans le triangle BCD rectangle en B, montrer par le calcul que la longueur BD est égale à ${fr(BD)} cm. (1 point)`)+
+      P("2. Démontrer que les triangles CBD et BFE sont semblables. (2 points)")+
+      P(`3. Sophie affirme que l'angle ${A3("BFE")} est un angle droit. A-t-elle raison ? Justifier la réponse. (2 points)`),
+    answers:[{label:"3.",kind:"radio",opts:["Oui, Sophie a raison.","Non, Sophie a tort."],correct:0}],
+    note:"Les questions 1 et 2 sont des démonstrations : compare ta rédaction avec la correction.",
+    corr:P(`1. Le triangle BCD est rectangle en B. D'après le théorème de Pythagore : CD² = BC² + BD².`)+
+      P(`Donc BD² = CD² − BC² = ${fr(CD)}² − ${fr(BC)}² = ${fr(sq(CD),4)} − ${fr(sq(BC),4)} = ${fr(sq(BD),4)}.`)+
+      P(`BD = √${fr(sq(BD),4)} = ${fr(BD)}, donc <b>BD = ${fr(BD)} cm</b>.`)+
+      P(`2. On range les longueurs des côtés dans l'ordre croissant : BD = ${fr(BD)}, BC = ${fr(BC)}, CD = ${fr(CD)} pour CBD et FE = ${fr(FE)}, BF = ${fr(BF)}, BE = ${fr(BE)} pour BFE.`)+
+      P(`${F(fr(FE),fr(BD))} = ${fr(k)} ; ${F(fr(BF),fr(BC))} = ${fr(k)} ; ${F(fr(BE),fr(CD))} = ${fr(k)}.`)+
+      P(`Les quotients sont égaux : les longueurs des côtés sont proportionnelles, donc <b>les triangles CBD et BFE sont semblables</b>.`)+
+      P(`3. Les côtés homologues sont [CD] et [BE], [BC] et [BF], [BD] et [FE]. Donc les sommets homologues sont B et F (opposés à [CD] et [BE]), C et B, D et E.`)+
+      P(`Les angles ${A3("CBD")} et ${A3("BFE")} sont homologues, donc ils ont la même mesure. Comme ${A3("CBD")} = 90°, on a ${A3("BFE")} = 90° : <b>Sophie a raison</b>.`)};
+}
+// --- Sujets ---
+function sujet2025(v){
+  if(v==="A")return {title:"D.S. 303 – Triangles semblables – Sujet A",parts:[
+    {title:"Partie 1 : Automatismes (10 minutes)",info:"L'usage de la calculatrice est interdit pour cette partie.",total:5,exos:[exoEquations(eqAffine(5,-3,2,6),eqAffine(-3,7,0,28)),exoFormules(["cercle","triangle","cylindre"])]},
+    {title:"Partie 2 : Triangles semblables (45 minutes)",info:"L'usage de la calculatrice est autorisé pour cette partie.",total:15,exos:[
+      exoHomoTexte({T1:["A","B","C"],T2:["R","S","T"],corr:[2,1,0],A:[65,45,70],t2:150,flip:true,side:["A","C"],angle:["B","C","A"]}),
+      exoPapillon({AB:2.5,AC:3,BC:3,BD:2,ask:"AC",donnees:"On donne AB = 2,5 cm, BC = 3 cm et BD = 2 cm.",labels:[["A","B","2,5 cm"],["B","C","3 cm"],["B","D","2 cm"]]}),
+      exoListe({T1:"GHI",T2:"JKL",L1:{GH:8,GI:11,HI:6},L2:{JK:10,JL:13.5,KL:7.5}}),
+      exoDNB18({BC:7.5,CD:8.5,k:.8})]}]};
+  return {title:"D.S. 303 – Triangles semblables – Sujet B",parts:[
+    {title:"Partie 1 : Automatismes (10 minutes)",info:"L'usage de la calculatrice est interdit pour cette partie.",total:5,exos:[exoEquations(eqAffine(4,-2,1,7),eqAffine(-2,5,0,21)),exoFormules(["disque","rectP","cone"])]},
+    {title:"Partie 2 : Triangles semblables (45 minutes)",info:"L'usage de la calculatrice est autorisé pour cette partie.",total:15,exos:[
+      exoHomoTexte({T1:["A","B","C"],T2:["R","S","T"],corr:[2,1,0],A:[65,45,70],t2:150,flip:true,tableFrom:"T2",side:["A","B"],angle:["B","A","C"]}),
+      exoPapillon({AB:3,AC:4.5,BC:4,BD:2,ask:"DE",donnees:"On donne AB = 3 cm, AC = 4,5 cm et BD = 2 cm.",labels:[["A","B","3 cm"],["A","C","4,5 cm"],["B","D","2 cm"]]}),
+      exoListe({T1:"MNO",T2:"PQR",L1:{MN:10,MO:12,NO:15},L2:{PQ:8,PR:9.6,QR:12}}),
+      exoDNB18({BC:8,CD:10,k:1.5})]}]};
+}
+function sujetAleatoire(){
+  // homologues
+  let A;do{A=[R(40,80),R(40,80)];A.push(180-A[0]-A[1]);}while(A[2]<35||Math.abs(A[0]-A[1])<10||Math.abs(A[0]-A[2])<10||Math.abs(A[1]-A[2])<10);
+  const L=letters(6),T1=L.slice(0,3),T2=L.slice(3),corr=shuffle([0,1,2]),[i,j]=shuffle([0,1,2]);
+  const ex3=exoHomoTexte({T1,T2,corr,A,t2:R(0,359),flip:Math.random()<.5,tableFrom:pick(["T1","T2"]),side:[T1[i],T1[j]].sort(),angle:(()=>{const v=R(0,2),o=[0,1,2].filter(x=>x!==v);return [T2[o[0]],T2[v],T2[o[1]]];})()});
+  // papillon
+  let AB,AC,BC,BD;
+  do{AB=R(2,6);AC=R(3,7);BC=R(3,7);BD=round(AB*pick([.5,.8,1.2,1.5,2]),2);}
+  while(AB+AC<=BC+.5||AB+BC<=AC+.5||AC+BC<=AB+.5||Math.min(...triangleAnglesFromSides(AB,AC,BC))<30||!isDec(BD/AB*AC,2)||!isDec(BD/AB*BC,2)||BD>6);
+  const ask=pick(["AC","DE"]);
+  const ex4=exoPapillon({AB,AC,BC,BD,ask,donnees:ask==="AC"?`On donne AB = ${fr(AB)} cm, BC = ${fr(BC)} cm et BD = ${fr(BD)} cm.`:`On donne AB = ${fr(AB)} cm, AC = ${fr(AC)} cm et BD = ${fr(BD)} cm.`,
+    labels:ask==="AC"?[["A","B",fr(AB)+" cm"],["B","C",fr(BC)+" cm"],["B","D",fr(BD)+" cm"]]:[["A","B",fr(AB)+" cm"],["A","C",fr(AC)+" cm"],["B","D",fr(BD)+" cm"]]});
+  // liste de longueurs
+  let s,t;const sim5=Math.random()<.5,kk=pick([1.25,1.5,2,2.5]);
+  do{const a=R(4,9),b=a+R(1,3),c=b+R(1,3);s=[a,b,c];t=s.map(x=>round(x*kk,2));
+    if(!sim5){const jj=R(0,2);t[jj]=round(t[jj]+pick([-1,-.5,.5,1]),2);}
+  }while(s[0]+s[1]<=s[2]+1||new Set(t).size<3||(()=>{const u=t.slice().sort((x,y)=>x-y);return u[0]+u[1]<=u[2]+1||(!sim5&&u.every((v,x)=>Math.abs(v/s[x]-kk)<1e-9));})());
+  const L5=letters(6),n1=L5.slice(0,3).join(""),n2=L5.slice(3).join("");
+  const mk=(n,vals)=>{const sd=shuffle([n[0]+n[1],n[0]+n[2],n[1]+n[2]]),o={};sd.forEach((x,q)=>o[x]=vals[q]);return o;};
+  const ex5=exoListe({T1:n1,T2:n2,L1:mk(n1,shuffle(s)),L2:mk(n2,shuffle(t))});
+  // type brevet 2018
+  let tr,mm,k6;
+  do{tr=pick([[4,5],[8,10],[6,10],[12,13],[15,17]]);mm=pick([.5,1,1.5]);k6=pick([.8,1.2,1.25,1.5,2]);}
+  while(tr[1]*mm>13||tr[1]*mm<5||tr[1]*mm*k6>16||!isDec(k6*tr[0]*mm,2)||!isDec(k6*tr[1]*mm,2));
+  const ex6=exoDNB18({BC:round(tr[0]*mm,2),CD:round(tr[1]*mm,2),k:k6});
+  return {title:"D.S. blanc – Triangles semblables – Sujet tiré au hasard",parts:[
+    {title:"Partie 1 : Automatismes (10 minutes)",info:"L'usage de la calculatrice est interdit pour cette partie.",total:5,exos:[exoEquations(randEq1(),randEq2()),exoFormules(shuffle(Object.keys(FORMULES)).slice(0,3))]},
+    {title:"Partie 2 : Triangles semblables (45 minutes)",info:"L'usage de la calculatrice est autorisé pour cette partie.",total:15,exos:[ex3,ex4,ex5,ex6]}]};
+}
+function renderDS(){
+  DSN++;const ds=DSCHOICE==="A"||DSCHOICE==="B"?sujet2025(DSCHOICE):sujetAleatoire();
+  const c=el("section","card ds");
+  c.innerHTML=`<h2 class="ttl"><span>5. D.S. blanc</span></h2>`;
+  const ch=el("div","levels",`<span class="lab">Sujet :</span>`);
+  [["A","D.S. 2025 – sujet A"],["B","D.S. 2025 – sujet B"],["R","Nouveau sujet"]].forEach(([v,l])=>ch.append(mkBtn(l,()=>{DSCHOICE=v;render();},DSCHOICE===v?"on":"")));
+  c.append(ch);
+  c.append(el("p","consigne small",`Fais le D.S. sur ta feuille, comme en classe, en respectant les durées. Ensuite, écris tes résultats dans les cadres « Mes réponses » et affiche la correction.`));
+  const tools=el("div","ds-tools");tools.append(mkBtn(DSCHOICE==="R"?"Tirer un autre sujet":"Recommencer ce sujet",()=>render()),mkBtn("Imprimer le sujet",()=>window.print(),"btn light"));c.append(tools);
+  c.append(el("h3","ds-title",ds.title));
+  const blocks=[];let n=0;
+  ds.parts.forEach(part=>{
+    c.append(el("div","ds-part",`<h3>${part.title}</h3><p class="ds-info"><i>${part.info}</i><span>Total : ${part.total} points</span></p>`));
+    part.exos.forEach(ex=>{n++;const id=`ds${DSN}-${n}`;
+      const title=ex.title.replace(/^Exercice \d+/,`Exercice ${n}`);
+      const b=el("div","ds-exo",`<h3>${title} <span class="small">(${ptsTxt(ex.pts)})</span></h3>${ex.head}`);
+      const ans=el("div","ds-ans",`<b>Mes réponses</b>${ex.note?`<div class="small">${ex.note}</div>`:""}`);
+      ex.answers.forEach((a,j)=>{const row=el("div","ds-row");const nm=`${id}-${j}`;
+        let inner="";
+        if(a.kind==="radio")inner=radios(nm,a.opts);
+        else if(a.kind==="num")inner=`<span class="numf"><input type="text" inputmode="decimal" autocomplete="off" name="${nm}">${a.unit?`<span class="unit">${a.unit}</span>`:""}</span>`;
+        else inner=a.from.map(x=>`<span class="homorow">${m(x)} ↔ <select><option value="">…</option>${a.choices.map(cc=>`<option>${cc}</option>`).join("")}</select></span>`).join("");
+        row.innerHTML=`<span class="ds-lab">${a.label}</span>${inner}<span class="ds-mark"></span>`;a.row=row;ans.append(row);});
+      b.append(ans);const cz=el("div","ds-corr");b.append(cz);c.append(b);blocks.push({ex,cz});
+    });
+  });
+  const fin=mkBtn("J'ai fini : afficher la correction",()=>{
+    blocks.forEach(({ex,cz})=>{
+      ex.answers.forEach(a=>{let ok;
+        if(a.kind==="radio"){const r=a.row.querySelector("input:checked");ok=!!r&&Number(r.value)===a.correct;a.row.querySelectorAll("label").forEach((l,i)=>{if(i===a.correct)l.classList.add("good");});}
+        else if(a.kind==="num"){const v=parseNum(a.row.querySelector("input").value);ok=v!==null&&Math.abs(v-a.correct)<=.011;}
+        else{const ss=[...a.row.querySelectorAll("select")];ok=ss.every((s,i)=>s.value===a.correct[i]);ss.forEach((s,i)=>s.classList.toggle("bad",s.value!==a.correct[i]));}
+        a.row.querySelectorAll("input,select").forEach(i=>i.disabled=true);
+        a.row.querySelector(".ds-mark").innerHTML=ok?`<span class="okm">✓ juste</span>`:`<span class="kom">✗ à revoir</span>`;
+      });
+      cz.innerHTML=seyesBox(ex.corr);if(ex.grid)cz.append(gridEl(ex.grid));
+    });
+    fin.remove();
+  },"btn");
+  c.append(fin);app.append(c);
+}
+
+render();
+</script>
+</body>
+</html>

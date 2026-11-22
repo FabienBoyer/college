@@ -25,7 +25,7 @@
   const levelButtons = [...document.querySelectorAll("[data-level]")];
   const requestedLevel = new URLSearchParams(location.search).get("niveau");
   let selectedLevel = allLevels.includes(requestedLevel) ? requestedLevel : "tous";
-  document.querySelector("#filters").hidden = applications.length === 0;
+  document.querySelector("#filters").hidden = applications.length < 2;
 
   function element(tag, className, content) {
     const node = document.createElement(tag);

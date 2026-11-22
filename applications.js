@@ -18,4 +18,14 @@
  * Une URL complète https://… fonctionne aussi. Plusieurs fiches sont séparées
  * par des virgules. Un tableau niveaux vide [] signifie « tous les niveaux ».
  */
-window.APPLICATIONS_ELEVES = [];
+window.APPLICATIONS_ELEVES = [
+  {
+    titre: "Triangles semblables",
+    description: "Reconnaître les éléments homologues, démontrer la similitude et calculer des longueurs. Exercices guidés, problèmes type brevet et D.S. blanc.",
+    niveaux: ["3e"],
+    chapitre: "Géométrie",
+    url: "apps/triangles-semblables.html",
+    symbole: "△",
+    couleur: "bleu"
+  }
+];
