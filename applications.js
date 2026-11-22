@@ -20,7 +20,7 @@
  */
 window.APPLICATIONS_ELEVES = [
   {
-    titre: "Triangles semblables",
+    titre: "Chapitre 4 : Triangles semblables",
     description: "Reconnaître les éléments homologues, démontrer la similitude et calculer des longueurs. Exercices guidés, problèmes type brevet et D.S. blanc.",
     niveaux: ["3e"],
     chapitre: "Géométrie",
