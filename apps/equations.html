@@ -1,0 +1,297 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Chapitre 2 : Équations – Je prépare mon D.S.</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&family=Playwrite+FR+Moderne&display=swap" rel="stylesheet"><style>
+:root{
+  --paper:#fbf8f1; --card:#fffefa; --ink:#1d3a8a; --ink2:#2c4fb5; --red:#b8322a; --margin:#e7a4a0;
+  --line:#dbe3f3; --text:#1b2333; --muted:#5b6478;
+  --ok:#1f7a4d; --okbg:#e7f5ed; --ko:#b8322a; --kobg:#fcecea; --warn:#7a5200; --warnbg:#fff4d6;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; color:var(--text); background:var(--paper);
+  background-image:repeating-linear-gradient(to bottom, transparent 0 31px, #e6ecf7 31px 32px);
+  font:17px/1.55 "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+}
+.m,.frac,.ang,svg text{font-family:"STIX Two Text","Cambria Math",Cambria,"Times New Roman",serif}
+.m{font-size:1.08em}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+header{padding:26px 0 10px}
+header h1{margin:0;color:var(--red);font-size:1.9rem;font-weight:700;letter-spacing:.2px}
+header h1 span{border-bottom:2px solid var(--red)}
+header p{margin:.35em 0 0;color:var(--muted)}
+nav{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 0;border-bottom:2px solid var(--ink)}
+nav button{font:inherit;font-size:.95rem;border:2px solid var(--ink);border-bottom:none;background:#eef2fb;color:var(--ink);
+  padding:.45em .9em;border-radius:10px 10px 0 0;cursor:pointer;margin-bottom:-2px}
+nav button.on{background:var(--card);font-weight:700}
+nav button:hover{background:#fff}
+main{padding:18px 0 40px}
+.card{background:var(--card);border:1px solid #e2e6ef;border-radius:4px 14px 14px 4px;padding:22px 24px 26px 34px;position:relative;
+  box-shadow:0 1px 0 rgba(0,0,0,.03),0 6px 18px -12px rgba(29,58,138,.35)}
+.card::before{content:"";position:absolute;left:18px;top:0;bottom:0;width:2px;background:var(--margin)}
+h2.ttl{margin:0 0 .6em;color:var(--red);font-size:1.45rem}
+h2.ttl span{border-bottom:2px solid var(--red)}
+h3{color:var(--ink);margin:1.2em 0 .4em}
+.retenir{border:2px solid var(--ink);border-radius:6px;padding:.6em .9em;margin:0 0 16px;color:var(--ink);background:#f6f8fe}
+.retenir b{display:block;color:var(--red);margin-bottom:.15em}
+.retenir ol,.retenir ul{margin:.2em 0 0;padding-left:1.3em}
+.subtabs{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px}
+.subtabs button,.levels button{font:inherit;font-size:.95rem;padding:.45em .9em;border-radius:999px;border:2px solid var(--ink2);background:#fff;color:var(--ink2);cursor:pointer}
+.subtabs button.on,.levels button.on{background:var(--ink2);color:#fff}
+.levels{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px}
+.levels .lab{color:var(--muted);margin-right:4px}
+.home{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.home .card h2{font-size:1.2rem;margin:0 0 .3em;color:var(--red)}
+.home .card p{margin:.2em 0 1em;color:var(--text)}
+.btn{font:inherit;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:.5em 1.05em;cursor:pointer;margin:.3em .4em .2em 0}
+.btn:hover{background:var(--ink2)}
+.btn.light{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.btn:disabled{opacity:.45;cursor:default}
+.consigne{margin:.2em 0 .6em}
+.question{margin:.6em 0;font-weight:700;color:var(--ink)}
+svg.fig{display:block;width:100%;max-width:600px;height:auto;margin:6px auto 4px}
+.step{background:#fff;border:1px solid #e3e8f2;border-left:5px solid var(--line);border-radius:4px 10px 10px 4px;padding:.65em 1em .75em;margin:.8em 0}
+.step.done{border-left-color:var(--ok)}
+.step.missed{border-left-color:#e0a63a}
+.step-n{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.step-q{margin:.15em 0 .45em}
+.step-a{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.opt{font:inherit;text-align:left;background:#fff;color:var(--text);border:2px solid #cfd8ea;border-radius:8px;padding:.45em .8em;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--ink2)}
+.opt.good{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--ko);background:var(--kobg)}
+.opt:disabled{cursor:default}
+.col{flex-direction:column;align-items:stretch}
+.col>.btn{align-self:flex-start}
+.numf{display:inline-flex;align-items:center;gap:6px;margin-right:10px}
+.numf input{font:inherit;font-family:"STIX Two Text",Cambria,serif;font-size:1.1em;width:6.2em;padding:.3em .45em;border:2px solid #cfd8ea;border-radius:6px;background:#fff}
+.numf input:focus{outline:none;border-color:var(--ink2)}
+.numf input.bad{border-color:var(--ko)}
+.unit{color:var(--muted)}
+select{font:inherit;font-family:"STIX Two Text",Cambria,serif;padding:.25em .35em;border:2px solid #cfd8ea;border-radius:6px;background:#fff}
+select.bad{border-color:var(--ko)}
+.fb{margin-top:.5em;border-radius:6px}
+.fb:empty{display:none}
+.fb.ok{background:var(--okbg);color:#123d28;padding:.45em .7em}
+.fb.ko{background:var(--kobg);color:#5c1712;padding:.45em .7em}
+.fb.warn{background:var(--warnbg);color:#4a3300;padding:.45em .7em}
+.fb .btn{margin-top:.5em}
+.model-a{color:var(--ink);font-weight:700;margin:.2em 0}
+.model-e{color:var(--text);background:#f4f6fb;border-radius:6px;padding:.35em .6em;margin:.3em 0 .4em}
+.corrige{margin:1em 0;border:2px solid var(--ink);border-radius:8px;padding:.7em 1em;background:#fff;color:var(--ink)}
+.corrige h4{margin:0 0 .4em;color:var(--red)}
+.corrige p{margin:.3em 0}
+.box{display:inline-block;border:2px solid var(--ink);border-radius:6px;padding:.1em .5em;margin-top:.2em;font-weight:700}
+.endmsg{margin:.8em 0 .2em;font-weight:700;color:var(--ink)}
+table.tab{border-collapse:collapse;margin:.4em 0;font-size:.97em}
+table.tab th,table.tab td{border:1.5px solid var(--ink2);padding:.3em .6em;text-align:center}
+table.tab th{font-weight:400;color:var(--ink)}
+.rankrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:.2em 0}
+.rankrow .rn{min-width:8.5em}
+.rankrow label{display:inline-flex;gap:4px;align-items:center;color:var(--muted)}
+.homorow{display:inline-flex;align-items:center;gap:6px;margin-right:16px}
+.pool,.answer{display:flex;flex-direction:column;gap:6px;width:100%}
+.answer:empty{display:none}
+.answer .opt{border-color:var(--ok);background:var(--okbg)}
+.shake{animation:sh .35s}
+@keyframes sh{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 .12em;font-size:1.02em;line-height:1.2}
+.frac>span:first-child{border-bottom:1.4px solid currentColor;padding:0 .2em}
+.frac>span:last-child{padding:0 .2em}
+.ang{position:relative;display:inline-block;padding:0 .04em}
+.ang::before{content:"";position:absolute;left:6%;right:6%;top:-.12em;height:.42em;border:1.4px solid currentColor;border-bottom:none;border-radius:50% 50% 0 0/100% 100% 0 0}
+.ang.one::before{left:-4%;right:-4%}
+.codebox{font-family:"STIX Two Text",Cambria,serif;font-size:1.6rem;letter-spacing:.08em;color:var(--ink);background:#fff;border:2px dashed var(--ink);border-radius:8px;padding:.3em .7em;display:inline-block;margin:.3em 0}
+.stats td,.stats th{text-align:left}
+.small{font-size:.9rem;color:var(--muted)}
+/* Correction sur papier Seyès (grands carreaux : interligne 8 px, ligne principale tous les 32 px) */
+.seyes{margin:1em 0;position:relative;color:#1d3a8a;background-color:#fff;border:1px solid #d6ddec;border-radius:4px;
+  padding:32px 18px 32px 64px;font-family:"Playwrite FR Moderne","Segoe Script","Comic Sans MS",cursive;font-size:15px;line-height:32px;
+  background-image:linear-gradient(90deg,transparent 0 50px,#e46d6d 50px 52px,transparent 52px),
+    repeating-linear-gradient(to bottom,transparent 0 31px,#8ea6d6 31px 32px),
+    repeating-linear-gradient(to bottom,transparent 0 7px,#dfe5f2 7px 8px);
+  background-position:0 var(--sy,6px)}
+.seyes h4{margin:0 0 32px;color:var(--red);font-weight:400;font-size:17px;line-height:32px;display:inline-block;border-bottom:1.5px solid var(--red);line-height:30px}
+.seyes p{margin:0;line-height:32px}
+.seyes p:has(.frac){line-height:64px;padding:16px 0}
+.seyes .frac{line-height:1.15;vertical-align:middle}
+.seyes b{font-weight:600}
+.seyes .m,.seyes .ang{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-size:1.38em}
+.seyes .frac{font-size:1.3em}
+.seyes .frac .m{font-size:1em}
+.seyes .box{border-color:#1d3a8a;font-weight:400;line-height:26px;margin:3px 0}
+.ds-tools{margin:0 0 6px}
+.ds-exo{border-top:2px solid var(--line);margin-top:18px;padding-top:4px}
+.ds-exo h3{color:var(--red);margin:.6em 0 .3em}
+.ds-title{color:var(--ink);font-size:1.25rem;margin:.8em 0 .2em}
+.ds-part h3{margin:1.2em 0 .1em;color:var(--ink);font-size:1.15rem;border-bottom:2px solid var(--ink);padding-bottom:.15em}
+.ds-info{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin:.2em 0;color:var(--muted)}
+.ds-info span{font-weight:700;color:var(--ink)}
+.ds-ans{background:#f6f8fe;border:2px solid var(--ink2);border-radius:8px;padding:.5em .8em;margin:.8em 0}
+.ds-ans b{color:var(--ink)}
+.ds-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:.35em 0}
+.ds-lab{min-width:2.5em}
+.ds-radios{display:inline-flex;flex-wrap:wrap;gap:8px}
+.ds-radios label{border:2px solid #cfd8ea;border-radius:8px;padding:.15em .6em;background:#fff;cursor:pointer}
+.ds-radios label.good{border-color:var(--ok);background:var(--okbg)}
+.okm{color:var(--ok);font-weight:700}.kom{color:var(--ko);font-weight:700}
+@media print{
+  body{background:#fff;font-size:12pt}
+  nav,footer,.btn,.ds-tools,.ds-ans,.ds-corr,header,.levels,.ds>.consigne,.ds>h2{display:none!important}
+  .ds-title{margin-top:0}
+  .card{box-shadow:none;border:none;padding:0}.card::before{display:none}
+  .ds-exo{break-inside:avoid;border-top:1px solid #999}
+  .ds-part{break-after:avoid}
+  svg.fig{max-width:430px}
+}
+.cl-line{margin:.35em 0;line-height:2.3}
+.blankw{position:relative;display:inline-block}
+.blank{font:inherit;min-width:3.2em;padding:.05em .5em;border:2px dashed var(--ink2);border-radius:6px;background:#f6f8fe;color:var(--ink);cursor:pointer}
+.blank.good,.cl-num.good{border-style:solid;border-color:var(--ok);background:var(--okbg)}
+.blank.bad,.cl-num.bad{border-style:solid;border-color:var(--ko);background:var(--kobg)}
+.blank.fixed,.cl-num.fixed{border-style:solid;border-color:#e0a63a;background:#fff4d6}
+.cl-num{width:4.5em!important}
+.blank-menu{position:absolute;left:0;top:calc(100% + 4px);z-index:20;display:flex;flex-direction:column;gap:4px;background:#fff;border:1px solid #cfd8ea;border-radius:8px;padding:6px;box-shadow:0 8px 24px -8px rgba(29,58,138,.45);min-width:max-content;max-width:min(560px,86vw);line-height:1.4}
+.blank-menu .opt{white-space:normal}
+.grille{margin:.8em 0;border:2px solid var(--ok);border-radius:8px;padding:.6em .9em;background:#f3faf6}
+.grille h4{margin:0 0 .2em;color:var(--ok)}
+.grille-item{display:flex;gap:.6em;align-items:flex-start;margin:.3em 0;cursor:pointer}
+.grille-item input{margin-top:.35em;width:1.1em;height:1.1em}
+.grille-msg{font-weight:700;color:var(--ok);margin:.3em 0 0}
+footer{padding:10px 0 30px;color:var(--muted);font-size:.9rem}
+footer button{font:inherit;background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;padding:0}
+@media (max-width:600px){.card{padding:18px 14px 20px 26px}.card::before{left:12px}header h1{font-size:1.5rem}}
+[hidden]{display:none!important}.eq-input{font:inherit;font-family:"STIX Two Text",Cambria,serif;padding:.35rem .5rem;border:2px solid #cfd8ea;border-radius:6px;max-width:100%;width:11em}.step-a select{max-width:100%;white-space:normal}.step-q{display:block}.home{margin-bottom:1rem}.step select{min-height:44px}.step .btn{min-height:44px}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--red);outline-offset:3px}.seyes{overflow-x:auto}.seyes p{font-family:"STIX Two Text",Cambria,serif;font-size:1.08rem}footer a{color:var(--ink)}@media print{.subtabs,.eq-input,.step button,.fb{display:none!important}.step-q:after{content:' …………………………………………………………';display:block}.ds-exo{break-inside:avoid}.step{border:0;padding:.15rem 0}.card{padding:0}.seyes{background:white;padding:1rem}}</style></head><body><div class="wrap"><header><h1><span>Chapitre 2 : Équations</span></h1><p>Je prépare mon D.S. de fin de chapitre.</p><nav aria-label="Parcours du chapitre"><button type="button" data-page="home" class="on">Accueil</button><button type="button" data-page="cours" class="">Cours</button><button type="button" data-page="test" class="">1. Tester</button><button type="button" data-page="rules" class="">2. Règles</button><button type="button" data-page="solve" class="">3. Résoudre</button><button type="button" data-page="problems" class="">4. Problèmes</button><button type="button" data-page="ds" class="">5. D.S. blanc</button></nav></header><main id="app"></main><footer>Collège La Rochefoucauld · Mathématiques 3<sup>e</sup> · <a href="../">Retour aux applications</a></footer></div><template id="course-source"><h3>1. Équation et solution</h3>
+<div class="retenir"><b>Définitions</b>Une équation est une égalité entre deux expressions contenant une ou plusieurs inconnues. Une solution est une valeur qui rend cette égalité vraie. Résoudre une équation, c’est déterminer toutes ses solutions.</div>
+<p>Dans ce chapitre, on travaille avec une inconnue. Une équation peut avoir une solution, aucune solution ou être vraie pour tous les nombres réels.</p>
+<h3>2. Tester une solution</h3>
+<ol><li>Remplacer l’inconnue par le nombre proposé dans le membre de gauche.</li><li>Faire le même remplacement dans le membre de droite.</li><li>Comparer les deux résultats, puis conclure.</li></ol>
+<div class="seyes"><h4>Exemple · −3x + 5 = −7x + 1</h4><p>Pour x = −1 :</p><p>G = −3 × (−1) + 5 = 8.</p><p>D = −7 × (−1) + 1 = 8.</p><p>Les deux membres sont égaux : −1 est une solution.</p><p>Pour x = 2, on obtient G = −1 et D = −13.</p><p>Les deux membres sont différents : 2 n’est pas une solution.</p></div>
+<h3>3. Conserver les mêmes solutions</h3>
+<div class="retenir"><b>Règle R1</b>On obtient une équation équivalente en ajoutant ou en soustrayant la même expression aux deux membres.</div>
+<div class="retenir"><b>Règle R2</b>On obtient une équation équivalente en multipliant ou en divisant les deux membres par un même nombre <strong>non nul</strong>.</div>
+<p>Deux équations équivalentes ont les mêmes solutions. Une opération faite sur un seul membre ne conserve généralement pas ces solutions. On ne divise jamais par 0.</p>
+<h3>4. Résoudre une équation du premier degré</h3>
+<ol><li>Développer et réduire si nécessaire.</li><li>Regrouper les termes contenant x dans un membre, en faisant la même opération sur les deux membres.</li><li>Regrouper les constantes dans l’autre membre.</li><li>Diviser les deux membres par le coefficient non nul de x.</li><li>Conclure, puis vérifier dans l’équation de départ.</li></ol>
+<div class="seyes"><h4>Exemple · 6x − 5 = 4x + 9</h4><p>On soustrait 4x aux deux membres : 2x − 5 = 9.</p><p>On ajoute 5 aux deux membres : 2x = 14.</p><p>On divise les deux membres par 2 : x = 7.</p><p>La solution est 7.</p><p>Vérification : 6 × 7 − 5 = 37 et 4 × 7 + 9 = 37.</p></div>
+<h3>5. Parenthèses et fractions</h3>
+<p>Un signe moins ou un coefficient devant des parenthèses agit sur tous les termes. Si le quotient final n’a pas d’écriture décimale finie, on garde la fraction exacte.</p>
+<div class="seyes"><h4>Exemple · 13 + 4x = 2(10x + 6)</h4><p>On développe : 13 + 4x = 20x + 12.</p><p>On soustrait 20x : 13 − 16x = 12.</p><p>On soustrait 13 : −16x = −1.</p><p>On divise par −16 : x = <span class="frac"><span>1</span><span>16</span></span>.</p><p>La solution est <span class="frac"><span>1</span><span>16</span></span>.</p></div>
+<h3>6. Quand les x disparaissent</h3>
+<p><span class="m">2x + 3 = 2x + 1</span> conduit à <span class="m">3 = 1</span>, qui est faux : l’équation n’a aucune solution.</p>
+<p><span class="m">2x + 3 = 2x + 3</span> est vraie pour tout nombre réel : tous les nombres réels sont solutions.</p>
+<h3>7. Mettre un problème en équation</h3>
+<ol><li>Définir l’inconnue avec une phrase.</li><li>Exprimer les quantités à l’aide de cette inconnue.</li><li>Traduire l’information du problème par une égalité.</li><li>Résoudre l’équation.</li><li>Vérifier que la solution convient au contexte et répondre avec l’unité.</li></ol>
+<p>Pour trois entiers consécutifs, si n est le plus petit, les deux suivants sont n + 1 et n + 2. Pour deux programmes de calcul A et B donnant le même résultat, on cherche x tel que A(x) = B(x).</p>
+</template><script>(() => {
+'use strict';
+const $=s=>document.querySelector(s),R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),pick=a=>a[R(0,a.length-1)];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>String(Math.abs(n)<1e-12?0:n).replace('.',',').replace('-','−');
+const par=n=>n<0?'('+fmt(n)+')':fmt(n);
+const gcd=(a,b)=>b?gcd(b,a%b):Math.abs(a);
+function ratio(a,b){if(!b)throw Error('Division par zéro');if(b<0){a=-a;b=-b;}const g=gcd(a,b);return [a/g,b/g];}
+const ratText=(a,b)=>{const [n,d]=ratio(a,b);return d===1?fmt(n):fmt(n)+'/'+d;};
+const ratHtml=(a,b)=>{const [n,d]=ratio(a,b);return d===1?fmt(n):`<span class="frac"><span>${fmt(n)}</span><span>${d}</span></span>`;};
+function lin(a,b){let s=a===0?'':a===1?'x':a===-1?'−x':fmt(a)+'x';if(b)s+=(s?(b<0?' − ':' + '):b<0?'−':'')+fmt(Math.abs(b));return s||'0';}
+function parseNum(v){let s=v.trim().replace(/\s/g,'').replace(/−/g,'-').replace(',','.');if(!s)return null;if(/^[+-]?\d+(?:\.\d+)?\/[+-]?\d+(?:\.\d+)?$/.test(s)){const[a,b]=s.split('/').map(Number);return b?a/b:null;}return /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(s)?Number(s):null;}
+function correct(v,a){if(typeof a==='number'){const n=parseNum(v);return n!==null&&Math.abs(n-a)<1e-8;}return v.trim().toLocaleLowerCase('fr')===String(a).toLocaleLowerCase('fr');}
+const answer=t=>t.answerHtml|| (typeof t.a==='number'?fmt(t.a):esc(t.a));
+function dom(tag,cls,html){const n=document.createElement(tag);if(cls)n.className=cls;if(html!==undefined)n.innerHTML=html;return n;}
+function button(label,fn,cls='btn'){const b=dom('button',cls,esc(label));b.type='button';b.addEventListener('click',fn);return b;}
+function solveData(a,b,c,d,shown){
+ const A=a-c,B=d-b,equation=shown||lin(a,b)+' = '+lin(c,d);
+ if(!A)return {equation,a,b,c,d,all:B===0,solution:B===0?'tous':'aucune',correction:B===0?`Les deux membres se réduisent à la même expression. Tous les nombres réels sont solutions.`:`On obtient 0 = ${fmt(B)}, ce qui est faux. Cette équation n’a aucune solution.`};
+ const [num,den]=ratio(B,A),solution=num/den;
+ return {equation,a,b,c,d,A,B,num,den,solution,correction:`<p>${equation}</p>${shown?`<p>On développe et on réduit : ${lin(a,b)} = ${lin(c,d)}.</p>`:''}<p>On ${c<0?'ajoute '+fmt(-c)+'x':'soustrait '+fmt(c)+'x'} aux deux membres : ${lin(A,b)} = ${fmt(d)}.</p><p>On ${b<0?'ajoute '+fmt(-b):'soustrait '+fmt(b)} aux deux membres : ${lin(A,0)} = ${fmt(B)}.</p><p>On divise les deux membres par ${par(A)} : x = ${ratHtml(B,A)}.</p><p>La solution est ${ratHtml(B,A)}. On peut vérifier en remplaçant x dans l’équation de départ.</p>`};
+}
+function equationExercise(level=1,example=false){
+ let data;
+ if(level===3){
+   if(example)data=solveData(4,13,20,12,'13 + 4x = 2(10x + 6)');
+   else{const p=pick([-4,-3,-2,2,3,4,5]),q=R(-5,5),r=R(-15,20);data=solveData(p,p*q,0,r,`${fmt(p)}(${lin(1,q)}) = ${fmt(r)}`);}
+ }else if(example)data=level===2?solveData(6,-5,4,9):solveData(5,-7,0,9);
+ else {let a=pick([-7,-5,-4,-3,-2,2,3,4,5,6,7]),c=level===2?pick([-5,-3,-2,1,2,3,4]):0;while(a===c)c=R(-5,5);data=solveData(a,R(-12,12),c,R(-15,15));}
+ const tasks=[{q:'Après avoir regroupé les termes en x à gauche, quel est le coefficient de x ?',a:data.A,hint:`Soustrais ${fmt(data.c)}x aux deux membres : le coefficient devient ${fmt(data.a)} − (${fmt(data.c)}).`,corr:`Le coefficient est ${fmt(data.a)} − (${fmt(data.c)}) = ${fmt(data.A)}.`},
+ {q:'Après avoir regroupé les constantes à droite, quel nombre obtient-on à droite ?',a:data.B,hint:`Soustrais ${par(data.b)} aux deux membres. Calcule ${fmt(data.d)} − (${fmt(data.b)}).`,corr:`On obtient ${fmt(data.A)}x = ${fmt(data.d)} − (${fmt(data.b)}) = ${fmt(data.B)}.`},
+ {q:'Quelle est la solution de cette équation ?',a:data.solution,answerHtml:ratHtml(data.B,data.A),hint:`Divise les deux membres par ${par(data.A)}. Tu peux saisir une fraction, par exemple 1/16.`,corr:`x = ${ratHtml(data.B,data.A)}.`}];
+ return {data,head:`<p>Résous l’équation <span class="m">${data.equation}</span>.</p>`,tasks,correction:data.correction};
+}
+function testExercise(example=false){
+ let a,b,c,d,x;if(example){a=-3;b=5;c=-7;d=1;x=-1;}else{a=R(-6,6)||2;c=R(-6,6)||-3;if(a===c)c++;b=R(-9,9);const s=R(-5,5);d=(a-c)*s+b;x=Math.random()<.5?s:s+pick([-2,-1,1,2]);}
+ const G=a*x+b,D=c*x+d,equation=lin(a,b)+' = '+lin(c,d);
+ return {data:{a,b,c,d,x,G,D},head:`<p>On considère <span class="m">${equation}</span>. Le nombre <span class="m">${fmt(x)}</span> est-il une solution ?</p>`,tasks:[
+ {q:`Calcule le membre de gauche pour x = ${fmt(x)}.`,a:G,hint:'Remplace x par le nombre proposé, entre parenthèses s’il est négatif.',corr:`G = ${fmt(a)} × ${par(x)} ${b<0?'−':'+'} ${fmt(Math.abs(b))} = ${fmt(G)}.`},
+ {q:`Calcule le membre de droite pour x = ${fmt(x)}.`,a:D,hint:'Calcule séparément le membre de droite avec le même nombre.',corr:`D = ${fmt(c)} × ${par(x)} ${d<0?'−':'+'} ${fmt(Math.abs(d))} = ${fmt(D)}.`},
+ {q:'Le nombre proposé est-il une solution ?',a:G===D?'oui':'non',options:['oui','non'],hint:'Compare les deux résultats, sans confondre tester un nombre et résoudre toute l’équation.',corr:`On a ${fmt(G)} ${G===D?'=':'≠'} ${fmt(D)} : ${fmt(x)} ${G===D?'est':'n’est pas'} une solution.`}],correction:`<p>On remplace x par ${par(x)} dans chacun des deux membres.</p><p>G = ${fmt(G)} et D = ${fmt(D)}.</p><p>${fmt(x)} ${G===D?'est':'n’est pas'} une solution, car les deux membres ${G===D?'sont égaux':'ne sont pas égaux'}.</p>`};
+}
+function ruleExercise(example=false){
+ const type=example?0:R(0,3);
+ const cases=[
+  {head:'On part de <span class="m">x − 8 = 12</span>.',q:'Quelle opération permet d’obtenir x = 20 ?',a:'Ajouter 8 aux deux membres',options:['Ajouter 8 aux deux membres','Ajouter 8 seulement à gauche','Soustraire 8 aux deux membres'],corr:'On ajoute le même nombre aux deux membres : x − 8 + 8 = 12 + 8, donc x = 20.'},
+  {head:'On part de <span class="m">−4x = 11</span>.',q:'Par quel nombre faut-il diviser les deux membres pour isoler x ?',a:-4,corr:'On divise les deux membres par −4, qui est non nul : x = −11/4.'},
+  {head:'On part de <span class="m">4x = 2</span>.',q:'Quelle opération est interdite ?',a:'Diviser les deux membres par 0',options:['Multiplier les deux membres par 5','Diviser les deux membres par 4','Diviser les deux membres par 0'],corr:'On ne peut pas diviser par 0. Pour conserver une équation équivalente, on multiplie ou on divise les deux membres par un même nombre non nul.'},
+  {head:'On part de <span class="m">6x − 5 = 4x + 9</span>.',q:'Quelle opération permet de regrouper les x à gauche ?',a:'Soustraire 4x aux deux membres',options:['Soustraire 4x aux deux membres','Soustraire 4x seulement à droite','Ajouter 4x seulement à gauche'],corr:'On soustrait la même expression 4x aux deux membres, puis on réduit : 2x − 5 = 9.'}
+ ];const t=cases[type];return {head:'<p>'+t.head+'</p>',tasks:[{...t,hint:'R1 : ajouter ou soustraire la même expression aux deux membres. R2 : multiplier ou diviser les deux membres par le même nombre non nul.'}],correction:'<p>'+t.corr+'</p>'};
+}
+function problemExercise(example=false){
+ const type=example?0:R(0,4);
+ const problems=[
+ {head:'Deux programmes donnent A(x) = 7x + 4 et B(x) = 3x − 8. Quel nombre doit-on choisir pour obtenir le même résultat ?',data:solveData(7,4,3,-8),tasks:[{q:'Quelle équation faut-il résoudre ?',a:'7x + 4 = 3x − 8',options:['7x + 4 = 3x − 8','7x + 4 = 0','7x + 4 + 3x − 8 = 0'],corr:'On cherche A(x) = B(x), donc 7x + 4 = 3x − 8.'},{q:'Quel nombre faut-il choisir ?',a:-3,corr:'4x = −12, donc x = −3. Vérification : A(−3) = B(−3) = −17.'}]},
+ {head:'La somme de trois entiers consécutifs est 1254. On note n le plus petit. Quel est le plus petit de ces trois nombres ?',data:solveData(3,3,0,1254),tasks:[{q:'Quelle équation traduit le problème ?',a:'n + (n + 1) + (n + 2) = 1254',options:['n + (n + 1) + (n + 2) = 1254','n + 1 + 2 = 1254','3n = 1254'],corr:'Les trois entiers sont n, n + 1 et n + 2.'},{q:'Quel est le plus petit entier ?',a:417,corr:'3n + 3 = 1254, donc 3n = 1251 puis n = 417. Les trois nombres sont 417, 418 et 419.'}]},
+ {head:'Un groupe compte deux fois plus d’adultes que d’enfants. Une entrée adulte coûte 15 € et une entrée enfant 7 €. Le groupe paie 740 €. On note x le nombre d’enfants.',data:solveData(37,0,0,740),tasks:[{q:'Quelle équation traduit le coût total ?',a:'15 × 2x + 7x = 740',options:['15 × 2x + 7x = 740','15x + 7 × 2x = 740','15 + 7 + 2x = 740'],corr:'Il y a 2x adultes et x enfants, donc 15 × 2x + 7x = 740.'},{q:'Combien y a-t-il d’enfants ?',a:20,corr:'37x = 740, donc x = 20. Il y a 20 enfants et 40 adultes.'}]},
+ {head:'Un triangle équilatéral a des côtés de longueur x + 5 cm ; un carré a des côtés de longueur x + 3 cm. Pour quelle valeur de x ont-ils le même périmètre ?',data:solveData(3,15,4,12),tasks:[{q:'Quelle équation faut-il résoudre ?',a:'3(x + 5) = 4(x + 3)',options:['3(x + 5) = 4(x + 3)','x + 5 = x + 3','3x + 5 = 4x + 3'],corr:'Le périmètre du triangle est 3(x + 5) et celui du carré 4(x + 3).'},{q:'Quelle est la valeur de x, en cm ?',a:3,corr:'3x + 15 = 4x + 12, donc x = 3. Les deux périmètres valent alors 24 cm.'}]},
+ {head:'Une place adulte coûte 5 € de plus qu’une place enfant. Trois places enfant et deux places adulte coûtent 29 €. On note p le prix d’une place enfant.',data:solveData(5,10,0,29),tasks:[{q:'Quelle équation traduit le problème ?',a:'3p + 2(p + 5) = 29',options:['3p + 2(p + 5) = 29','3p + 2p + 5 = 29','3(p + 5) + 2p = 29'],corr:'Une place adulte coûte p + 5. Le total est donc 3p + 2(p + 5).'}, {q:'Quel est le prix d’une place enfant, en euros ?',a:3.8,corr:'5p + 10 = 29, donc 5p = 19 puis p = 19/5 = 3,80 €. Une place adulte coûte 8,80 €.'}]}
+ ];const p=problems[type];return {...p,head:'<p>'+p.head+'</p>',correction:p.data.correction+'<p>'+p.tasks.at(-1).corr+'</p>'};
+}
+const MODULES={test:{title:'1. Tester une solution',desc:'Calculer séparément les deux membres, puis comparer.',retain:'Un nombre est une solution si l’égalité est vraie lorsqu’on remplace l’inconnue par ce nombre.',gen:testExercise},rules:{title:'2. Règles de transformation',desc:'Faire la même opération sur les deux membres.',retain:'R1 : ajouter ou soustraire la même expression aux deux membres. R2 : multiplier ou diviser par un même nombre non nul.',gen:ruleExercise},solve:{title:'3. Résoudre une équation',desc:'Équations simples, avec x dans les deux membres, puis parenthèses.',retain:'Développer et réduire si nécessaire. Regrouper les termes en x, puis les nombres. Isoler x et conclure.',gen:null},problems:{title:'4. Mettre en équation',desc:'Programmes de calcul, nombres, périmètres et tarifs.',retain:'Choisir l’inconnue, traduire l’égalité, résoudre, puis vérifier que la réponse convient au contexte.',gen:problemExercise}};
+const VIEW={page:'home',mode:'exemple',level:1};
+function go(id){VIEW.page=id;render();window.scrollTo({top:0});}
+function modeBar(parent){const bar=dom('div','subtabs');for(const[key,label]of[['exemple','Je regarde un exemple'],['aide','Je m’entraîne avec de l’aide'],['seul','Je m’entraîne seul']])bar.append(button(label,()=>{VIEW.mode=key;render();},VIEW.mode===key?'on':''));parent.append(bar);}
+function renderExercise(parent,ex){
+ parent.append(dom('div','exo-head',ex.head));const box=dom('div','steps');parent.append(box);
+ const tasks=VIEW.mode==='seul'&&VIEW.page==='solve'?[ex.tasks.at(-1)]:ex.tasks;
+ if(VIEW.mode==='seul')parent.prepend(dom('p','small','Rédige les calculs et les justifications sur ton cahier avant de saisir tes réponses. Les fractions sont acceptées : par exemple −1/10 ou 1/16.'));
+ let step=0;
+ function next(){
+  if(step>=tasks.length){parent.append(dom('div','seyes','<h4>Correction rédigée</h4>'+ex.correction));parent.append(button('Nouvel exercice',render));return;}
+  const t=tasks[step],i=step++;const row=dom('div','step',`<div class="step-n">Étape ${step} sur ${tasks.length}</div><div class="step-q">${t.q}</div>`);box.append(row);
+  if(VIEW.mode==='exemple'){row.classList.add('done');row.append(dom('div','model-a',answer(t)),dom('div','model-e',t.corr));row.append(button(step<tasks.length?'Étape suivante':'Voir la rédaction',()=>{row.querySelector('button').remove();next();}));return;}
+  const area=dom('div','step-a'),feedback=dom('div','fb');feedback.setAttribute('aria-live','polite');row.append(area,feedback);let input;
+  if(t.options){input=dom('select');input.append(new Option('Choisir une réponse',''));for(const o of t.options)input.append(new Option(o,o));}
+  else {input=dom('input');input.type='text';input.className='eq-input';input.placeholder=typeof t.a==='number'?'Nombre ou fraction':'Réponse';if(typeof t.a==='number')input.inputMode='text';}
+  input.setAttribute('aria-label','Réponse à l’étape '+step);let tries=0;
+  const valid=button('Valider',()=>{
+   if(!input.value.trim()){feedback.className='fb warn';feedback.textContent='Donne une réponse avant de valider.';return;}
+   const ok=correct(input.value,t.a);tries++;
+   if(!ok&&VIEW.mode==='aide'&&tries<2){feedback.className='fb warn';feedback.innerHTML='Pas encore. '+(t.hint||'Relis la méthode et réessaie.');return;}
+   input.disabled=true;valid.disabled=true;row.classList.add(ok?'done':'missed');feedback.className='fb '+(ok?'ok':'ko');feedback.innerHTML=`<b>${ok?"C’est juste.":'Réponse attendue : '+answer(t)+'.'}</b> ${t.corr}`;row.append(button('Continuer',()=>{row.querySelectorAll('button').forEach(b=>b.remove());next();}));
+  });input.addEventListener('keydown',e=>{if(e.key==='Enter')valid.click();});area.append(input,valid);if(VIEW.mode==='aide'&&t.hint)row.append(dom('p','small',t.hint));
+ }
+ next();
+}
+function dsData(variant='A'){
+ const B=variant==='B';const E=(a,b,c,d,shown)=>{const s=solveData(a,b,c,d,shown);return {q:`Résous : <span class="m">${s.equation}</span>.`,a:s.solution,answerHtml:ratHtml(s.B,s.A),corr:s.correction};};
+ return [
+ {title:'Exercice 1 · Tester une solution',head:'<p>On considère l’équation 2x + 8 = 3x − 3.</p>',tasks:[{q:'Calcule le membre de gauche pour x = 11.',a:30,corr:'2 × 11 + 8 = 30.'},{q:'Calcule le membre de droite pour x = 11.',a:30,corr:'3 × 11 − 3 = 30.'},{q:'11 est-il une solution ? Écris oui ou non.',a:'oui',corr:'Les deux membres sont égaux : 11 est une solution.'},{q:'10 est-il une solution ? Écris oui ou non.',a:'non',corr:'Pour x = 10, le membre de gauche vaut 28 et celui de droite 27.'}]},
+ {title:'Exercice 2 · Équations simples',head:'',tasks:B?[E(1,-8,0,12),E(5,0,0,13),E(-4,0,0,11),E(7,6,0,69)]:[E(1,-3,0,0),E(10,1,0,0),E(2,5,0,0),E(5,-7,0,9)]},
+ {title:'Exercice 3 · Deux membres et parenthèses',head:'',tasks:B?[E(6,-5,4,9),E(3,7,8,-1),E(7,-4,3,-9),E(5,20,3,15,'5(x + 4) = 3(x + 5)')]:[E(-2,3,3,-1),E(3,5,4,-7),E(-3,-15,0,6,'−3(x + 5) = 6'),E(4,13,20,12,'13 + 4x = 2(10x + 6)')]},
+ {title:'Exercice 4 · Programmes de calcul',head:'<p>Deux programmes donnent A(x) = 7x + 4 et B(x) = 3x − 8.</p>',tasks:[{q:'Calcule A(7).',a:53,corr:'7 × 7 + 4 = 53.'},{q:'Calcule B(7).',a:13,corr:'3 × 7 − 8 = 13.'},{q:'Quel nombre donne le même résultat dans les deux programmes ?',a:-3,corr:'7x + 4 = 3x − 8 donne 4x = −12, donc x = −3.'},{q:'Quel est ce résultat commun ?',a:-17,corr:'A(−3) = B(−3) = −17.'}]},
+ {title:'Exercice 5 · Problème',head:'<p>Un groupe compte deux fois plus d’adultes que d’enfants. L’entrée coûte 15 € par adulte et 7 € par enfant. Le total est de 740 €. On note x le nombre d’enfants.</p>',tasks:[{q:'Quel nombre multiplie x dans l’expression du nombre d’adultes ?',a:2,corr:'Le nombre d’adultes est 2x.'},{q:'Réduis 15 × 2x + 7x : quel est le coefficient de x ?',a:37,corr:'30x + 7x = 37x.'},{q:'Combien y a-t-il d’enfants ?',a:20,corr:'37x = 740, donc x = 20.'},{q:'Combien y a-t-il d’adultes ?',a:40,corr:'2 × 20 = 40 adultes.'}]}
+ ];
+}
+function renderDS(){
+ const main=$('#app');main.append(dom('h2','ttl','<span>5. D.S. blanc</span>'));const bar=dom('div','subtabs');let variant=VIEW.variant||'A';for(const v of ['A','B'])bar.append(button('Sujet '+v,()=>{VIEW.variant=v;render();},variant===v?'on':''));bar.append(button('Imprimer le sujet',()=>window.print(),'btn light'));main.append(bar);
+ const paper=dom('div','card ds');paper.append(dom('h3','','Sujet '+variant),dom('p','','Travaille sur une feuille. Chaque réponse vaut 1 point. Rédige aussi les transformations de l’équation, les calculs et la conclusion. Une fraction exacte est attendue si la valeur décimale n’est pas finie.'));main.append(paper);const controls=[];
+ dsData(variant).forEach((ex,ei)=>{const block=dom('section','ds-exo',`<h3>${ex.title} <span class="small">(4 points)</span></h3>${ex.head}`);paper.append(block);ex.tasks.forEach((t,qi)=>{const row=dom('div','step');const lab=dom('label','step-q',t.q);const input=dom('input','eq-input');input.type='text';input.id=`ds-${ei}-${qi}`;input.autocomplete='off';lab.htmlFor=input.id;row.append(lab,input);block.append(row);controls.push({t,row,input});});});
+ const end=button('Vérifier mes réponses et afficher la correction',()=>{let score=0;for(const{t,row,input}of controls){const ok=correct(input.value,t.a);if(ok)score++;input.disabled=true;row.append(dom('div','fb '+(ok?'ok':'ko'),`<b>${ok?'Réponse juste.':'Réponse attendue : '+answer(t)+'.'}</b> ${t.corr}`));}end.replaceWith(dom('div','corrige',`<b>${score} réponse${score===1?'':'s'} juste${score===1?'':'s'} sur 20.</b><p>Vérifie aussi ta rédaction : même opération sur les deux membres, calculs exacts, phrase de conclusion et cohérence avec le contexte.</p>`));});paper.append(end);
+}
+function render(){
+ const main=$('#app');main.innerHTML='';document.querySelectorAll('nav [data-page]').forEach(b=>b.classList.toggle('on',b.dataset.page===VIEW.page));
+ if(VIEW.page==='cours'){main.append(dom('h2','ttl','<span>Cours · Équations</span>'),dom('div','card',$('#course-source').innerHTML));return;}
+ if(VIEW.page==='ds'){renderDS();return;}
+ if(VIEW.page==='home'){main.append(dom('div','retenir','<b>À retenir</b>Résoudre une équation, c’est chercher toutes les valeurs qui rendent l’égalité vraie. À chaque étape, on conserve les mêmes solutions.'));const grid=dom('div','home');for(const[k,m]of Object.entries(MODULES)){const card=dom('section','card',`<h2>${m.title}</h2><p>${m.desc}</p>`);card.append(button('Commencer',()=>go(k)));grid.append(card);}const ds=dom('section','card','<h2>5. D.S. blanc</h2><p>Deux sujets avec vérification des réponses et correction.</p>');ds.append(button('Commencer',()=>go('ds')));grid.append(ds);main.append(grid,button('Relire le cours',()=>go('cours'),'btn light'));return;}
+ const mod=MODULES[VIEW.page];main.append(dom('h2','ttl','<span>'+mod.title+'</span>'));modeBar(main);main.append(dom('div','retenir','<b>À retenir</b>'+mod.retain));if(VIEW.page==='solve'){const levels=dom('div','levels');for(const[n,label]of[[1,'1. Simples'],[2,'2. Deux membres'],[3,'3. Parenthèses']])levels.append(button(label,()=>{VIEW.level=n;render();},VIEW.level===n?'on':''));main.append(levels);}
+ const panel=dom('div','card');main.append(panel);renderExercise(panel,VIEW.page==='solve'?equationExercise(VIEW.level,VIEW.mode==='exemple'):mod.gen(VIEW.mode==='exemple'));
+}
+document.querySelectorAll('nav [data-page]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));render();
+})();
+</script></body></html>

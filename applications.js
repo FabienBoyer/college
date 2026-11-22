@@ -20,6 +20,15 @@
  */
 window.APPLICATIONS_ELEVES = [
   {
+    titre: "Chapitre 2 : Équations",
+    description: "Cours, tests de solutions, règles de transformation, résolutions et mises en équation. Exemples, entraînements guidés et deux D.S. blancs.",
+    niveaux: ["3e"],
+    chapitre: "Calcul littéral",
+    url: "apps/equations.html",
+    symbole: "x",
+    couleur: "bleu"
+  },
+  {
     titre: "Chapitre 3 : Fonctions (1)",
     description: "Cours, images et antécédents, lectures graphiques, calculs et programmes de calcul. Exemples, entraînements guidés et deux D.S. blancs.",
     niveaux: ["3e"],
