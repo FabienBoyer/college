@@ -62,6 +62,15 @@ window.APPLICATIONS_ELEVES = [
     url: "apps/triangles-semblables.html"
   },
   {
+    numero: 5,
+    titre: "Calcul littéral (1)",
+    niveau: "3e",
+    theme: "Calcul littéral",
+    description: "Le sens de la lettre, réduire, développer avec la simple et la double distributivité, factoriser avec un facteur commun et prouver. Le chapitre se termine par deux D.S. blancs.",
+    parties: ["0. Le sens de la lettre", "1. Réduire", "2. Simple distributivité", "3. Double distributivité", "4. Factoriser", "5. Prouver", "Bilan", "D.S. blanc"],
+    url: "apps/calcul-litteral-1.html"
+  },
+  {
     titre: "Devoir commun de mathématiques 2024-2025",
     niveau: "4e",
     theme: "Devoir commun",

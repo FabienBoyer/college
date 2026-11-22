@@ -11,7 +11,7 @@ et la balise ne s’applique pas aux PDF.
 - `index.html`, `style.css`, `page.js` : l’accueil, qui affiche une section par niveau.
 - `applications.js` : la liste des fiches de l’accueil et la date de mise à jour.
 - `apps/` : une application par fichier HTML autonome :
-  Arithmétique, Équations, Fonctions (1), Triangles semblables (3e).
+  Arithmétique, Équations, Fonctions (1), Triangles semblables, Calcul littéral (1) (3e).
 - `devoirs-communs-4e/` : sujet et corrigé du devoir commun de 4e (PDF).
 - `fonts/` : les polices, hébergées dans le dépôt (aucun appel à Google Fonts).
 

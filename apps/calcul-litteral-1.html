@@ -1,0 +1,2353 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Chapitre 5 : Calcul littéral (1) – Je prépare mon D.S.</title>
+<link rel="stylesheet" href="../fonts/polices.css">
+<style>
+/* Charte du site /college/ : papier ligné, encre bleue, titres rouges soulignés, marge rouge.
+   Texte en Atkinson Hyperlegible, chiffres et écriture mathématique en STIX Two Text (../fonts/polices.css).
+   Stylo bleu pour l'élève, stylo rouge et vert pour la correction. */
+:root{
+  --papier:#fbf8f1; --carte:#fffefa; --carreau:#dbe3f3; --ligne:#e6ecf7; --marge:#e7a4a0;
+  --encre:#1b2333; --gris:#5b6478;
+  --bleu:#1d3a8a; --bleu2:#2c4fb5; --bleu-clair:#e3e9f8;
+  --rouge:#b8322a; --vert:#1f7a4d; --orange:#c77700;
+  --surligneur:#fff1a8;
+  --math:"STIX Two Text","Cambria Math",Cambria,"Times New Roman",serif;
+  --texte:"Atkinson Hyperlegible","STIX Two Text","Segoe UI",system-ui,sans-serif;
+  --c:20px;
+}
+*{box-sizing:border-box}
+html{font-size:17px;-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--encre);font-family:var(--texte);line-height:1.55;
+  background-color:var(--papier);
+  background-image:repeating-linear-gradient(to bottom,transparent 0 31px,var(--ligne) 31px 32px)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,summary:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid var(--rouge);outline-offset:2px}
+i.m{font-family:var(--math);font-style:italic}
+
+/* En-tête */
+.top{padding:1rem 1.2rem .6rem calc(var(--mw) + 1.2rem);border-bottom:2px solid var(--bleu);background:var(--papier)}
+:root{--mw:150px}
+.back-home{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:0 0 .7rem;padding:8px 14px;border:2px solid var(--bleu);border-radius:7px;background:var(--carte);color:var(--bleu);font:inherit;font-size:1rem;font-weight:700;text-decoration:none}
+.back-home:hover{background:#eef2fb}
+.top-row{display:flex;align-items:baseline;gap:1.5rem;flex-wrap:wrap}
+.brand{margin:0 auto 0 0;color:var(--rouge);font-size:1.6rem;font-weight:700;line-height:1.25}
+.brand span{border-bottom:2px solid var(--rouge)}
+.topnav{display:flex;gap:1.3rem;flex-wrap:wrap}
+.topnav button{background:none;border:0;padding:.1rem 0;border-bottom:3px solid transparent;color:var(--bleu)}
+.topnav button:hover{border-bottom-color:var(--carreau)}
+.topnav button.on{border-bottom-color:var(--bleu);font-weight:700}
+.navsel{display:none}
+
+/* Page : marge + contenu */
+.page{display:grid;grid-template-columns:var(--mw) minmax(0,1fr);min-height:calc(100vh - 52px)}
+.marge{border-right:2px solid var(--marge);padding:1.3rem .8rem 1rem .9rem;font-size:.92rem}
+main{padding:1.3rem 1.6rem 4rem;max-width:860px}
+.m-date{color:var(--bleu);font-style:italic;line-height:1.3}
+.m-back{background:none;border:0;padding:0;color:var(--bleu);text-decoration:underline;text-underline-offset:3px;margin-bottom:1.2rem;display:block}
+.m-pal{font-weight:700;margin-bottom:.5rem}
+.etapes{display:flex;flex-direction:column;gap:.15rem}
+.etapes .tab{display:flex;gap:.45rem;align-items:baseline;text-align:left;background:none;border:0;padding:.3rem .2rem;line-height:1.25;color:var(--gris)}
+.etapes .tab .tn{font-weight:700;min-width:1rem}
+.etapes .tab:hover{color:var(--encre)}
+.etapes .tab.on{color:var(--bleu);font-weight:700}
+.etapes .tab.on span:last-child{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.timer{font-variant-numeric:tabular-nums;font-size:1.25rem;font-weight:700;color:var(--bleu)}
+
+/* Titres : soulignés à la règle */
+.chap{margin:0;color:var(--gris)}
+.titre{display:inline-block;font-size:1.5rem;line-height:1.25;margin:.2rem 0 .9rem;padding-bottom:.1rem;border-bottom:2px solid var(--rouge);color:var(--rouge);font-weight:700}
+.sous{display:inline-block;font-size:1.15rem;margin:1.6rem 0 .6rem;border-bottom:2px solid var(--bleu);color:var(--bleu);font-weight:700}
+h3{font-size:1.05rem;margin:1.4rem 0 .4rem;color:var(--bleu)}
+.lead{max-width:62ch;margin:.2rem 0 1rem}
+p{margin:.5rem 0}
+.muted{color:var(--gris)}.small{font-size:.85rem}
+
+/* Sommaire */
+.sommaire{list-style:none;margin:0;padding:0}
+.som{display:flex;align-items:flex-end;gap:.7rem;width:100%;text-align:left;background:none;border:0;padding:.55rem 0;border-radius:0}
+.som-n{flex:0 0 2rem;height:2rem;display:grid;place-items:center;border:2px solid var(--encre);font-weight:700;align-self:flex-start;background:var(--papier)}
+.som-t{display:flex;flex-direction:column;max-width:60%}
+.som-h{font-weight:700;font-size:1.08rem}
+.som-s{color:var(--gris);font-size:.92rem;line-height:1.35}
+.som-l{flex:1;border-bottom:2px dotted var(--gris);margin-bottom:.4rem;min-width:1.5rem}
+.som-st{white-space:nowrap;color:var(--gris);font-size:.92rem}
+.som-st.started{color:var(--bleu);font-weight:700}
+.som:hover .som-h{color:var(--bleu);text-decoration:underline;text-underline-offset:3px}
+.som:hover .som-n{border-color:var(--bleu);color:var(--bleu)}
+.som.solo{padding-left:0}
+.slist{margin-top:.6rem}
+
+/* Boutons */
+button.primary,.actions button,.navnext button{border:2px solid var(--encre);background:var(--papier);padding:.45rem 1rem;border-radius:3px}
+button.primary{background:var(--bleu);border-color:var(--bleu);color:#fff;font-weight:700}
+button.primary:hover{background:var(--bleu2)}
+.actions button:not(.primary):hover{border-color:var(--bleu);color:var(--bleu)}
+button.ghost{border-style:dashed !important}
+button.armed{background:var(--rouge) !important;border-color:var(--rouge) !important;color:#fff !important}
+.actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.9rem}
+.navnext{margin:1.6rem 0 1rem}
+
+/* Écriture mathématique */
+.m{font-family:var(--math);font-size:1.18em;white-space:nowrap;word-spacing:.06em}
+.m i{font-style:italic}
+.m sup{font-size:.7em;line-height:0}
+mark{background:var(--surligneur);padding:0 1px;color:inherit}
+
+/* Cours : cadres tracés à la règle, comme dans le cahier */
+.course>p,.course>div{margin-bottom:.8rem}
+.cbox{border:2px solid var(--encre);padding:.55rem .9rem;margin:1rem 0;background:rgba(251,248,241,.85)}
+.cbox-t{font-weight:700;margin-bottom:.15rem}
+.cbox.def,.cbox.prop{border-color:var(--rouge)}
+.cbox.def .cbox-t,.cbox.prop .cbox-t{color:var(--rouge)}
+.cbox.rem{border-style:dashed;border-color:var(--gris)}
+.cbox ol,.cbox ul{margin:.3rem 0;padding-left:1.4rem}
+.cbox li{margin:.2rem 0}
+.warn b{color:var(--rouge)}
+.blue{color:var(--bleu);font-weight:700}.green{color:var(--vert);font-weight:700}
+.conv{border-collapse:collapse;margin:.5rem 0;background:var(--papier)}
+.conv td{border:2px solid var(--encre);padding:.25rem .7rem;text-align:center}
+.exs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem}
+.line{margin:.25rem 0;padding:.1rem 0}
+.resbox{display:inline-block;border:2px solid var(--bleu);padding:.1rem .6rem;margin:.35rem 0;background:var(--papier)}
+.calc>div{margin:.15rem 0}
+.links{padding-left:1.2rem}.links a{color:var(--bleu)}
+
+/* Flèches */
+.arw{position:relative;display:inline-block;padding:1.15em 0 .2em}
+.arw.double{padding-bottom:1.15em}
+.arw-svg{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
+
+/* Feu tricolore pour le niveau */
+.feu{display:flex;align-items:center;gap:1.1rem;flex-wrap:wrap;margin:.2rem 0 1.1rem}
+.feu-l{color:var(--gris)}
+.lamp{display:flex;align-items:center;gap:.45rem;background:none;border:0;padding:.2rem 0;color:var(--gris)}
+.lamp .dot{width:1.15rem;height:1.15rem;border-radius:50%;border:2px solid currentColor;opacity:.55;flex:none}
+.lamp.v{--l:var(--vert)}.lamp.o{--l:var(--orange)}.lamp.r{--l:var(--rouge)}
+.lamp .dot{color:var(--l)}
+.lamp-t{display:flex;flex-direction:column;line-height:1.15;text-align:left}
+.lamp-t small{font-size:.78rem}
+.lamp.on{color:var(--encre);font-weight:700}
+.lamp.on .dot{background:var(--l);opacity:1;box-shadow:0 0 0 3px var(--papier),0 0 0 5px var(--l)}
+.lamp.on small{font-weight:400;color:var(--gris)}
+
+/* Zone d'exercice */
+.card{margin:0 0 1.4rem}
+.qhead{display:flex;align-items:center;gap:1rem;margin-bottom:.4rem}
+.qnum{color:var(--gris)}
+.cases{display:inline-flex;gap:3px}
+.cases i{width:var(--c);height:var(--c);border:2px solid var(--encre);display:block;background:var(--papier)}
+.cases i.cur{border-color:var(--bleu);box-shadow:inset 0 0 0 2px var(--bleu-clair)}
+.cases i.first,.cases i.done{background:var(--vert);border-color:var(--vert)}
+.cases i.second{background:var(--orange);border-color:var(--orange)}
+.cases i.fail{background:repeating-linear-gradient(45deg,var(--rouge) 0 2px,var(--papier) 2px 6px);border-color:var(--rouge)}
+.consigne{font-weight:700}
+.bigexpr{font-size:1.5rem;margin:.3rem 0 1rem}
+.bigexpr .m{font-size:1.15em}
+.hint{color:var(--gris);margin:.2rem 0 .9rem;max-width:66ch}
+.glabel{font-weight:700;margin-top:.4rem}
+
+/* Saisie : on écrit au stylo bleu sur la ligne */
+.inp{margin-top:.3rem;max-width:620px}
+.inp input{width:100%;font-family:var(--math);font-size:1.45rem;color:var(--bleu);padding:.35rem .5rem;border:0;border-bottom:3px solid var(--bleu);background:var(--papier)}
+.inp input:focus{outline:none;background:#fff;box-shadow:0 3px 0 var(--bleu-clair)}
+.keys{display:flex;gap:.35rem;margin:.55rem 0 .2rem;flex-wrap:wrap;align-items:center}
+.key{min-width:2.6rem;padding:.25rem .55rem;font-family:var(--math);font-size:1.15rem;background:var(--papier);border:2px solid var(--encre);border-radius:3px}
+.key:hover{border-color:var(--bleu);color:var(--bleu)}
+.preview{min-height:1.6rem;color:var(--gris)}
+
+/* Exemple déroulé */
+.mstep{padding:.3rem 0 .3rem .9rem;margin:.7rem 0;border-left:3px solid var(--bleu)}
+.mstep .sn{font-weight:700;color:var(--bleu);font-size:.9rem}
+.mstep .line{font-size:1.15rem}
+.mstep.last{border-left-color:var(--vert)}
+.cmt{color:var(--gris);font-size:.95rem;max-width:68ch}
+
+/* Pratique guidée */
+.guided{margin-top:.3rem}
+.grow{padding:.4rem 0 .5rem .9rem;margin:.5rem 0;border-left:3px solid var(--carreau)}
+.grow.cur{border-left-color:var(--bleu)}
+.grow.done{display:flex;gap:.8rem;align-items:baseline;flex-wrap:wrap;border-left-color:var(--vert)}
+.grow.done.col{display:block}
+.gans .m{font-size:1.25em;color:var(--bleu)}
+.tag{display:inline-block;font-size:.85rem;font-weight:700;margin-left:.4rem;white-space:nowrap}
+.tag.ok{color:var(--vert)}.tag.shown{color:var(--rouge)}.tag.mid{color:var(--orange)}
+
+/* Tableau de distributivité */
+.dtab{border-collapse:collapse;margin:.5rem 0;background:var(--papier)}
+.dtab th,.dtab td{border:2px solid var(--encre);padding:.3rem .5rem;text-align:center;min-width:5.6rem;height:2.9rem}
+.dtab th{font-weight:400}
+.dtab th.corner{font-family:var(--math);font-size:1.2rem}
+.dtab td.ok .m,.dtab td.ok{color:var(--vert)}
+.dtab td.given{color:var(--rouge)}
+.dtab td.given .m{color:var(--rouge)}
+.tin{width:5.4rem;font-family:var(--math);font-size:1.2rem;color:var(--bleu);text-align:center;padding:.2rem;border:0;border-bottom:2px solid var(--bleu-clair);background:transparent}
+.tin:focus{outline:none;border-bottom-color:var(--bleu);background:#fff}
+.dtab td.bad{background:repeating-linear-gradient(-45deg,transparent 0 6px,rgba(198,40,40,.08) 6px 8px)}
+.dtab td.bad .tin{border-bottom-color:var(--rouge)}
+.draft{border:2px dashed var(--gris);padding:.5rem .9rem;margin:.3rem 0 1rem;background:rgba(251,248,241,.9);max-width:620px}
+.draft-t{font-weight:700}
+
+/* Correction au stylo */
+.fb{margin:.7rem 0;padding:.2rem 0 .2rem .9rem;border-left:4px solid;max-width:68ch;background:rgba(251,248,241,.92)}
+.fb b{font-weight:700}
+.fb.ok{border-color:var(--vert);color:var(--vert)}
+.fb.bad{border-color:var(--rouge);color:var(--rouge)}
+.fb.almost{border-color:var(--orange);color:#9a5b00}
+.fb.info{border-color:var(--bleu);color:var(--bleu)}
+.fb .test{margin-top:.25rem;font-size:.93rem}
+.fb .next{margin-top:.3rem;color:var(--bleu)}
+.corr{margin-top:1.2rem;padding-top:.2rem}
+.corr-t{display:inline-block;font-weight:700;color:var(--rouge);border-bottom:2px solid var(--rouge);margin-bottom:.4rem}
+.cstep{margin:.5rem 0}
+.cstep .line{font-size:1.1rem}
+
+/* Tableaux de bilan */
+.recap{width:100%;border-collapse:collapse;margin:.6rem 0;font-size:.95rem;background:rgba(251,248,241,.92)}
+.recap th,.recap td{border:1px solid var(--carreau);border-width:0 0 2px;padding:.45rem .5rem;text-align:left;vertical-align:top}
+.recap th{color:var(--gris);font-weight:400;border-bottom-color:var(--encre)}
+.recap tr.rok td:first-child{color:var(--vert);font-weight:700}.recap tr.rbad td:first-child{color:var(--rouge);font-weight:700}
+.score{border-bottom-color:var(--bleu)}
+.code{font-family:Consolas,"Courier New",monospace;font-size:1.3rem;letter-spacing:.08em;border:2px solid var(--bleu);color:var(--bleu);padding:.5rem .9rem;display:inline-block;background:var(--papier);user-select:all;word-break:break-all}
+.prof{margin-top:2rem;border-top:2px dashed var(--gris);padding-top:.8rem}
+.prof summary{cursor:pointer;font-weight:700}
+.prof input{width:100%;max-width:520px;font-family:Consolas,monospace;font-size:1.05rem;padding:.4rem;border:0;border-bottom:2px solid var(--encre);background:var(--papier);margin-top:.4rem}
+
+
+/* Calcul sur plusieurs lignes */
+.lignes{margin:.4rem 0 .2rem;max-width:720px}
+.lrow{display:flex;align-items:baseline;gap:.6rem;min-height:2.6rem}
+.lname{font-family:var(--math);font-size:1.35rem;white-space:nowrap;min-width:2.6rem}
+.lsrc{font-size:1.2rem}
+.lsrc.mine .m{color:var(--bleu)}
+.lin{flex:1;font-family:var(--math);font-size:1.4rem;color:var(--bleu);padding:.2rem .4rem;border:0;border-bottom:2px solid var(--bleu-clair);background:transparent}
+.lin:focus{outline:none;border-bottom-color:var(--bleu);background:#fff}
+.lnote{font-size:.85rem;color:var(--rouge);white-space:nowrap;min-width:7rem}
+.lrow.bad .lin{border-bottom:3px solid var(--rouge);color:var(--rouge)}
+.lrow.bad .lsrc .m{color:var(--rouge)}
+.lrow.unread .lin{border-bottom-color:var(--orange)}
+.lrow.unread .lnote{color:#9a5b00}
+.key.addl{font-family:var(--texte);font-size:.95rem}
+
+/* Lecteur façon vidéo */
+.video{max-width:820px;border:2px solid var(--encre);background:var(--papier)}
+.screen{position:relative;min-height:330px;padding:1rem 1.2rem 1.2rem;
+  background-image:repeating-linear-gradient(to bottom,transparent 0 31px,var(--ligne) 31px 32px)}
+.vstep{margin:.35rem 0}
+.vstep .line{font-size:1.18rem}
+.bigplay{position:absolute;inset:0;margin:auto;width:max-content;height:max-content;display:flex;align-items:center;gap:.7rem;padding:.8rem 1.4rem .8rem 1.1rem;background:var(--encre);color:#fff;border:0;border-radius:4px;font-weight:700;font-size:1.1rem}
+.bigplay svg{width:1.6rem;height:1.6rem}
+.bigplay:hover{background:var(--bleu)}
+.soustitre{min-height:3.3rem;padding:.55rem 1rem;background:#1b2333;color:#fff;font-size:1.02rem;line-height:1.45}
+.soustitre .m{color:#fff}
+.player{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;padding:.45rem .6rem;background:var(--encre);color:#fff}
+.pbtn{display:inline-flex;align-items:center;gap:.4rem;background:transparent;color:#fff;border:0;padding:.35rem .45rem;border-radius:3px}
+.pbtn svg{width:1.2rem;height:1.2rem}
+.pbtn:hover:not(:disabled){background:rgba(255,255,255,.14)}
+.pbtn:disabled{opacity:.35;cursor:default}
+.pseg{flex:1;display:flex;gap:3px;min-width:160px;margin:0 .4rem}
+.seg{flex:1;height:.55rem;padding:0;border:0;border-radius:0;background:rgba(255,255,255,.25)}
+.seg.past{background:#fff}
+.seg.cur{background:var(--orange)}
+.pcount{font-size:.85rem;opacity:.85;min-width:6.5rem}
+.pbtn.vox span{font-size:.9rem}
+.pbtn.vox.on{background:rgba(255,255,255,.18)}
+.vsel{display:inline-flex;align-items:center;gap:.4rem;font-size:.88rem}
+.vsel select{font:inherit;font-size:.88rem;background:#2a3550;color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:3px;padding:.15rem .3rem;max-width:14rem}
+
+/* Choix de la méthode dans l'exemple */
+.meth{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin:-.4rem 0 1rem}
+.mbtn{background:var(--papier);border:2px solid var(--encre);padding:.3rem .8rem;border-radius:3px}
+.mbtn.on{background:var(--encre);color:#fff;font-weight:700}
+.mbtn:hover:not(.on){border-color:var(--bleu);color:var(--bleu)}
+.vtab .dtab td{min-width:5.6rem}
+.vtab .dtab td.pop{background:#fff8c4;animation:pop .5s ease-out both}
+.vtab.now .dtab{animation:ecrire .9s steps(18,end) both}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* Écriture qui se déroule, puis flèches qui se tracent */
+.vstep.now .line{animation:ecrire 1.15s steps(28,end) both}
+.vstep.now .shaft{stroke-dasharray:1;stroke-dashoffset:1;animation:trace .5s ease-out forwards;animation-delay:var(--d)}
+.vstep.now .head{opacity:0;animation:montre .01s forwards;animation-delay:calc(var(--d) + .48s)}
+.vstep.res.now .line{animation:ecrire .9s steps(20,end) both}
+@keyframes ecrire{from{clip-path:inset(-40% 100% -60% 0)}to{clip-path:inset(-40% 0 -60% 0)}}
+@keyframes trace{to{stroke-dashoffset:0}}
+@keyframes montre{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.vstep.now .line,.vstep.now .shaft,.vstep.now .head{animation:none;opacity:1;stroke-dashoffset:0}}
+
+@media (max-width:760px){
+  :root{--mw:0px}
+  .top{padding-left:1rem}
+  .page{grid-template-columns:1fr}
+  .marge{border-right:0;border-bottom:2px solid var(--marge);padding:.7rem 1rem}
+  .etapes{flex-direction:row;flex-wrap:wrap;gap:.2rem 1rem}
+  .m-back{margin-bottom:.5rem}
+  main{padding:1rem 1rem 4rem}
+  .som-t{max-width:none}.som-l{display:none}.som{flex-wrap:wrap}.som-st{width:100%;padding-left:2.7rem}
+  .m{white-space:normal}
+  .brand{font-size:1.35rem}
+}
+@media (max-width:600px){
+  .topnav button{display:none}
+  .topnav{width:100%}
+  .navsel{display:block;width:100%;min-height:44px;margin:.5rem 0 .2rem;font-family:var(--texte);font-size:1rem;font-weight:700;color:var(--bleu);border:2px solid var(--bleu);border-radius:8px;background:var(--carte)}
+}
+/* Étapes à choix, programmes de calcul */
+.choices{display:flex;flex-direction:column;gap:.45rem;margin:.4rem 0;max-width:640px}
+.opt{text-align:left;background:var(--carte);border:2px solid var(--carreau);border-radius:6px;padding:.45rem .8rem;line-height:1.45}
+.opt:hover{border-color:var(--bleu)}
+.phrase{font-size:1.2rem;font-weight:700;color:var(--bleu);margin:.2rem 0}
+.prog{margin:.3rem 0 .8rem;padding-left:1.6rem}
+.prog li{margin:.15rem 0}
+.bigexpr p,.bigexpr ol{font-size:1.05rem}
+.bigexpr .phrase{font-size:1.2rem}
+.resbox{max-width:100%;white-space:normal}
+
+/* D.S. blanc */
+.ds-exo{margin:1.2rem 0 1.8rem}
+.ds-exo h3{color:var(--bleu)}
+.ds-item{margin:.7rem 0}
+.ds-ans{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;margin:.35rem 0}
+.dsin{font-family:var(--math);font-size:1.25rem;color:var(--bleu);padding:.2rem .4rem;border:0;border-bottom:2px solid var(--bleu);background:var(--carte);width:16rem;max-width:100%}
+.dsin:focus{outline:none;background:#fff}
+.ds-radios{display:flex;flex-wrap:wrap;gap:.5rem}
+.ds-radios label{border:2px solid var(--carreau);border-radius:6px;padding:.2rem .6rem;background:var(--carte);cursor:pointer}
+[hidden]{display:none!important}
+@media print{.top,.marge,.actions,.navnext,.feu,.noprint,.ds-corr,#dsres{display:none!important}.page{display:block}body{background:#fff}main{padding:0}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="back-home" href="../">← Toutes les applications</a>
+  <div class="top-row">
+    <h1 class="brand"><span>Chapitre 5 : Calcul littéral (1)</span></h1>
+    <nav class="topnav" aria-label="Menu"><button data-nav="home">Sommaire</button><button data-nav="ds">D.S. blanc</button><button data-nav="series">Séries chronométrées</button><button data-nav="travail">Mon travail</button>
+      <select class="navsel" id="navsel" aria-label="Aller à une partie du chapitre"><option value="home">Sommaire</option><option value="ds">D.S. blanc</option><option value="series">Séries chronométrées</option><option value="travail">Mon travail</option></select></nav>
+  </div>
+</header>
+<div class="page"><aside class="marge" id="marge"></aside><main id="main"></main></div>
+<script>
+/* ================= Moteur algébrique ================= */
+const Alg = (() => {
+  function normalize(s) {
+    return String(s)
+      .replace(/[−–—]/g, '-')
+      .replace(/[×·∙]/g, '*')
+      .replace(/²/g, '^2').replace(/³/g, '^3')
+      .replace(/X/g, 'x')
+      .replace(/\[/g, '(').replace(/\]/g, ')')
+      .replace(/(\d),(\d)/g, '$1.$2')
+      .replace(/\s+/g, '');
+  }
+  function tokenize(s) {
+    const t = []; let i = 0;
+    while (i < s.length) {
+      const c = s[i];
+      if (/[0-9.]/.test(c)) {
+        let j = i; while (j < s.length && /[0-9.]/.test(s[j])) j++;
+        const str = s.slice(i, j);
+        if ((str.match(/\./g) || []).length > 1) throw new Error('nombre');
+        t.push({ k: 'num', v: parseFloat(str) }); i = j;
+      } else if (c === 'x' || c === 'n') { t.push({ k: 'x' }); i++; }
+      else if ('+-*^()'.includes(c)) { t.push({ k: c }); i++; }
+      else throw new Error('car:' + c);
+    }
+    return t;
+  }
+  function parse(src) {
+    const s = normalize(src);
+    if (!s) throw new Error('vide');
+    const t = tokenize(s); let p = 0;
+    const peek = () => t[p], eat = k => { if (!t[p] || t[p].k !== k) throw new Error('attendu ' + k); return t[p++]; };
+    function expr() {
+      const terms = [term()];
+      while (peek() && (peek().k === '+' || peek().k === '-')) {
+        const op = t[p++].k; const tm = term();
+        terms.push(op === '-' ? { t: 'neg', a: tm } : tm);
+      }
+      return terms.length === 1 ? terms[0] : { t: 'add', terms };
+    }
+    function term() {
+      if (peek() && peek().k === '-') { p++; return { t: 'neg', a: term() }; }
+      if (peek() && peek().k === '+') { p++; return term(); }
+      const fs = [factor()];
+      for (;;) {
+        const n = peek(); if (!n) break;
+        if (n.k === '*') {
+          p++;
+          if (peek() && peek().k === '-') { p++; fs.push({ t: 'neg', a: factor() }); }
+          else fs.push(factor());
+        } else if (n.k === 'x' || n.k === '(') fs.push(factor());
+        else if (n.k === 'num') {
+          const prev = fs[fs.length - 1];
+          if (prev.t === 'x' || prev.t === 'pow') throw new Error('x2');
+          fs.push(factor());
+        } else break;
+      }
+      return fs.length === 1 ? fs[0] : { t: 'mul', f: fs };
+    }
+    function factor() {
+      let b = primary();
+      while (peek() && peek().k === '^') {
+        p++;
+        let e;
+        if (peek() && peek().k === '(') { p++; const n = eat('num'); eat(')'); e = n.v; }
+        else e = eat('num').v;
+        if (!Number.isInteger(e) || e < 0 || e > 6) throw new Error('exposant');
+        b = { t: 'pow', b, e };
+      }
+      return b;
+    }
+    function primary() {
+      const n = peek(); if (!n) throw new Error('fin');
+      if (n.k === 'num') { p++; return { t: 'num', v: n.v }; }
+      if (n.k === 'x') { p++; return { t: 'x' }; }
+      if (n.k === '(') { p++; const e = expr(); eat(')'); return { t: 'par', a: e }; }
+      throw new Error('inattendu ' + n.k);
+    }
+    const r = expr();
+    if (p < t.length) throw new Error('reste');
+    return r;
+  }
+  // polynômes : tableaux de coefficients
+  const P = {
+    add(a, b) { const r = []; for (let i = 0; i < Math.max(a.length, b.length); i++) r[i] = (a[i] || 0) + (b[i] || 0); return r; },
+    neg(a) { return a.map(c => -c); },
+    mul(a, b) { const r = Array(a.length + b.length - 1).fill(0); a.forEach((x, i) => b.forEach((y, j) => r[i + j] += x * y)); return r; },
+    pow(a, e) { let r = [1]; for (let i = 0; i < e; i++) r = P.mul(r, a); return r; },
+    trim(a) { const r = a.map(c => Math.abs(c) < 1e-9 ? 0 : c); while (r.length > 1 && r[r.length - 1] === 0) r.pop(); return r; },
+    eq(a, b) { a = P.trim(a); b = P.trim(b); return a.length === b.length && a.every((c, i) => Math.abs(c - b[i]) < 1e-7); },
+    val(a, x) { return a.reduce((s, c, i) => s + c * Math.pow(x, i), 0); }
+  };
+  function toPoly(n) {
+    switch (n.t) {
+      case 'num': return [n.v];
+      case 'x': return [0, 1];
+      case 'par': return toPoly(n.a);
+      case 'neg': return P.neg(toPoly(n.a));
+      case 'add': return n.terms.map(toPoly).reduce(P.add);
+      case 'mul': return n.f.map(toPoly).reduce(P.mul);
+      case 'pow': return P.pow(toPoly(n.b), n.e);
+    }
+  }
+  const poly = src => P.trim(toPoly(parse(src)));
+  function hasPar(n) {
+    if (!n) return false;
+    if (n.t === 'par') return true;
+    if (n.t === 'neg') return hasPar(n.a);
+    if (n.t === 'add') return n.terms.some(hasPar);
+    if (n.t === 'mul') return n.f.some(hasPar);
+    if (n.t === 'pow') return hasPar(n.b);
+    return false;
+  }
+  function mono(n) {
+    if (n.t === 'num') return { c: n.v, d: 0 };
+    if (n.t === 'x') return { c: 1, d: 1 };
+    if (n.t === 'pow' && n.b.t === 'x') return { c: 1, d: n.e };
+    if (n.t === 'neg') { if (n.a.t === 'neg') return null; const m = mono(n.a); return m && { c: -m.c, d: m.d }; }
+    if (n.t === 'mul' && n.f.length === 2 && n.f[0].t === 'num') {
+      const s = n.f[1];
+      if (s.t === 'x') return { c: n.f[0].v, d: 1 };
+      if (s.t === 'pow' && s.b.t === 'x') return { c: n.f[0].v, d: s.e };
+    }
+    return null;
+  }
+  function devCheck(n) {
+    if (hasPar(n)) return { ok: false, why: 'par' };
+    const terms = n.t === 'add' ? n.terms : [n];
+    const ms = terms.map(mono);
+    if (ms.some(m => !m)) return { ok: false, why: 'mono' };
+    const ds = ms.map(m => m.d);
+    if (new Set(ds).size !== ds.length) return { ok: false, why: 'dup' };
+    if (ms.length > 1 && ms.some(m => Math.abs(m.c) < 1e-12)) return { ok: false, why: 'dup' };
+    return { ok: true };
+  }
+  const gcd = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) [a, b] = [b, a % b]; return a; };
+  function factCheck(n) {
+    let u = n; while (u.t === 'neg') u = u.a;
+    while (u.t === 'par') u = u.a;
+    if (u.t === 'add') return { ok: false, why: 'sum' };
+    let fs;
+    if (u.t === 'pow' && u.b.t === 'par') fs = [u];
+    else if (u.t === 'mul') fs = u.f;
+    else return { ok: false, why: 'notprod' };
+    let parCount = 0; const notes = [];
+    for (let f of fs) {
+      while (f.t === 'neg') f = f.a;
+      let inner = null;
+      if (f.t === 'par') inner = f.a;
+      else if (f.t === 'pow' && f.b.t === 'par') inner = f.b.a;
+      else if (f.t === 'num' || f.t === 'x' || (f.t === 'pow' && f.b.t === 'x')) continue;
+      else return { ok: false, why: 'notprod' };
+      parCount++;
+      if (inner.t !== 'add') { if (!mono(inner)) return { ok: false, why: 'inner' }; continue; }
+      if (!devCheck(inner).ok) return { ok: false, why: 'inner' };
+      const p = P.trim(toPoly(inner));
+      if (p.every(c => Number.isInteger(c))) {
+        const g = p.filter(c => c !== 0).reduce((a, c) => gcd(a, c), 0);
+        if (g > 1) notes.push({ k: 'gcd', g, inner });
+        else if (p[0] === 0 && p.length > 1) notes.push({ k: 'x', inner });
+      }
+    }
+    if (!parCount) return { ok: false, why: 'notprod' };
+    return { ok: true, full: notes.length === 0, notes };
+  }
+  return { parse, normalize, poly, P, devCheck, factCheck, toPoly, gcd };
+})();
+
+/* ================= Écriture ================= */
+const W = {
+  // terme c·x^d ; first = premier terme de l'écriture
+  mono(c, d, first) {
+    const a = Math.abs(c);
+    let body = d === 0 ? String(a) : (a === 1 ? '' : String(a)) + 'x' + (d > 1 ? '^' + d : '');
+    if (first) return (c < 0 ? '-' : '') + body;
+    return (c < 0 ? ' - ' : ' + ') + body;
+  },
+  poly(p, asc) {
+    const idx = p.map((c, i) => i).filter(i => Math.abs(p[i]) > 1e-12);
+    if (!idx.length) return '0';
+    if (!asc) idx.reverse();
+    return idx.map((i, k) => W.mono(p[i], i, k === 0)).join('');
+  },
+  lin(a, b) { return W.poly([b, a]); },
+  linRev(a, b) { return W.poly([b, a], true); },
+  sq(s) { return '(' + s + ')^2'; },
+  np(n) { return n < 0 ? '(' + W.num(n) + ')' : W.num(n); },
+  num(n) { return (n < 0 ? '-' : '') + String(Math.abs(n)).replace('.', ','); },
+  // terme entre parenthèses s'il commence par -
+  tp(s) { return s.trim().startsWith('-') ? '(' + s + ')' : s; },
+  fr(n) { return String(n).replace('.', ','); }
+};
+
+/* Affichage HTML d'une écriture mathématique */
+function fmt(s) {
+  s = String(s);
+  if (s.includes('==')) return s.split('==').map((part, i) => i % 2 ? '<mark>' + fmt(part) + '</mark>' : fmt(part)).join('');
+  let out = '';
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if (c === '^') {
+      let j = i + 1, e = '';
+      if (s[j] === '(') { j++; while (j < s.length && s[j] !== ')') e += s[j++]; j++; }
+      else while (j < s.length && /[0-9]/.test(s[j])) e += s[j++];
+      out += '<sup>' + e + '</sup>'; i = j - 1;
+    } else if (c === '-') out += '−';
+    else if (c === '*') out += '×';
+    else if (/[a-z]/.test(c)) {
+      let j = i; while (j < s.length && /[a-zé]/i.test(s[j])) j++;
+      let k = i; while (k > 0 && /[a-zé]/i.test(s[k - 1])) k--;
+      const word = s.slice(k, j);
+      out += /^[abcdknxy]+$/.test(word) ? '<i>' + c + '</i>' : c;
+    }
+    else if (c === '<') out += '&lt;';
+    else if (c === '>') out += '&gt;';
+    else if (c === '&') out += '&amp;';
+    else out += c;
+  }
+  return out.replace(/ /g, '&#8239;').replace(/&#8239;([−+=×])&#8239;/g, ' $1 ');
+}
+
+/* ================= Générateurs d'exercices ================= */
+const R = {
+  i(a, b) { return a + Math.floor(Math.random() * (b - a + 1)); },
+  nz(a, b) { let v; do v = R.i(a, b); while (v === 0); return v; },
+  pick(a) { return a[Math.floor(Math.random() * a.length)]; },
+  sgn() { return Math.random() < 0.5 ? -1 : 1; },
+  chance(p) { return Math.random() < p; },
+  shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+};
+const T = (c, d) => ({ c, d });
+const TS = {
+  alone: t => W.mono(t.c, t.d, true),
+  pp: t => t.c < 0 ? '(' + W.mono(t.c, t.d, true) + ')' : W.mono(t.c, t.d, true),
+  list: ts => ts.map((t, i) => W.mono(t.c, t.d, i === 0)).join(''),
+  prod: (a, b) => T(a.c * b.c, a.d + b.d),
+  prodStr: (f, t, first) => (first ? TS.alone(f) : TS.pp(f)) + ' * ' + TS.pp(t),
+  poly: ts => { const p = []; ts.forEach(t => p[t.d] = (p[t.d] || 0) + t.c); for (let i = 0; i < p.length; i++) p[i] = p[i] || 0; return Alg.P.trim(p); },
+  red: ts => W.poly(TS.poly(ts)),
+  // liste de termes : réduit si déjà réduite (degrés distincts), sinon réduction
+  final: ts => { const ds = ts.map(t => t.d); return new Set(ds).size === ds.length && ts.every(t => t.c !== 0) ? TS.list(ts) : TS.red(ts); }
+};
+const lab = (t, i) => i === 0 ? TS.alone(t) : (t.c < 0 ? '' : '+') + TS.alone(t);
+function mkTable(rows, cols) {
+  return { rows: rows.map(lab), cols: cols.map(lab), simple: rows.length === 1, cells: rows.map(r => cols.map(c => { const p = TS.prod(r, c); return { poly: TS.poly([p]), show: TS.alone(p), ps: TS.prodStr(r, c, true), t: p }; })) };
+}
+const TABLE_STEP = { table: true, label: 'Je remplis le tableau : dans chaque case, j’écris le produit du terme de sa ligne par le terme de sa colonne.' };
+const NAMES = ['Léo', 'Inès', 'Tom', 'Julie', 'Sacha', 'Lina', 'Noah', 'Emma'];
+const LEVELS = { v: 'vert', o: 'orange', r: 'rouge' };
+
+function mkQ(o) {
+  o.expected = Alg.poly(o.src);
+  o.errors = (o.errors || []).filter(e => !Alg.P.eq(e.poly, o.expected));
+  return o;
+}
+const err = (ts, msg) => ({ poly: Array.isArray(ts) && typeof ts[0] === 'object' ? TS.poly(ts) : ts, msg });
+
+/* ---------- Palier 1 : réduire ---------- */
+function genReduce(level) {
+  let ts;
+  if (level === 'v') {
+    const f = R.pick(['xx', 'xnx', 'nxn', 'prod']);
+    if (f === 'xx') { const a = R.i(2, 9), b = R.nz(-6, 9); ts = [T(a, 1), T(b, 1)]; if (R.chance(0.3)) ts.push(T(R.pick([1, -1]), 1)); }
+    else if (f === 'xnx') { ts = [T(R.nz(1, 9), 1), T(R.nz(-9, 9), 0), T(R.nz(-6, 9), 1)]; }
+    else if (f === 'nxn') { ts = [T(R.nz(2, 9), 0), T(R.pick([1, -1, 2, 3, -2]), 1), T(R.nz(-9, 9), 0)]; }
+    else {
+      const a = R.i(2, 6), b = R.i(2, 6), sq = R.chance(0.5);
+      const src = `${a}x * ${sq ? b + 'x' : b}`;
+      const res = T(a * b, sq ? 2 : 1);
+      return mkQ({
+        kind: 'red', palier: 1, level, consigne: 'Réduire l’expression.', src, expr: src,
+        answer: TS.alone(res),
+        steps: [{ m: `${src} = ${a} * ${b} * x${sq ? ' * x' : ''}`, c: 'Je regroupe les nombres d’un côté et les lettres de l’autre.' },
+                { m: `${src} = ${TS.alone(res)}`, c: sq ? 'Je calcule : ' + a + ' × ' + b + ' = ' + (a * b) + ' et x × x = x².' : 'Je calcule : ' + a + ' × ' + b + ' = ' + (a * b) + '.' }],
+        errors: sq ? [err([T(a * b, 1)], 'x × x = x², pas x.'), err([T(2 * a * b, 1)], 'x × x = x², pas 2x.'), err([T(a + b, 2)], 'On multiplie les nombres : ' + a + ' × ' + b + ', on ne les additionne pas.')]
+                   : [err([T(a + b, 1)], 'On multiplie les nombres : ' + a + ' × ' + b + ', on ne les additionne pas.')]
+      });
+    }
+  } else if (level === 'o') {
+    ts = R.shuffle([T(R.nz(-5, 5), 2), T(R.nz(-9, 9), 1), T(R.nz(-9, 9), 0), T(R.nz(-4, 4), 2), T(R.nz(-6, 6), 1)]);
+    if (R.chance(0.5)) ts.push(T(R.pick([1, -1]), 1));
+  } else {
+    ts = R.shuffle([T(R.nz(-5, 5), 2), T(R.pick([1, -1]), 2), T(R.nz(-9, 9), 1), T(R.pick([1, -1]), 1), T(R.nz(-9, 9), 0), T(R.nz(-9, 9), 0), T(R.nz(-6, 6), 1)]);
+  }
+  if ([0, 1, 2].some(d => ts.some(t => t.d === d) && ts.filter(t => t.d === d).reduce((a, t) => a + t.c, 0) === 0)) return genReduce(level);
+  const src = TS.list(ts);
+  const p = TS.poly(ts);
+  const groups = [2, 1, 0].filter(d => ts.some(t => t.d === d));
+  const gName = { 2: 'les termes en x²', 1: 'les termes en x', 0: 'les nombres' };
+  const regroup = groups.map(d => ts.filter(t => t.d === d)).flat();
+  const steps = [];
+  steps.push({ m: `${src} = ${TS.list(regroup)}`, c: 'Je regroupe les termes de la même famille : ' + groups.map(d => gName[d]).join(', puis ') + '.' });
+  steps.push({ m: `${src} = ${W.poly(p)}`, c: 'Je calcule chaque famille séparément.' + (ts.some(t => Math.abs(t.c) === 1 && t.d > 0) ? ' Attention : x = 1x et −x = −1x.' : '') });
+  const errors = [];
+  // tout additionner en x
+  errors.push(err([0, ts.reduce((s, t) => s + t.c, 0)], 'On ne peut pas ajouter des termes de familles différentes : 2x + 3 ne se réduit pas.'));
+  // ±x comptés comme 0
+  if (ts.some(t => Math.abs(t.c) === 1 && t.d > 0)) errors.push(err(ts.filter(t => !(Math.abs(t.c) === 1 && t.d > 0)), 'N’oublie pas les termes x et −x : x = 1x et −x = −1x.'));
+  // x² et x mélangés
+  if (ts.some(t => t.d === 2)) errors.push(err([p[0] || 0, (p[1] || 0) + (p[2] || 0)], 'Les termes en x² et les termes en x ne sont pas de la même famille.'));
+  const guided = groups.map(d => ({ label: `Je réduis ${gName[d]} : ${fmt(TS.list(ts.filter(t => t.d === d)))} =`, poly: TS.poly(ts.filter(t => t.d === d)), show: W.poly(TS.poly(ts.filter(t => t.d === d))) }));
+  guided.push({ label: 'J’écris le résultat :', final: true });
+  return mkQ({ kind: 'red', palier: 1, level, consigne: 'Réduire l’expression.', src, expr: src, answer: W.poly(p), steps, errors, guided });
+}
+
+/* ---------- Palier 2 : simple distributivité et parenthèses ---------- */
+function simpleParts(k, inner) {
+  const prods = inner.map(t => TS.prod(k, t));
+  const pStr = inner.map((t, i) => TS.prodStr(k, t, i === 0)).join(' + ');
+  return { prods, pStr };
+}
+function genSimpleBasic(level) {
+  let k, inner;
+  if (level === 'v') {
+    if (R.chance(0.25)) { k = R.chance(0.6) ? T(1, 1) : T(R.i(2, 5), 1); inner = [T(R.pick([1, 1, 2, 3]), 1), T(R.nz(-9, 9), 0)]; }
+    else { k = T(R.i(2, 9), 0); inner = [T(R.pick([1, 1, 1, 2, 3, 4, 5]), 1), T(R.i(1, 9) * (R.chance(0.35) ? -1 : 1), 0)]; }
+  } else {
+    const f = R.pick(['negk', 'negk', 'negx', 'rev']);
+    if (f === 'negk') { k = T(-R.i(2, 9), 0); inner = [T(R.i(1, 5), 1), T(R.nz(-9, 9), 0)]; }
+    else if (f === 'negx') { k = T(R.pick([-1, -2, -3]), 1); inner = [T(R.i(1, 4), 1), T(R.nz(-9, 9), 0)]; }
+    else { k = T(R.i(2, 9) * (R.chance(0.5) ? -1 : 1), 0); inner = [T(R.nz(1, 9), 0), T(-R.i(1, 5), 1)]; }
+  }
+  const kStr = TS.alone(k);
+  const src = `${kStr}(${TS.list(inner)})`;
+  const { prods, pStr } = simpleParts(k, inner);
+  const steps = [
+    { arrow: { type: 'simple', f: kStr, terms: inner.map((t, i) => W.mono(t.c, t.d, i === 0)) }, rest: ' = ' + pStr,
+      c: `Je trace une flèche de ${fmt(kStr)} vers chaque terme de la parenthèse, puis j’écris les produits en gardant le signe de chaque terme.` },
+    { m: `${src} = ${TS.final(prods)}`, c: 'Je calcule chaque produit.' + (k.c < 0 ? ' Attention aux signes : deux nombres de même signe donnent un produit positif.' : '') }
+  ];
+  const errors = [
+    err([prods[0], inner[1]], `${fmt(kStr)} doit multiplier chaque terme de la parenthèse : trace une flèche vers chaque terme.`),
+    err([prods[0], T(-prods[1].c, prods[1].d)], 'Vérifie le signe du deuxième produit : ' + fmt(TS.prodStr(k, inner[1], false)) + ' = ' + fmt(TS.alone(prods[1])) + '.'),
+  ];
+  if (k.d === 1 && inner.some(t => t.d === 1)) {
+    const i = inner.findIndex(t => t.d === 1);
+    const wrong = prods.slice(); wrong[i] = T(prods[i].c, 1);
+    errors.push(err(wrong, 'x × x = x², pas x.'));
+    const wrong2 = prods.slice(); wrong2[i] = T(2 * prods[i].c, 1);
+    errors.push(err(wrong2, 'x × x = x², pas 2x.'));
+  }
+  const guided = [TABLE_STEP, { label: `Donc ${fmt(src)} =`, final: true }];
+  return mkQ({ kind: 'dev', palier: 2, level, consigne: 'Développer.', src, expr: src, answer: TS.final(prods), steps, errors, guided, table: mkTable([k], inner) });
+}
+function genParen(level) {
+  // c ± (a + b) ou (x + p) − (q − x) ou ax − (bx + c)
+  const f = level === 'v' ? R.pick(['c+', 'c-', 'c-']) : R.pick(['c-', 'ax-', 'pp']);
+  let left, minus, inner;
+  if (f === 'c+') { left = [T(R.i(1, 9), 0)]; minus = false; inner = [T(R.i(1, 5), 1), T(R.nz(-9, 9), 0)]; }
+  else if (f === 'c-') { left = [T(R.i(2, 12), 0)]; minus = true; inner = R.chance(0.5) ? [T(R.pick([1, 1, 2, 3]), 1), T(R.nz(-9, 9), 0)] : [T(R.i(1, 9), 0), T(-R.pick([1, 2, 3]), 1)]; }
+  else if (f === 'ax-') { left = [T(R.i(2, 6), 1)]; minus = true; inner = [T(R.i(1, 5), 1), T(R.nz(-9, 9), 0)]; }
+  else { left = [T(1, 1), T(R.nz(-6, 6), 0)]; minus = true; inner = [T(R.i(1, 9), 0), T(-1, 1)]; }
+  const lStr = left.length > 1 ? '(' + TS.list(left) + ')' : TS.list(left);
+  const src = `${lStr} ${minus ? '-' : '+'} (${TS.list(inner)})`;
+  const opp = inner.map(t => T(minus ? -t.c : t.c, t.d));
+  const all = left.concat(opp);
+  const steps = [];
+  if (left.length > 1) steps.push({ m: `${src} = ${TS.list(left)} ${minus ? '-' : '+'} (${TS.list(inner)})`, c: 'La première parenthèse est précédée du signe + (il n’y a rien devant) : je la supprime sans rien changer.' });
+  if (minus) {
+    steps.push({ m: `${src} = ${TS.list(left)} + (-1) * (${TS.list(inner)})`, c: 'Une parenthèse précédée du signe − : c’est −1 × la parenthèse.' });
+    steps.push({ m: `${src} = ${TS.list(all)}`, c: 'Je supprime la parenthèse et je change tous les signes à l’intérieur.' });
+  } else steps.push({ m: `${src} = ${TS.list(all)}`, c: 'Une parenthèse précédée du signe + : je la supprime et je garde les signes.' });
+  steps.push({ m: `${src} = ${TS.red(all)}`, c: 'Je réduis.' });
+  const errors = minus ? [
+    err(left.concat([opp[0], inner[1]]), 'Il faut changer TOUS les signes à l’intérieur de la parenthèse, pas seulement le premier.'),
+    err(left.concat(inner), 'La parenthèse est précédée du signe − : quand on la supprime, on change tous les signes à l’intérieur.')
+  ] : [];
+  const guided = [{ label: minus ? `Sans la parenthèse : −(${fmt(TS.list(inner))}) =` : `Sans la parenthèse : +(${fmt(TS.list(inner))}) =`, poly: TS.poly(opp), show: TS.list(opp) },
+                  { label: `Je réduis : ${fmt(src)} =`, final: true }];
+  return mkQ({ kind: 'dev', palier: 2, level, consigne: 'Supprimer les parenthèses, puis réduire.', src, expr: src, answer: TS.red(all), steps, errors, guided });
+}
+function genSimpleCombo(level) {
+  // c − k(ax + b) ; k1(..) ± k2(..) ; x(x + a) − k(x + a)
+  const f = R.pick(['c-k', 'kk', 'kk', 'xk']);
+  let parts; // [{k, inner}] ou constante
+  if (f === 'c-k') parts = [{ c: T(R.i(2, 12), 0) }, { k: T(-R.i(2, 6), 0), inner: [T(R.i(1, 5), 1), T(R.nz(-9, 9), 0)] }];
+  else if (f === 'kk') parts = [{ k: T(R.i(2, 6), 0), inner: [T(R.i(1, 4), 1), T(R.nz(-9, 9), 0)] }, { k: T(R.nz(-6, 6), 0), inner: [T(R.i(1, 4), 1), T(R.nz(-9, 9), 0)] }];
+  else { const a = R.nz(-6, 6); parts = [{ k: T(1, 1), inner: [T(1, 1), T(a, 0)] }, { k: T(-R.i(2, 6), 0), inner: [T(1, 1), T(a, 0)] }]; }
+  if (parts[1].k && Math.abs(parts[1].k.c) === 1 && parts[1].k.d === 0) parts[1].k.c *= 2;
+  const pieceSrc = (p, i) => {
+    if (p.c) return (i ? (p.c.c < 0 ? ' - ' : ' + ') : '') + TS.alone(T(i ? Math.abs(p.c.c) : p.c.c, p.c.d));
+    const kk = T(i ? Math.abs(p.k.c) : p.k.c, p.k.d);
+    return (i ? (p.k.c < 0 ? ' - ' : ' + ') : '') + TS.alone(kk) + '(' + TS.list(p.inner) + ')';
+  };
+  const src = parts.map(pieceSrc).join('');
+  const prodLine = [], prods = [];
+  parts.forEach((p, i) => {
+    if (p.c) { prodLine.push((i ? ' + ' : '') + (i ? TS.pp(p.c) : TS.alone(p.c))); prods.push(p.c); return; }
+    p.inner.forEach((t, j) => { prodLine.push((i || j ? ' + ' : '') + TS.prodStr(p.k, t, !i && !j)); prods.push(TS.prod(p.k, t)); });
+  });
+  const neg = parts.find((p, i) => i && p.k && p.k.c < 0);
+  const steps = [
+    { m: `${src} = ${prodLine.join('')}`, c: 'Je développe chaque produit avec les flèches.' + (neg ? ` Le facteur est ${fmt(TS.alone(neg.k))} : il multiplie chaque terme de sa parenthèse.` : '') },
+    { m: `${src} = ${TS.list(prods)}`, c: 'Je calcule chaque produit.' },
+    { m: `${src} = ${TS.red(prods)}`, c: 'Je réduis.' }
+  ];
+  const errors = [];
+  const last = parts[parts.length - 1];
+  if (last.k && last.k.c < 0) {
+    const w = prods.slice(); w[w.length - 1] = T(-w[w.length - 1].c, w[w.length - 1].d);
+    errors.push(err(w, `Le facteur ${fmt(TS.alone(last.k))} multiplie aussi le deuxième terme de la parenthèse : attention au signe.`));
+  }
+  if (f === 'c-k') {
+    const c = parts[0].c.c, k = parts[1].k.c;
+    errors.push(err(parts[1].inner.map(t => T((c + k) * t.c, t.d)), 'La multiplication est prioritaire : on ne calcule pas ' + c + ' − ' + (-k) + ' en premier.'));
+  }
+  return mkQ({ kind: 'dev', palier: 2, level, consigne: 'Développer, puis réduire.', src, expr: src, answer: TS.red(prods), steps, errors });
+}
+function genP2(level) {
+  if (level === 'v') return R.chance(0.75) ? genSimpleBasic('v') : genParen('v');
+  if (level === 'o') return R.chance(0.6) ? genSimpleBasic('o') : genParen('o');
+  return R.chance(0.75) ? genSimpleCombo('r') : genParen('o');
+}
+
+/* ---------- Palier 3 : double distributivité ---------- */
+function dblParts(A, B) {
+  const pStr = [], prods = [];
+  A.forEach((a, i) => B.forEach((b, j) => { pStr.push(TS.prodStr(a, b, !i && !j)); prods.push(TS.prod(a, b)); }));
+  return { pStr: pStr.join(' + '), prods };
+}
+function lin2(level, revOK) {
+  const a = level === 'v' ? 1 : R.pick([1, 1, 2, 3, 4, 5]);
+  const b = R.nz(-9, 9);
+  if (revOK && R.chance(0.3)) return [T(Math.abs(b), 0), T(-a, 1)];
+  return [T(a, 1), T(b, 0)];
+}
+function genDoubleBasic(level, opts = {}) {
+  let A, B, square = false;
+  if (level === 'v') {
+    A = [T(1, 1), T(R.i(1, 9) * (R.chance(0.3) ? -1 : 1), 0)];
+    B = [T(1, 1), T(R.i(1, 9) * (A[1].c < 0 ? 1 : (R.chance(0.3) ? -1 : 1)), 0)];
+  } else if (!opts.noSquare && R.chance(0.25)) {
+    square = true; A = [T(R.pick([1, 1, 2, 3]), 1), T(R.nz(-9, 9), 0)]; B = A;
+  } else { A = lin2('o', true); B = lin2('o', true); }
+  const sA = TS.list(A), sB = TS.list(B);
+  const src = square ? `(${sA})^2` : `(${sA})(${sB})`;
+  const { pStr, prods } = dblParts(A, B);
+  const steps = [];
+  if (square) steps.push({ m: `${src} = (${sA})(${sA})`, c: 'J’écris le carré comme un produit : la parenthèse multipliée par elle-même.' });
+  steps.push({ arrow: { type: 'double', A: A.map((t, i) => W.mono(t.c, t.d, i === 0)), B: B.map((t, i) => W.mono(t.c, t.d, i === 0)) }, pre: square ? src + ' = ' : '', rest: ' = ' + pStr,
+               c: 'Je trace les 4 flèches : chaque terme de la première parenthèse vers chaque terme de la deuxième. J’écris les 4 produits en gardant le signe de chaque terme.' });
+  steps.push({ m: `${src} = ${TS.list(prods)}`, c: 'Je calcule chaque produit.' });
+  steps.push({ m: `${src} = ${TS.red(prods)}`, c: 'Je réduis.' });
+  const errors = [
+    err([prods[0], prods[3]], 'Il doit y avoir 4 produits : chaque terme de la première parenthèse multiplie chaque terme de la deuxième.'),
+  ];
+  if (square) errors.unshift(err([TS.prod(A[0], A[0]), TS.prod(A[1], A[1])], `(${fmt(sA)})² n’est pas égal à ${fmt(TS.alone(TS.prod(A[0], A[0])))} + ${fmt(TS.alone(TS.prod(A[1], A[1])))} : écris le carré comme un produit, puis développe.`));
+  const guided = [TABLE_STEP, { label: `J’ajoute les 4 cases, puis je réduis : ${fmt(src)} =`, final: true }];
+  return mkQ({ kind: 'dev', palier: 3, level, consigne: 'Développer, puis réduire.', src, expr: src, answer: TS.red(prods), steps, errors, guided, table: mkTable(A, B), square });
+}
+function genDoubleCombo() {
+  const f = R.pick(['c-P', 'P+P', 'P-P', 'P+k']);
+  const P = () => [lin2('o', true), lin2('o', true)];
+  let parts;
+  if (f === 'c-P') parts = [{ c: T(R.i(2, 12), 0) }, { s: -1, AB: [[T(1, 1), T(R.nz(-6, 6), 0)], [T(1, 1), T(R.nz(-6, 6), 0)]] }];
+  else if (f === 'P+P') parts = [{ s: 1, AB: P() }, { s: 1, AB: P() }];
+  else if (f === 'P-P') parts = [{ s: 1, AB: P() }, { s: -1, AB: P() }];
+  else parts = [{ s: 1, AB: P() }, { s: R.sgn(), k: R.i(2, 6), inner: [T(1, 1), T(R.nz(-9, 9), 0)] }];
+  const pieceSrc = (p, i) => {
+    const sg = i ? (p.c ? (p.c.c < 0 ? ' - ' : ' + ') : (p.s < 0 ? ' - ' : ' + ')) : '';
+    if (p.c) return sg + Math.abs(p.c.c);
+    if (p.k) return sg + p.k + '(' + TS.list(p.inner) + ')';
+    return sg + '(' + TS.list(p.AB[0]) + ')(' + TS.list(p.AB[1]) + ')';
+  };
+  const src = parts.map(pieceSrc).join('');
+  const devs = parts.map(p => {
+    if (p.c) return [p.c];
+    if (p.k) return p.inner.map(t => TS.prod(T(p.k, 0), t));
+    return dblParts(p.AB[0], p.AB[1]).prods;
+  });
+  const reds = devs.map(d => TS.poly(d));
+  const line1 = parts.map((p, i) => {
+    const sg = i ? (p.c ? '' : (p.s < 0 ? ' - ' : ' + ')) : '';
+    if (p.c) return (i ? (p.c.c < 0 ? ' - ' : ' + ') : '') + Math.abs(p.c.c);
+    return sg + '(' + W.poly(reds[i]) + ')';
+  }).join('');
+  const flat = [];
+  parts.forEach((p, i) => {
+    if (p.c) { flat.push(p.c); return; }
+    const s = p.s < 0 ? -1 : 1;
+    reds[i].forEach((c, d) => { if (c) flat.push(T(s * c, d)); });
+  });
+  flat.sort((a, b) => 0);
+  const ord = [];
+  parts.forEach((p, i) => { if (p.c) ord.push(p.c); else { const s = p.s < 0 ? -1 : 1; [2, 1, 0].forEach(d => { if (reds[i][d]) ord.push(T(s * reds[i][d], d)); }); } });
+  const steps = [
+    { m: `${src} = ${line1}`, c: 'Je développe et je réduis chaque produit à part. J’écris chaque résultat entre parenthèses.' },
+    { m: `${src} = ${TS.list(ord)}`, c: parts.some(p => p.s < 0) ? 'Je supprime les parenthèses. Devant une parenthèse précédée du signe −, je change tous les signes.' : 'Je supprime les parenthèses : elles sont précédées du signe +, je garde les signes.' },
+    { m: `${src} = ${TS.red(ord)}`, c: 'Je réduis.' }
+  ];
+  const errors = [];
+  const mi = parts.findIndex(p => p.s < 0);
+  if (mi > 0) {
+    const w = [];
+    let firstDone = false;
+    parts.forEach((p, i) => {
+      if (p.c) { w.push(p.c); return; }
+      const s = p.s < 0 ? -1 : 1;
+      [2, 1, 0].forEach(d => { if (reds[i][d]) { if (i === mi && firstDone) w.push(T(reds[i][d], d)); else w.push(T(s * reds[i][d], d)); if (i === mi) firstDone = true; } });
+    });
+    errors.push(err(w, 'Quand on soustrait un produit, on écrit son développement entre parenthèses, puis on change TOUS les signes, pas seulement le premier.'));
+  }
+  return mkQ({ kind: 'dev', palier: 3, level: 'r', consigne: 'Développer, puis réduire.', src, expr: src, answer: TS.red(ord), steps, errors });
+}
+function genP3(level) { return level === 'r' ? (R.chance(0.8) ? genDoubleCombo() : genDoubleBasic('o')) : genDoubleBasic(level); }
+
+/* ---------- Palier 4 : factoriser ---------- */
+function genFactSimple(level) {
+  // facteur k (nombre), x ou kx ; intérieur a·x + b premiers entre eux
+  let k, inner;
+  if (level === 'v') {
+    if (R.chance(0.3)) { k = T(1, 1); inner = [T(1, 1), T(R.nz(-9, 9), 0)]; }
+    else {
+      k = T(R.i(2, 9), 0);
+      let a, b; do { a = R.pick([1, 1, 1, 2, 3]); b = R.nz(-9, 9); } while (Alg.gcd(a, b) !== 1);
+      inner = [T(a, 1), T(b, 0)];
+    }
+  } else {
+    if (R.chance(0.6)) {
+      k = T(R.i(1, 5), 1);
+      let a, b; do { a = R.nz(-5, 5); b = R.nz(-9, 9); } while (Alg.gcd(a, b) !== 1 || a < 0 && b < 0);
+      inner = [T(a, 1), T(b, 0)];
+    } else {
+      k = T(R.pick([4, 5, 6, 7, 8, 9, 10, 12]), 0);
+      let a, b; do { a = R.pick([1, 2, 3]); b = R.nz(-9, 9); } while (Alg.gcd(a, b) !== 1);
+      inner = [T(a, 1), T(b, 0)];
+    }
+  }
+  if (inner[0].c < 0) inner = [inner[1], inner[0]];
+  const prods = inner.map(t => TS.prod(k, t));
+  const order = R.chance(0.2) && level !== 'v' ? [1, 0] : [0, 1];
+  const shown = order.map(i => prods[i]);
+  const src = TS.list(shown);
+  const kStr = TS.alone(k);
+  const factorStr = `${kStr}(${TS.list(order.map(i => inner[i]))})`;
+  const prodLine = order.map((i, j) => (j ? (inner[i].c < 0 ? ' - ' : ' + ') : (inner[i].c < 0 ? '-' : '')) + '==' + kStr + '== * ' + TS.alone(T(Math.abs(inner[i].c), inner[i].d))).join('');
+  const kName = k.d === 0 ? 'un nombre' : k.c === 1 ? 'la lettre x' : 'le produit ' + kStr;
+  const steps = [
+    { m: `${src} = ${prodLine}`, c: `J’écris chaque terme sous la forme d’un produit et je surligne le facteur commun : c’est ${kName}${k.d === 0 && k.c > 3 ? ', le plus grand possible' : ''}.` },
+    { m: `${src} = ${factorStr}`, c: 'J’écris le facteur commun devant une parenthèse, puis je mets dans la parenthèse ce qui reste de chaque terme.' }
+  ];
+  const guided = [
+    { label: 'Le facteur commun (le plus grand possible) est :', poly: TS.poly([k]), show: kStr, factorStep: true },
+    { label: `Ce qui reste du terme ${fmt(TS.alone(shown[0]))} :`, poly: TS.poly([inner[order[0]]]), show: TS.alone(inner[order[0]]) },
+    { label: `Ce qui reste du terme ${fmt(TS.alone(shown[1]))} (avec son signe) :`, poly: TS.poly([inner[order[1]]]), show: TS.alone(inner[order[1]]) },
+    { label: `Donc ${fmt(src)} =`, final: true }
+  ];
+  return mkQ({ kind: 'fact', palier: 4, level, consigne: 'Factoriser.', src, expr: src, answer: factorStr, steps, errors: [], guided, needFull: true });
+}
+function genFactParen() {
+  const f = R.pick(['T1', 'T2', 'T3', 'T4']);
+  let F, X, Y, sign = 1, src, srcTxt;
+  const lin = (aMax) => { let a, b; do { a = R.i(1, aMax); b = R.nz(-9, 9); } while (Alg.gcd(a, b) !== 1); return [T(a, 1), T(b, 0)]; };
+  for (let tries = 0; tries < 50; tries++) {
+    if (f === 'T1') { F = [T(1, 1), T(R.nz(-6, 6), 0)]; X = [T(1, 1), T(R.nz(-9, 9), 0)]; Y = [T(R.i(2, 6) * R.sgn(), 0)]; sign = 1; }
+    else if (f === 'T2') { F = [T(1, 1), T(R.nz(-6, 6), 0)]; X = [T(R.i(2, 7), 0)]; Y = [T(1, 1)]; sign = 1; }
+    else if (f === 'T3') { F = lin(3); X = lin(4); Y = lin(3); sign = -1; }
+    else { F = lin(3); X = lin(3); Y = lin(3); sign = 1; }
+    const rest = TS.poly(X.concat(Y.map(t => T(sign * t.c, t.d))));
+    const ints = rest.filter(c => c !== 0);
+    if (ints.length < 2 || rest[1] === 0 || rest[0] === 0) continue;
+    if (ints.reduce((a, c) => Alg.gcd(a, c), 0) !== 1) continue;
+    if (Alg.P.eq(TS.poly(X), TS.poly(F)) || Alg.P.eq(TS.poly(Y), TS.poly(F))) continue;
+    break;
+  }
+  const sF = '(' + TS.list(F) + ')';
+  const piece = (P) => P.length === 1 ? (P[0].d === 0 ? String(Math.abs(P[0].c)) : TS.alone(T(Math.abs(P[0].c), P[0].d))) : '(' + TS.list(P) + ')';
+  let t1, t2;
+  if (f === 'T1') { t1 = sF + piece(X); t2 = sF + ' * ' + piece(Y); }
+  else if (f === 'T2') { t1 = piece(X) + sF; t2 = piece(Y) + sF; }
+  else { t1 = sF + piece(X); t2 = sF + piece(Y); }
+  const s2 = (f === 'T1' && Y[0].c < 0) ? -1 : sign;
+  const Yeff = (f === 'T1' && Y[0].c < 0) ? [T(-Y[0].c, 0)] : Y;
+  src = t1 + (s2 < 0 ? ' - ' : ' + ') + t2;
+  const hl = s => s.split(sF).join('==' + sF + '==');
+  const restTerms = X.concat(Yeff.map(t => T(s2 * t.c, t.d)));
+  const rp = TS.poly(restTerms); const restRed = (rp[1] < 0 && rp[0] > 0) ? W.poly(rp, true) : W.poly(rp);
+  const bracket = (X.length > 1 ? '(' + TS.list(X) + ')' : TS.list(X)) + (s2 < 0 ? ' - ' : ' + ') + (Yeff.length > 1 ? '(' + TS.list(Yeff) + ')' : TS.alone(T(Math.abs(Yeff[0].c), Yeff[0].d)));
+  const answer = `${sF}(${restRed})`;
+  const steps = [
+    { m: `${src} = ${hl(t1)}${s2 < 0 ? ' - ' : ' + '}${hl(t2)}`, c: `Je surligne le facteur commun : c’est la parenthèse ${fmt(sF)}. Je peux l’appeler A pour mieux la voir.` },
+    { m: `${src} = ${sF}[${bracket}]`, c: 'J’écris le facteur commun devant, puis ce qui reste de chaque terme entre crochets.' + (s2 < 0 ? ' Le signe − porte sur tout le deuxième reste.' : '') },
+    { m: `${src} = ${answer}`, c: 'Je réduis l’expression entre crochets.' }
+  ];
+  const errors = [];
+  if (s2 < 0 && Yeff.length > 1) {
+    const w = X.concat([T(-Yeff[0].c, Yeff[0].d)], Yeff.slice(1));
+    errors.push(err(Alg.P.mul(TS.poly(F), TS.poly(w)), 'Le signe − porte sur tout ce qui reste du deuxième terme : il faut changer tous ses signes.'));
+  }
+  const guided = [
+    { label: 'Le facteur commun est :', poly: TS.poly(F), show: sF, factorStep: true },
+    { label: `Ce qui reste du 1er terme ${fmt(t1)} :`, poly: TS.poly(X), show: TS.list(X) },
+    { label: `Ce qui reste du 2e terme ${fmt(t2)} (avec le signe ${s2 < 0 ? '−' : '+'} devant) :`, poly: TS.poly(Yeff.map(t => T(s2 * t.c, t.d))), show: TS.list(Yeff.map(t => T(s2 * t.c, t.d))) },
+    { label: `Donc ${fmt(src)} =`, final: true }
+  ];
+  return mkQ({ kind: 'fact', palier: 4, level: 'r', consigne: 'Factoriser, puis réduire l’expression entre crochets.', src, expr: src, answer, steps, errors, guided, needFull: true });
+}
+function genP4(level) { return level === 'r' ? genFactParen() : genFactSimple(level); }
+
+/* ---------- Vrai ou faux ---------- */
+function genVF(base) {
+  const name = R.pick(NAMES);
+  const wrongs = base.errors.filter(e => e.poly);
+  const isTrue = !wrongs.length || R.chance(0.35);
+  let claimPoly, msg = '';
+  if (isTrue) claimPoly = base.expected;
+  else { const e = R.pick(wrongs); claimPoly = e.poly; msg = e.msg; }
+  const claim = base.kind === 'fact' && isTrue ? base.answer : W.poly(claimPoly);
+  return Object.assign({}, base, { kind: 'vf', vfBase: base.kind, name, claim, isTrue, vfMsg: msg, consigne: `${name} a écrit le calcul ci-dessous. Est-il juste ?` });
+}
+
+/* ---------- Palier 0 : le sens de la lettre ---------- */
+function mkQ0(o) {
+  if (!o.expected) o.expected = Alg.poly(o.src);
+  o.errors = (o.errors || []).filter(e => !Alg.P.eq(e.poly, o.expected));
+  return o;
+}
+// Remplace x par une valeur, en écrivant les signes × cachés et des parenthèses autour d'un nombre négatif.
+function subst(src, v, opt = {}) {
+  const val = opt.naive ? W.num(v) : W.np(v);
+  let out = '';
+  for (let i = 0; i < src.length; i++) {
+    const c = src[i];
+    if (c === 'x') {
+      const prev = out.replace(/\s+$/, '').slice(-1);
+      const hidden = /[0-9)]/.test(prev);
+      if (opt.naive) out += val;
+      else if (opt.plus) out += (hidden ? ' + ' : '') + val + (src[i + 1] === '(' ? ' + ' : '');
+      else out += (hidden ? ' * ' : '') + val + (src[i + 1] === '(' ? ' * ' : '');
+    } else out += c;
+  }
+  return out;
+}
+const VAL_FORMS = {
+  v: [a => `${a}x + ${R.i(1, 9)}`, () => `${R.i(10, 20)} - x`, () => 'x^2', a => `${a}x - ${R.i(1, 9)}`],
+  o: [a => `${a}x + ${R.i(1, 9)}`, () => `${R.i(2, 9)} - x`, () => 'x^2', () => `${R.i(2, 5)}x^2`, () => `(${R.i(2, 4)}x)^2`, () => `x(x + ${R.i(1, 6)})`],
+  r: [() => `${R.i(2, 5)}x^2`, () => `(${R.i(2, 4)}x)^2`, () => `x(x + ${R.i(1, 6)})`, () => `x^2 - ${R.i(2, 5)}x + ${R.i(1, 9)}`, () => `${R.i(2, 5)}(x - ${R.i(1, 6)})`, () => `(x + ${R.i(1, 5)})^2`]
+};
+function genValue(level) {
+  const src = R.pick(VAL_FORMS[level])(R.i(2, 7));
+  const v = level === 'v' ? R.i(2, 9) : (R.chance(0.65) ? -R.i(1, 6) : R.i(2, 7));
+  const good = subst(src, v);
+  const value = Alg.P.val(Alg.poly(src), v);
+  const vs = W.num(v);
+  const sq = src.includes('^2');
+  const steps = [
+    { m: `E = ${good}`, c: `Je remplace x par ${fmt(vs)}${v < 0 ? ', entre parenthèses car c’est un nombre négatif' : ''}. J’écris les signes × qui étaient cachés.` },
+    { m: `E = ${W.num(value)}`, c: 'Je calcule en respectant les priorités : d’abord les parenthèses et les carrés, puis les multiplications, puis les additions et les soustractions.' + (sq && v < 0 ? ` Attention : ${fmt(W.np(v) + '^2')} = ${fmt(W.np(v) + ' * ' + W.np(v))} = ${fmt(W.num(v * v))}.` : '') }
+  ];
+  // propositions pour la pratique guidée : la bonne écriture et deux erreurs fréquentes
+  const opts = [good];
+  [subst(src, v, { naive: true }), subst(src, v, { plus: true }), src.replace(/x/g, W.num(v)), src.replace(/x\^2/g, '2 * ' + W.np(v)), good + ' + ' + W.np(v), W.np(v) + ' + ' + good]
+    .forEach(s => { if (!opts.includes(s) && opts.length < 3) opts.push(s); });
+  const order = R.shuffle([0, 1, 2]);
+  const errors = [];
+  if (sq && v < 0) {
+    const wrongVal = Alg.P.val(Alg.poly(src.replace(/x\^2/g, '(0 - x^2)')), v);
+    if (wrongVal !== value) errors.push({ poly: [wrongVal], msg: `Attention au carré : ${fmt(W.np(v) + '^2')} = ${fmt(W.num(v * v))}, c’est un nombre positif.` });
+  }
+  return mkQ0({
+    kind: 'val', palier: 0, level, letter: 'x',
+    consigne: `Calculer la valeur de l’expression E pour x = ${fmt(vs)}.`, head: m('E = ' + src), src, expected: [value], answer: W.num(value),
+    resHtml: `<div class="resbox">Pour ${m('x = ' + vs)}, ${m('E = ' + W.num(value))}</div>`, steps, errors,
+    guided: [
+      { choice: true, label: `Je remplace x par ${fmt(vs)}. Quelle écriture est juste ?`, options: order.map(i => m('E = ' + opts[i])), a: order.indexOf(0), show: m('E = ' + good),
+        hint: 'Il faut écrire les signes × cachés' + (v < 0 ? ' et mettre le nombre négatif entre parenthèses.' : '.') },
+      { label: 'Je calcule : E =', final: true }
+    ],
+    seul: [{ label: `Pour x = ${fmt(vs)} : E =`, final: true }]
+  });
+}
+const MULT = { 2: 'double', 3: 'triple', 4: 'quadruple', 5: 'quintuple' };
+function genTrad(level) {
+  const a = R.i(2, 9), k = R.i(2, 4), K = MULT[k];
+  const bank = {
+    v: [[`le ${K} de x`, `${k}x`, 'Le ' + K + ' de x, c’est ' + k + ' × x.', [`x + ${k}`, `x^${k}`]],
+        [`la somme de x et de ${a}`, `x + ${a}`, 'Une somme est le résultat d’une addition.', [`${a}x`, `x - ${a}`]],
+        [`la différence de x et de ${a}`, `x - ${a}`, 'Une différence est le résultat d’une soustraction.', [`x + ${a}`, `${a} - x`]],
+        [`le produit de x par ${a}`, `${a}x`, 'Un produit est le résultat d’une multiplication.', [`x + ${a}`, `${a} + x^2`]],
+        ['le carré de x', 'x^2', 'Le carré de x, c’est x × x.', ['2x', 'x + 2']]],
+    o: [[`le ${K} de la somme de x et de ${a}`, `${k}(x + ${a})`, `Le mot « ${K} » porte sur toute la somme : je mets la somme entre parenthèses.`, [`${k}x + ${a}`, `x + ${k * a}`]],
+        [`la somme du ${K} de x et de ${a}`, `${k}x + ${a}`, `Le mot « somme » vient en premier : c’est une addition. Le premier terme est le ${K} de x.`, [`${k}(x + ${a})`, `x + ${k * a}`]],
+        [`le carré de la somme de x et de ${a}`, `(x + ${a})^2`, 'Le mot « carré » porte sur toute la somme : je mets la somme entre parenthèses.', [`x^2 + ${a}`, `x^2 + ${a * a}`]],
+        [`la somme du carré de x et de ${a}`, `x^2 + ${a}`, 'Le mot « somme » vient en premier : c’est une addition. Le premier terme est le carré de x.', [`(x + ${a})^2`, `2x + ${a}`]],
+        [`le ${K} de la différence de x et de ${a}`, `${k}(x - ${a})`, `Le mot « ${K} » porte sur toute la différence : je mets la différence entre parenthèses.`, [`${k}x - ${a}`, `x - ${k * a}`]]],
+    r: [[`le périmètre d’un rectangle de longueur x + ${a} et de largeur x`, `2(x + ${a} + x)`, 'Le périmètre d’un rectangle, c’est 2 × (longueur + largeur).', [`x(x + ${a})`, `2x + ${a}`]],
+        [`l’aire d’un rectangle de longueur x + ${a} et de largeur x`, `x(x + ${a})`, 'L’aire d’un rectangle, c’est longueur × largeur.', [`2(x + ${a} + x)`, `x + ${a} + x`]],
+        [`le produit de x par la somme de x et de ${a}`, `x(x + ${a})`, 'Le mot « produit » vient en premier : c’est une multiplication. Le deuxième facteur est la somme, entre parenthèses.', [`x^2 + ${a}`, `2x + ${a}`]],
+        [`la somme de x et de son carré`, 'x + x^2', 'Le mot « somme » vient en premier : c’est une addition de x et de x × x.', ['2x^2', 'x^3']]]
+  };
+  const [ph, ans, why, wrongs] = R.pick(bank[level]);
+  const phrase = ph[0].toUpperCase() + ph.slice(1);
+  const order = R.shuffle([0, 1, 2]);
+  const opts = [ans].concat(wrongs);
+  return mkQ0({
+    kind: 'trad', palier: 0, level, letter: 'x',
+    consigne: 'Écrire une expression qui traduit la phrase.', head: `<p class="phrase">« ${phrase}. »</p>`, src: ans, answer: ans,
+    resHtml: `<div class="resbox">${phrase} : ${m(ans)}</div>`,
+    steps: [{ m: ans, c: why }],
+    errors: wrongs.map(w => ({ poly: Alg.poly(w), msg: 'Relis la phrase : quel est le mot qui vient en premier ? Il donne la dernière opération.' })),
+    guided: [{ choice: true, label: 'Quelle expression traduit la phrase ?', options: order.map(i => m(opts[i])), a: order.indexOf(0), show: m(ans), hint: 'Le premier mot de la phrase (somme, produit, double, carré…) donne la dernière opération. Il porte sur tout ce qui suit.' }],
+    seul: [{ label: 'L’expression est :', final: true }]
+  });
+}
+function genConv() {
+  const a = R.i(2, 9), b = R.i(2, 9);
+  const f = R.pick([[`${a} * x`, `${a}x`], [`x * ${a}`, `${a}x`], ['x * x', 'x^2'], ['x * x * x', 'x^3'], [`${a} * x * x`, `${a}x^2`], [`(x + ${b}) * ${a}`, `${a}(x + ${b})`], [`x * ${a} * x`, `${a}x^2`]]);
+  return mkQ0({
+    kind: 'conv', palier: 0, level: 'v', letter: 'x',
+    consigne: 'Écrire l’expression le plus simplement possible.', head: m(f[0]), src: f[0], answer: f[1],
+    resHtml: res(`${f[0]} = ${f[1]}`),
+    steps: [{ m: `${f[0]} = ${f[1]}`, c: 'Je supprime le signe × devant une lettre ou devant une parenthèse. J’écris le nombre en premier, et x × x s’écrit x².' }],
+    errors: [], guided: [{ label: `${fmt(f[0])} =`, final: true }], seul: [{ label: `${fmt(f[0])} =`, final: true }]
+  });
+}
+function genP0(level) {
+  if (level === 'v') return R.pick([genValue, genValue, genTrad, genConv])('v');
+  return R.chance(0.55) ? genValue(level) : genTrad(level);
+}
+
+/* ---------- Palier 5 : prouver ---------- */
+const prog = lines => `<ol class="prog">${lines.map(l => `<li>${l}</li>`).join('')}</ol>`;
+const Ln = (s, l) => l === 'n' ? s.replace(/x/g, 'n') : s;
+function proofQ(o) {
+  // o.letter, o.src (en x), o.devLines (en x), o.answer (en x), o.exprChoice {wrongs, hint}, o.concl {good, wrongs}
+  const l = o.letter, N = o.name || 'R';
+  const steps = [];
+  if (o.exprChoice) steps.push({ m: `${N} = ${Ln(o.src, l)}`, c: o.exprWhy || `Je note ${l} le nombre de départ et j’écris le résultat en fonction de ${l}. Je mets des parenthèses quand on multiplie tout un résultat.` });
+  o.devLines.forEach(d => steps.push({ m: `${N} = ${Ln(d[0], l)}`, c: d[1] }));
+  steps.push({ m: `${N} = ${Ln(o.answer, l)}`, c: 'Je réduis.' });
+  const guided = [], seul = [];
+  const conclOrder = R.shuffle([0, 1, 2]);
+  const conclOpts = [o.concl.good].concat(o.concl.wrongs);
+  const conclStep = { choice: true, label: (o.conclLabel || 'Je conclus par une phrase.') + ' Quelle phrase est juste ?', options: conclOrder.map(i => conclOpts[i]), a: conclOrder.indexOf(0), show: o.concl.good,
+    hint: 'Relis ton résultat réduit. Des exemples ne suffisent pas : c’est le calcul avec la lettre qui prouve que c’est toujours vrai.' };
+  if (o.exprChoice) {
+    const ord = R.shuffle([0, 1, 2]);
+    const opts = [o.src].concat(o.exprChoice.wrongs);
+    const st = { choice: true, label: `Je note ${l} le nombre de départ. Quelle expression donne le résultat ?`, options: ord.map(i => m(`${N} = ${Ln(opts[i], l)}`)), a: ord.indexOf(0), show: m(`${N} = ${Ln(o.src, l)}`), hint: o.exprChoice.hint };
+    guided.push(st); seul.push(st);
+  }
+  (o.subs || []).forEach(s => guided.push({ label: s[0], poly: Alg.poly(s[1]), show: Ln(s[1], l) }));
+  guided.push({ label: `Je développe et je réduis : ${N} =`, final: true });
+  seul.push({ label: `Je développe et je réduis : ${N} =`, final: true });
+  guided.push(conclStep); seul.push(conclStep);
+  return mkQ0({
+    kind: 'proof', palier: 5, level: o.level, letter: l, consigne: o.consigne, head: o.head, src: o.src, answer: Ln(o.answer, l),
+    resHtml: `<div class="resbox">${o.concl.good}</div>`, steps, errors: o.errors || [], guided, seul
+  });
+}
+function genProofProg(level) {
+  const a = R.i(2, 9), b = R.i(2, 5);
+  if (R.chance(0.5)) {
+    return proofQ({
+      level, letter: 'x', src: `${b}(x + ${a}) - ${b}x`, answer: `${a * b}`,
+      consigne: 'On considère le programme de calcul ci-dessous. Démontrer qu’on obtient toujours le même résultat, quel que soit le nombre choisi.',
+      head: prog(['Choisir un nombre.', `Lui ajouter ${a}.`, `Multiplier le résultat par ${b}.`, `Soustraire le ${MULT[b]} du nombre de départ.`]),
+      exprChoice: { wrongs: [`x + ${a} * ${b} - ${b}x`, `${b}(x + ${a}) - ${b}`], hint: `On multiplie tout le résultat x + ${a} par ${b} : il faut des parenthèses. Le ${MULT[b]} du nombre de départ, c’est ${b}x.` },
+      devLines: [[`${b}x + ${a * b} - ${b}x`, `Je développe ${fmt(b + '(x + ' + a + ')')} avec la simple distributivité.`]],
+      subs: [[`Je développe ${fmt(b + '(x + ' + a + ')')} :`, `${b}x + ${a * b}`]],
+      errors: [{ poly: [a], msg: `${b} multiplie chaque terme de la parenthèse, donc aussi ${a}.` }],
+      concl: { good: `Le résultat est toujours égal à ${fmt(String(a * b))}, quel que soit le nombre choisi.`, wrongs: [`Le résultat est toujours égal au ${MULT[b]} du nombre de départ.`, 'Le résultat dépend du nombre choisi.'] }
+    });
+  }
+  return proofQ({
+    level, letter: 'x', src: `${b}(x + ${a}) - ${a * b}`, answer: `${b}x`,
+    consigne: `On considère le programme de calcul ci-dessous. Démontrer que le résultat est toujours le ${MULT[b]} du nombre de départ.`,
+    head: prog(['Choisir un nombre.', `Lui ajouter ${a}.`, `Multiplier le résultat par ${b}.`, `Soustraire ${a * b}.`]),
+    exprChoice: { wrongs: [`x + ${a} * ${b} - ${a * b}`, `${b}(x + ${a} - ${a * b})`], hint: `On multiplie tout le résultat x + ${a} par ${b} : il faut des parenthèses. Puis on soustrait ${a * b} au produit.` },
+    devLines: [[`${b}x + ${a * b} - ${a * b}`, `Je développe ${fmt(b + '(x + ' + a + ')')} avec la simple distributivité.`]],
+    subs: [[`Je développe ${fmt(b + '(x + ' + a + ')')} :`, `${b}x + ${a * b}`]],
+    errors: [{ poly: [a - a * b, b], msg: `${b} multiplie chaque terme de la parenthèse, donc aussi ${a}.` }],
+    concl: { good: `Le résultat est toujours égal à ${m(b + 'x')}, c’est-à-dire au ${MULT[b]} du nombre de départ.`, wrongs: [`Le résultat est toujours égal à ${fmt(String(a * b))}.`, `C’est vrai pour le nombre 1, donc c’est toujours vrai.`] }
+  });
+}
+function genProofConst() {
+  let a, b; do { a = R.i(1, 6); b = R.i(2, 7); } while (a === b);
+  const s = a + b, p = a * b;
+  return proofQ({
+    level: 'o', letter: 'n', name: 'E', src: `(x + ${a})(x + ${b}) - x(x + ${s})`, answer: `${p}`,
+    consigne: `Soit n un nombre. Démontrer que l’expression E ci-dessous est toujours égale à ${fmt(String(p))}.`,
+    head: m(`E = ${Ln(`(x + ${a})(x + ${b}) - x(x + ${s})`, 'n')}`),
+    devLines: [[`x^2 + ${b}x + ${a}x + ${p} - (x^2 + ${s}x)`, 'Je développe chaque produit. J’écris le deuxième entre parenthèses, car il est précédé du signe −.'],
+               [`x^2 + ${s}x + ${p} - x^2 - ${s}x`, 'Je réduis le premier produit, puis je supprime les parenthèses en changeant tous les signes.']],
+    subs: [[`Je développe ${fmt(Ln(`(x + ${a})(x + ${b})`, 'n'))} et je réduis :`, `x^2 + ${s}x + ${p}`], [`Je développe ${fmt(Ln(`x(x + ${s})`, 'n'))} :`, `x^2 + ${s}x`]],
+    errors: [{ poly: [p, 2 * s], msg: 'Quand on soustrait un produit, on change TOUS les signes de son développement.' }],
+    conclLabel: 'Je conclus.',
+    concl: { good: `Pour tout nombre ${m('n')}, E = ${fmt(String(p))}.`, wrongs: [`E = ${fmt(String(p))} seulement pour ${m('n = 0')}.`, `E dépend du nombre ${m('n')}.`] }
+  });
+}
+function genProofTwoProg(level) {
+  const a = R.i(1, 6), b = R.i(2, 8), s = a + b, p = a * b;
+  return proofQ({
+    level, letter: 'x', name: 'A', src: `(x + ${a})(x + ${b})`, answer: `x^2 + ${s}x + ${p}`,
+    consigne: 'On considère les deux programmes de calcul ci-dessous. Démontrer qu’ils donnent toujours le même résultat.',
+    head: `<p><b>Programme A</b></p>${prog(['Choisir un nombre.', `Lui ajouter ${a}.`, `Multiplier le résultat par la somme du nombre choisi et de ${b}.`])}
+      <p><b>Programme B</b></p>${prog(['Choisir un nombre.', 'Calculer son carré.', `Ajouter ${s} fois le nombre choisi.`, `Ajouter ${p}.`])}`,
+    exprChoice: { wrongs: [`x + ${a} * x + ${b}`, `(x + ${a}) * ${b}`], hint: `On multiplie le résultat x + ${a} par la somme x + ${b} : il faut deux parenthèses.` },
+    exprWhy: `Je note x le nombre de départ. Le programme A donne A = ${fmt(`(x + ${a})(x + ${b})`)} et le programme B donne B = ${fmt(`x^2 + ${s}x + ${p}`)}.`,
+    devLines: [[`x^2 + ${b}x + ${a}x + ${p}`, 'Je développe A avec la double distributivité.']],
+    subs: [],
+    errors: [{ poly: [p, 0, 1], msg: 'Il doit y avoir 4 produits : chaque terme de la première parenthèse multiplie chaque terme de la deuxième.' }],
+    conclLabel: `Le programme B donne B = ${fmt(`x^2 + ${s}x + ${p}`)}.`,
+    concl: { good: 'A = B pour tout nombre x : les deux programmes donnent toujours le même résultat.', wrongs: ['Les deux programmes donnent le même résultat seulement pour x = 0.', 'Les deux programmes ne donnent pas le même résultat.'] }
+  });
+}
+function genProofConsec() {
+  if (R.chance(0.5)) {
+    return proofQ({
+      level: 'r', letter: 'n', name: 'S', src: 'x + (x + 1) + (x + 2)', answer: '3x + 3',
+      consigne: 'Soit n un nombre entier. Démontrer que la somme de trois entiers consécutifs est toujours un multiple de 3.',
+      head: '<p>Trois entiers consécutifs se suivent, par exemple 7, 8 et 9.</p>',
+      exprChoice: { wrongs: ['x + 1 + 2', 'x(x + 1)(x + 2)'], hint: 'Si le premier entier est n, le suivant est n + 1, puis n + 2. On demande leur somme.' },
+      exprWhy: 'Je note n le plus petit des trois entiers. Les deux suivants sont n + 1 et n + 2. J’écris leur somme.',
+      devLines: [['x + x + 1 + x + 2', 'Je supprime les parenthèses : elles sont précédées du signe +.']],
+      concl: { good: `${m('S = 3n + 3 = 3(n + 1)')}. C’est un multiple de 3, donc la somme de trois entiers consécutifs est toujours un multiple de 3.`,
+               wrongs: [`${m('4 + 5 + 6 = 15')} est un multiple de 3, donc c’est toujours vrai.`, `${m('3n + 3')} est une somme, donc ce n’est pas un multiple de 3.`] }
+    });
+  }
+  return proofQ({
+    level: 'r', letter: 'n', name: 'S', src: '(2x + 1) + (2x + 3)', answer: '4x + 4',
+    consigne: 'Soit n un nombre entier. Les nombres 2n + 1 et 2n + 3 sont deux nombres impairs consécutifs. Démontrer que leur somme est toujours un multiple de 4.',
+    head: m('S = (2n + 1) + (2n + 3)'),
+    devLines: [['2x + 1 + 2x + 3', 'Je supprime les parenthèses : elles sont précédées du signe +.']],
+    concl: { good: `${m('S = 4n + 4 = 4(n + 1)')}. C’est un multiple de 4, donc la somme de deux nombres impairs consécutifs est toujours un multiple de 4.`,
+             wrongs: [`${m('3 + 5 = 8')} est un multiple de 4, donc c’est toujours vrai.`, `${m('4n + 4')} est une somme, donc ce n’est pas un multiple de 4.`] }
+  });
+}
+function genProofTwoDouble() {
+  let a, b, c, d;
+  do { const s = R.i(5, 10); a = R.i(1, s - 1); b = s - a; c = R.i(1, s - 1); d = s - c; } while (c === a || c === b || a * b === c * d);
+  const s = a + b, k = a * b - c * d;
+  return proofQ({
+    level: 'r', letter: 'n', name: 'E', src: `(x + ${a})(x + ${b}) - (x + ${c})(x + ${d})`, answer: W.num(k),
+    consigne: `Soit n un nombre. Démontrer que l’expression E ci-dessous est toujours égale à ${fmt(W.num(k))}.`,
+    head: m(`E = ${Ln(`(x + ${a})(x + ${b}) - (x + ${c})(x + ${d})`, 'n')}`),
+    devLines: [[`(x^2 + ${s}x + ${a * b}) - (x^2 + ${s}x + ${c * d})`, 'Je développe et je réduis chaque produit à part. J’écris chaque résultat entre parenthèses.'],
+               [`x^2 + ${s}x + ${a * b} - x^2 - ${s}x - ${c * d}`, 'Je supprime les parenthèses. Devant la deuxième, il y a le signe − : je change tous les signes.']],
+    subs: [[`Je développe ${fmt(Ln(`(x + ${a})(x + ${b})`, 'n'))} et je réduis :`, `x^2 + ${s}x + ${a * b}`], [`Je développe ${fmt(Ln(`(x + ${c})(x + ${d})`, 'n'))} et je réduis :`, `x^2 + ${s}x + ${c * d}`]],
+    errors: [{ poly: [a * b + c * d, 0, 0], msg: 'Quand on soustrait un produit, on change TOUS les signes de son développement.' }, { poly: [a * b + c * d, 2 * s, 2], msg: 'Le signe − porte sur tout le deuxième produit : écris son développement entre parenthèses, puis change tous les signes.' }],
+    conclLabel: 'Je conclus.',
+    concl: { good: `Pour tout nombre ${m('n')}, E = ${fmt(W.num(k))}.`, wrongs: [`E = ${fmt(W.num(k))} seulement pour ${m('n = 1')}.`, `E dépend du nombre ${m('n')}.`] }
+  });
+}
+function genP5(level) {
+  if (level === 'v') return genProofProg('v');
+  if (level === 'o') return R.chance(0.5) ? genProofConst() : genProofTwoProg('o');
+  return R.pick([genProofConsec, genProofTwoDouble, () => genProofTwoProg('r')])();
+}
+
+const GEN = { 0: genP0, 1: genReduce, 2: genP2, 3: genP3, 4: genP4, 5: genP5 };
+function genBilan(level) {
+  const lv = level === 'r' ? R.pick(['o', 'r']) : level;
+  return R.pick([GEN[2], GEN[3], GEN[3], GEN[4], GEN[4]])(lv === 'v' ? R.pick(['v', 'o']) : lv);
+}
+function genQuestion(palier, level, allowVF = true) {
+  const g = palier === 'B' ? genBilan : GEN[palier];
+  let q;
+  for (let i = 0; i < 30; i++) { q = g(level); if (q.expected && q.expected.length) break; }
+  if (allowVF && palier !== 1 && level !== 'v' && R.chance(0.18) && q.kind === 'dev' && q.errors.length) q = genVF(q);
+  q.palier = palier; q.level = level;
+  return q;
+}
+
+/* ================= Interface ================= */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const m = s => `<span class="m">${fmt(s)}</span>`;
+// confirmation en deux clics : les fenêtres de confirmation sont bloquées dans certains lecteurs
+function twoClick(btn, label, action) {
+  if (!btn) return;
+  const orig = btn.textContent;
+  btn.onclick = () => {
+    if (btn.dataset.armed) { action(); return; }
+    btn.dataset.armed = '1'; btn.textContent = label; btn.classList.add('armed');
+    setTimeout(() => { if (btn.isConnected) { delete btn.dataset.armed; btn.textContent = orig; btn.classList.remove('armed'); } }, 4000);
+  };
+}
+
+/* ---------- Mémoire ---------- */
+const KEY = 'calcul-litteral-1-v1';
+const PALIERS = [0, 1, 2, 3, 4, 5, 'B'];
+const LV = ['v', 'o', 'r'];
+function blank() { const s = {}; PALIERS.forEach(p => { s[p] = { v: [0, 0], o: [0, 0], r: [0, 0] }; }); return { stats: s, series: [] }; }
+let store = blank();
+try { const raw = localStorage.getItem(KEY); if (raw) { const d = JSON.parse(raw); store = Object.assign(blank(), d); PALIERS.forEach(p => { store.stats[p] = Object.assign({ v: [0, 0], o: [0, 0], r: [0, 0] }, store.stats[p] || {}); }); } } catch (e) { }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) { } }
+function record(p, lv, first) { const s = store.stats[p][lv]; s[0]++; if (first) s[1]++; save(); }
+
+/* ---------- Infos des paliers ---------- */
+const INFO = {
+  0: { t: 'Le sens de la lettre', s: 'Je sais calculer la valeur d’une expression et écrire une expression à partir d’une phrase.' },
+  1: { t: 'Réduire une expression', s: 'Je sais réduire une expression : je regroupe les termes en x², les termes en x et les nombres.' },
+  2: { t: 'Développer avec la simple distributivité', s: `Je sais développer un produit du type ${m('k(a + b)')} et supprimer des parenthèses.` },
+  3: { t: 'Développer avec la double distributivité', s: `Je sais développer un produit du type ${m('(a + b)(c + d)')}.` },
+  4: { t: 'Factoriser avec un facteur commun', s: 'Je sais factoriser une expression qui contient un facteur commun.' },
+  5: { t: 'Prouver avec le calcul littéral', s: 'Je sais démontrer qu’une propriété est toujours vraie : je développe, je réduis, puis je conclus par une phrase.' },
+  B: { t: 'Bilan : développer ou factoriser', s: 'Je sais faire ce que la consigne demande : développer ou factoriser.' }
+};
+const LVNAME = { v: 'Vert', o: 'Orange', r: 'Rouge' };
+const LVTXT = { v: 'je m’entraîne', o: 'je progresse', r: 'je vise haut' };
+
+/* ---------- Flèches de distributivité ---------- */
+function splitTerm(s, first) {
+  if (first) return { sign: '', body: s.trim() };
+  const mm = /^\s*([+-])\s*(.*)$/.exec(s);
+  return { sign: mm[1], body: mm[2] };
+}
+function arrowHTML(a, pre = '', rest = '') {
+  let inner;
+  const sp = (cls, s, first) => { const t = splitTerm(s, first); return (t.sign ? ' ' + fmt(t.sign) + ' ' : '') + `<span class="${cls}">${fmt(t.body)}</span>`; };
+  if (a.type === 'simple') inner = `<span class="a-f">${fmt(a.f)}</span>(${a.terms.map((t, i) => sp('a-t', t, i === 0)).join('')})`;
+  else inner = `(${a.A.map((t, i) => sp('a-a', t, i === 0)).join('')})(${a.B.map((t, i) => sp('a-b', t, i === 0)).join('')})`;
+  return `<span class="m">${pre ? fmt(pre) : ''}<span class="arw ${a.type}">${inner}</span>${fmt(rest)}</span>`;
+}
+function drawArrows(root) {
+  (root || document).querySelectorAll('.arw').forEach(w => {
+    const old = w.querySelector('svg'); if (old) old.remove();
+    const wr = w.getBoundingClientRect(); if (!wr.width) return;
+    const NS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('class', 'arw-svg'); svg.setAttribute('width', wr.width); svg.setAttribute('height', wr.height);
+    const c = el => { const r = el.getBoundingClientRect(); return { x: r.left - wr.left + r.width / 2, top: r.top - wr.top, bot: r.bottom - wr.top }; };
+    let k = 0;
+    const arc = (p, q, below, col) => {
+      const h = Math.max(10, Math.min(22, Math.abs(q.x - p.x) * 0.45));
+      const x1 = p.x - 2, x2 = q.x + 1;
+      const y1 = below ? p.bot + 1 : p.top + 3, y2 = below ? q.bot + 1 : q.top + 3;
+      const cx = (x1 + x2) / 2, cy = below ? Math.max(y1, y2) + h : Math.min(y1, y2) - h;
+      const g = document.createElementNS(NS, 'g');
+      g.style.setProperty('--d', (1.15 + k * 0.45).toFixed(2) + 's'); k++;
+      const path = document.createElementNS(NS, 'path');
+      path.setAttribute('d', `M${x1},${y1} Q${cx},${cy} ${x2},${y2}`);
+      path.setAttribute('pathLength', '1'); path.setAttribute('class', 'shaft');
+      path.setAttribute('fill', 'none'); path.setAttribute('stroke', col); path.setAttribute('stroke-width', '1.7');
+      const a = Math.atan2(y2 - cy, x2 - cx), L = 7.5, W = 3.6;
+      const bx = x2 - L * Math.cos(a), by = y2 - L * Math.sin(a);
+      const head = document.createElementNS(NS, 'polygon');
+      head.setAttribute('points', `${x2},${y2} ${bx - W * Math.sin(a)},${by + W * Math.cos(a)} ${bx + W * Math.sin(a)},${by - W * Math.cos(a)}`);
+      head.setAttribute('fill', col); head.setAttribute('class', 'head');
+      g.appendChild(path); g.appendChild(head); svg.appendChild(g);
+    };
+    if (w.classList.contains('simple')) {
+      const f = c(w.querySelector('.a-f'));
+      w.querySelectorAll('.a-t').forEach(t => arc(f, c(t), false, '#b8322a'));
+    } else {
+      const A = [...w.querySelectorAll('.a-a')].map(c), B = [...w.querySelectorAll('.a-b')].map(c);
+      B.forEach(b => arc(A[0], b, false, '#b8322a'));
+      if (A[1]) B.forEach(b => arc(A[1], b, true, '#1d3a8a'));
+    }
+    w.appendChild(svg);
+  });
+}
+window.addEventListener('resize', () => drawArrows());
+function stepHTML(st) { return st.arrow ? arrowHTML(st.arrow, st.pre || '', st.rest) : m(st.m); }
+
+/* ---------- Le cours ---------- */
+const box = (cls, title, body) => `<div class="cbox ${cls}">${title ? `<div class="cbox-t">${title}</div>` : ''}${body}</div>`;
+const ol = items => '<ol>' + items.map(i => `<li>${i}</li>`).join('') + '</ol>';
+const res = s => `<div class="resbox">${m(s)}</div>`;
+const COURSE = {
+  0: () => `
+    ${box('def', 'Définition 1', '<p>Une expression littérale est une expression qui contient une ou plusieurs lettres. Chaque lettre représente un nombre qui peut prendre différentes valeurs.</p>')}
+    ${box('rem', 'Remarque : conventions d’écriture', `<p>On peut supprimer le signe × devant une lettre ou devant une parenthèse, mais jamais entre deux nombres.</p>
+      <table class="conv"><tr>${['3 * x', 'x * 5', '1 * x', 'x * x', 'x * x * x', '4 * (x + 1)'].map(s => `<td>${m(s)}</td>`).join('')}</tr>
+      <tr>${['3x', '5x', 'x', 'x^2', 'x^3', '4(x + 1)'].map(s => `<td>${m(s)}</td>`).join('')}</tr></table>
+      <p class="warn"><b>Attention :</b> ${m('3 * 5 = 15')}. On ne peut pas l’écrire 35 !</p>`)}
+    ${box('meth', 'Méthode : calculer la valeur d’une expression', ol([
+      'Je remplace la lettre par le nombre.',
+      'J’écris les signes × qui étaient cachés. Je mets un nombre négatif entre parenthèses.',
+      'Je calcule en respectant les priorités : d’abord les parenthèses et les carrés, puis les multiplications, puis les additions et les soustractions.']))}
+    <p><b>Exemple :</b> je calcule ${m('E = 3x^2 - 1')} pour ${m('x = -2')}.</p>
+    <div class="calc">${['E = 3 * (-2)^2 - 1', 'E = 3 * 4 - 1'].map(s => `<div>${m(s)}</div>`).join('')}${res('E = 11')}</div>
+    ${box('meth', 'Méthode : traduire une phrase par une expression', `<p>Le premier mot de la phrase donne la dernière opération : « somme » pour une addition, « différence » pour une soustraction, « produit » pour une multiplication. Le « double » de x, c’est ${m('2x')} ; le « carré » de x, c’est ${m('x^2')}.</p>`)}
+    <ul><li>« Le double de la somme de x et de 5 » : ${m('2(x + 5)')}. Le double porte sur toute la somme.</li>
+      <li>« La somme du double de x et de 5 » : ${m('2x + 5')}. C’est une addition.</li></ul>`,
+  1: () => `
+    ${box('meth', 'Méthode 1 : réduire une expression', `<p>Réduire une expression, c’est l’écrire avec le moins de termes possible.</p>${ol([
+      `Je repère les termes « de la même famille » : les termes en ${m('x^2')}, les termes en ${m('x')} et les nombres.`,
+      'Je calcule chaque famille séparément.',
+      `J’écris le résultat dans l’ordre : les ${m('x^2')}, puis les ${m('x')}, puis le nombre.`])}`)}
+    <p><b>Exemple :</b> ${m('3x^2 + 5x - 2 - x^2 + x + 7 = 2x^2 + 6x + 5')}</p>
+    <p class="warn"><b>À retenir :</b> ${m('x + x = 2x')} mais ${m('x * x = x^2')}.</p>
+    <p class="warn"><b>À retenir :</b> ${m('2x + 3')} ne se réduit pas : ce n’est pas égal à ${m('5x')} !</p>
+    <p class="warn"><b>À retenir :</b> ${m('x = 1x')} et ${m('-x = -1x')}. Donc ${m('5x - x = 4x')} et pas 5.</p>`,
+  2: () => `
+    ${box('def', 'Définition 2', `<ul><li><b>Développer</b> un produit, c’est l’écrire sous la forme d’une somme.</li><li><b>Factoriser</b> une somme, c’est l’écrire sous la forme d’un produit.</li></ul>`)}
+    <p>Forme factorisée : ${m('3(x + 2)')} <span class="blue">→ on développe →</span> Forme développée : ${m('3x + 6')}</p>
+    ${box('prop', 'Propriété 1 : simple distributivité', `<p>Pour tous nombres ${m('k')}, ${m('a')} et ${m('b')} : ${m('k(a + b) = ka + kb')}</p>`)}
+    ${box('meth', 'Méthode 2 : développer avec la simple distributivité, avec les flèches', ol([
+      'Je trace une flèche du facteur placé devant la parenthèse vers chaque terme de la parenthèse.',
+      'J’écris les produits, en gardant le signe de chaque terme.',
+      'Je calcule chaque produit.']))}
+    <div class="exs">
+      <div><b>Exemple 1 :</b><div class="line">${arrowHTML({ type: 'simple', f: '3', terms: ['x', ' + 2'] }, '', ' = 3 * x + 3 * 2')}</div>${res('3(x + 2) = 3x + 6')}</div>
+      <div><b>Exemple 2 :</b><div class="line">${arrowHTML({ type: 'simple', f: 'x', terms: ['x', ' + 5'] }, '', ' = x * x + x * 5')}</div>${res('x(x + 5) = x^2 + 5x')}</div>
+    </div>
+    <div><b>Exemple 3 :</b><div class="line">${arrowHTML({ type: 'simple', f: '-2', terms: ['3x', ' - 5'] }, '', ' = -2 * 3x + (-2) * (-5)')}</div>${res('-2(3x - 5) = -6x + 10')}</div>
+    <h3>Supprimer des parenthèses</h3>
+    <p>Une parenthèse précédée du signe − peut se développer en distribuant le facteur ${m('(-1)')} : ${m('-(x - 4) = -1 * (x - 4)')}.</p>
+    <div class="calc">${['7 - (x - 4) = 7 + (-1) * (x - 4)', '7 - (x - 4) = 7 + (-1) * x + (-1) * (-4)', '7 - (x - 4) = 7 - x + 4'].map(s => `<div>${m(s)}</div>`).join('')}${res('7 - (x - 4) = 11 - x')}</div>
+    ${box('meth', 'Conséquences', `<ul><li><u>Parenthèse précédée du signe + :</u> on supprime la parenthèse et on garde les signes.<br>${m('5 + (2x - 3) = 5 + 2x - 3 = 2x + 2')}</li>
+      <li><u>Parenthèse précédée du signe − :</u> on supprime la parenthèse et on change tous les signes à l’intérieur.<br>${m('7 - (x - 4) = 7 - x + 4 = 11 - x')}</li></ul>`)}`,
+  3: () => `
+    ${box('prop', 'Propriété 2 : double distributivité', `<p>Pour tous nombres ${m('a')}, ${m('b')}, ${m('c')} et ${m('d')} : ${m('(a + b)(c + d) = ac + ad + bc + bd')}</p>`)}
+    ${box('meth', 'Méthode 3 : développer avec la double distributivité, avec les flèches', ol([
+      'Je trace les flèches : chaque terme de la première parenthèse vers chaque terme de la deuxième parenthèse. J’obtiens 4 flèches.',
+      'J’écris les 4 produits, en gardant le signe de chaque terme.',
+      'Je calcule chaque produit.', 'Je réduis.']))}
+    <div><b>Exemple 4 :</b><div class="line">${arrowHTML({ type: 'double', A: ['x', ' + 2'], B: ['x', ' + 5'] }, '', ' = x * x + x * 5 + 2 * x + 2 * 5')}</div>
+      <div class="line">${m('(x + 2)(x + 5) = x^2 + 5x + 2x + 10')}</div>${res('(x + 2)(x + 5) = x^2 + 7x + 10')}</div>
+    <div><b>Exemple 5 :</b><div class="line">${arrowHTML({ type: 'double', A: ['x', ' + 3'], B: ['2x', ' - 1'] }, '', ' = x * 2x + x * (-1) + 3 * 2x + 3 * (-1)')}</div>
+      <div class="line">${m('(x + 3)(2x - 1) = 2x^2 - x + 6x - 3')}</div>${res('(x + 3)(2x - 1) = 2x^2 + 5x - 3')}</div>
+    <p class="warn"><b>Attention au carré !</b> ${m('(x + 3)^2')} n’est pas égal à ${m('x^2 + 9')}.</p>
+    <p>On écrit le carré comme un produit, puis on développe avec la double distributivité :<br>${m('(x + 3)^2 = (x + 3)(x + 3) = x^2 + 3x + 3x + 9 = x^2 + 6x + 9')}.</p>`,
+  4: () => `
+    <p>Factoriser, c’est utiliser la distributivité « dans l’autre sens » : ${m('ka + kb = k(a + b)')}.</p>
+    ${box('meth', 'Méthode 5 : factoriser avec un facteur commun', ol([
+      'J’écris chaque terme sous la forme d’un produit.',
+      'Je repère et je surligne le facteur commun à tous les termes. Je choisis le plus grand possible.',
+      'J’écris ce facteur devant une parenthèse, puis je mets dans la parenthèse ce qui reste de chaque terme.']))}
+    <div class="exs">
+      <div><b>Exemple 1 : le facteur commun est un nombre.</b><div class="line">${m('3x + 6 = ==3== * x + ==3== * 2')}</div>${res('3x + 6 = 3(x + 2)')}</div>
+      <div><b>Exemple 2 : le facteur commun est une lettre.</b><div class="line">${m('x^2 + 5x = ==x== * x + ==x== * 5')}</div>${res('x^2 + 5x = x(x + 5)')}</div>
+    </div>
+    <div><b>Exemple 3 : je choisis le plus grand facteur commun.</b>
+      <p>${m('6x + 12 = 2(3x + 6)')} : c’est un produit, mais ${m('3x + 6')} se factorise encore. Ce n’est pas terminé.</p>
+      <div class="line">${m('6x + 12 = ==6== * x + ==6== * 2')}</div>${res('6x + 12 = 6(x + 2)')}</div>
+    <div><b>Exemple 4 : le facteur commun est une parenthèse.</b>
+      <div class="calc">${['C = (x + 1)(x + 5) + (x + 1) * 2', 'C = ==(x + 1)==(x + 5) + ==(x + 1)== * 2', 'C = ==(x + 1)==(x + 5 + 2)'].map(s => `<div>${m(s)}</div>`).join('')}${res('C = (x + 1)(x + 7)')}</div></div>`,
+  5: () => `
+    ${box('meth', 'Méthode 6 : démontrer qu’une propriété est toujours vraie', ol([
+      'Je désigne le nombre de départ par une lettre (par exemple x ou n).',
+      'J’écris l’expression obtenue, puis je la développe et je la réduis.',
+      'Je conclus par une phrase.']))}
+    ${box('rem', 'Remarque', '<p>Des exemples ne suffisent pas pour démontrer qu’une propriété est toujours vraie. En revanche, un seul contre-exemple suffit pour démontrer qu’une propriété est fausse.</p>')}
+    <p><b>Exemple 1 :</b> on choisit un nombre, on lui ajoute 5, on multiplie le résultat par 3, puis on soustrait le triple du nombre de départ. Je démontre qu’on obtient toujours le même résultat.</p>
+    <div class="calc"><div>Je note ${m('x')} le nombre de départ.</div>${['R = 3(x + 5) - 3x', 'R = 3x + 15 - 3x', 'R = 15'].map(s => `<div>${m(s)}</div>`).join('')}</div>
+    <div class="resbox">Le résultat est toujours égal à 15, quel que soit le nombre choisi.</div>
+    <p><b>Exemple 2 :</b> soit ${m('n')} un nombre. Je démontre que ${m('(n + 1)(n + 2) - n(n + 3)')} est toujours égal à 2.</p>
+    <div class="calc">${['E = (n + 1)(n + 2) - n(n + 3)', 'E = n^2 + 2n + n + 2 - (n^2 + 3n)', 'E = n^2 + 3n + 2 - n^2 - 3n', 'E = 2'].map(s => `<div>${m(s)}</div>`).join('')}</div>
+    <div class="resbox">Pour tout nombre ${m('n')}, l’expression est égale à 2.</div>`,
+  B: () => `
+    ${box('def', 'Définition 2', `<ul><li><b>Développer</b> un produit, c’est l’écrire sous la forme d’une somme.</li><li><b>Factoriser</b> une somme, c’est l’écrire sous la forme d’un produit.</li></ul>`)}
+    <p>Forme factorisée : ${m('3(x + 2)')} <span class="blue">→ on développe →</span> Forme développée : ${m('3x + 6')}</p>
+    <p>Forme développée : ${m('3x + 6')} <span class="green">→ on factorise →</span> Forme factorisée : ${m('3(x + 2)')}</p>
+    <p>Dans le bilan, la consigne te dit ce qu’il faut faire. Si tu as un doute sur une méthode, revois le cours du palier correspondant :</p>
+    <ul class="links"><li><a href="#" data-go="2">Palier 2 : simple distributivité et parenthèses</a></li><li><a href="#" data-go="3">Palier 3 : double distributivité</a></li><li><a href="#" data-go="4">Palier 4 : factoriser avec un facteur commun</a></li></ul>`
+};
+
+/* ---------- Correction d'une réponse ---------- */
+const WHY = {
+  par: 'C’est égal, mais il reste des parenthèses : ce n’est pas développé.',
+  mono: 'C’est égal, mais il reste des calculs à faire. Par exemple, x × x s’écrit x².',
+  dup: 'C’est égal, mais ce n’est pas réduit : regroupe les termes de la même famille.',
+  sum: 'C’est égal, mais c’est une somme. Une expression factorisée est un produit.',
+  notprod: 'C’est égal, mais ce n’est pas une expression factorisée : écris un produit avec le facteur commun devant une parenthèse.',
+  inner: 'C’est presque fini : réduis ce qu’il y a dans la parenthèse.'
+};
+function testValue(q, poly) {
+  for (const x of [3, 10, 7]) {
+    const a = Alg.P.val(q.expected, x), b = Alg.P.val(poly, x);
+    if (Math.abs(a - b) > 1e-9) return `Je vérifie avec x = ${x} : l’expression de départ vaut ${W.num(+a.toFixed(6))}, ta réponse vaut ${W.num(+b.toFixed(6))}. Ce n’est pas égal, donc il y a une erreur.`;
+  }
+  return '';
+}
+function checkAnswer(q, input) {
+  let ast;
+  try { ast = Alg.parse(input); } catch (e) {
+    if (e.message === 'vide') return { st: 'empty', msg: 'Écris ta réponse avant de vérifier.' };
+    if (e.message === 'x2') return { st: 'unread', msg: 'Écris le nombre devant la lettre : 2x et pas x2. Pour un carré, utilise le bouton x² ou tape x^2.' };
+    if (/^car:/.test(e.message)) return { st: 'unread', msg: 'Utilise seulement la lettre x, des nombres et les signes + − × ( ).' };
+    return { st: 'unread', msg: 'Je n’arrive pas à lire ton expression. Vérifie les parenthèses et les signes.' };
+  }
+  const poly = Alg.P.trim(Alg.toPoly(ast));
+  if (!Alg.P.eq(poly, q.expected)) {
+    const e = q.errors.find(er => Alg.P.eq(er.poly, poly));
+    if (q.kind === 'val') return { st: 'wrong', msg: e ? e.msg : 'Ce n’est pas la bonne valeur. Vérifie le remplacement, puis les priorités de calcul.' };
+    if (q.kind === 'trad') return { st: 'wrong', msg: e ? e.msg : 'Cette expression ne traduit pas la phrase.' };
+    return { st: 'wrong', msg: e ? e.msg : 'Ce n’est pas égal à l’expression de départ.', test: testValue(q, poly) };
+  }
+  if (q.kind === 'val') return /^-?[0-9.]+$/.test(Alg.normalize(input)) ? { st: 'ok' } : { st: 'almost', msg: 'Ton calcul est juste, mais il n’est pas terminé : écris seulement le nombre obtenu.' };
+  if (q.kind === 'trad') return { st: 'ok' };
+  if (q.kind === 'conv') return Alg.normalize(input).includes('*') ? { st: 'almost', msg: 'C’est égal, mais on peut encore supprimer le signe × devant une lettre ou une parenthèse.' } : { st: 'ok' };
+  if (q.kind === 'fact') {
+    const r = Alg.factCheck(ast);
+    if (!r.ok) return { st: 'almost', msg: WHY[r.why] };
+    if (!r.full && q.needFull) {
+      const n = r.notes[0];
+      const inner = W.poly(Alg.P.trim(Alg.toPoly(n.inner)));
+      return { st: 'almost', msg: n.k === 'gcd' ? `C’est un produit, mais ce n’est pas terminé : ${fmt(inner)} se factorise encore par ${n.g}. Choisis le plus grand facteur commun.` : `C’est un produit, mais ce n’est pas terminé : ${fmt(inner)} se factorise encore par x.` };
+    }
+    return { st: 'ok' };
+  }
+  const r = Alg.devCheck(ast);
+  if (!r.ok) return { st: 'almost', msg: WHY[r.why] };
+  return { st: 'ok' };
+}
+
+/* ---------- Zone de saisie ---------- */
+function inputHTML(id, letter = 'x') {
+  return `<div class="inp">
+    <input id="${id}" type="text" autocomplete="off" spellcheck="false" aria-label="Ta réponse">
+    <div class="keys">${[letter, letter + '²', '(', ')', '+', '−', '×'].map(k => `<button type="button" class="key" data-k="${k}" data-for="${id}">${k}</button>`).join('')}</div>
+    <div class="preview" id="${id}-pv" aria-live="polite"></div>
+  </div>`;
+}
+/* ---------- Tableau de distributivité ---------- */
+function tableHTML(t, o = {}) {
+  // o.mode : 'input' (cases à remplir) ou 'show' (cases remplies) ; o.id préfixe ; o.vals valeurs ; o.marks 'ok'|'bad'|'given'
+  const cell = (r, c) => {
+    if (o.mode === 'show') return `<td class="tc ${o.marks && o.marks[r][c] === 'given' ? 'given' : ''}">${m(t.cells[r][c].show)}</td>`;
+    const mk = o.marks ? o.marks[r][c] : '';
+    if (mk === 'ok' || mk === 'given') return `<td class="tc ${mk}">${m(t.cells[r][c].show)}</td>`;
+    const v = o.vals && o.vals[r] && o.vals[r][c] ? esc(o.vals[r][c]) : '';
+    return `<td class="tc ${mk}"><input class="tin" data-r="${r}" data-c="${c}" id="${o.id}-${r}-${c}" value="${v}" autocomplete="off" spellcheck="false" aria-label="Case ligne ${r + 1}, colonne ${c + 1}"></td>`;
+  };
+  return `<table class="dtab"><tr><th class="corner">×</th>${t.cols.map(c => `<th>${m(c)}</th>`).join('')}</tr>
+    ${t.rows.map((rw, r) => `<tr><th>${m(rw)}</th>${t.cols.map((_, c) => cell(r, c)).join('')}</tr>`).join('')}</table>
+    ${o.mode === 'input' ? `<div class="keys">${['x', 'x²', '+', '−'].map(k => `<button type="button" class="key tkey" data-k="${k}">${k}</button>`).join('')}<span class="muted small">Pour écrire x², utilise le bouton ou tape x^2.</span></div>` : ''}`;
+}
+let LAST_CELL = null;
+function wireTable(root, onEnter) {
+  root.querySelectorAll('.tin').forEach(inp => {
+    inp.addEventListener('focus', () => LAST_CELL = inp);
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); onEnter && onEnter(); } });
+  });
+  root.querySelectorAll('.tkey').forEach(b => b.onclick = () => {
+    const el = LAST_CELL && LAST_CELL.isConnected ? LAST_CELL : root.querySelector('.tin'); if (!el) return;
+    const k = b.dataset.k, s = el.selectionStart ?? el.value.length, e2 = el.selectionEnd ?? el.value.length;
+    el.value = el.value.slice(0, s) + k + el.value.slice(e2); el.focus(); el.setSelectionRange(s + k.length, s + k.length);
+  });
+  const first = root.querySelector('.tin'); if (first) setTimeout(() => first.focus(), 30);
+}
+function readTable(root) { const v = {}; root.querySelectorAll('.tin').forEach(i => { (v[i.dataset.r] = v[i.dataset.r] || {})[i.dataset.c] = i.value; }); return v; }
+
+function starToTimes(el) { if (!el.value.includes('*')) return; const p = el.selectionStart; el.value = el.value.replace(/\*/g, '×'); try { el.setSelectionRange(p, p); } catch (e) { } }
+function pretty(v) { return Alg.normalize(v).replace(/\*/g, ' * ').replace(/([+-])/g, ' $1 ').replace(/\(\s-\s/g, '(-').replace(/^\s-\s/, '-').replace(/\s+/g, ' ').trim(); }
+function wireInput(id, onEnter) {
+  const el = document.getElementById(id); if (!el) return;
+  const pv = document.getElementById(id + '-pv');
+  const upd = () => {
+    const v = el.value.trim();
+    if (!v) { pv.innerHTML = ''; return; }
+    try { Alg.parse(v); pv.innerHTML = 'Je lis : ' + m(pretty(v)); }
+    catch (e) { pv.innerHTML = '<span class="muted">Je lis : …</span>'; }
+  };
+  el.addEventListener('input', () => { starToTimes(el); upd(); });
+  el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); onEnter(); } });
+  document.querySelectorAll(`.key[data-for="${id}"]`).forEach(b => b.addEventListener('click', () => {
+    const k = b.dataset.k, ins = k === '×' ? '×' : k;
+    const s = el.selectionStart ?? el.value.length, t = el.selectionEnd ?? el.value.length;
+    el.value = el.value.slice(0, s) + ins + el.value.slice(t);
+    el.focus(); el.setSelectionRange(s + ins.length, s + ins.length); upd();
+  }));
+  setTimeout(() => el.focus(), 30);
+}
+
+/* ---------- Réponse sur plusieurs lignes, comme dans le cahier ---------- */
+function lineRow(letter, v, i, mark) {
+  return `<div class="lrow ${mark || ''}" data-row="${i}"><span class="lname">${fmt(letter)} =</span><input class="lin" data-i="${i}" value="${esc(v)}" autocomplete="off" spellcheck="false" aria-label="Ligne ${i + 1} de mon calcul"><span class="lnote">${mark === 'bad' ? 'l’erreur est ici' : mark === 'unread' ? 'je ne lis pas cette ligne' : ''}</span></div>`;
+}
+function linesHTML(letter, src, lines, marks) {
+  return `<div class="lignes" id="lignes">
+    <div class="lrow first"><span class="lname">${fmt(letter)} =</span><span class="lsrc">${m(src)}</span></div>
+    <div id="lrows">${lines.map((v, i) => lineRow(letter, v, i, marks[i])).join('')}</div>
+  </div>
+  <div class="keys">${['x', 'x²', '(', ')', '+', '−', '×'].map(k => `<button type="button" class="key lkey" data-k="${k}">${k}</button>`).join('')}
+    <button type="button" class="key addl" id="addl">Nouvelle ligne</button></div>
+  <div class="preview" id="lpv"></div>
+  <p class="hint small">Écris ton calcul ligne par ligne. La touche Entrée passe à la ligne suivante. Seule la dernière ligne est ta réponse.</p>`;
+}
+let LAST_LINE = null;
+function wireLines(S, letter, onSubmit) {
+  const box = $('#lrows'), pv = $('#lpv');
+  const show = el => { const v = el.value.trim(); if (!v) { pv.innerHTML = ''; return; } try { Alg.parse(v); pv.innerHTML = 'Je lis la ligne ' + (+el.dataset.i + 1) + ' : ' + m(pretty(v)); } catch (e) { pv.innerHTML = '<span class="muted">Je lis : …</span>'; } };
+  const addRow = (focus = true) => {
+    S.lines.push(''); const i = S.lines.length - 1;
+    box.insertAdjacentHTML('beforeend', lineRow(letter, '', i, ''));
+    wireOne(box.querySelector(`.lin[data-i="${i}"]`));
+    if (focus) box.querySelector(`.lin[data-i="${i}"]`).focus();
+  };
+  const wireOne = el => {
+    const i = +el.dataset.i;
+    el.addEventListener('focus', () => { LAST_LINE = el; show(el); });
+    el.addEventListener('input', () => { starToTimes(el); S.lines[i] = el.value; show(el); const row = el.closest('.lrow'); row.classList.remove('bad', 'unread'); row.querySelector('.lnote').textContent = ''; });
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (e.ctrlKey || e.metaKey) { onSubmit(); return; }
+        if (!el.value.trim()) return;
+        const nxt = box.querySelector(`.lin[data-i="${i + 1}"]`);
+        if (nxt) nxt.focus(); else addRow();
+      } else if (e.key === 'Backspace' && !el.value && i > 0 && i === S.lines.length - 1) {
+        e.preventDefault(); S.lines.pop(); el.closest('.lrow').remove();
+        const prev = box.querySelector(`.lin[data-i="${i - 1}"]`); prev.focus(); prev.setSelectionRange(prev.value.length, prev.value.length);
+      } else if (e.key === 'ArrowUp' && i > 0) { box.querySelector(`.lin[data-i="${i - 1}"]`).focus(); }
+      else if (e.key === 'ArrowDown') { const n = box.querySelector(`.lin[data-i="${i + 1}"]`); if (n) n.focus(); }
+    });
+  };
+  box.querySelectorAll('.lin').forEach(wireOne);
+  document.querySelectorAll('.lkey').forEach(b => b.onclick = () => {
+    const el = LAST_LINE && LAST_LINE.isConnected ? LAST_LINE : box.querySelector('.lin:last-of-type') || box.querySelector('.lin'); if (!el) return;
+    const k = b.dataset.k, s = el.selectionStart ?? el.value.length, t = el.selectionEnd ?? el.value.length;
+    el.value = el.value.slice(0, s) + k + el.value.slice(t); el.focus(); el.setSelectionRange(s + k.length, s + k.length);
+    el.dispatchEvent(new Event('input'));
+  });
+  $('#addl').onclick = () => addRow();
+  const lastFilled = [...box.querySelectorAll('.lin')].pop();
+  setTimeout(() => { lastFilled.focus(); lastFilled.setSelectionRange(lastFilled.value.length, lastFilled.value.length); }, 30);
+}
+function checkLines(q, lines) {
+  const idx = lines.map((v, i) => v.trim() ? i : -1).filter(i => i >= 0);
+  const marks = lines.map(() => '');
+  if (!idx.length) return { r: { st: 'empty', msg: 'Écris ton calcul avant de vérifier.' }, marks };
+  const last = idx[idx.length - 1];
+  for (const i of idx.slice(0, -1)) { try { Alg.parse(lines[i]); } catch (e) { marks[i] = 'unread'; return { r: { st: 'unread', msg: `Je n’arrive pas à lire la ligne ${i + 1}. Vérifie les parenthèses et les signes.` }, marks }; } }
+  const r = checkAnswer(q, lines[last]);
+  if (r.st === 'unread' || r.st === 'empty') { marks[last] = 'unread'; return { r, marks }; }
+  let firstBad = -1;
+  for (const i of idx.slice(0, -1)) { const p = Alg.P.trim(Alg.toPoly(Alg.parse(lines[i]))); if (!Alg.P.eq(p, q.expected)) { firstBad = i; break; } }
+  if (r.st === 'ok') {
+    if (firstBad >= 0) { marks[firstBad] = 'bad'; return { r: { st: 'ok', msg: `Ta dernière ligne est juste. Attention : la ligne ${firstBad + 1} n’était pas égale à l’expression de départ.` }, marks }; }
+    return { r, marks };
+  }
+  if (r.st === 'wrong') {
+    const k = firstBad >= 0 ? firstBad : last;
+    marks[k] = 'bad';
+    const rk = checkAnswer(q, lines[k]);
+    const known = q.errors.find(er => { try { return Alg.P.eq(er.poly, Alg.P.trim(Alg.toPoly(Alg.parse(lines[k])))); } catch (e) { return false; } });
+    return { r: { st: 'wrong', msg: (idx.length > 1 ? `L’erreur apparaît à la ligne ${k + 1} : cette ligne n’est plus égale à l’expression de départ. ` : '') + (known ? known.msg : ''), test: rk.test }, marks };
+  }
+  return { r: Object.assign({}, r, { msg: r.msg + ' Continue sur une nouvelle ligne.' }), marks };
+}
+
+/* ---------- Correction modèle ---------- */
+function correctionHTML(q, title = 'La correction') {
+  return `<div class="corr"><div class="corr-t">${title}</div>
+    ${q.steps.map(st => `<div class="cstep"><div class="line">${stepHTML(st)}</div><div class="cmt">${st.c}</div></div>`).join('')}
+    ${q.table ? `<div class="cstep"><div class="cmt">Avec le tableau, on obtient les mêmes produits :</div>${tableHTML(q.table, { mode: 'show' })}</div>` : ''}
+    ${q.resHtml || res(q.src + ' = ' + q.answer)}</div>`;
+}
+function feedbackHTML(r, extra) {
+  const cls = { ok: 'ok', almost: 'almost', wrong: 'bad', unread: 'almost', empty: 'almost' }[r.st];
+  const head = { ok: 'Juste.', almost: 'Pas tout à fait.', wrong: 'Ce n’est pas juste.', unread: 'Je ne comprends pas ta réponse.', empty: '' }[r.st];
+  return `<div class="fb ${cls}">${head ? `<b>${head}</b> ` : ''}${r.msg || ''}${r.test ? `<div class="test">${r.test}</div>` : ''}${extra ? `<div class="next">${extra}</div>` : ''}</div>`;
+}
+
+/* ---------- Navigation ---------- */
+let view = { name: 'home' };
+function go(v) { stopVideo(); view = v; render(); window.scrollTo(0, 0); }
+function setMarge(html) { $('#marge').innerHTML = html; const b = $('#marge #back'); }
+function render() {
+  document.querySelectorAll('.topnav button').forEach(b => b.classList.toggle('on', b.dataset.nav === view.name || (view.name === 'palier' && b.dataset.nav === 'home')));
+  const ns = $('#navsel'); if (ns) ns.value = view.name === 'palier' ? 'home' : view.name;
+  ({ home: renderHome, palier: renderPalier, series: renderSeries, travail: renderTravail, ds: renderDS })[view.name]();
+  requestAnimationFrame(() => drawArrows());
+}
+
+/* ---------- Accueil ---------- */
+function statLine(p) {
+  const s = store.stats[p]; const f = LV.reduce((a, l) => a + s[l][0], 0), r = LV.reduce((a, l) => a + s[l][1], 0);
+  return f ? `${f} fait${f > 1 ? 's' : ''}, ${r} du premier coup` : 'pas commencé';
+}
+function renderHome() {
+  const d = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+  setMarge(`<div class="m-date">${d}</div>`);
+  $('#main').innerHTML = `
+    <h2 class="titre">Réduire, développer, factoriser et prouver</h2>
+    <p class="lead">Pour chaque palier, tu revois le cours, tu regardes un exemple corrigé, tu fais un exercice avec de l’aide, puis tu t’entraînes seul.</p>
+    <ol class="sommaire">${PALIERS.map(p => `
+      <li><button class="som" data-p="${p}">
+        <span class="som-n">${p === 'B' ? 'B' : p}</span>
+        <span class="som-t"><span class="som-h">${INFO[p].t}</span><span class="som-s">${INFO[p].s}</span></span>
+        <span class="som-l" aria-hidden="true"></span>
+        <span class="som-st ${store.stats[p] && LV.some(l => store.stats[p][l][0]) ? 'started' : ''}">${statLine(p)}</span>
+      </button></li>`).join('')}
+    </ol>
+    <h2 class="sous">Entraînement technique</h2>
+    <button class="som solo" data-nav2="series">
+      <span class="som-t"><span class="som-h">Séries chronométrées</span><span class="som-s">8 calculs à faire le plus juste et le plus vite possible, sans calculatrice.</span></span>
+      <span class="som-l" aria-hidden="true"></span>
+      <span class="som-st">${store.series.length ? store.series.length + ' essai' + (store.series.length > 1 ? 's' : '') : 'pas d’essai'}</span>
+    </button>`;
+  document.querySelectorAll('.som[data-p]').forEach(b => b.onclick = () => go({ name: 'palier', p: b.dataset.p === 'B' ? 'B' : +b.dataset.p, tab: 'cours' }));
+  document.querySelector('[data-nav2="series"]').onclick = () => go({ name: 'series' });
+}
+
+/* ---------- Palier ---------- */
+const TABS = [['cours', 'Le cours'], ['exemple', 'Je regarde un exemple'], ['guide', 'Je fais avec de l’aide'], ['seul', 'Je fais seul']];
+function renderPalier() {
+  const p = view.p;
+  setMarge(`<button class="m-back" id="back">Sommaire</button>
+    <div class="m-pal">${p === 'B' ? 'Bilan' : 'Palier ' + p}</div>
+    <div class="etapes" role="tablist" aria-label="Étapes">${TABS.map(([k, l], i) => `<button role="tab" aria-selected="${view.tab === k}" class="tab ${view.tab === k ? 'on' : ''}" data-tab="${k}"><span class="tn">${i + 1}</span><span>${l}</span></button>`).join('')}</div>`);
+  $('#main').innerHTML = `<h2 class="titre">${INFO[p].t}</h2><div id="pane" class="pane"></div>`;
+  $('#back').onclick = () => go({ name: 'home' });
+  document.querySelectorAll('.tab').forEach(b => b.onclick = () => { stopVideo(); view.tab = b.dataset.tab; view.sess = null; renderPalier(); requestAnimationFrame(() => drawArrows()); });
+  ({ cours: paneCours, exemple: paneExemple, guide: paneGuide, seul: paneSeul })[view.tab](p);
+  requestAnimationFrame(() => drawArrows());
+}
+function nextTabBtn(label, tab) { return `<div class="navnext"><button class="primary" id="nexttab">${label}</button></div>`; }
+function wireNextTab(tab) { const b = $('#nexttab'); if (b) b.onclick = () => { stopVideo(); view.tab = tab; renderPalier(); }; }
+
+function paneCours(p) {
+  $('#pane').innerHTML = `<div class="course">${COURSE[p]()}</div>${nextTabBtn('J’ai relu le cours : je regarde un exemple', 'exemple')}`;
+  wireNextTab('exemple');
+  document.querySelectorAll('[data-go]').forEach(a => a.onclick = e => { e.preventDefault(); go({ name: 'palier', p: +a.dataset.go, tab: 'cours' }); });
+}
+
+function levelChips(cur, allowed = LV) {
+  return `<div class="feu" role="radiogroup" aria-label="Niveau"><span class="feu-l">Niveau</span>${allowed.map(l => `<button role="radio" aria-checked="${cur === l}" class="chip lamp ${l} ${cur === l ? 'on' : ''}" data-lv="${l}"><span class="dot"></span><span class="lamp-t">${LVNAME[l]}<small>${LVTXT[l]}</small></span></button>`).join('')}</div>`;
+}
+
+/* Modelage : un lecteur façon vidéo, avec voix off facultative */
+const VOX = { ok: typeof speechSynthesis !== 'undefined' && typeof SpeechSynthesisUtterance !== 'undefined', on: false, voice: null, list: [] };
+// On préfère les voix « naturelles » (Edge : Denise, Henri, Vivienne… Online (Natural) ; Chrome : Google français),
+// bien moins robotiques que les voix système classiques.
+function voiceScore(v) {
+  const n = v.name;
+  return (/natural|neural/i.test(n) ? 40 : 0) + (/online/i.test(n) ? 20 : 0) + (/google/i.test(n) ? 15 : 0)
+    + (/fr-FR/i.test(v.lang) ? 5 : 0) + (/Denise|Henri|Vivienne|Eloise|Remy|Rémy|Yves|Thomas|Amélie|Audrey/i.test(n) ? 3 : 0) + (v.localService ? 0 : 2);
+}
+function pickVoice() {
+  try {
+    VOX.list = speechSynthesis.getVoices().filter(v => /^fr/i.test(v.lang)).sort((a, b) => voiceScore(b) - voiceScore(a));
+    let saved = null; try { saved = localStorage.getItem('calcul-litteral-1-voix'); } catch (e) { }
+    VOX.voice = VOX.list.find(v => v.name === saved) || VOX.list[0] || null;
+  } catch (e) { }
+}
+if (VOX.ok) { pickVoice(); try { speechSynthesis.onvoiceschanged = () => { pickVoice(); if (V && $('#video')) renderVideo(); }; } catch (e) { } }
+const plain = html => { const d = document.createElement('div'); d.innerHTML = html; return d.textContent; };
+const sayable = t => t.replace(/−/g, ' moins ').replace(/×/g, ' fois ').replace(/²/g, ' au carré').replace(/=/g, ' égale ').replace(/\s+/g, ' ').trim();
+// Lecture d'une expression comme le ferait un professeur : « 3 fois la parenthèse x moins 8 ».
+function mathSay(src) {
+  let s = src.replace(/==/g, '').replace(/\s+/g, ' ').trim();
+  s = s.replace(/\((-?\s?\d*x?(\^\d)?)\)/g, '$1');                       // (−5) ou (−2x) : un seul nombre
+  s = s.replace(/\)\^2/g, ') le tout au carré').replace(/\)\^3/g, ') le tout au cube');
+  s = s.replace(/\^2/g, ' au carré').replace(/\^3/g, ' au cube');
+  s = s.replace(/\)\s*[(\[]/g, ') fois (').replace(/(\d|x)\s*\(/g, '$1 fois (');
+  s = s.replace(/[(\[]\s*-/g, '( moins ').replace(/^-/, 'moins ').replace(/\*\s*-/g, '* moins ');
+  s = s.replace(/[(\[]/g, ' la parenthèse ').replace(/[)\]]/g, ' ');
+  s = s.replace(/\*/g, ' fois ').replace(/ - /g, ' moins ').replace(/ \+ /g, ' plus ').replace(/=/g, ' égale ').replace(/-/g, ' moins ');
+  return s.replace(/\s+/g, ' ').trim();
+}
+const ICON = {
+  play: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3 L17 10 L5 17 Z" fill="currentColor"/></svg>',
+  pause: '<svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="3" width="4.2" height="14" fill="currentColor"/><rect x="11.8" y="3" width="4.2" height="14" fill="currentColor"/></svg>',
+  prev: '<svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="4" width="2.6" height="12" fill="currentColor"/><path d="M17 4 L7 10 L17 16 Z" fill="currentColor"/></svg>',
+  next: '<svg viewBox="0 0 20 20" aria-hidden="true"><rect x="14.4" y="4" width="2.6" height="12" fill="currentColor"/><path d="M3 4 L13 10 L3 16 Z" fill="currentColor"/></svg>',
+  again: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3.5a6.5 6.5 0 1 1-6.1 4.3" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M2.4 3.4 L4.4 9 L9.2 6.2 Z" fill="currentColor"/></svg>',
+  vox: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5h3.5L11 4v12l-4.5-3.5H3z" fill="currentColor"/><path d="M13.5 7a4 4 0 0 1 0 6M15.5 5a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>'
+};
+let V = null;
+function stopVideo() { if (!V) return; V.playing = false; V.token++; clearTimeout(V.timer); clearTimeout(V.timer2); if (VOX.ok) try { speechSynthesis.cancel(); } catch (e) { } }
+function tableSteps(q) {
+  const t = q.table, out = [];
+  out.push({ kind: 'tab', fill: 0, text: t.simple ? 'Je trace le tableau : le facteur placé devant la parenthèse à gauche, les termes de la parenthèse en haut, chacun avec son signe.' : 'Je trace le tableau : les termes de la première parenthèse à gauche, ceux de la deuxième parenthèse en haut, chacun avec son signe.' });
+  let k = 0;
+  t.cells.forEach((row, r) => row.forEach((cell, c) => {
+    k++;
+    const txt = `Ligne ${t.rows[r]}, colonne ${t.cols[c]} : ${cell.ps} = ${cell.show}.`;
+    out.push({ kind: 'tab', fill: k, cur: [r, c], text: `Ligne ${fmt(t.rows[r])}, colonne ${fmt(t.cols[c])} : ${fmt(cell.ps)} = ${fmt(cell.show)}.`, say: mathSay(cell.ps) + ' égale ' + mathSay(cell.show) + '.' });
+  }));
+  const terms = t.cells.flat().map(c => c.t);
+  const list = TS.list(terms);
+  out.push({ kind: 'step', st: { m: q.src + ' = ' + list }, text: t.simple ? 'J’écris la somme des cases du tableau.' : 'J’ajoute les 4 cases du tableau.' });
+  if (q.answer !== list) out.push({ kind: 'step', st: { m: q.src + ' = ' + q.answer }, text: 'Je réduis.' });
+  return out;
+}
+function newVideo(q, meth) {
+  stopVideo();
+  const body = meth === 'tableau' && q.table ? tableSteps(q) : q.steps.map(st => ({ kind: 'step', st, text: st.c }));
+  body.forEach(s => { if (!s.say) s.say = sayable(plain(s.text)); });
+  const steps = [{ kind: 'intro', text: q.consigne, say: q.head ? sayable(plain(q.consigne + ' ' + q.head)) : q.consigne + ' ' + mathSay(q.src) + '.' }]
+    .concat(body)
+    .concat([q.resHtml ? { kind: 'res', text: q.kind === 'proof' ? 'Je conclus par une phrase.' : 'J’encadre le résultat.', say: sayable(plain(q.resHtml)) }
+      : { kind: 'res', text: 'J’encadre le résultat.', say: 'J’encadre le résultat : ' + mathSay(q.answer) + '.' }]);
+  V = { q, steps, i: 0, playing: false, token: 0, anim: false, started: false, meth };
+}
+function paneExemple(p) {
+  const lv = view.exLv || 'v';
+  const meth = view.exMeth || 'fleches';
+  if (!V || !view.exQ || view.exQ.palier !== p || view.exQ.level !== lv) { view.exQ = genQuestion(p, lv, false); newVideo(view.exQ, meth); }
+  else if (V.meth !== meth) newVideo(view.exQ, meth);
+  const methChoice = view.exQ.table ? `<div class="meth" role="radiogroup" aria-label="Méthode"><span class="feu-l">Je veux voir la méthode</span>
+      <button role="radio" aria-checked="${meth === 'fleches'}" class="mbtn ${meth === 'fleches' ? 'on' : ''}" data-meth="fleches">avec les flèches</button>
+      <button role="radio" aria-checked="${meth === 'tableau'}" class="mbtn ${meth === 'tableau' ? 'on' : ''}" data-meth="tableau">avec le tableau</button></div>` : '';
+  $('#pane').innerHTML = `${levelChips(lv)}${methChoice}<div class="video" id="video"></div>
+    <div class="actions"><button id="exnew">Un autre exemple</button></div>
+    ${nextTabBtn('J’ai compris : je fais un exercice avec de l’aide', 'guide')}`;
+  document.querySelectorAll('.chip').forEach(c => c.onclick = () => { view.exLv = c.dataset.lv; view.exQ = null; paneExemple(p); });
+  document.querySelectorAll('.mbtn').forEach(b => b.onclick = () => { view.exMeth = b.dataset.meth; paneExemple(p); });
+  $('#exnew').onclick = () => { view.exQ = null; paneExemple(p); };
+  wireNextTab('guide');
+  renderVideo();
+}
+function renderVideo() {
+  const box = $('#video'); if (!box || !V) return;
+  const q = V.q, last = V.steps.length - 1;
+  const shown = V.steps.slice(1, V.i + 1);
+  box.innerHTML = `
+    <div class="screen" aria-live="polite">
+      <div class="consigne">${q.consigne}</div>
+      <div class="bigexpr">${q.head || m(q.src)}</div>
+      <div class="vsteps">${shown.map((s, k) => {
+        const now = V.anim && k === shown.length - 1 ? ' now' : '';
+        if (s.kind === 'tab') {
+          const lastTab = shown.map(x => x.kind).lastIndexOf('tab');
+          if (k !== lastTab) return '';
+          const t = q.table; let n = 0;
+          return `<div class="vstep vtab${now && s.fill === 0 ? ' now' : ''}"><table class="dtab">
+            <tr><th class="corner">×</th>${t.cols.map(c => `<th>${m(c)}</th>`).join('')}</tr>
+            ${t.rows.map((rw, r) => `<tr><th>${m(rw)}</th>${t.cols.map((_, c) => { n++; const on = n <= s.fill; const cur = s.cur && s.cur[0] === r && s.cur[1] === c && now; return `<td class="${cur ? 'pop' : ''}">${on ? m(t.cells[r][c].show) : ''}</td>`; }).join('')}</tr>`).join('')}</table></div>`;
+        }
+        if (s.kind === 'res') return `<div class="vstep res${now}"><div class="line">${q.resHtml || res(q.src + ' = ' + q.answer)}</div></div>`;
+        return `<div class="vstep${now}"><div class="line">${stepHTML(s.st)}</div></div>`;
+      }).join('')}</div>
+      ${!V.started ? `<button class="bigplay" id="vbig">${ICON.play}<span>Regarder l’exemple</span></button>` : ''}
+    </div>
+    <div class="soustitre">${V.started ? V.steps[V.i].text : 'Appuie sur lecture : la correction s’écrit étape par étape.'}</div>
+    <div class="player">
+      <button class="pbtn" id="vplay" aria-label="${V.playing ? 'Pause' : 'Lecture'}">${V.playing ? ICON.pause : ICON.play}</button>
+      <button class="pbtn" id="vprev" aria-label="Étape précédente" ${V.i === 0 ? 'disabled' : ''}>${ICON.prev}</button>
+      <button class="pbtn" id="vnext" aria-label="Étape suivante" ${V.i === last ? 'disabled' : ''}>${ICON.next}</button>
+      <button class="pbtn" id="vagain" aria-label="Revoir depuis le début">${ICON.again}</button>
+      <div class="pseg">${V.steps.map((s, k) => `<button class="seg ${k < V.i ? 'past' : ''} ${k === V.i && V.started ? 'cur' : ''}" data-k="${k}" aria-label="${k === 0 ? 'Début' : k === last ? 'Résultat' : 'Étape ' + k}"></button>`).join('')}</div>
+      <span class="pcount">${V.i === 0 ? 'début' : V.i === last ? 'résultat' : 'étape ' + V.i + ' sur ' + (last - 1)}</span>
+      ${VOX.ok ? `<button class="pbtn vox ${VOX.on ? 'on' : ''}" id="vvox" aria-pressed="${VOX.on}">${ICON.vox}<span>Voix off : ${VOX.on ? 'oui' : 'non'}</span></button>` : ''}
+      ${VOX.ok && VOX.on && VOX.list.length > 1 ? `<label class="vsel"><span>Voix</span><select id="vsel">${VOX.list.map(v => `<option value="${esc(v.name)}" ${VOX.voice && v.name === VOX.voice.name ? 'selected' : ''}>${esc(v.name.replace(/^Microsoft\s+/, '').replace(/\s*-\s*French.*$/i, '').replace(/\(.*?\)/g, m0 => /natural/i.test(m0) ? '(naturelle)' : ''))}</option>`).join('')}</select></label>` : ''}
+    </div>`;
+  requestAnimationFrame(() => drawArrows(box));
+  const play = () => { V.started = true; if (V.i >= last) { V.playing = true; vidGo(0); } else { V.playing = true; if (V.i === 0 && !V.anim) vidGo(0); else narrate(); renderVideo(); } };
+  $('#vplay').onclick = () => { if (V.playing) { stopVideo(); renderVideo(); } else play(); };
+  const big = $('#vbig'); if (big) big.onclick = play;
+  $('#vprev').onclick = () => { stopVideo(); V.started = true; vidGo(Math.max(0, V.i - 1)); };
+  $('#vnext').onclick = () => { stopVideo(); V.started = true; vidGo(Math.min(last, V.i + 1)); };
+  $('#vagain').onclick = () => { stopVideo(); V.started = true; V.playing = true; vidGo(0); };
+  box.querySelectorAll('.seg').forEach(s => s.onclick = () => { stopVideo(); V.started = true; vidGo(+s.dataset.k); });
+  const vs = $('#vsel'); if (vs) vs.onchange = () => { VOX.voice = VOX.list.find(v => v.name === vs.value) || VOX.voice; try { localStorage.setItem('calcul-litteral-1-voix', vs.value); } catch (e) { } if (!V.playing) narrate(); };
+  const vx = $('#vvox'); if (vx) vx.onclick = () => { VOX.on = !VOX.on; if (!VOX.on) try { speechSynthesis.cancel(); } catch (e) { } renderVideo(); if (VOX.on && V.playing) narrate(); };
+}
+function vidGo(k) { V.i = k; V.anim = true; renderVideo(); narrate(); }
+function narrate() {
+  const tk = ++V.token; clearTimeout(V.timer); clearTimeout(V.timer2);
+  const s = V.steps[V.i], txt = s.say, last = V.steps.length - 1;
+  const writing = V.anim && V.i > 0 ? 1300 : 300;
+  const after = () => {
+    if (tk !== V.token) return;
+    if (V.playing && V.i < last) V.timer = setTimeout(() => { if (tk === V.token) vidGo(V.i + 1); }, 650);
+    else if (V.playing) { V.playing = false; renderVideo(); }
+  };
+  if (VOX.on && VOX.ok) {
+    try { speechSynthesis.cancel(); } catch (e) { }
+    let done = false; const fin = () => { if (done) return; done = true; after(); };
+    V.timer2 = setTimeout(fin, writing + 3000 + txt.length * 95);
+    V.timer = setTimeout(() => {
+      if (tk !== V.token) return;
+      const ut = new SpeechSynthesisUtterance(txt); ut.lang = 'fr-FR'; if (VOX.voice) ut.voice = VOX.voice; ut.rate = 1; ut.pitch = 1;
+      ut.onend = fin; ut.onerror = fin;
+      try { speechSynthesis.speak(ut); } catch (e) { fin(); }
+    }, writing);
+  } else {
+    V.timer = setTimeout(after, writing + Math.min(6500, Math.max(2200, 900 + txt.length * 42)));
+  }
+}
+
+/* Pratique guidée */
+function guidedQuestion(p, lv) {
+  for (let i = 0; i < 40; i++) {
+    let q;
+    if (p === 2 && lv === 'r') q = R.chance(0.5) ? genSimpleBasic('o') : genParen('o');
+    else if (p === 3 && lv === 'r') q = genDoubleBasic('o');
+    else if (p === 'B') q = genQuestion(R.pick([2, 3, 4]), lv, false);
+    else q = genQuestion(p, lv, false);
+    if (q.guided) return q;
+  }
+  return genSimpleBasic('v');
+}
+function paneGuide(p) {
+  const lv = view.gLv || 'v';
+  const gm = view.gMeth || 'tableau';
+  if (!view.g || view.g.p !== p || view.g.lv !== lv) view.g = { p, lv, q: guidedQuestion(p, lv), i: 0, tries: 0, done: [], fin: false, last: null };
+  const g = view.g;
+  // Les questions avec tableau peuvent se faire « avec les flèches » : un produit par étape.
+  if (g.q.table && !g.base) g.base = g.q;
+  if (g.base) {
+    const b = g.base;
+    if (gm === 'fleches' && g.meth !== 'fleches') {
+      g.q = Object.assign({}, b, { guided: b.table.cells.flat().map(c => ({ label: `${fmt(c.ps)} =`, poly: c.poly, show: c.show })).concat([b.guided[b.guided.length - 1]]) });
+      Object.assign(g, { i: 0, tries: 0, done: [], fin: false, last: null, tvals: null, tmarks: null, meth: 'fleches' });
+    } else if (gm === 'tableau' && g.meth === 'fleches') {
+      g.q = b; Object.assign(g, { i: 0, tries: 0, done: [], fin: false, last: null, tvals: null, tmarks: null, meth: 'tableau' });
+    }
+  }
+  const q = g.q;
+  const methChoice = g.base ? `<div class="meth" role="radiogroup" aria-label="Méthode"><span class="feu-l">Je veux travailler</span>
+      <button role="radio" aria-checked="${gm === 'fleches'}" class="mbtn ${gm === 'fleches' ? 'on' : ''}" data-meth="fleches">avec les flèches</button>
+      <button role="radio" aria-checked="${gm === 'tableau'}" class="mbtn ${gm === 'tableau' ? 'on' : ''}" data-meth="tableau">avec le tableau</button></div>` : '';
+  const head = q.head || (q.steps[0] && q.steps[0].arrow && !q.steps[0].pre ? arrowHTML(q.steps[0].arrow) : m(q.src));
+  const rows = q.guided.map((st, i) => {
+    if (i > g.i) return '';
+    const d = g.done[i];
+    const label = st.label;
+    if (st.table) {
+      if (d) return `<div class="grow done col"><div class="glabel">Le tableau ${d.given ? '<span class="tag shown">complété par l’app</span>' : '<span class="tag ok">✓</span>'}</div>${tableHTML(q.table, { mode: 'show', marks: g.tmarks })}</div>`;
+      return `<div class="grow cur" id="tstep"><div class="glabel">${label}</div>${tableHTML(q.table, { mode: 'input', id: 'gt', vals: g.tvals, marks: g.tmarks })}<div class="actions"><button class="primary" id="gchk">Vérifier le tableau</button></div><div id="gfb">${g.last ? g.last : ''}</div></div>`;
+    }
+    if (st.choice) return choiceRow(st, d, g.last);
+    if (d) return `<div class="grow done"><div class="glabel">${label}</div><div class="gans">${m(d.show)} ${d.given ? '<span class="tag shown">réponse donnée</span>' : '<span class="tag ok">✓</span>'}</div></div>`;
+    return `<div class="grow cur"><div class="glabel">${label}</div>${inputHTML('gin', q.letter)}<div class="actions"><button class="primary" id="gchk">Vérifier</button></div><div id="gfb">${g.last ? g.last : ''}</div></div>`;
+  }).join('');
+  $('#pane').innerHTML = `
+    ${levelChips(lv, [0, 1, 4, 5, 'B'].includes(p) ? LV : ['v', 'o'])}${methChoice}
+    <p class="hint">Fais chaque étape l’une après l’autre. Si tu te trompes deux fois sur une étape, la réponse s’affiche et tu continues.</p>
+    <div class="card">
+      <div class="consigne">${q.consigne}</div>
+      <div class="bigexpr">${head}</div>
+      <div class="guided">${rows}</div>
+      ${g.fin ? correctionHTML(q, 'La correction complète') + '<div class="actions"><button class="primary" id="gnew">Un autre exercice avec de l’aide</button></div>' : ''}
+    </div>
+    ${g.fin ? nextTabBtn('Je suis prêt : je fais seul', 'seul') : ''}`;
+  document.querySelectorAll('.chip').forEach(c => c.onclick = () => { view.gLv = c.dataset.lv; view.g = null; paneGuide(p); requestAnimationFrame(() => drawArrows()); });
+  document.querySelectorAll('.mbtn').forEach(bt => bt.onclick = () => { view.gMeth = bt.dataset.meth; paneGuide(p); requestAnimationFrame(() => drawArrows()); });
+  const nw = $('#gnew'); if (nw) nw.onclick = () => { view.g = null; paneGuide(p); requestAnimationFrame(() => drawArrows()); };
+  wireNextTab('seul');
+  if (g.fin) return;
+  const stNow = q.guided[g.i];
+  if (stNow.table) {
+    const checkTable = () => {
+      const vals = readTable($('#tstep'));
+      g.tvals = g.tvals || {}; g.tmarks = g.tmarks || q.table.cells.map(r => r.map(() => ''));
+      let allOk = true, unread = false, signHint = false, sqHint = false;
+      q.table.cells.forEach((row, r) => row.forEach((cell, c) => {
+        if (g.tmarks[r][c] === 'ok' || g.tmarks[r][c] === 'given') return;
+        const v = vals[r] && vals[r][c] !== undefined ? vals[r][c] : '';
+        (g.tvals[r] = g.tvals[r] || {})[c] = v;
+        let poly = null; try { poly = Alg.P.trim(Alg.toPoly(Alg.parse(v))); } catch (e) { unread = true; }
+        if (poly && Alg.P.eq(poly, cell.poly)) g.tmarks[r][c] = 'ok';
+        else { allOk = false; g.tmarks[r][c] = 'bad'; if (poly && Alg.P.eq(Alg.P.neg(poly), cell.poly)) signHint = true; if (poly && poly.length === 2 && cell.poly.length === 3) sqHint = true; }
+      }));
+      if (allOk) { g.done[g.i] = { table: true }; g.i++; g.tries = 0; g.last = ''; }
+      else {
+        g.tries++;
+        if (g.tries >= 2) {
+          q.table.cells.forEach((row, r) => row.forEach((cell, c) => { if (g.tmarks[r][c] === 'bad') g.tmarks[r][c] = 'given'; }));
+          g.done[g.i] = { table: true, given: true }; g.i++; g.tries = 0; g.last = '';
+        } else g.last = feedbackHTML({ st: 'wrong', msg: 'Les cases en rouge ne sont pas justes. Corrige-les.' + (signHint ? ' Attention aux signes.' : '') + (sqHint ? ' Rappel : x × x = x².' : '') + (unread ? ' Écris un seul terme par case, par exemple 6x ou −3.' : '') });
+      }
+      paneGuide(p); requestAnimationFrame(() => drawArrows());
+    };
+    wireTable($('#tstep'), checkTable);
+    $('#gchk').onclick = checkTable;
+    return;
+  }
+  if (stNow.choice) {
+    wireChoice(stNow, g, () => { if (g.i >= q.guided.length) g.fin = true; paneGuide(p); });
+    return;
+  }
+  const submit = () => {
+    const st = q.guided[g.i], val = $('#gin').value;
+    let ok = false, r;
+    if (st.final) {
+      r = checkAnswer(q, val);
+      if (r.st === 'empty' || r.st === 'unread') { $('#gfb').innerHTML = feedbackHTML(r); return; }
+      ok = r.st === 'ok';
+      g.last = ok ? '' : feedbackHTML(r);
+    } else {
+      let poly = null;
+      try { poly = Alg.P.trim(Alg.toPoly(Alg.parse(val))); } catch (e) { $('#gfb').innerHTML = feedbackHTML({ st: 'unread', msg: 'Je n’arrive pas à lire ta réponse.' }); return; }
+      ok = Alg.P.eq(poly, st.poly);
+      if (!ok) {
+        let msg = 'Relis l’étape et recommence.';
+        if (st.factorStep && poly.length === st.poly.length && poly.every(c => Number.isInteger(c)) && st.poly.every((c, i) => !c || (poly[i] && Number.isInteger(c / poly[i]))) && poly.some(c => c)) msg = 'C’est un facteur commun, mais ce n’est pas le plus grand possible.';
+        else if (st.factorStep && poly.length < st.poly.length && st.poly[0] === 0 && poly.length === 1 && Number.isInteger(st.poly[1] / poly[0])) msg = 'C’est un facteur commun, mais ce n’est pas le plus grand possible : regarde aussi la lettre x.';
+        else if (!st.final && /x/.test(val) && st.poly.length === 3 && poly.length === 2) msg = 'Attention : x × x = x².';
+        else if (poly.length && st.poly.length && Alg.P.eq(Alg.P.neg(poly), st.poly)) msg = 'Attention au signe.';
+        g.last = feedbackHTML({ st: 'wrong', msg });
+      }
+    }
+    if (ok) { g.done[g.i] = { show: st.final ? q.answer : st.show }; g.i++; g.tries = 0; g.last = ''; }
+    else {
+      g.tries++;
+      if (g.tries >= 2) { g.done[g.i] = { show: st.final ? q.answer : st.show, given: true }; g.i++; g.tries = 0; g.last = ''; }
+    }
+    if (g.i >= q.guided.length) g.fin = true;
+    paneGuide(p); requestAnimationFrame(() => drawArrows());
+  };
+  wireInput('gin', submit);
+  $('#gchk').onclick = submit;
+}
+
+
+/* Étape à choix (paliers 0 et 5) : deux essais, puis la réponse s'affiche. */
+function choiceRow(st, d, last) {
+  if (d) return `<div class="grow done col"><div class="glabel">${st.label}</div><div class="gans">${st.show} ${d.given ? '<span class="tag shown">réponse donnée</span>' : '<span class="tag ok">✓</span>'}</div></div>`;
+  return `<div class="grow cur"><div class="glabel">${st.label}</div><div class="choices">${st.options.map((o, i) => `<button type="button" class="opt" data-o="${i}">${o}</button>`).join('')}</div><div id="gfb">${last || ''}</div></div>`;
+}
+function wireChoice(st, g, after) {
+  document.querySelectorAll('.opt[data-o]').forEach(b => b.onclick = () => {
+    if (+b.dataset.o === st.a) { g.done[g.i] = { show: st.show, second: g.tries > 0 }; g.i++; g.tries = 0; g.last = ''; }
+    else {
+      g.tries++; g.miss = true;
+      if (g.tries >= 2) { g.done[g.i] = { show: st.show, given: true }; g.i++; g.tries = 0; g.last = ''; g.fail = true; }
+      else g.last = feedbackHTML({ st: 'wrong', msg: st.hint });
+    }
+    after();
+  });
+}
+
+/* Pratique autonome des paliers 0 et 5 : chaque exercice suit ses étapes, deux essais par étape. */
+const NQS = { 0: 8, 5: 4 };
+function paneSeulSteps(p) {
+  const lv = view.sLv || 'v', NQ5 = NQS[p];
+  const newQ = () => { const q = genQuestion(p, lv, false); return { q, i: 0, tries: 0, done: [], last: '', fin: false, fail: false, miss: false }; };
+  if (!view.sess || view.sess.p !== p || view.sess.lv !== lv) view.sess = Object.assign({ p, lv, n: 0, list: [] }, { cur: newQ(), state: 'ask' });
+  const S = view.sess;
+  if (S.state === 'end') {
+    const first = S.list.filter(x => x.r === 'first').length;
+    $('#pane').innerHTML = `${levelChips(lv)}
+      <div class="card"><h3 class="sous">Série terminée</h3>
+      <p>Tu as fait ${NQ5} exercices. Tu en as réussi ${first} du premier coup.</p>
+      <table class="recap"><tr><th></th><th>Exercice</th><th>Mon résultat</th></tr>
+      ${S.list.map((x, i) => `<tr><td>${i + 1}</td><td>${x.q.consigne}</td><td>${{ first: '<span class="tag ok">réussi du premier coup</span>', second: '<span class="tag mid">réussi au deuxième essai</span>', fail: '<span class="tag shown">à revoir</span>' }[x.r]}</td></tr>`).join('')}</table>
+      <div class="actions"><button class="primary" id="again">Une nouvelle série</button>${lv !== 'r' ? `<button id="up">Passer au niveau ${LVNAME[lv === 'v' ? 'o' : 'r']}</button>` : ''}</div></div>`;
+    document.querySelectorAll('.chip').forEach(c => c.onclick = () => { view.sLv = c.dataset.lv; view.sess = null; paneSeul(p); });
+    $('#again').onclick = () => { view.sess = null; paneSeul(p); };
+    const up = $('#up'); if (up) up.onclick = () => { view.sLv = lv === 'v' ? 'o' : 'r'; view.sess = null; paneSeul(p); };
+    return;
+  }
+  const g = S.cur, q = g.q, steps = q.seul;
+  const rows = steps.map((st, i) => {
+    if (i > g.i) return '';
+    const d = g.done[i];
+    if (st.choice) return choiceRow(st, d, g.last);
+    if (d) return `<div class="grow done"><div class="glabel">${st.label}</div><div class="gans">${m(d.show)} ${d.given ? '<span class="tag shown">réponse donnée</span>' : '<span class="tag ok">✓</span>'}</div></div>`;
+    return `<div class="grow cur"><div class="glabel">${st.label}</div>${inputHTML('gin', q.letter)}<div class="actions"><button class="primary" id="gchk">Vérifier</button></div><div id="gfb">${g.last || ''}</div></div>`;
+  }).join('');
+  $('#pane').innerHTML = `${levelChips(lv)}
+    <div class="card"><div class="qhead"><span class="qnum">Exercice ${S.n + 1} sur ${NQ5}</span><span class="cases" aria-hidden="true">${Array.from({ length: NQ5 }, (_, i) => `<i class="${S.list[i] ? S.list[i].r : (i === S.n ? 'cur' : '')}"></i>`).join('')}</span></div>
+      <div class="consigne">${q.consigne}</div><div class="bigexpr">${q.head || m(q.src)}</div>
+      <div class="guided">${rows}</div>
+      ${g.fin ? correctionHTML(q) + `<div class="actions"><button class="primary" id="snext">${S.n + 1 < NQ5 ? 'Exercice suivant' : 'Voir le bilan de la série'}</button></div>` : ''}
+    </div>`;
+  document.querySelectorAll('.chip').forEach(c => { if (c.classList.contains('on')) return; if (S.n) twoClick(c, 'Cliquer encore : nouvelle série', () => { view.sLv = c.dataset.lv; view.sess = null; paneSeul(p); }); else c.onclick = () => { view.sLv = c.dataset.lv; view.sess = null; paneSeul(p); }; });
+  const finishStep = () => {
+    if (g.i >= steps.length && !g.fin) {
+      g.fin = true;
+      const r = g.fail ? 'fail' : (g.miss ? 'second' : 'first');
+      S.list.push({ q, r }); record(p, lv, r === 'first');
+    }
+    paneSeul(p);
+  };
+  if (g.fin) {
+    $('#snext').onclick = () => { S.n++; if (S.n >= NQ5) S.state = 'end'; else S.cur = newQ(); paneSeul(p); };
+    $('#snext').focus();
+    return;
+  }
+  const st = steps[g.i];
+  if (st.choice) { wireChoice(st, g, finishStep); return; }
+  const submit = () => {
+    const r = checkAnswer(q, $('#gin').value);
+    if (r.st === 'empty' || r.st === 'unread' || r.st === 'almost') { $('#gfb').innerHTML = feedbackHTML(r); return; }
+    if (r.st === 'ok') { g.done[g.i] = { show: q.answer }; g.i++; g.tries = 0; g.last = ''; }
+    else {
+      g.tries++; g.miss = true;
+      if (g.tries >= 2) { g.done[g.i] = { show: q.answer, given: true }; g.i++; g.tries = 0; g.last = ''; g.fail = true; }
+      else g.last = feedbackHTML(r, 'Corrige ta réponse, puis vérifie à nouveau.');
+    }
+    finishStep();
+  };
+  wireInput('gin', submit);
+  $('#gchk').onclick = submit;
+}
+
+/* Pratique autonome */
+const NQ = 8;
+function paneSeul(p) {
+  if (p === 0 || p === 5) return paneSeulSteps(p);
+  const lv = view.sLv || 'v';
+  if (!view.sess || view.sess.p !== p || view.sess.lv !== lv) view.sess = { p, lv, n: 0, list: [], q: genQuestion(p, lv), tries: 0, state: 'ask', fb: '', lines: [''], marks: [] };
+  const S = view.sess;
+  if (S.state === 'end') {
+    const first = S.list.filter(x => x.r === 'first').length;
+    $('#pane').innerHTML = `${levelChips(lv)}
+      <div class="card"><h2 class="sous">Série terminée</h2>
+      <p>Tu as fait ${NQ} exercices. Tu en as réussi ${first} du premier coup.</p>
+      <table class="recap"><tr><th></th><th>Expression</th><th>Réponse attendue</th><th>Mon résultat</th></tr>
+      ${S.list.map((x, i) => `<tr><td>${i + 1}</td><td>${m(x.q.src)}${x.q.kind === 'vf' ? ' <small>(vrai ou faux)</small>' : ''}</td><td>${x.q.kind === 'vf' ? (x.q.isTrue ? 'C’était juste.' : 'C’était faux.') : m(x.q.answer)}</td><td>${{ first: '<span class="tag ok">réussi du premier coup</span>', second: '<span class="tag mid">réussi au deuxième essai</span>', fail: '<span class="tag shown">à revoir</span>' }[x.r]}</td></tr>`).join('')}</table>
+      <div class="actions"><button class="primary" id="again">Une nouvelle série</button>${lv !== 'r' ? `<button id="up">Passer au niveau ${LVNAME[lv === 'v' ? 'o' : 'r']}</button>` : ''}</div></div>`;
+    document.querySelectorAll('.chip').forEach(c => c.onclick = () => { view.sLv = c.dataset.lv; view.sess = null; paneSeul(p); });
+    $('#again').onclick = () => { view.sess = null; paneSeul(p); };
+    const up = $('#up'); if (up) up.onclick = () => { view.sLv = lv === 'v' ? 'o' : 'r'; view.sess = null; paneSeul(p); };
+    return;
+  }
+  const q = S.q;
+  let body;
+  if (q.kind === 'vf') {
+    body = `<div class="consigne">${q.consigne}</div><div class="bigexpr">${m(q.src + ' = ' + q.claim)}</div>
+      ${S.state === 'ask' ? `<div class="actions"><button class="primary" data-vf="1">C’est juste</button><button class="primary" data-vf="0">C’est faux</button></div>` : ''}`;
+  } else {
+    const draft = q.table && S.state === 'ask' ? (S.draft
+      ? `<div class="draft"><div class="draft-t">Mon tableau au brouillon <span class="muted small">(il n’est pas corrigé)</span></div>${tableHTML(q.table, { mode: 'input', id: 'dt', vals: S.dvals })}</div>`
+      : `<div class="actions"><button id="sdraft" class="ghost">Faire le tableau au brouillon</button></div>`) : '';
+    const letter = String.fromCharCode(65 + S.n);
+    body = `<div class="consigne">${q.consigne}</div>${draft}
+      ${S.state === 'ask' ? linesHTML(letter, q.src, S.lines, S.marks) + `<div class="actions"><button class="primary" id="schk">Vérifier ma réponse</button>${S.tries ? '<button id="sshow">Voir la correction</button>' : ''}</div>`
+        : `<div class="lignes done"><div class="lrow first"><span class="lname">${fmt(letter)} =</span><span class="lsrc">${m(q.src)}</span></div>${S.lines.map((v, i) => !v.trim() ? '' : `<div class="lrow ${S.marks[i] || ''}"><span class="lname">${fmt(letter)} =</span><span class="lsrc mine">${(() => { try { Alg.parse(v); return m(pretty(v)); } catch (e) { return esc(v); } })()}</span></div>`).join('')}</div>`}`;
+  }
+  $('#pane').innerHTML = `${levelChips(lv)}
+    <div class="card"><div class="qhead"><span class="qnum">Exercice ${S.n + 1} sur ${NQ}</span><span class="cases" aria-hidden="true">${Array.from({ length: NQ }, (_, i) => `<i class="${S.list[i] ? S.list[i].r : (i === S.n ? 'cur' : '')}"></i>`).join('')}</span></div>
+      ${body}<div id="sfb">${S.fb}</div>
+      ${S.state === 'done' ? correctionHTML(q) + `<div class="actions"><button class="primary" id="snext">${S.n + 1 < NQ ? 'Exercice suivant' : 'Voir le bilan de la série'}</button></div>` : ''}
+    </div>`;
+  document.querySelectorAll('.chip').forEach(c => { if (c.classList.contains('on')) return; if (S.n) twoClick(c, 'Cliquer encore : nouvelle série', () => { view.sLv = c.dataset.lv; view.sess = null; paneSeul(p); }); else c.onclick = () => { view.sLv = c.dataset.lv; view.sess = null; paneSeul(p); }; });
+  const finish = (r) => { S.state = 'done'; S.list.push({ q, r }); record(p, lv, r === 'first'); paneSeul(p); requestAnimationFrame(() => drawArrows()); };
+  if (S.state === 'done') {
+    $('#snext').onclick = () => { S.n++; if (S.n >= NQ) S.state = 'end'; else { S.q = genQuestion(p, lv); S.tries = 0; S.state = 'ask'; S.fb = ''; S.draft = false; S.dvals = null; S.lines = ['']; S.marks = []; } paneSeul(p); };
+    $('#snext').focus();
+    return;
+  }
+  if (q.kind === 'vf') {
+    document.querySelectorAll('[data-vf]').forEach(b => b.onclick = () => {
+      const said = b.dataset.vf === '1', good = said === q.isTrue;
+      S.fb = `<div class="fb ${good ? 'ok' : 'bad'}"><b>${good ? 'Bonne réponse.' : 'Ce n’est pas la bonne réponse.'}</b> ${q.isTrue ? `Le calcul de ${q.name} est juste.` : `Le calcul de ${q.name} est faux. ${q.vfMsg}`}</div>`;
+      finish(good ? 'first' : 'fail');
+    });
+    return;
+  }
+  const submit = () => {
+    const { r, marks } = checkLines(q, S.lines);
+    S.marks = marks;
+    if (r.st === 'empty' || r.st === 'unread') { paneSeul(p); $('#sfb').innerHTML = feedbackHTML(r); return; }
+    if (r.st === 'ok') { S.fb = feedbackHTML(r); finish(S.tries ? 'second' : 'first'); return; }
+    S.tries++;
+    S.fb = feedbackHTML(r, S.tries < 2 ? 'Corrige ton calcul, puis vérifie à nouveau.' : '');
+    if (S.tries >= 2) { finish('fail'); return; }
+    paneSeul(p);
+  };
+  const letter = String.fromCharCode(65 + S.n);
+  wireLines(S, letter, submit);
+  $('#schk').onclick = submit;
+  const dr = $('#sdraft'); if (dr) dr.onclick = () => { S.draft = true; paneSeul(p); };
+  const dbox = document.querySelector('.draft');
+  if (dbox) { wireTable(dbox, null); dbox.querySelectorAll('.tin').forEach(i => i.addEventListener('input', () => { S.dvals = readTable(dbox); })); }
+  const sh = $('#sshow'); if (sh) sh.onclick = () => finish('fail');
+}
+
+/* ---------- Séries chronométrées ---------- */
+const SERIES = {
+  A: { t: 'Série A : développer', mk: () => [genSimpleBasic('v'), genSimpleBasic('v'), genSimpleBasic('o'), genParen('o'), genDoubleBasic('v'), genDoubleBasic('v'), genDoubleBasic('o', { noSquare: true }), genDoubleBasic('o')] },
+  B: { t: 'Série B : factoriser', mk: () => [genFactSimple('v'), genFactSimple('v'), genFactSimple('v'), genFactSimple('o'), genFactSimple('o'), genFactSimple('o'), genFactParen(), genFactParen()] },
+  C: { t: 'Série C : développer ou factoriser ?', mk: () => R.shuffle([genSimpleBasic('o'), genFactSimple('v'), genDoubleBasic('v'), genFactSimple('o'), genParen('o'), genDoubleBasic('o', { noSquare: true }), genFactParen(), genSimpleCombo('r')]) }
+};
+function fmtTime(ms) { const s = Math.round(ms / 1000); return Math.floor(s / 60) + ' min ' + String(s % 60).padStart(2, '0') + ' s'; }
+let TIMER = null;
+function renderSeries() {
+  clearInterval(TIMER);
+  const R0 = view.run;
+  if (!R0) {
+    const hist = store.series.slice(-15).reverse();
+    setMarge('<button class="m-back" id="back">Sommaire</button>');
+    $('#main').innerHTML = `
+      <h2 class="titre">Séries chronométrées</h2>
+      <div class="card"><p>Objectif : 8 bonnes réponses sur 8 en moins de 5 minutes, sans calculatrice. Le chronomètre démarre quand tu cliques sur une série. Tu as un seul essai par calcul : la correction s’affiche à la fin.</p>
+      <div class="slist">${Object.entries(SERIES).map(([k, s]) => { const tries = store.series.filter(h => h.s === k); const best = tries.reduce((a, h) => Math.max(a, h.score), 0); return `<button class="som solo" data-s="${k}"><span class="som-t"><span class="som-h">${s.t}</span></span><span class="som-l" aria-hidden="true"></span><span class="som-st ${tries.length ? 'started' : ''}">${tries.length ? 'meilleur score : ' + best + ' / 8' : 'pas d’essai'}</span></button>`; }).join('')}</div></div>
+      <div class="card"><h2 class="sous">Mes essais</h2>${hist.length ? `<table class="recap"><tr><th>Date</th><th>Série</th><th>Score</th><th>Temps</th></tr>${hist.map(h => `<tr><td>${new Date(h.d).toLocaleDateString('fr-FR')}</td><td>${h.s}</td><td>${h.score} / 8</td><td>${fmtTime(h.ms)}</td></tr>`).join('')}</table>` : '<p class="muted">Pas encore d’essai.</p>'}</div>`;
+    $('#back').onclick = () => go({ name: 'home' });
+    document.querySelectorAll('[data-s]').forEach(b => b.onclick = () => { view.run = { s: b.dataset.s, qs: SERIES[b.dataset.s].mk(), i: 0, ans: [], t0: Date.now() }; renderSeries(); });
+    return;
+  }
+  if (R0.end) {
+    const score = R0.ans.filter(a => a.ok).length;
+    setMarge('<button class="m-back" id="back">Les séries</button>');
+    $('#main').innerHTML = `
+      <h2 class="titre">${SERIES[R0.s].t}</h2>
+      <div class="card"><h2 class="score">${score} / 8 en ${fmtTime(R0.ms)}</h2>
+      <table class="recap"><tr><th></th><th>Consigne</th><th>Ma réponse</th><th>Réponse attendue</th></tr>
+      ${R0.qs.map((q, i) => `<tr class="${R0.ans[i].ok ? 'rok' : 'rbad'}"><td>${R0.ans[i].ok ? '✓' : '✗'}</td><td>${q.kind === 'fact' ? 'Factoriser' : 'Développer'} ${m(q.src)}</td><td>${R0.ans[i].v ? m(pretty(R0.ans[i].v)) : '—'}</td><td>${m(q.answer)}</td></tr>`).join('')}</table>
+      <div class="actions"><button class="primary" id="redo">Refaire cette série</button><button id="list">Choisir une autre série</button></div></div>`;
+    $('#back').onclick = () => { view.run = null; renderSeries(); };
+    $('#list').onclick = () => { view.run = null; renderSeries(); };
+    $('#redo').onclick = () => { view.run = { s: R0.s, qs: SERIES[R0.s].mk(), i: 0, ans: [], t0: Date.now() }; renderSeries(); };
+    return;
+  }
+  const q = R0.qs[R0.i];
+  setMarge(`<button class="m-back" id="back">Abandonner</button><div class="m-pal">Temps</div><div class="timer" id="timer">${fmtTime(Date.now() - R0.t0)}</div>`);
+  $('#main').innerHTML = `
+    <h2 class="titre">${SERIES[R0.s].t}</h2>
+    <div class="card"><div class="qhead"><span class="qnum">Calcul ${R0.i + 1} sur 8</span><span class="cases" aria-hidden="true">${Array.from({ length: 8 }, (_, i) => `<i class="${i < R0.i ? 'done' : (i === R0.i ? 'cur' : '')}"></i>`).join('')}</span></div>
+      <div class="consigne">${q.kind === 'fact' ? 'Factoriser.' : 'Développer et réduire.'}</div><div class="bigexpr">${m(q.src)}</div>
+      ${inputHTML('tin')}<div class="actions"><button class="primary" id="tok">Valider</button></div><div id="tfb"></div></div>`;
+  twoClick($('#back'), 'Cliquer encore pour abandonner', () => { clearInterval(TIMER); view.run = null; renderSeries(); });
+  TIMER = setInterval(() => { const t = $('#timer'); if (t) t.textContent = fmtTime(Date.now() - R0.t0); }, 500);
+  const submit = () => {
+    const v = $('#tin').value, r = checkAnswer(q, v);
+    if (r.st === 'empty') { $('#tfb').innerHTML = feedbackHTML(r); return; }
+    if (r.st === 'unread') { $('#tfb').innerHTML = feedbackHTML(r); return; }
+    R0.ans.push({ v, ok: r.st === 'ok' });
+    R0.i++;
+    if (R0.i >= 8) { R0.end = true; R0.ms = Date.now() - R0.t0; store.series.push({ s: R0.s, score: R0.ans.filter(a => a.ok).length, ms: R0.ms, d: Date.now() }); store.series = store.series.slice(-60); save(); }
+    renderSeries();
+  };
+  wireInput('tin', submit);
+  $('#tok').onclick = submit;
+}
+
+/* ---------- Mon travail et code pour le professeur ---------- */
+const B36 = n => Math.max(0, Math.min(1295, n | 0)).toString(36).toUpperCase().padStart(2, '0');
+const PCH = { 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5', B: 'B' };
+function codeSum(s) { let h = 0; for (const ch of s) h = (h * 31 + ch.charCodeAt(0)) % 1296; return h; }
+function makeCode() {
+  const day = Math.floor((Date.now() - Date.UTC(2026, 0, 1)) / 864e5);
+  let body = B36(day);
+  PALIERS.forEach(p => LV.forEach(l => { const [f, r] = store.stats[p][l]; if (f) body += PCH[p] + l.toUpperCase() + B36(f) + B36(r); }));
+  const best = { A: 0, B: 0, C: 0 };
+  store.series.forEach(h => { if (h.score > best[h.s]) best[h.s] = h.score; });
+  ['A', 'B', 'C'].forEach(k => { if (store.series.some(h => h.s === k)) body += 'S' + k + B36(best[k]) + '00'; });
+  const full = 'CL' + body + B36(codeSum(body));
+  return full.match(/.{1,6}/g).join('-');
+}
+function decodeCode(str) {
+  const s = str.toUpperCase().replace(/[^0-9A-Z]/g, '');
+  if (!s.startsWith('CL') || s.length < 6) return null;
+  const body = s.slice(2, -2), chk = parseInt(s.slice(-2), 36);
+  if (codeSum(body) !== chk) return null;
+  const day = parseInt(body.slice(0, 2), 36);
+  const map = {}; PALIERS.forEach(p => { map[p] = { v: [0, 0], o: [0, 0], r: [0, 0] }; });
+  const best = {};
+  for (let i = 2; i + 6 <= body.length; i += 6) {
+    const e = body.slice(i, i + 6);
+    if (e[0] === 'S') { best[e[1]] = parseInt(e.slice(2, 4), 36); continue; }
+    const p = e[0] === 'B' ? 'B' : +e[0], l = e[1].toLowerCase();
+    if (!map[p] || !map[p][l]) return null;
+    map[p][l] = [parseInt(e.slice(2, 4), 36), parseInt(e.slice(4, 6), 36)];
+  }
+  return { date: new Date(Date.UTC(2026, 0, 1) + day * 864e5), map, best };
+}
+function travailTable(get) {
+  return `<table class="recap"><tr><th>Palier</th>${LV.map(l => `<th>${LVNAME[l]}</th>`).join('')}</tr>
+    ${PALIERS.map(p => `<tr><td>${p === 'B' ? INFO[p].t : 'Palier ' + p + ' : ' + INFO[p].t}</td>${LV.map(l => { const [f, r] = get(p, l); return `<td>${f ? `${f} fait${f > 1 ? 's' : ''}<br><small>${r} du premier coup</small>` : '—'}</td>`; }).join('')}</tr>`).join('')}</table>`;
+}
+function renderTravail() {
+  const code = makeCode();
+  setMarge('<button class="m-back" id="back">Sommaire</button>');
+  $('#main').innerHTML = `
+    <h2 class="titre">Mon travail</h2><p class="lead">Ce que j’ai fait seul, palier par palier.</p>
+    <div class="card">${travailTable((p, l) => store.stats[p][l])}
+      <p class="muted">Seuls les exercices de l’onglet « Je fais seul » sont comptés.</p></div>
+    <div class="card"><h2 class="sous">Mon code pour le professeur</h2>
+      <p>Ce code résume ton travail. Copie-le et envoie-le à ton professeur s’il te le demande.</p>
+      <div class="code" id="code">${code}</div>
+      <div class="actions"><button class="primary" id="copy">Copier le code</button></div></div>
+    <details class="card prof"><summary>Espace professeur : lire un code</summary>
+      <p>Collez le code d’un élève pour voir le détail de son travail.</p>
+      <input id="dec" type="text" placeholder="CL…" autocomplete="off"><div class="actions"><button id="decb">Lire le code</button></div><div id="decout"></div>
+      <hr><p class="muted">Effacer les données de cet ordinateur (tous les exercices et les essais des séries) :</p><button id="reset">Tout effacer</button>
+    </details>`;
+  $('#back').onclick = () => go({ name: 'home' });
+  $('#copy').onclick = () => { const t = code; (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => { $('#copy').textContent = 'Code copié'; }).catch(() => { const r = document.createRange(); r.selectNode($('#code')); getSelection().removeAllRanges(); getSelection().addRange(r); }); };
+  $('#decb').onclick = () => {
+    const d = decodeCode($('#dec').value);
+    if (!d) { $('#decout').innerHTML = '<div class="fb bad">Ce code n’est pas valide. Vérifiez qu’il a été copié en entier.</div>'; return; }
+    const bs = ['A', 'B', 'C'].map(k => `${k} : ${d.best[k] === undefined ? 'pas d’essai' : d.best[k] + '/8'}`).join(' ; ');
+    $('#decout').innerHTML = `<p>Code créé le ${d.date.toLocaleDateString('fr-FR')}.</p>${travailTable((p, l) => d.map[p][l])}
+      <p>Meilleurs scores aux séries chronométrées : ${bs}.</p>`;
+  };
+  twoClick($('#reset'), 'Cliquer encore pour tout effacer', () => { store = blank(); save(); renderTravail(); });
+}
+
+
+/* ---------- D.S. blanc ----------
+   Nombres absents du cours et des exemples ; le sujet B ne reprend aucun exercice du sujet A.
+   L'élève rédige sur une feuille et ne saisit que le résultat final de chaque question. */
+const cl = arr => arr.map(s => `<div>${s.startsWith('§') ? s.slice(1) : m(s)}</div>`).join('');
+const DS = {
+  A: [
+    { t: 'Réduire', pts: 2, head: '<p>Réduis chaque expression.</p>', items: [
+      { q: m('A = 4x^2 - 7x + 3 - x^2 + 9x - 8'), k: 'dev', a: '3x^2 + 2x - 5', c: cl(['A = 4x^2 - x^2 - 7x + 9x + 3 - 8', 'A = 3x^2 + 2x - 5']) },
+      { q: m('B = 6x * 3x'), k: 'dev', a: '18x^2', c: cl(['B = 6 * 3 * x * x', 'B = 18x^2']) }] },
+    { t: 'Le sens de la lettre', pts: 3, head: '', items: [
+      { q: `Calcule la valeur de ${m('C = 2x^2 - 5x')} pour ${m('x = -3')}.`, k: 'val', a: '33', c: cl(['C = 2 * (-3)^2 - 5 * (-3)', 'C = 2 * 9 + 15', 'C = 33']) },
+      { q: 'Écris une expression qui traduit la phrase « le quadruple de la différence de x et de 6 ».', k: 'trad', a: '4(x - 6)', c: cl(['§Le quadruple porte sur toute la différence : je mets la différence entre parenthèses.', '4(x - 6)']) }] },
+    { t: 'Développer', pts: 5, head: '<p>Développe, puis réduis chaque expression.</p>', items: [
+      { q: m('D = -4(2x - 7)'), k: 'dev', a: '-8x + 28', c: cl(['D = -4 * 2x + (-4) * (-7)', 'D = -8x + 28']) },
+      { q: m('E = 9 - (3x - 11)'), k: 'dev', a: '-3x + 20', c: cl(['§La parenthèse est précédée du signe − : je change tous les signes à l’intérieur.', 'E = 9 - 3x + 11', 'E = -3x + 20']) },
+      { q: m('F = (x + 6)(x - 4)'), k: 'dev', a: 'x^2 + 2x - 24', c: cl(['F = x * x + x * (-4) + 6 * x + 6 * (-4)', 'F = x^2 - 4x + 6x - 24', 'F = x^2 + 2x - 24']) },
+      { q: m('G = (3x - 2)(2x + 5)'), k: 'dev', a: '6x^2 + 11x - 10', c: cl(['G = 3x * 2x + 3x * 5 + (-2) * 2x + (-2) * 5', 'G = 6x^2 + 15x - 4x - 10', 'G = 6x^2 + 11x - 10']) }] },
+    { t: 'Factoriser', pts: 4, head: '<p>Factorise chaque expression.</p>', items: [
+      { q: m('H = 8x + 28'), k: 'fact', a: '4(2x + 7)', c: cl(['H = ==4== * 2x + ==4== * 7', 'H = 4(2x + 7)']) },
+      { q: m('I = x^2 - 9x'), k: 'fact', a: 'x(x - 9)', c: cl(['I = ==x== * x - ==x== * 9', 'I = x(x - 9)']) },
+      { q: m('J = (x + 5)(2x - 1) + (x + 5) * 4'), k: 'fact', a: '(x + 5)(2x + 3)', c: cl(['J = ==(x + 5)==(2x - 1) + ==(x + 5)== * 4', 'J = (x + 5)(2x - 1 + 4)', 'J = (x + 5)(2x + 3)']) }] },
+    { t: 'Un programme de calcul', pts: 3, head: `<p>On considère le programme de calcul suivant.</p>${prog(['Choisir un nombre.', 'Lui ajouter 7.', 'Multiplier le résultat par 4.', 'Soustraire 28.'])}`, items: [
+      { q: 'Quel résultat obtient-on si on choisit le nombre 6 ?', k: 'val', a: '24', c: cl(['§6 + 7 = 13, puis 13 × 4 = 52, puis 52 − 28 = 24.']) },
+      { q: 'On note x le nombre choisi. Écris le résultat en fonction de x, puis développe et réduis cette expression.', k: 'dev', a: '4x', c: cl(['R = 4(x + 7) - 28', 'R = 4x + 28 - 28', 'R = 4x']) },
+      { q: 'Que peut-on dire du résultat, quel que soit le nombre choisi ? Justifie.', options: ['C’est toujours 28.', 'C’est toujours le quadruple du nombre choisi.', 'Cela dépend du nombre choisi.'], a: 'C’est toujours le quadruple du nombre choisi.', c: cl([`§On a trouvé ${m('R = 4x')} pour tout nombre ${m('x')} : le résultat est toujours le quadruple du nombre choisi.`]) }] },
+    { t: 'Prouver', pts: 3, head: `<p>Soit ${m('n')} un nombre entier. On veut démontrer que la différence des carrés de deux entiers consécutifs est toujours un nombre impair.</p>`, items: [
+      { q: `Développe et réduis ${m('K = (n + 1)^2 - n^2')}.`, k: 'dev', a: '2n + 1', c: cl(['K = (n + 1)(n + 1) - n^2', 'K = n^2 + n + n + 1 - n^2', 'K = 2n + 1']) },
+      { q: 'Conclus.', options: ['K est toujours impair.', 'K est toujours pair.', 'On ne peut pas savoir.'], a: 'K est toujours impair.', c: cl([`§${m('2n')} est un nombre pair, donc ${m('2n + 1')} est un nombre impair. La différence des carrés de deux entiers consécutifs est toujours un nombre impair.`]) }] }
+  ],
+  B: [
+    { t: 'Réduire', pts: 2, head: '<p>Réduis chaque expression.</p>', items: [
+      { q: m('A = 5x - 9 + 2x^2 - 8x + 14 - 6x^2'), k: 'dev', a: '-4x^2 - 3x + 5', c: cl(['A = 2x^2 - 6x^2 + 5x - 8x - 9 + 14', 'A = -4x^2 - 3x + 5']) },
+      { q: m('B = -2x * 7x'), k: 'dev', a: '-14x^2', c: cl(['B = -2 * 7 * x * x', 'B = -14x^2']) }] },
+    { t: 'Le sens de la lettre', pts: 3, head: '', items: [
+      { q: `Calcule la valeur de ${m('C = 3x^2 + x - 4')} pour ${m('x = -2')}.`, k: 'val', a: '6', c: cl(['C = 3 * (-2)^2 + (-2) - 4', 'C = 3 * 4 - 2 - 4', 'C = 6']) },
+      { q: 'Écris une expression qui traduit la phrase « la somme du carré de x et du triple de x ».', k: 'trad', a: 'x^2 + 3x', c: cl(['§Le mot « somme » vient en premier : c’est une addition du carré de x et du triple de x.', 'x^2 + 3x']) }] },
+    { t: 'Développer', pts: 5, head: '<p>Développe, puis réduis chaque expression.</p>', items: [
+      { q: m('D = 3x(5 - 2x)'), k: 'dev', a: '-6x^2 + 15x', c: cl(['D = 3x * 5 + 3x * (-2x)', 'D = 15x - 6x^2']) },
+      { q: m('E = 6(x + 2) - 5(x - 3)'), k: 'dev', a: 'x + 27', c: cl(['E = 6x + 12 - 5x + 15', 'E = x + 27']) },
+      { q: m('F = (2x + 7)(x - 3)'), k: 'dev', a: '2x^2 + x - 21', c: cl(['F = 2x * x + 2x * (-3) + 7 * x + 7 * (-3)', 'F = 2x^2 - 6x + 7x - 21', 'F = 2x^2 + x - 21']) },
+      { q: m('G = (5 - x)(4x + 1)'), k: 'dev', a: '-4x^2 + 19x + 5', c: cl(['G = 5 * 4x + 5 * 1 + (-x) * 4x + (-x) * 1', 'G = 20x + 5 - 4x^2 - x', 'G = -4x^2 + 19x + 5']) }] },
+    { t: 'Factoriser', pts: 4, head: '<p>Factorise chaque expression.</p>', items: [
+      { q: m('H = 15x - 35'), k: 'fact', a: '5(3x - 7)', c: cl(['H = ==5== * 3x - ==5== * 7', 'H = 5(3x - 7)']) },
+      { q: m('I = 6x^2 + 21x'), k: 'fact', a: '3x(2x + 7)', c: cl(['I = ==3x== * 2x + ==3x== * 7', 'I = 3x(2x + 7)']) },
+      { q: m('J = (x - 6)(3x + 2) + 5(x - 6)'), k: 'fact', a: '(x - 6)(3x + 7)', c: cl(['J = ==(x - 6)==(3x + 2) + 5==(x - 6)==', 'J = (x - 6)(3x + 2 + 5)', 'J = (x - 6)(3x + 7)']) }] },
+    { t: 'Un rectangle', pts: 3, head: `<p>Un rectangle a pour longueur ${m('2x + 3')} et pour largeur ${m('x + 4')}, en cm.</p>`, items: [
+      { q: 'Écris son périmètre en fonction de x, sous forme réduite.', k: 'dev', a: '6x + 14', c: cl(['P = 2(2x + 3 + x + 4)', 'P = 2(3x + 7)', 'P = 6x + 14']) },
+      { q: 'Écris son aire en fonction de x, sous forme développée et réduite.', k: 'dev', a: '2x^2 + 11x + 12', c: cl(['S = (2x + 3)(x + 4)', 'S = 2x^2 + 8x + 3x + 12', 'S = 2x^2 + 11x + 12']) },
+      { q: 'Calcule l’aire du rectangle, en cm², pour x = 5.', k: 'val', a: '117', c: cl(['S = 2 * 5^2 + 11 * 5 + 12', 'S = 50 + 55 + 12', 'S = 117', '§Vérification : le rectangle mesure 13 cm sur 9 cm, et 13 × 9 = 117.']) }] },
+    { t: 'Deux programmes de calcul', pts: 3, head: `<p><b>Programme A</b></p>${prog(['Choisir un nombre.', 'Lui soustraire 3.', 'Multiplier le résultat par la somme du nombre choisi et de 8.'])}<p><b>Programme B</b></p>${prog(['Choisir un nombre.', 'Calculer son carré.', 'Ajouter le quintuple du nombre choisi.', 'Soustraire 24.'])}`, items: [
+      { q: 'Quel résultat donne le programme A si on choisit le nombre 2 ?', k: 'val', a: '-10', c: cl(['§2 − 3 = −1 et 2 + 8 = 10, puis −1 × 10 = −10.']) },
+      { q: 'On note x le nombre choisi. Écris le résultat du programme A en fonction de x, puis développe et réduis.', k: 'dev', a: 'x^2 + 5x - 24', c: cl(['A = (x - 3)(x + 8)', 'A = x^2 + 8x - 3x - 24', 'A = x^2 + 5x - 24']) },
+      { q: 'Les deux programmes donnent-ils toujours le même résultat ? Justifie.', options: ['Oui', 'Non'], a: 'Oui', c: cl([`§Le programme B donne ${m('B = x^2 + 5x - 24')}. On a ${m('A = B')} pour tout nombre ${m('x')} : les deux programmes donnent toujours le même résultat.`]) }] }
+  ]
+};
+function dsCheck(it, v) {
+  const q = { kind: it.k === 'fact' ? 'fact' : it.k, expected: Alg.poly(it.a), errors: [], needFull: true };
+  try { return checkAnswer(q, v).st === 'ok'; } catch (e) { return false; }
+}
+function renderDS() {
+  const sub = view.sujet || 'A', exos = DS[sub], total = exos.reduce((s, e) => s + e.pts, 0);
+  setMarge(`<button class="m-back" id="back">Sommaire</button><div class="m-pal">D.S. blanc</div>
+    <div class="etapes">${['A', 'B'].map(k => `<button class="tab ${k === sub ? 'on' : ''}" data-sujet="${k}"><span>Sujet ${k}</span></button>`).join('')}</div>`);
+  let n = 0;
+  $('#main').innerHTML = `<h2 class="titre">D.S. blanc · Sujet ${sub}</h2>
+    <p class="lead">Rédige toutes tes réponses sur une feuille : les calculs ligne par ligne et une phrase de conclusion quand on te demande de justifier. Le D.S. est noté sur ${total} points.</p>
+    <p class="consigne noprint">Quand tu as fini, écris seulement le résultat final de chaque question dans sa case, puis vérifie. Pour écrire x², tape x^2 ou x².</p>
+    <div class="actions noprint"><button id="dsprint">Imprimer le sujet</button></div>
+    ${exos.map((ex, ei) => `<section class="ds-exo"><h3>Exercice ${ei + 1} · ${ex.t} <span class="muted small">(${ex.pts} points)</span></h3>${ex.head}
+      ${ex.items.map((it, qi) => { const id = n++; return `<div class="ds-item"><div class="ds-q">${ex.items.length > 1 ? `<b>${'abcd'[qi]})</b> ` : ''}${it.q}</div>
+        <div class="ds-ans noprint" id="dsa${id}">${it.options ? `<div class="ds-radios" role="radiogroup">${it.options.map(o => `<label><input type="radio" name="dsr${id}" value="${esc(o)}"> ${o}</label>`).join('')}</div>`
+          : `<label class="ds-lab" for="dsi${id}">Résultat :</label><input class="dsin" id="dsi${id}" type="text" autocomplete="off" spellcheck="false">`}</div></div>`; }).join('')}
+      <div class="corr ds-corr" hidden><div class="corr-t">Correction de l’exercice ${ei + 1}</div>${ex.items.map((it, qi) => `${ex.items.length > 1 ? `<p><b>${'abcd'[qi]})</b></p>` : ''}<div class="calc">${it.c}</div>`).join('')}</div></section>`).join('')}
+    <div class="actions noprint"><button class="primary" id="dscheck">Vérifier mes résultats et afficher la correction</button></div><div id="dsres"></div>`;
+  $('#back').onclick = () => go({ name: 'home' });
+  document.querySelectorAll('[data-sujet]').forEach(b => b.onclick = () => { view.sujet = b.dataset.sujet; render(); window.scrollTo(0, 0); });
+  $('#dsprint').onclick = () => window.print();
+  document.querySelectorAll('.dsin').forEach(el => el.addEventListener('input', () => starToTimes(el)));
+  $('#dscheck').onclick = () => {
+    let k = 0, score = 0;
+    exos.forEach(ex => ex.items.forEach(it => {
+      const id = k++, box = $('#dsa' + id);
+      let v = '', ok;
+      if (it.options) { const c = box.querySelector('input:checked'); v = c ? c.value : ''; ok = v === it.a; box.querySelectorAll('input').forEach(i => i.disabled = true); }
+      else { const inp = $('#dsi' + id); v = inp.value; ok = v.trim() !== '' && dsCheck(it, v); inp.disabled = true; }
+      if (ok) score++;
+      box.insertAdjacentHTML('beforeend', ok ? '<span class="tag ok">Juste.</span>' : `<span class="tag shown">La bonne réponse est ${it.options ? it.a : m(it.a)}.</span>`);
+    }));
+    document.querySelectorAll('.ds-corr').forEach(c => c.hidden = false);
+    $('#dscheck').remove();
+    $('#dsres').innerHTML = `<div class="fb info"><b>${score} résultat${score > 1 ? 's' : ''} juste${score > 1 ? 's' : ''} sur ${k}.</b> Ta note dépend aussi de ta rédaction : calculs ligne par ligne, développement complet et phrase de conclusion. Compare ta feuille avec la correction de chaque exercice.</div>`;
+  };
+}
+
+/* ---------- Démarrage ---------- */
+document.querySelectorAll('.topnav button').forEach(b => b.onclick = () => { view.run = null; go({ name: b.dataset.nav }); });
+$('#navsel').onchange = e => { view.run = null; go({ name: e.target.value }); };
+render();
+
+</script>
+<script>
+/* Charte : dans le texte courant, les lettres x et n (seules ou après un chiffre : 3x, x², 2n),
+   la lettre f seule et g, h, p suivies d'une parenthèse sont des lettres mathématiques.
+   On les affiche en italique STIX pour ne pas confondre x avec le signe ×.
+   Le texte déjà en italique (<i>), le SVG et les champs de saisie ne sont pas touchés. */
+(() => {
+  "use strict";
+  const RE = /(^|[^\p{L}\p{M}])(x|n|f|[ghp](?=\())(?![\p{L}\p{M}’'])/gu;
+  const SKIP = "i, em, svg, code, pre, script, style, textarea, select, option, title, [contenteditable], .no-math";
+  function fix(text) {
+    const parent = text.parentElement;
+    if (!parent || parent.closest(SKIP)) return;
+    const value = text.data;
+    RE.lastIndex = 0;
+    if (!RE.test(value)) return;
+    const frag = document.createDocumentFragment();
+    let last = 0;
+    value.replace(RE, (all, before, letter, offset) => {
+      const start = offset + before.length;
+      if (start > last) frag.append(value.slice(last, start));
+      const i = document.createElement("i");
+      i.className = "m";
+      i.textContent = letter;
+      frag.append(i);
+      last = start + letter.length;
+      return all;
+    });
+    if (last < value.length) frag.append(value.slice(last));
+    text.replaceWith(frag);
+  }
+  function scan(root) {
+    if (root.nodeType === Node.TEXT_NODE) { fix(root); return; }
+    if (root.nodeType !== Node.ELEMENT_NODE || root.closest(SKIP)) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const texts = [];
+    while (walker.nextNode()) texts.push(walker.currentNode);
+    texts.forEach(fix);
+  }
+  scan(document.body);
+  new MutationObserver((records) => {
+    for (const r of records) {
+      if (r.type === "characterData") fix(r.target);
+      else r.addedNodes.forEach(scan);
+    }
+  }).observe(document.body, { childList: true, subtree: true, characterData: true });
+})();
+</script>
+</body>
+</html>
