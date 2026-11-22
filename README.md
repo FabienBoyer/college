@@ -1,4 +1,4 @@
-# L’atelier maths — espace élèves
+# Applications compagnon du cours — espace élèves
 
 Page autonome pour GitHub Pages. Aucun lien n’est à ajouter au menu du site compagnon.
 La page demande aux moteurs de recherche de ne pas l’indexer (`noindex, nofollow`).
@@ -42,8 +42,12 @@ Plusieurs fiches sont séparées par des virgules. Les niveaux acceptés sont
 Le bouton « Ouvrir l’application » navigue directement vers le fichier HTML.
 Le petit bouton adjacent copie le lien direct à transmettre aux élèves.
 
-Ne mettre une fiche en ligne que lorsque son fichier est présent. Les exemples
-de cette notice ne sont pas des applications incluses : le catalogue est vide.
+Ne mettre une fiche en ligne que lorsque son fichier est présent. L’application
+« Triangles semblables » est incluse pour les 3e ; la fiche « Fractions »
+ci-dessus reste un exemple.
+
+Quand la liste ou les fichiers CSS/JS sont modifiés, actualiser la valeur `v=`
+dans les trois références de `index.html` pour éviter les anciennes versions en cache.
 
 ## Liens à partager après publication
 
