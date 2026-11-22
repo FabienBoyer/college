@@ -30,8 +30,8 @@ window.APPLICATIONS_ELEVES = [
     titre: "Arithmétique",
     niveau: "3e",
     theme: "Nombres et calculs",
-    description: "Multiples, diviseurs, nombres premiers et PGCD, puis des problèmes de partage et de cycles. Le chapitre se termine par deux D.S. blancs.",
-    parties: ["Cours", "1. Divisibilité", "2. Nombres premiers", "3. PGCD / PPCM", "4. Fractions", "5. Problèmes", "6. D.S. blanc"],
+    description: "Multiples, diviseurs, nombres premiers, PGCD, PPCM et fractions irréductibles, puis des problèmes de partage et de rendez-vous. Le chapitre se termine par deux D.S. blancs.",
+    parties: ["Cours", "1. Diviseurs", "2. Premiers", "3. PGCD", "4. Problèmes", "5. D.S. blanc"],
     url: "apps/arithmetique.html"
   },
   {

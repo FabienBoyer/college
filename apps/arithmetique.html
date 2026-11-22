@@ -162,208 +162,372 @@ footer button{font:inherit;background:none;border:none;color:var(--muted);text-d
 [hidden]{display:none!important}.eq-input{font:inherit;font-family:"STIX Two Text",Cambria,serif;padding:.35rem .5rem;border:2px solid #cfd8ea;border-radius:6px;max-width:100%;width:11em}.step-a select{max-width:100%;white-space:normal}.step-q{display:block}.home{margin-bottom:1rem}.step select{min-height:44px}.step .btn{min-height:44px}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--red);outline-offset:3px}.seyes{overflow-x:auto}.seyes p{font-family:"STIX Two Text",Cambria,serif;font-size:1.08rem}footer a{color:var(--ink)}@media print{.subtabs,.eq-input,.step button,.fb{display:none!important}.step-q:after{content:' …………………………………………………………';display:block}.ds-exo{break-inside:avoid}.step{border:0;padding:.15rem 0}.card{padding:0}.seyes{background:white;padding:1rem}}.sieve{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:3px;max-width:600px;margin:1rem 0}.sieve span{text-align:center;border:1px solid #d9dfe9;padding:5px 0;color:#777;background:#f0f1f3}.sieve .prime{color:var(--ink);font-weight:700;background:#e5ecff;border-color:var(--ink2)}.table-scroll{max-width:100%;overflow-x:auto}summary{cursor:pointer;font-weight:700;color:var(--ink);padding:.5rem 0}details{margin:.8rem 0}
 .back-home{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:0 0 16px;padding:8px 14px;border:2px solid var(--ink);border-radius:7px;background:var(--card);color:var(--ink);font:inherit;font-size:1rem;font-weight:700;text-decoration:none}.back-home:hover{background:#eef2fb}.back-home:focus-visible{outline:3px solid var(--red);outline-offset:3px}
 i.m{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-style:italic;text-transform:none;letter-spacing:0}
-</style></head><body><div class="wrap"><header><a class="back-home" href="../">← Toutes les applications</a><h1><span>Chapitre 1 : Arithmétique</span></h1><p>Je prépare mon D.S. de fin de chapitre.</p><nav aria-label="Parcours du chapitre"><button type="button" data-page="home" class="on">Sommaire</button><button type="button" data-page="cours" class="">Cours</button><button type="button" data-page="multiples" class="">1. Divisibilité</button><button type="button" data-page="primes" class="">2. Nombres premiers</button><button type="button" data-page="gcd" class="">3. PGCD / PPCM</button><button type="button" data-page="fractions" class="">4. Fractions</button><button type="button" data-page="problems" class="">5. Problèmes</button><button type="button" data-page="ds" class="">6. D.S. blanc</button></nav></header><main id="app"></main><footer>Collège La Rochefoucauld · Mathématiques 3<sup>e</sup></footer></div><template id="course-source"><h3>1. Multiple, diviseur et division euclidienne</h3>
-<div class="retenir"><b>Définition</b>Soient a un entier naturel et b un entier naturel non nul. On dit que a est divisible par b s’il existe un entier naturel k tel que a = b × k. Alors a est un multiple de b et b est un diviseur de a.</div>
-<p>Dans la division euclidienne <span class="m">a = bq + r</span>, avec <span class="m">0 ≤ r &lt; b</span>, la divisibilité correspond au cas <span class="m">r = 0</span>.</p>
-<div class="seyes"><h4>Exemple</h4><p>72 = 24 × 3.</p><p>72 est un multiple de 24 ; 24 est un diviseur de 72.</p></div>
-<p>0 est un multiple de tout entier naturel non nul. 1 divise tous les entiers naturels. On ne divise pas par 0.</p>
+.ds-item{margin:.8em 0}.ds-q{margin:.1em 0 .35em}.ds-ans{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:.3em 0 .6em;padding:.4em .7em}.ds-ans .eq-input{width:9em}.ds-ans .fac-input{width:14em}.ds-corr{margin-top:.8em}.aide{background:#f6f8fe;border-left:3px solid var(--ink2);padding:.3em .6em;color:var(--text);margin:.2em 0 .5em}.exo-head p{margin-top:0}
+details.cours-part{background:var(--card);border:1px solid #e2e6ef;border-radius:8px;padding:.5em 1em;margin:0 0 14px}details.cours-part>summary{cursor:pointer;color:var(--ink);font-weight:700;min-height:32px}details.cours-part[open]>summary{margin-bottom:.4em}details.cours-part h3:first-child{margin-top:.4em}
+.eq-input.fac-input{width:14em}.fac{display:flex;flex-direction:column;align-items:flex-start;gap:6px}.keys{display:flex;flex-wrap:wrap;gap:6px}
+.key{font:inherit;font-family:"STIX Two Text",Cambria,serif;font-size:1.1em;min-width:44px;min-height:44px;padding:0 .5em;border:2px solid var(--ink2);border-radius:8px;background:#fff;color:var(--ink);cursor:pointer}.key:hover:not(:disabled){background:#eef2fb}.key.wide{font-family:"Atkinson Hyperlegible","STIX Two Text",sans-serif;font-size:.95rem;padding:0 .8em}.key:disabled{opacity:.45;cursor:default}
+table.ladder{border-collapse:collapse;margin:0 0 .2em}table.ladder td{border:none;padding:0 .8em;text-align:right;font-family:"STIX Two Text",Cambria,serif;font-size:1.08rem;line-height:32px}table.ladder td:first-child{border-right:2px solid currentColor}
+.ds-checks{display:inline-flex;flex-wrap:wrap;gap:8px}.ds-checks label{border:2px solid #cfd8ea;border-radius:8px;padding:.15em .6em;background:#fff;cursor:pointer}.ds-checks label.good{border-color:var(--ok);background:var(--okbg)}
+.navsel{display:none}
+@media (max-width:600px){nav{border-bottom:none}nav button{display:none}nav .navsel{display:block;width:100%;min-height:44px;margin:0 0 4px;font-family:"Atkinson Hyperlegible","STIX Two Text",sans-serif;font-size:1rem;font-weight:700;color:var(--ink);border:2px solid var(--ink);border-radius:8px;background:var(--card)}}
+@media print{.ds-q{break-after:avoid}.ds-item{margin:.5em 0}.keys{display:none!important}}
+</style></head><body><div class="wrap"><header><a class="back-home" href="../">← Toutes les applications</a><h1><span>Chapitre 1 : Arithmétique</span></h1><p>Je prépare mon D.S. de fin de chapitre.</p><nav aria-label="Parcours du chapitre"><select class="navsel" aria-label="Aller à une partie du chapitre"><option value="home">Sommaire</option><option value="cours">Cours</option><option value="diviseurs">1. Multiples et diviseurs</option><option value="premiers">2. Nombres premiers</option><option value="pgcd">3. PGCD, PPCM et fractions</option><option value="problems">4. Problèmes</option><option value="ds">5. D.S. blanc</option></select><button type="button" data-page="home" class="on">Sommaire</button><button type="button" data-page="cours" class="">Cours</button><button type="button" data-page="diviseurs" class="">1. Diviseurs</button><button type="button" data-page="premiers" class="">2. Premiers</button><button type="button" data-page="pgcd" class="">3. PGCD</button><button type="button" data-page="problems" class="">4. Problèmes</button><button type="button" data-page="ds" class="">5. D.S. blanc</button></nav></header><main id="app"></main><footer>Collège La Rochefoucauld · Mathématiques 3<sup>e</sup></footer></div><template id="course-source"><section data-mod="diviseurs"><h3>1. Multiples et diviseurs</h3>
+<div class="retenir"><b>Définition</b>Quand la division d’un nombre entier par un autre tombe juste, le premier nombre est un <strong>multiple</strong> du second, et le second est un <strong>diviseur</strong> du premier. On dit aussi que le premier nombre est <strong>divisible</strong> par le second.</div>
+<div class="seyes"><h4>Exemple</h4><p>42 ÷ 6 = 7 et il ne reste rien. Donc 42 = 6 × 7.</p><p>42 est un multiple de 6, et 6 est un diviseur de 42.</p><p>42 est aussi un multiple de 7.</p></div>
+<p>Le nombre 1 est un diviseur de tous les nombres entiers. On ne divise jamais par 0.</p>
 <h3>2. Critères de divisibilité</h3>
-<div class="table-scroll"><table class="tab"><tr><th>Par</th><th>Critère</th></tr><tr><td>2</td><td>Le dernier chiffre est 0, 2, 4, 6 ou 8.</td></tr><tr><td>3</td><td>La somme des chiffres est divisible par 3.</td></tr><tr><td>4</td><td>Le nombre formé par les deux derniers chiffres est divisible par 4.</td></tr><tr><td>5</td><td>Le dernier chiffre est 0 ou 5.</td></tr><tr><td>6</td><td>Le nombre est divisible à la fois par 2 et par 3.</td></tr><tr><td>9</td><td>La somme des chiffres est divisible par 9.</td></tr></table></div>
-<p>Par exemple, <span class="m">2 + 5 + 2 = 9</span>, donc 252 est divisible par 9 et par 3.</p>
-<h3>3. Nombres pairs et impairs</h3>
-<div class="retenir"><b>Définitions</b>Un entier naturel n est pair s’il existe un entier naturel k tel que n = 2k. Il est impair s’il existe un entier naturel k tel que n = 2k + 1.</div>
-<p>Pour démontrer une propriété portant sur tous les nombres pairs ou impairs, on utilise ces écritures.</p>
-<details><summary>Exemple de démonstration : le carré d’un impair est impair</summary><div class="seyes"><h4>Démonstration</h4><p>Soit n = 2k + 1 avec k entier naturel.</p><p>n² = (2k + 1)² = 4k² + 4k + 1.</p><p>Donc n² = 2(2k² + 2k) + 1.</p><p>Comme 2k² + 2k est un entier naturel, n² est impair.</p></div></details>
-<h3>4. Chercher les diviseurs d’un entier positif</h3>
-<p>On cherche toutes les paires de facteurs. Chaque paire fournit un ou deux diviseurs.</p>
-<div class="seyes"><h4>Exemple · Diviseurs de 56</h4><p>56 = 1 × 56 = 2 × 28 = 4 × 14 = 7 × 8.</p><p>Ses diviseurs positifs sont 1 ; 2 ; 4 ; 7 ; 8 ; 14 ; 28 ; 56.</p></div>
-<h3>5. Nombres premiers</h3>
-<div class="retenir"><b>Définition</b>Un nombre premier est un entier naturel supérieur ou égal à 2 qui possède exactement deux diviseurs positifs distincts : 1 et lui-même.</div>
-<p>1 n’est pas premier. 2 est le seul nombre premier pair. Pour vérifier qu’un entier n ≥ 2 est premier, il suffit de tester les diviseurs premiers inférieurs ou égaux à √n.</p>
+<p>Ces critères permettent de savoir si une division tombe juste, sans la poser.</p>
+<div class="table-scroll"><table class="tab"><tr><th>Un nombre est divisible par</th><th>quand</th></tr><tr><td>2</td><td>son chiffre des unités est 0, 2, 4, 6 ou 8.</td></tr><tr><td>5</td><td>son chiffre des unités est 0 ou 5.</td></tr><tr><td>10</td><td>son chiffre des unités est 0.</td></tr><tr><td>3</td><td>la somme de ses chiffres est divisible par 3.</td></tr><tr><td>9</td><td>la somme de ses chiffres est divisible par 9.</td></tr></table></div>
+<div class="seyes"><h4>Exemple · 135</h4><p>Son chiffre des unités est 5 : 135 est divisible par 5, mais pas par 2 ni par 10.</p><p>1 + 3 + 5 = 9 : 135 est divisible par 3 et par 9.</p></div>
+<h3>3. Trouver tous les diviseurs d’un nombre</h3>
+<ol><li>On essaie de diviser le nombre par 1, puis par 2, puis par 3, et ainsi de suite.</li><li>Chaque division qui tombe juste donne deux diviseurs, qu’on écrit sous la forme d’un produit.</li><li>On s’arrête quand le nombre essayé, multiplié par lui-même, dépasse le nombre de départ.</li></ol>
+<div class="seyes"><h4>Exemple · Diviseurs de 45</h4><p>45 = 1 × 45 = 3 × 15 = 5 × 9.</p><p>45 n’est divisible ni par 2, ni par 4, ni par 6.</p><p>On s’arrête là, car 7 × 7 = 49 dépasse 45.</p><p>Les diviseurs de 45 sont 1 ; 3 ; 5 ; 9 ; 15 ; 45.</p></div></section>
+<section data-mod="premiers"><h3>4. Nombres premiers</h3>
+<div class="retenir"><b>Définition</b>Un nombre premier est un nombre entier qui a exactement deux diviseurs : 1 et lui-même.</div>
+<p>Les nombres premiers inférieurs à 30 sont 2, 3, 5, 7, 11, 13, 17, 19, 23 et 29. Le nombre 1 n’est pas premier, car il n’a qu’un seul diviseur.</p>
+<p>Pour savoir si un nombre est premier, on essaie de le diviser par 2, 3, 5, 7, 11… Si une division tombe juste, le nombre n’est pas premier. On peut s’arrêter quand le nombre essayé, multiplié par lui-même, dépasse le nombre étudié.</p>
 <details><summary>Crible d’Ératosthène : les nombres premiers jusqu’à 100</summary><p>On écarte 1. On conserve 2 et on barre ses multiples à partir de 4 ; on conserve 3 et on barre ses multiples à partir de 9, puis on procède de même avec 5 et 7. Les nombres qui restent sont premiers.</p><div class="sieve" aria-label="Les nombres premiers jusqu’à 100 sont mis en évidence"><span class="" aria-label="1, non premier">1</span><span class="prime" aria-label="2, premier">2</span><span class="prime" aria-label="3, premier">3</span><span class="" aria-label="4, non premier">4</span><span class="prime" aria-label="5, premier">5</span><span class="" aria-label="6, non premier">6</span><span class="prime" aria-label="7, premier">7</span><span class="" aria-label="8, non premier">8</span><span class="" aria-label="9, non premier">9</span><span class="" aria-label="10, non premier">10</span><span class="prime" aria-label="11, premier">11</span><span class="" aria-label="12, non premier">12</span><span class="prime" aria-label="13, premier">13</span><span class="" aria-label="14, non premier">14</span><span class="" aria-label="15, non premier">15</span><span class="" aria-label="16, non premier">16</span><span class="prime" aria-label="17, premier">17</span><span class="" aria-label="18, non premier">18</span><span class="prime" aria-label="19, premier">19</span><span class="" aria-label="20, non premier">20</span><span class="" aria-label="21, non premier">21</span><span class="" aria-label="22, non premier">22</span><span class="prime" aria-label="23, premier">23</span><span class="" aria-label="24, non premier">24</span><span class="" aria-label="25, non premier">25</span><span class="" aria-label="26, non premier">26</span><span class="" aria-label="27, non premier">27</span><span class="" aria-label="28, non premier">28</span><span class="prime" aria-label="29, premier">29</span><span class="" aria-label="30, non premier">30</span><span class="prime" aria-label="31, premier">31</span><span class="" aria-label="32, non premier">32</span><span class="" aria-label="33, non premier">33</span><span class="" aria-label="34, non premier">34</span><span class="" aria-label="35, non premier">35</span><span class="" aria-label="36, non premier">36</span><span class="prime" aria-label="37, premier">37</span><span class="" aria-label="38, non premier">38</span><span class="" aria-label="39, non premier">39</span><span class="" aria-label="40, non premier">40</span><span class="prime" aria-label="41, premier">41</span><span class="" aria-label="42, non premier">42</span><span class="prime" aria-label="43, premier">43</span><span class="" aria-label="44, non premier">44</span><span class="" aria-label="45, non premier">45</span><span class="" aria-label="46, non premier">46</span><span class="prime" aria-label="47, premier">47</span><span class="" aria-label="48, non premier">48</span><span class="" aria-label="49, non premier">49</span><span class="" aria-label="50, non premier">50</span><span class="" aria-label="51, non premier">51</span><span class="" aria-label="52, non premier">52</span><span class="prime" aria-label="53, premier">53</span><span class="" aria-label="54, non premier">54</span><span class="" aria-label="55, non premier">55</span><span class="" aria-label="56, non premier">56</span><span class="" aria-label="57, non premier">57</span><span class="" aria-label="58, non premier">58</span><span class="prime" aria-label="59, premier">59</span><span class="" aria-label="60, non premier">60</span><span class="prime" aria-label="61, premier">61</span><span class="" aria-label="62, non premier">62</span><span class="" aria-label="63, non premier">63</span><span class="" aria-label="64, non premier">64</span><span class="" aria-label="65, non premier">65</span><span class="" aria-label="66, non premier">66</span><span class="prime" aria-label="67, premier">67</span><span class="" aria-label="68, non premier">68</span><span class="" aria-label="69, non premier">69</span><span class="" aria-label="70, non premier">70</span><span class="prime" aria-label="71, premier">71</span><span class="" aria-label="72, non premier">72</span><span class="prime" aria-label="73, premier">73</span><span class="" aria-label="74, non premier">74</span><span class="" aria-label="75, non premier">75</span><span class="" aria-label="76, non premier">76</span><span class="" aria-label="77, non premier">77</span><span class="" aria-label="78, non premier">78</span><span class="prime" aria-label="79, premier">79</span><span class="" aria-label="80, non premier">80</span><span class="" aria-label="81, non premier">81</span><span class="" aria-label="82, non premier">82</span><span class="prime" aria-label="83, premier">83</span><span class="" aria-label="84, non premier">84</span><span class="" aria-label="85, non premier">85</span><span class="" aria-label="86, non premier">86</span><span class="" aria-label="87, non premier">87</span><span class="" aria-label="88, non premier">88</span><span class="prime" aria-label="89, premier">89</span><span class="" aria-label="90, non premier">90</span><span class="" aria-label="91, non premier">91</span><span class="" aria-label="92, non premier">92</span><span class="" aria-label="93, non premier">93</span><span class="" aria-label="94, non premier">94</span><span class="" aria-label="95, non premier">95</span><span class="" aria-label="96, non premier">96</span><span class="prime" aria-label="97, premier">97</span><span class="" aria-label="98, non premier">98</span><span class="" aria-label="99, non premier">99</span><span class="" aria-label="100, non premier">100</span></div><p>Les nombres en bleu sont premiers ; 1 et les nombres composés sont grisés.</p></details>
-<h3>6. Décomposer en produit de facteurs premiers</h3>
-<div class="retenir"><b>Propriété</b>Tout entier naturel supérieur ou égal à 2 s’écrit comme un produit de nombres premiers. Cette décomposition est unique à l’ordre des facteurs près.</div>
-<p>On divise successivement par des nombres premiers jusqu’à obtenir 1. Le dernier produit ne doit contenir que des facteurs premiers.</p>
-<div class="seyes"><h4>Exemple</h4><p>324 = 2 × 162 = 2 × 2 × 81.</p><p>324 = 2 × 2 × 3 × 3 × 3 × 3 = 2² × 3⁴.</p></div>
-<h3>7. PGCD et PPCM de deux entiers positifs</h3>
-<p>Le <strong>PGCD</strong> est leur plus grand diviseur commun. Dans les décompositions, on conserve les facteurs premiers communs avec les plus petits exposants.</p>
-<p>Le <strong>PPCM</strong> est leur plus petit multiple commun <strong>strictement positif</strong>. On conserve tous les facteurs premiers nécessaires avec les plus grands exposants.</p>
-<div class="seyes"><h4>Exemples</h4><p>162 = 2 × 3⁴ et 108 = 2² × 3³.</p><p>PGCD(162 ; 108) = 2 × 3³ = 54.</p><p>12 = 2² × 3 et 28 = 2² × 7.</p><p>PPCM(12 ; 28) = 2² × 3 × 7 = 84.</p></div>
+<h3>5. Décomposer en produit de facteurs premiers</h3>
+<div class="retenir"><b>Propriété</b>Tout nombre entier supérieur ou égal à 2 peut s’écrire comme un produit de nombres premiers. Cette écriture est unique, à l’ordre des facteurs près.</div>
+<p>On divise le nombre par le plus petit nombre premier possible, puis on recommence avec le quotient, jusqu’à obtenir 1.</p>
+<div class="seyes"><h4>Exemple · 90</h4><table class="ladder" aria-label="Divisions successives de 90"><tr><td>90</td><td>2</td></tr><tr><td>45</td><td>3</td></tr><tr><td>15</td><td>3</td></tr><tr><td>5</td><td>5</td></tr><tr><td>1</td><td></td></tr></table><p>90 = 2 × 3 × 3 × 5 = 2 × 3² × 5.</p></div></section>
+<section data-mod="pgcd"><h3>6. PGCD de deux nombres</h3>
+<div class="retenir"><b>Définition</b>Le PGCD de deux nombres est leur plus grand diviseur commun.</div>
+<p>On décompose les deux nombres, puis on multiplie les facteurs premiers communs aux deux décompositions.</p>
+<div class="seyes"><h4>Exemple · PGCD de 60 et de 84</h4><p>60 = 2 × 2 × 3 × 5.</p><p>84 = 2 × 2 × 3 × 7.</p><p>Les facteurs communs sont 2, 2 et 3.</p><p>PGCD = 2 × 2 × 3 = 12.</p><p>On a pris tous les facteurs communs : un nombre plus grand ne diviserait plus 60 ou 84.</p></div>
+<h3>7. PPCM de deux nombres</h3>
+<div class="retenir"><b>Définition</b>Le PPCM de deux nombres est leur plus petit multiple commun strictement positif.</div>
+<p>On dit « strictement positif », car 0 est un multiple de tous les nombres.</p>
+<p>On écrit la décomposition du premier nombre, puis on ajoute les facteurs du second qui manquent.</p>
+<div class="seyes"><h4>Exemple · PPCM de 6 et de 8</h4><p>6 = 2 × 3 et 8 = 2 × 2 × 2.</p><p>On garde 2 × 3, puis on ajoute les deux facteurs 2 de 8 qui manquent.</p><p>PPCM = 2 × 3 × 2 × 2 = 24.</p><p>Vérification : 24 = 6 × 4 = 8 × 3.</p></div>
 <h3>8. Fraction irréductible</h3>
-<p>Une fraction d’entiers est irréductible lorsque le numérateur et le dénominateur n’ont pas de diviseur commun positif autre que 1. Pour l’obtenir, on peut diviser les deux termes par leur PGCD.</p>
-<div class="seyes"><h4>Exemple</h4><p>198 = 2 × 3² × 11 et 84 = 2² × 3 × 7.</p><p>PGCD(198 ; 84) = 6.</p><p>198/84 = (198 ÷ 6)/(84 ÷ 6) = 33/14.</p><p>33 et 14 sont premiers entre eux : 33/14 est irréductible.</p></div>
-<h3>9. Choisir la bonne méthode dans un problème</h3>
-<ul><li><strong>Partage maximal :</strong> pour faire le plus grand nombre de lots identiques sans reste, on cherche le PGCD des quantités. On divise ensuite chaque quantité par ce nombre pour obtenir la composition d’un lot.</li><li><strong>Phénomènes périodiques :</strong> pour trouver la première rencontre après un départ commun, on cherche le PPCM des durées.</li></ul>
-<div class="seyes"><h4>Exemples</h4><p>Avec 175 objets rouges et 105 bleus, on fait au maximum 35 lots.</p><p>Chaque lot contient 175 ÷ 35 = 5 rouges et 105 ÷ 35 = 3 bleus.</p><p>Deux circuits de 280 s et 350 s reviennent ensemble au départ après 1400 s.</p><p>1400 = 23 × 60 + 20 : soit 23 min 20 s.</p></div>
-<details><summary>Pour réfléchir : existe-t-il un nombre premier parfait ?</summary><p>Un entier positif est parfait si la somme de tous ses diviseurs positifs est égale à son double. Si p est premier, ses seuls diviseurs sont 1 et p. S’il était parfait, on aurait 1 + p = 2p, donc p = 1. Or 1 n’est pas premier. Il n’existe donc aucun nombre premier parfait.</p></details>
+<div class="retenir"><b>Propriété</b>Quand on divise le numérateur et le dénominateur d’une fraction par leur PGCD, on obtient une fraction égale qu’on ne peut plus simplifier : elle est irréductible.</div>
+<div class="seyes"><h4>Exemple</h4><p>Le PGCD de 60 et de 84 est 12.</p><p><span class="frac"><span>60</span><span>84</span></span> = <span class="frac"><span>60 ÷ 12</span><span>84 ÷ 12</span></span> = <span class="frac"><span>5</span><span>7</span></span>.</p></div></section>
+<section data-mod="problems"><h3>9. PGCD ou PPCM dans un problème</h3>
+<ul><li>On partage tout en <strong>lots identiques</strong>, le plus grand nombre possible : on cherche le <strong>PGCD</strong>.</li><li>Deux événements se répètent, et on cherche quand ils auront lieu <strong>de nouveau ensemble</strong> pour la première fois : on cherche le <strong>PPCM</strong>.</li></ul>
+<div class="seyes"><h4>Exemple · Partage en lots</h4><p>Avec 48 crayons et 36 gommes, on veut faire le plus grand nombre possible de trousses identiques.</p><p>48 = 2 × 2 × 2 × 2 × 3 et 36 = 2 × 2 × 3 × 3.</p><p>PGCD = 2 × 2 × 3 = 12 : on fait 12 trousses.</p><p>48 ÷ 12 = 4 et 36 ÷ 12 = 3 : chaque trousse contient 4 crayons et 3 gommes.</p></div>
+<div class="seyes"><h4>Exemple · Rendez-vous</h4><p>Un bus part toutes les 6 minutes, un autre toutes les 8 minutes. Ils viennent de partir ensemble.</p><p>Le PPCM de 6 et de 8 est 24 : ils repartiront ensemble dans 24 minutes.</p></div></section>
 </template><script>(() => {
 'use strict';
 const $=s=>document.querySelector(s),R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),pick=a=>a[R(0,a.length-1)];
+const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=R(0,i);[b[i],b[j]]=[b[j],b[i]];}return b;};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const fmt=n=>String(Math.abs(n)<1e-12?0:n).replace('.',',').replace('-','−');
-const par=n=>n<0?'('+fmt(n)+')':fmt(n);
-const gcd=(a,b)=>b?gcd(b,a%b):Math.abs(a);
-function ratio(a,b){if(!b)throw Error('Division par zéro');if(b<0){a=-a;b=-b;}const g=gcd(a,b);return [a/g,b/g];}
-const ratText=(a,b)=>{const [n,d]=ratio(a,b);return d===1?fmt(n):fmt(n)+'/'+d;};
-const ratHtml=(a,b)=>{const [n,d]=ratio(a,b);return d===1?fmt(n):`<span class="frac"><span>${fmt(n)}</span><span>${d}</span></span>`;};
-function lin(a,b){let s=a===0?'':a===1?'x':a===-1?'−x':fmt(a)+'x';if(b)s+=(s?(b<0?' − ':' + '):b<0?'−':'')+fmt(Math.abs(b));return s||'0';}
-function parseNum(v){let s=v.trim().replace(/\s/g,'').replace(/−/g,'-').replace(',','.');if(!s)return null;if(/^[+-]?\d+(?:\.\d+)?\/[+-]?\d+(?:\.\d+)?$/.test(s)){const[a,b]=s.split('/').map(Number);return b?a/b:null;}return /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(s)?Number(s):null;}
-function numericCorrect(v,a){if(typeof a==='number'){const n=parseNum(v);return n!==null&&Math.abs(n-a)<1e-8;}return v.trim().toLocaleLowerCase('fr')===String(a).toLocaleLowerCase('fr');}
-const answer=t=>t.answerHtml|| (typeof t.a==='number'?fmt(t.a):esc(t.a));
+/* Nombres entiers : espace fine insécable entre les classes à partir de 1 000. */
+const fmt=n=>{const s=String(Math.abs(n));return (n<0?'−':'')+(s.length>3?s.replace(/\B(?=(\d{3})+(?!\d))/g,' '):s);};
+const gcd=(a,b)=>b?gcd(b,a%b):Math.abs(a),lcm=(a,b)=>a/gcd(a,b)*b;
 function dom(tag,cls,html){const n=document.createElement(tag);if(cls)n.className=cls;if(html!==undefined)n.innerHTML=html;return n;}
 function button(label,fn,cls='btn'){const b=dom('button',cls,esc(label));b.type='button';b.addEventListener('click',fn);return b;}
 function divisors(n){const lo=[],hi=[];for(let d=1;d*d<=n;d++)if(n%d===0){lo.push(d);if(d*d!==n)hi.push(n/d);}return lo.concat(hi.reverse());}
 function prime(n){if(!Number.isInteger(n)||n<2)return false;for(let d=2;d*d<=n;d++)if(n%d===0)return false;return true;}
-function factors(n){if(!Number.isInteger(n)||n<2)throw Error('La décomposition est définie ici pour un entier au moins égal à 2.');const out=[];for(let p=2;p*p<=n;p++)while(n%p===0){out.push(p);n/=p;}if(n>1)out.push(n);return out;}
-const lcm=(a,b)=>a/gcd(a,b)*b;
-const fstr=n=>factors(n).join(' × ');
-const listTask=(xs)=>({kind:'list',values:xs});
-const factorTask=n=>({kind:'factors',n});
-const fractionTask=(n,d)=>({kind:'fraction',n,d});
-const timeTask=s=>({kind:'time',seconds:s});
-function parseFactors(value){
- const superdigits='⁰¹²³⁴⁵⁶⁷⁸⁹';let s=value.trim().replace(/([0-9]+)([⁰¹²³⁴⁵⁶⁷⁸⁹]+)/g,(_,a,b)=>a+'^'+[...b].map(c=>superdigits.indexOf(c)).join('')).replace(/[×·xX]/g,'*').replace(/\s/g,'');
- if(!s)return null;const out=[];for(const tok of s.split('*')){const m=tok.match(/^(\d+)(?:\^(\d+))?$/);if(!m)return null;const p=+m[1],e=m[2]===undefined?1:+m[2];if(!prime(p)||e<1||e>30)return null;for(let i=0;i<e;i++)out.push(p);}return out;
+function factors(n){const out=[];for(let p=2;p*p<=n;p++)while(n%p===0){out.push(p);n/=p;}if(n>1)out.push(n);return out;}
+const SUP='⁰¹²³⁴⁵⁶⁷⁸⁹',sup=e=>String(e).split('').map(c=>SUP[+c]).join('');
+const prod=f=>f.map(fmt).join(' × ');
+const fx=n=>prod(factors(n));
+function fp(n){const m=new Map();for(const p of factors(n))m.set(p,(m.get(p)||0)+1);return [...m].map(([p,e])=>fmt(p)+(e>1?sup(e):'')).join(' × ');}
+/* 126 = 2 × 3 × 3 × 7 = 2 × 3² × 7 : la forme avec puissances n'est ajoutée que si elle est différente. */
+const decomp=n=>{const a=fx(n),b=fp(n);return `${fmt(n)} = ${a}`+(a===b?'':` = ${b}`);};
+/* Facteurs communs aux deux décompositions (avec leurs répétitions), et facteurs de b absents de celle de a. */
+function common(a,b){const fb=factors(b),out=[];for(const p of factors(a)){const i=fb.indexOf(p);if(i>=0){out.push(p);fb.splice(i,1);}}return out;}
+function missing(a,b){const fa=factors(a),out=[];for(const p of factors(b)){const i=fa.indexOf(p);if(i>=0)fa.splice(i,1);else out.push(p);}return out;}
+const listFr=xs=>xs.length<2?xs.join(''):xs.slice(0,-1).join(', ')+' et '+xs.at(-1);
+const frac=(n,d)=>`<span class="frac"><span>${fmt(n)}</span><span>${fmt(d)}</span></span>`;
+const digits=n=>String(n).split('').map(Number);
+function ladder(n){let m=n,rows='';for(const p of factors(n)){rows+=`<tr><td>${fmt(m)}</td><td>${p}</td></tr>`;m/=p;}return `<table class="ladder" aria-label="Divisions successives de ${fmt(n)}">${rows}<tr><td>1</td><td></td></tr></table>`;}
+/* Nombres du cours, des exemples (modelage) et des D.S. : jamais tirés dans les exercices. */
+const AVOID=new Set([42,135,45,90,60,84,48,36,24,12,414,40,133,126,78,130,10,14,56,98,54,72,16,20,2754,306,52,149,1050,154,198,252,189,175,391,1236,127,588,300,405,330,210,32,44,352,25,35]);
+
+/* ---------- Saisie et vérification ---------- */
+const F=n=>({kind:'factors',n}),L=xs=>({kind:'list',values:[...xs].sort((a,b)=>a-b)}),Q=(n,d)=>({kind:'fraction',n,d}),S=xs=>({kind:'set',values:[...xs]});
+function parseWhole(v){const s=String(v).replace(/\s/g,'');return /^\d+$/.test(s)?Number(s):null;}
+/* Produit de facteurs premiers : 2x2x3, 2*2*3, 2 × 2 × 3, 2.2.3, 2 2 3, 2^2*3 ou 2²×3. */
+function parseFactors(v){
+ const s=String(v).trim().replace(/(\d+)([⁰¹²³⁴⁵⁶⁷⁸⁹]+)/g,(_,a,b)=>a+'^'+[...b].map(c=>SUP.indexOf(c)).join('')).replace(/\s*\^\s*/g,'^').replace(/[×·xX*.,;]/g,' ').trim();
+ if(!s)return null;const out=[];
+ for(const tok of s.split(/\s+/)){const m=tok.match(/^(\d+)(?:\^(\d+))?$/);if(!m)return null;const p=+m[1],e=m[2]===undefined?1:+m[2];if(!prime(p)||e<1||e>20)return null;for(let i=0;i<e;i++)out.push(p);}
+ return out;
 }
-function checkArithmetic(v,a){
- if(a&&typeof a==='object'){
-  if(a.kind==='list'){const s=v.trim();if(!s)return false;const parts=s.replace(/[{}]/g,'').split(/[;,\s]+/).filter(Boolean);if(!parts.every(x=>/^\d+$/.test(x)))return false;const vals=parts.map(Number).sort((x,y)=>x-y);return new Set(vals).size===vals.length&&vals.length===a.values.length&&vals.every((x,i)=>x===a.values.slice().sort((x,y)=>x-y)[i]);}
-  if(a.kind==='factors'){const f=parseFactors(v);return f!==null&&f.reduce((n,x)=>n*x,1)===a.n;}
-  if(a.kind==='fraction'){const s=v.trim().replace(/\s/g,'');const m=s.match(/^(\d+)(?:\/(\d+))?$/);if(!m)return false;const n=+m[1],d=m[2]===undefined?1:+m[2];return d>0&&gcd(n,d)===1&&n*a.d===d*a.n;}
-  if(a.kind==='time'){const m=v.trim().match(/^(\d+)\s*(?::|min(?:ute)?s?)\s*(\d+)\s*(?:s|sec(?:onde)?s?)?$/i);return !!m&&+m[2]<60&&+m[1]*60+(+m[2])===a.seconds;}
-  return false;
+function check(v,a){
+ if(Array.isArray(v))return !!a&&a.kind==='set'&&v.length===a.values.length&&a.values.every(x=>v.includes(x));
+ if(typeof a==='number')return parseWhole(v)===a;
+ if(typeof a==='string')return v===a;
+ if(a.kind==='factors'){const f=parseFactors(v);return !!f&&f.reduce((p,x)=>p*x,1)===a.n;}
+ if(a.kind==='list'){const parts=String(v).split(/[^\d]+/).filter(Boolean).map(Number);return parts.length===a.values.length&&new Set(parts).size===parts.length&&a.values.every(x=>parts.includes(x));}
+ if(a.kind==='fraction'){const m=String(v).replace(/\s/g,'').match(/^(\d+)\/(\d+)$/);if(!m)return false;const n=+m[1],d=+m[2];return d>0&&gcd(n,d)===1&&n*a.d===d*a.n;}
+ return false;
+}
+function answer(t){const a=t.a;if(typeof a==='number')return fmt(a);if(typeof a==='string')return esc(a);
+ if(a.kind==='factors')return fx(a.n);if(a.kind==='list')return a.values.map(fmt).join(' ; ');if(a.kind==='set')return listFr(a.values);
+ if(a.kind==='fraction'){const g=gcd(a.n,a.d);return frac(a.n/g,a.d/g);}return '';}
+function keyBtn(label,fn,extra=''){const b=dom('button','key '+extra,esc(label));b.type='button';b.addEventListener('click',fn);return b;}
+/* Champ de réponse : liste déroulante, ou zone de texte. Pour une décomposition, des boutons 2, 3, 5, 7, 11, 13 complètent la saisie. */
+function makeField(t,label){
+ if(t.options){const s=dom('select');s.append(new Option('Choisir une réponse',''));for(const o of (t.keep||t.options.length<3?t.options:shuffle(t.options)))s.append(new Option(o,o));s.setAttribute('aria-label',label);
+  return {el:s,get:()=>s.value,disable:()=>{s.disabled=true;},bad:b=>s.classList.toggle('bad',b),onEnter:()=>{}};}
+ const input=dom('input','eq-input');input.type='text';input.autocomplete='off';input.setAttribute('aria-label',label);
+ const k=t.a&&t.a.kind;let el=input,keys=null;
+ input.placeholder=k==='factors'?'Par exemple 2 × 3 × 3':k==='list'?'Par exemple 1 ; 2 ; 4':k==='fraction'?'Par exemple 2/3':'Nombre';
+ if(typeof t.a==='number')input.inputMode='numeric';
+ if(k==='list')input.classList.add('fac-input');
+ if(k==='factors'){
+  input.classList.add('fac-input');el=dom('div','fac');keys=dom('div','keys');
+  for(const p of [2,3,5,7,11,13])keys.append(keyBtn(String(p),()=>{const v=input.value.replace(/[\s×xX*.]+$/,'');input.value=v?v+' × '+p:String(p);input.focus();}));
+  keys.append(keyBtn('Effacer le dernier',()=>{input.value=input.value.replace(/\s*[×xX*.]?\s*[^\s×xX*.]*\s*$/,'');input.focus();},'wide'));
+  el.append(input,keys);
  }
- if(typeof a==='number'){const n=parseNum(v);return n!==null&&Math.abs(n-a)<1e-8;}
- return v.trim().toLocaleLowerCase('fr')===String(a).toLocaleLowerCase('fr');
-}
-function multipleExercise(example=false){
- const n=example?252:pick([18,22,48,72,81,99,120,252,285,396,495,702,1818,2835,9876]),d=example?9:pick([2,3,4,5,6,9]);
- const yes=n%d===0,ds=divisors(n),sum=String(n).split('').reduce((s,x)=>s+(+x),0);
- const why=d===2?'On regarde le dernier chiffre : il doit être 0, 2, 4, 6 ou 8.':d===5?'Le dernier chiffre doit être 0 ou 5.':d===3||d===9?`La somme des chiffres est ${sum}. Elle ${sum%d===0?'est':'n’est pas'} divisible par ${d}.`:d===4?`Les deux derniers chiffres donnent ${n%100}, qui ${n%4===0?'est':'n’est pas'} divisible par 4.`:'Un entier est divisible par 6 s’il est divisible par 2 et par 3.';
- return {data:{n,d,ds},head:`<p>On considère les entiers <span class="m">${n}</span> et <span class="m">${d}</span>.</p>`,tasks:[
- {q:`${n} est-il un multiple de ${d} ?`,a:yes?'oui':'non',options:['oui','non'],hint:why,corr:yes?`${n} = ${d} × ${n/d}. Donc ${n} est un multiple de ${d}, et ${d} est un diviseur de ${n}.`:`La division de ${n} par ${d} a pour reste ${n%d}, non nul. ${n} n’est pas un multiple de ${d}.`},
- {q:`Donne tous les diviseurs positifs de ${n}.`,a:listTask(ds),answerHtml:ds.join(' ; '),hint:'Cherche des paires de facteurs : 1 × le nombre, puis 2, 3… jusqu’à ne plus trouver de nouvelle paire. Sépare les valeurs par des points-virgules.',corr:`Les diviseurs positifs sont ${ds.join(' ; ')}.`}
- ],correction:`<p>${why}</p><p>${yes?`${n} = ${d} × ${n/d}`:`${n} = ${d} × ${Math.floor(n/d)} + ${n%d}`}.</p><p>Les paires de facteurs sont : ${ds.filter(x=>x*x<=n).map(x=>`${x} × ${n/x}`).join(' ; ')}.</p><p>La liste complète est ${ds.join(' ; ')}.</p>`};
-}
-function primeExercise(example=false){
- const n=example?324:pick([1,2,3,17,29,49,57,67,77,84,97,99,101,103,162,198,250,324,373,1000,1323,3630]);const is=prime(n);
- const tasks=[{q:`${n} est-il un nombre premier ?`,a:is?'oui':'non',options:['oui','non'],hint:'Un nombre premier est un entier au moins égal à 2 ayant exactement deux diviseurs positifs distincts : 1 et lui-même.',corr:n===1?'1 possède un seul diviseur positif : il n’est pas premier.':is?`${n} possède exactement deux diviseurs positifs : 1 et ${n}.`:`${n} a d’autres diviseurs que 1 et lui-même : par exemple ${factors(n)[0]}.`}];
- if(n>=2)tasks.push({q:`Décompose ${n} en produit de facteurs premiers.`,a:factorTask(n),answerHtml:fstr(n),hint:'Divise successivement par 2, puis par 3, 5, 7… Tu peux saisir 2*2*3 ou 2^2*3.',corr:`${n} = ${fstr(n)}. Tous les facteurs écrits sont premiers.`});
- return {data:{n,is},head:`<p>On étudie le nombre entier <span class="m">${n}</span>.</p>`,tasks,correction:`<p>${tasks[0].corr}</p>${n>=2?`<p>${n} = ${fstr(n)}.</p><p>La décomposition en facteurs premiers est unique à l’ordre des facteurs près.</p>`:''}`};
-}
-function gcdLcmExercise(example=false){
- const [a,b]=example?[162,108]:pick([[12,28],[35,45],[42,63],[84,60],[175,105],[266,114],[280,350],[154,99],[380,171]]),g=gcd(a,b),m=lcm(a,b);
- return {data:{a,b,g,m},head:`<p>On considère les nombres <span class="m">${a}</span> et <span class="m">${b}</span>.</p>`,tasks:[
- {q:`Quel est le plus grand diviseur commun à ${a} et ${b} ?`,a:g,hint:'Dans les décompositions, prends les facteurs premiers communs avec les plus petits exposants.',corr:`PGCD(${a} ; ${b}) = ${g}. Les deux quotients ${a/g} et ${b/g} sont entiers.`},
- {q:`Quel est leur plus petit multiple commun strictement positif ?`,a:m,hint:'Prends tous les facteurs premiers nécessaires, avec les plus grands exposants. Attention : 0 est un multiple commun, mais on cherche le premier strictement positif.',corr:`PPCM(${a} ; ${b}) = ${m}. On a ${m} = ${a} × ${m/a} = ${b} × ${m/b}.`}
- ],correction:`<p>${a} = ${fstr(a)} et ${b} = ${fstr(b)}.</p><p>Le plus grand diviseur commun est ${g}.</p><p>Le plus petit multiple commun strictement positif est ${m}.</p><p>Vérification : ${g} × ${m} = ${a} × ${b} = ${a*b}.</p>`};
-}
-function fractionExercise(example=false){
- const [n,d]=example?[198,84]:pick([[198,88],[40,15],[48,56],[56,63],[180,108],[650,800],[204,595],[63,48],[2261,323],[7476,6300]]),g=gcd(n,d);
- return {data:{n,d,g},head:`<p>Rends la fraction <span class="frac"><span>${n}</span><span>${d}</span></span> irréductible en t’appuyant sur les décompositions.</p>`,tasks:[
- {q:`Décompose le numérateur ${n} en facteurs premiers.`,a:factorTask(n),answerHtml:fstr(n),hint:'Chaque facteur du produit doit être premier.',corr:`${n} = ${fstr(n)}.`},
- {q:`Décompose le dénominateur ${d} en facteurs premiers.`,a:factorTask(d),answerHtml:fstr(d),hint:'Continue les divisions jusqu’à obtenir 1.',corr:`${d} = ${fstr(d)}.`},
- {q:'Quelle est la fraction irréductible ? Écris-la sous la forme a/b.',a:fractionTask(n,d),answerHtml:ratHtml(n,d),hint:`Divise le numérateur et le dénominateur par leur PGCD, ${g}. Une fraction équivalente non simplifiée n’est pas encore irréductible.`,corr:`${n}/${d} = (${n} ÷ ${g})/(${d} ÷ ${g}) = ${n/g}/${d/g}.`}
- ],correction:`<p>${n} = ${fstr(n)} et ${d} = ${fstr(d)}.</p><p>Le PGCD des deux nombres est ${g}.</p><p>On divise le numérateur et le dénominateur par ${g} : ${n}/${d} = ${n/g}/${d/g}.</p><p>Les deux nouveaux nombres sont premiers entre eux : la fraction est irréductible.</p>`};
-}
-function sharingExercise(example=false){
- const [a,b]=example?[175,105]:pick([[266,114],[162,108],[45,60],[3003,3731],[186,155],[1575,4410]]),g=gcd(a,b);
- return {data:{a,b,g},head:`<p>On dispose de ${a} objets rouges et de ${b} objets bleus. On veut utiliser tous les objets pour réaliser le plus grand nombre de lots ayant tous la même composition.</p>`,tasks:[
- {q:'Quel calcul permet de trouver le nombre maximal de lots ?',a:'PGCD',options:['PGCD','PPCM'],hint:'Le nombre de lots doit diviser les deux quantités, et il doit être le plus grand possible.',corr:`On cherche le plus grand diviseur commun à ${a} et ${b}.`},
- {q:'Quel est le nombre maximal de lots ?',a:g,hint:'Décompose les deux quantités ou cherche leurs diviseurs communs.',corr:`PGCD(${a} ; ${b}) = ${g}.`},
- {q:'Combien y a-t-il d’objets rouges dans chaque lot ?',a:a/g,hint:'Divise la quantité de rouges par le nombre de lots.',corr:`${a} ÷ ${g} = ${a/g} objets rouges.`},
- {q:'Combien y a-t-il d’objets bleus dans chaque lot ?',a:b/g,hint:'Divise la quantité de bleus par le même nombre de lots.',corr:`${b} ÷ ${g} = ${b/g} objets bleus.`}
- ],correction:`<p>Le nombre de lots divise ${a} et ${b}, car il ne reste aucun objet. Il doit être maximal : on cherche leur PGCD.</p><p>${a} = ${fstr(a)} et ${b} = ${fstr(b)}.</p><p>PGCD(${a} ; ${b}) = ${g}.</p><p>Chaque lot contient ${a/g} objets rouges et ${b/g} objets bleus.</p>`};
-}
-function periodExercise(example=false){
- const [a,b]=example?[12,28]:pick([[12,18],[8,12],[15,20],[24,30],[280,350]]),m=lcm(a,b),unit=a===280?'secondes':'jours';
- return {data:{a,b,m},head:`<p>Deux opérations ont lieu respectivement tous les ${a} ${unit} et tous les ${b} ${unit}. Elles ont lieu ensemble à l’instant de départ. Quand auront-elles lieu ensemble pour la première fois après ce départ ?</p>`,tasks:[
- {q:'Quel calcul faut-il utiliser ?',a:'PPCM',options:['PGCD','PPCM'],hint:'Les instants cherchés sont des multiples des deux durées ; on veut le premier strictement positif.',corr:`On cherche le PPCM de ${a} et ${b}.`},
- {q:`Combien de ${unit} faut-il attendre ?`,a:m,hint:'Prends tous les facteurs premiers nécessaires avec les plus grands exposants.',corr:`PPCM(${a} ; ${b}) = ${m}.`},
- {q:'Combien de périodes de la première opération se sont écoulées ?',a:m/a,hint:`Calcule ${m} ÷ ${a}.`,corr:`${m} ÷ ${a} = ${m/a}.`},
- {q:'Combien de périodes de la seconde opération se sont écoulées ?',a:m/b,hint:`Calcule ${m} ÷ ${b}.`,corr:`${m} ÷ ${b} = ${m/b}.`}
- ],correction:`<p>Le délai cherché est un multiple commun strictement positif à ${a} et ${b}. Il doit être le plus petit possible.</p><p>${a} = ${fstr(a)} ; ${b} = ${fstr(b)}.</p><p>Le PPCM vaut ${m} : les deux opérations auront lieu ensemble dans ${m} ${unit}.</p>`};
-}
-const MODULES={
- multiples:{title:'1. Divisibilité et diviseurs',desc:'Distinguer multiple et diviseur, appliquer les critères et lister les diviseurs.',retain:'Pour a naturel et b naturel non nul, b divise a si a = b × k pour un entier naturel k. Le reste de la division de a par b est alors nul.',gen:multipleExercise},
- primes:{title:'2. Nombres premiers et décomposition',desc:'Reconnaître les nombres premiers et écrire un produit de facteurs premiers.',retain:'Un nombre premier est un entier au moins égal à 2 ayant exactement deux diviseurs positifs distincts. 1 n’est pas premier.',gen:primeExercise},
- gcd:{title:'3. PGCD et PPCM',desc:'Chercher le plus grand diviseur commun et le premier multiple commun positif.',retain:'PGCD : facteurs communs avec les plus petits exposants. PPCM : tous les facteurs nécessaires avec les plus grands exposants.',gen:gcdLcmExercise},
- fractions:{title:'4. Fractions irréductibles',desc:'Simplifier une fraction avec les décompositions et le PGCD.',retain:'On peut diviser le numérateur et le dénominateur par leur PGCD. Une fraction est irréductible quand ces deux nombres sont premiers entre eux.',gen:fractionExercise},
- problems:{title:'5. Problèmes type brevet',desc:'Choisir entre partage maximal et phénomènes périodiques.',retain:'Lots identiques et partage maximal : PGCD. Première rencontre après un départ commun : PPCM.',gen:null}
-};
-function dsData(variant='A'){
- const B=variant==='B',N=B?54:56,a=B?105:175,b=B?175:105,D=B?88:84,G=gcd(198,D);
- return [
- {title:'Exercice 1 · Cours et automatismes',head:'<p>Rédige les développements sur ta feuille.</p>',tasks:[
- {q:'Un entier naturel impair s’écrit 2k + 1 avec k entier naturel. Vrai ou faux ?',a:'vrai',corr:'C’est la définition d’un nombre impair.'},
- {q:'Développe −5(5x − 2). Quel est le coefficient de x ?',a:-25,corr:'−5(5x − 2) = −25x + 10.'},
- {q:'Dans ce même développement, quel est le terme constant ?',a:10,corr:'−5 × (−2) = 10.'},
- {q:'81 est-il un diviseur de 9 ? Écris oui ou non.',a:'non',corr:'9 n’est pas un multiple de 81. C’est 81 qui est un multiple de 9.'}]},
- {title:'Exercice 2 · Divisibilité et nombres premiers',head:'',tasks:[
- {q:'252 est-il un multiple de 9 ? Écris oui ou non.',a:'oui',corr:'2 + 5 + 2 = 9, donc 252 est divisible par 9.'},
- {q:`Donne tous les diviseurs positifs de ${N}.`,a:listTask(divisors(N)),answerHtml:divisors(N).join(' ; '),corr:`Les diviseurs sont ${divisors(N).join(' ; ')}.`},
- {q:'67 est-il un nombre premier ? Écris oui ou non.',a:'oui',corr:'On teste les diviseurs premiers 2, 3, 5 et 7, inférieurs ou égaux à √67. Aucun ne divise 67.'},
- {q:'Décompose 324 en produit de facteurs premiers.',a:factorTask(324),answerHtml:fstr(324),corr:'324 = 2² × 3⁴ = 2 × 2 × 3 × 3 × 3 × 3.'}]},
- {title:'Exercice 3 · Groupes identiques',head:`<p>On répartit ${a} garçons et ${b} filles en un maximum de groupes ayant chacun la même composition. Tous les élèves doivent être répartis.</p>`,tasks:[
- {q:'Quel est le nombre maximal de groupes ?',a:35,corr:'PGCD(175 ; 105) = 35.'},
- {q:'Combien y a-t-il de garçons dans chaque groupe ?',a:a/35,corr:`${a} ÷ 35 = ${a/35}.`},
- {q:'Combien y a-t-il de filles dans chaque groupe ?',a:b/35,corr:`${b} ÷ 35 = ${b/35}.`},
- {q:'Combien y a-t-il d’élèves au total dans chaque groupe ?',a:8,corr:'5 + 3 = 8 élèves.'}]},
- {title:'Exercice 4 · Fraction irréductible',head:`<p>On souhaite rendre ${198}/${D} irréductible.</p>`,tasks:[
- {q:'Décompose 198 en produit de facteurs premiers.',a:factorTask(198),answerHtml:fstr(198),corr:'198 = 2 × 3 × 3 × 11.'},
- {q:`Décompose ${D} en produit de facteurs premiers.`,a:factorTask(D),answerHtml:fstr(D),corr:`${D} = ${fstr(D)}.`},
- {q:`Quel est le PGCD de 198 et ${D} ?`,a:G,corr:`Le PGCD vaut ${G}.`},
- {q:'Écris la fraction sous forme irréductible a/b.',a:fractionTask(198,D),answerHtml:ratHtml(198,D),corr:`On divise le numérateur et le dénominateur par ${G} : ${198/G}/${D/G}.`}]},
- {title:'Exercice 5 · Deux circuits',head:'<p>Le circuit 1 comprend 5 exercices de 40 s, suivis chacun de 16 s de repos et de déplacement. Le circuit 2 comprend 10 exercices de 30 s, suivis chacun de 5 s de repos et de déplacement. Chaque circuit revient au point de départ. Les deux sportifs partent ensemble.</p>',tasks:[
- {q:'Quelle est la durée d’un tour du circuit 1, en secondes ?',a:280,corr:'5 × (40 + 16) = 280 s.'},
- {q:'Quelle est la durée d’un tour du circuit 2, en secondes ?',a:350,corr:'10 × (30 + 5) = 350 s.'},
- {q:'Après combien de secondes reviennent-ils ensemble au départ pour la première fois ?',a:1400,corr:'PPCM(280 ; 350) = 2³ × 5² × 7 = 1400 s.'},
- {q:'Convertis cette durée en minutes et secondes. Écris par exemple 12:30 pour 12 min 30 s.',a:timeTask(1400),answerHtml:'23 min 20 s',corr:'1400 = 23 × 60 + 20 : 23 minutes et 20 secondes.'}]}
- ];
+ return {el,get:()=>input.value,disable:()=>{input.disabled=true;if(keys)keys.querySelectorAll('button').forEach(b=>b.disabled=true);},bad:b=>input.classList.toggle('bad',b),onEnter:f=>input.addEventListener('keydown',e=>{if(e.key==='Enter')f();})};
 }
 
-function correct(v,a){return checkArithmetic(v,a);}
-let problemKind="sharing";
-const VIEW={page:'home',mode:'exemple',level:1};
+/* ---------- Exercices ----------
+   Chaque étape : q (question), a (réponse), hint (aide de la pratique guidée), corr (explication qui contient la réponse).
+   guide:true = sous-étape de la pratique guidée, absente en pratique autonome ; alone = variante de l'étape en pratique autonome. */
+function critExercise(level,ex){
+ let n,d;
+ if(ex){n=414;d=9;}
+ else{d=pick([2,3,5,9,10]);const yes=Math.random()<.5;do n=yes?d*R(Math.ceil(100/d),Math.floor(999/d)):R(100,999);while((n%d===0)!==yes||AVOID.has(n));}
+ const yes=n%d===0,last=n%10,ds=digits(n),sum=ds.reduce((s,x)=>s+x,0),bySum=d===3||d===9,N=fmt(n);
+ const crit={2:'Un nombre est divisible par 2 quand son chiffre des unités est 0, 2, 4, 6 ou 8.',5:'Un nombre est divisible par 5 quand son chiffre des unités est 0 ou 5.',10:'Un nombre est divisible par 10 quand son chiffre des unités est 0.',3:'Un nombre est divisible par 3 quand la somme de ses chiffres est divisible par 3.',9:'Un nombre est divisible par 9 quand la somme de ses chiffres est divisible par 9.'}[d];
+ const why={2:['son chiffre des unités est pair','son chiffre des unités est impair'],5:['son chiffre des unités est 0 ou 5','son chiffre des unités n’est ni 0 ni 5'],10:['son chiffre des unités est 0','son chiffre des unités n’est pas 0'],3:[`la somme de ses chiffres, ${sum}, est divisible par 3`,`la somme de ses chiffres, ${sum}, n’est pas divisible par 3`],9:[`la somme de ses chiffres, ${sum}, est divisible par 9`,`la somme de ses chiffres, ${sum}, n’est pas divisible par 9`]}[d];
+ const opts=[`Oui, car ${why[0]}.`,`Non, car ${why[1]}.`],good=yes?opts[0]:opts[1];
+ const first=bySum?{guide:true,q:`Calcule la somme des chiffres de ${N}.`,a:sum,hint:'Additionne les chiffres un par un.',corr:`${ds.join(' + ')} = ${sum}.`}
+  :{guide:true,q:`Quel est le chiffre des unités de ${N} ?`,a:last,hint:'Le chiffre des unités est le dernier chiffre, à droite.',corr:`Le chiffre des unités de ${N} est ${last}.`};
+ const tasks=[first,{q:`${N} est-il divisible par ${d} ?`,a:good,options:opts,keep:true,hint:crit,corr:`${good} ${crit}`,alone:{options:['Oui','Non'],a:yes?'Oui':'Non',corr:`${good}`}}];
+ if(yes)tasks.push({q:`Complète l’égalité : ${N} = ${d} × …`,a:n/d,hint:`Pose la division de ${N} par ${d}.`,corr:`${N} ÷ ${d} = ${fmt(n/d)}, donc ${N} = ${d} × ${fmt(n/d)}. ${N} est un multiple de ${d}, et ${d} est un diviseur de ${N}.`});
+ return {head:`<p>Le nombre ${N} est-il divisible par ${d} ?</p>`,tasks,correction:`<p>${first.corr}</p><p>${crit}</p><p>${good}</p><p>${yes?`${N} = ${d} × ${fmt(n/d)} : ${N} est un multiple de ${d}.`:`${N} n’est pas un multiple de ${d}.`}</p>`};
+}
+function listExercise(level,ex){
+ const n=ex?40:pick([28,32,44,50,63,68,70,76,88,92,99,117].filter(x=>!AVOID.has(x))),N=fmt(n);
+ const small=divisors(n).filter(d=>d*d<=n),all=divisors(n),tasks=[],lines=[];let prev=0;
+ const skipped=(from,to)=>{const s=[];for(let k=from;k<to;k++)s.push(k);return !s.length?'':s.length===1?`${N} n’est pas divisible par ${s[0]}. `:`${N} n’est divisible ni par ${s.join(', ni par ')}. `;};
+ for(const d of small){const sk=skipped(prev+1,d);prev=d;const c=`${sk}${N} ÷ ${d} = ${fmt(n/d)}, donc ${N} = ${d} × ${fmt(n/d)}.`;lines.push(c);
+  tasks.push({guide:true,q:`Complète : ${N} = ${d} × …`,a:n/d,hint:d===1?'Un nombre est toujours égal à 1 multiplié par lui-même.':`Divise ${N} par ${d}.`,corr:c});}
+ let k=prev+1;const tail=[];while(k*k<=n){tail.push(k);k++;}
+ const stop=`${tail.length?skipped(prev+1,k):''}On s’arrête, car ${k} × ${k} = ${k*k} dépasse ${N}.`;
+ tasks.push({q:`Écris la liste de tous les diviseurs de ${N}, du plus petit au plus grand.`,a:L(all),hint:'Chaque égalité donne deux diviseurs, un de chaque côté du signe ×. Sépare les nombres par des points-virgules.',corr:`${stop} Les diviseurs de ${N} sont ${all.map(fmt).join(' ; ')}.`,alone:{q:`Écris la liste de tous les diviseurs de ${N}.`}});
+ return {head:`<p>On cherche tous les diviseurs de ${N}. On essaie 1, 2, 3… dans l’ordre, et on écrit une égalité pour chaque division qui tombe juste.</p>`,tasks,
+  correction:`<p>${N} = ${small.map(d=>`${d} × ${fmt(n/d)}`).join(' = ')}.</p><p>${stop}</p><p>Les diviseurs de ${N} sont ${all.map(fmt).join(' ; ')}.</p>`};
+}
+/* Essais de division par 2, 3, 5, 7, 11… jusqu'au premier qui tombe juste, ou jusqu'à ce que le carré du nombre essayé dépasse n. */
+function trials(n){
+ const N=fmt(n),last=n%10,ds=digits(n),sum=ds.reduce((s,x)=>s+x,0),lines=[];
+ for(const p of [2,3,5,7,11,13]){
+  if(p*p>n)return {d:0,lines,stop:`On peut s’arrêter, car ${p} × ${p} = ${p*p} dépasse ${N}.`};
+  const ok=n%p===0;let why;
+  if(p===2)why=`son chiffre des unités, ${last}, est ${last%2?'impair':'pair'}`;
+  else if(p===3)why=`${ds.join(' + ')} = ${sum}, ${ok?'qui est divisible par 3':'qui n’est pas divisible par 3'}`;
+  else if(p===5)why=`son chiffre des unités est ${last}`;
+  else why=ok?`${N} = ${p} × ${fmt(n/p)}`:`${N} = ${p} × ${Math.floor(n/p)} + ${n%p}`;
+  lines.push(`${N} ${ok?'est divisible':'n’est pas divisible'} par ${p} : ${why}.`);
+  if(ok)return {d:p,lines,stop:''};
+ }
+ return {d:0,lines,stop:''};
+}
+function primeExercise(level,ex){
+ const n=ex?133:Math.random()<.5?pick([101,103,107,109,113,131,137,139,151,157,163,167]):pick([111,115,117,119,121,122,141,145,153,155,158,159,161,187]),N=fmt(n),T=trials(n),is=!T.d;
+ const opts=['Par 2','Par 3','Par 5','Par 7','Par 11','Aucune de ces divisions'];
+ const yn=['Oui : ses seuls diviseurs sont 1 et lui-même.','Non : il a un autre diviseur que 1 et lui-même.'];
+ const concl=is?`${T.stop} Aucune division n’a donc pu tomber juste : ${N} est un nombre premier.`:`${N} = ${T.d} × ${fmt(n/T.d)}. ${T.d} est un diviseur de ${N}, autre que 1 et lui-même : ${N} n’est pas un nombre premier.`;
+ return {head:`<p>Le nombre ${N} est-il un nombre premier ?</p>`,tasks:[
+  {guide:true,q:`Essaie de diviser ${N} par 2, 3, 5, 7 et 11, dans cet ordre. Quelle est la première division qui tombe juste ?`,a:is?opts[5]:'Par '+T.d,options:opts,keep:true,hint:'Pour 2, 3 et 5, utilise les critères de divisibilité. Pour 7 et 11, pose la division.',corr:T.lines.join(' ')+(is&&T.stop?' '+T.stop:'')},
+  {q:`${N} est-il un nombre premier ?`,a:is?yn[0]:yn[1],options:yn,keep:true,hint:'Un nombre premier a exactement deux diviseurs : 1 et lui-même.',corr:(is?'Oui. ':'Non. ')+concl,alone:{options:['Oui','Non'],a:is?'Oui':'Non'}}],
+  correction:T.lines.map(l=>`<p>${l}</p>`).join('')+`<p>${concl}</p>`};
+}
+function decompExercise(level,ex){
+ let f;
+ if(ex)f=[2,3,3,7];
+ else{let n;do{f=[];const k=R(3,5);for(let i=0;i<k;i++)f.push(pick([2,2,2,3,3,3,5,5,7,11]));f.sort((a,b)=>a-b);n=f.reduce((p,x)=>p*x,1);}while(n<40||n>700||AVOID.has(n)||new Set(f).size<2);}
+ const n=f.reduce((p,x)=>p*x,1),N=fmt(n),tasks=[];let m=n;
+ for(let i=0;i<f.length-1;i++){const p=f[i],q=m/p;
+  tasks.push({guide:true,q:`Quel est le plus petit nombre premier qui divise ${fmt(m)} ?`,a:p,hint:'Essaie 2, puis 3, puis 5, puis 7, avec les critères de divisibilité.',corr:`${fmt(m)} = ${p} × ${fmt(q)}.`+(prime(q)?` ${fmt(q)} est un nombre premier : on s’arrête.`:` On continue avec ${fmt(q)}.`)});m=q;}
+ tasks.push({q:`Écris la décomposition de ${N} en produit de facteurs premiers.`,a:F(n),hint:'Écris tous les nombres premiers trouvés, séparés par le signe ×. Tu peux taper <span class="no-math">2x3x3</span> ou utiliser les boutons.',corr:decomp(n)+'.'});
+ return {head:`<p>Décompose ${N} en produit de facteurs premiers.</p>`,tasks,correction:ladder(n)+`<p>${decomp(n)}.</p>`};
+}
+/* Deux nombres a = g × u et b = g × v, avec u et v sans diviseur commun : leur PGCD vaut g. */
+function pairGen(lo,hi){for(;;){const g=pick([2,3,4,5,6,7,8,9,10,11,12,13,14,15,18,21,22,26]),u=R(2,11),v=R(2,11);if(u===v||gcd(u,v)!==1)continue;const a=g*Math.min(u,v),b=g*Math.max(u,v);if(a<lo||b>hi||AVOID.has(a)||AVOID.has(b))continue;return [a,b];}}
+const decompSteps=(xs)=>xs.map(x=>({guide:true,q:`Décompose ${fmt(x)} en produit de facteurs premiers.`,a:F(x),hint:'Divise par le plus petit nombre premier possible, puis recommence avec le quotient.',corr:decomp(x)+'.'}));
+const communs=c=>c.length>1?`Les facteurs communs sont ${listFr(c)}.`:`Le seul facteur commun est ${c[0]}.`;
+function pgcdExercise(level,ex){
+ const [a,b]=ex?[78,130]:pairGen(30,400),g=gcd(a,b),c=common(a,b),A=fmt(a),B=fmt(b);
+ const big=`On a pris tous les facteurs communs : un nombre plus grand ne diviserait plus ${A} ou ${B}.`;
+ return {head:`<p>Cherche le PGCD de ${A} et de ${B}.</p>`,tasks:[...decompSteps([a,b]),
+  {guide:true,q:'Écris le produit des facteurs premiers communs aux deux décompositions.',a:F(g),hint:'Prends un facteur de la première décomposition qui se trouve aussi dans la seconde, et barre-le dans les deux. Recommence jusqu’à ce qu’il n’y ait plus de facteur commun.',corr:`${communs(c)} Leur produit s’écrit ${prod(c)}.`},
+  {q:`Quel est le PGCD de ${A} et de ${B} ?`,a:g,hint:'Calcule le produit des facteurs communs.',corr:`${c.length>1?prod(c)+' = '+fmt(g)+'. ':''}Le PGCD de ${A} et de ${B} est ${fmt(g)}. ${big} Vérification : ${A} = ${fmt(g)} × ${fmt(a/g)} et ${B} = ${fmt(g)} × ${fmt(b/g)}.`}],
+  correction:`<p>${decomp(a)}.</p><p>${decomp(b)}.</p><p>${communs(c)}</p><p>PGCD = ${c.length>1?prod(c)+' = ':''}${fmt(g)}.</p><p>${big}</p>`};
+}
+function ppcmExercise(level,ex){
+ let a,b;
+ if(ex){a=10;b=14;}else do{a=R(4,30);b=R(a+1,40);}while(prime(a)||prime(b)||b%a===0||gcd(a,b)===1||lcm(a,b)>360||AVOID.has(a)||AVOID.has(b));
+ const m=lcm(a,b),miss=missing(a,b),A=fmt(a),B=fmt(b),M=fmt(m);
+ const add=`On garde ${fx(a)}, puis on ajoute ${miss.length>1?'les facteurs '+listFr(miss)+' de '+B+', qui manquent':'le facteur '+miss[0]+' de '+B+', qui manque'}.`;
+ const small=`Si on enlevait un facteur, le produit ne serait plus un multiple de ${A} ou de ${B} : c’est le plus petit multiple commun strictement positif.`;
+ return {head:`<p>Cherche le PPCM de ${A} et de ${B}.</p>`,tasks:[...decompSteps([a,b]),
+  {guide:true,q:`Écris le produit des facteurs de ${A}, suivis des facteurs de ${B} qui manquent.`,a:F(m),hint:`Recopie la décomposition de ${A}. Ensuite, pour chaque facteur de ${B}, regarde s’il reste un facteur égal dans la décomposition de ${A} ; sinon, ajoute-le.`,corr:`${add} Le produit s’écrit ${fx(a)} × ${prod(miss)}.`},
+  {q:`Quel est le PPCM de ${A} et de ${B} ?`,a:m,hint:'Calcule le produit obtenu.',corr:`${fx(a)} × ${prod(miss)} = ${M}. Le PPCM de ${A} et de ${B} est ${M}. Vérification : ${M} = ${A} × ${fmt(m/a)} = ${B} × ${fmt(m/b)}.`}],
+  correction:`<p>${decomp(a)}.</p><p>${decomp(b)}.</p><p>${add}</p><p>PPCM = ${fx(a)} × ${prod(miss)} = ${M}.</p><p>${small}</p><p>Vérification : ${M} = ${A} × ${fmt(m/a)} = ${B} × ${fmt(m/b)}.</p>`};
+}
+function fracExercise(level,ex){
+ let n,d;
+ if(ex){n=56;d=98;}else{[n,d]=pairGen(12,300);if(Math.random()<.3)[n,d]=[d,n];}
+ const g=gcd(n,d),c=common(n,d);
+ const div=`On divise le numérateur et le dénominateur par ${fmt(g)} : ${fmt(n)} ÷ ${fmt(g)} = ${fmt(n/g)} et ${fmt(d)} ÷ ${fmt(g)} = ${fmt(d/g)}.`;
+ return {head:`<p>Rends la fraction ${frac(n,d)} irréductible.</p>`,tasks:[...decompSteps([n,d]),
+  {guide:true,q:`Quel est le PGCD de ${fmt(n)} et de ${fmt(d)} ?`,a:g,hint:'Multiplie les facteurs communs aux deux décompositions.',corr:`${communs(c)} PGCD = ${c.length>1?prod(c)+' = ':''}${fmt(g)}.`},
+  {q:`Écris la fraction ${frac(n,d)} sous forme irréductible.`,a:Q(n,d),hint:`Divise le numérateur et le dénominateur par le PGCD. Écris ta réponse avec une barre oblique, par exemple 2/3.`,corr:`${div} Donc ${frac(n,d)} = ${frac(n/g,d/g)}, et cette fraction est irréductible.`}],
+  correction:`<p>${decomp(n)}.</p><p>${decomp(d)}.</p><p>${communs(c)} Le PGCD vaut ${fmt(g)}.</p><p>${div}</p><p>${frac(n,d)} = ${frac(n/g,d/g)}.</p>`};
+}
+function lotsExercise(level,ex){
+ const ctx=[
+  {txt:(a,b)=>`Un fleuriste a ${a} roses et ${b} tulipes. Il veut composer le plus grand nombre possible de bouquets identiques, en utilisant toutes les fleurs.`,lots:'bouquets',un:'chaque bouquet',A:'roses',B:'tulipes',fin:g=>`Le fleuriste peut composer au maximum ${g} bouquets.`},
+  {txt:(a,b)=>`Un confiseur a ${a} caramels et ${b} sucettes. Il veut préparer le plus grand nombre possible de sachets identiques, en utilisant tous les bonbons.`,lots:'sachets',un:'chaque sachet',A:'caramels',B:'sucettes',fin:g=>`Le confiseur peut préparer au maximum ${g} sachets.`},
+  {txt:(a,b)=>`Un club de sport compte ${a} garçons et ${b} filles. L’entraîneur veut former le plus grand nombre possible d’équipes ayant toutes la même composition, sans laisser personne de côté.`,lots:'équipes',un:'chaque équipe',A:'garçons',B:'filles',fin:g=>`L’entraîneur peut former au maximum ${g} équipes.`}];
+ let k,a,b,g;
+ if(ex){k=0;a=54;b=72;}else{k=R(0,2);do{g=R(6,18);const u=R(2,9),v=R(2,9);a=g*u;b=g*v;if(u===v||gcd(u,v)!==1)a=0;}while(!a||a>200||b>200||AVOID.has(a)||AVOID.has(b));}
+ g=gcd(a,b);const C=ctx[k],c=common(a,b);
+ const opts=[`Le PGCD de ${a} et de ${b}, car le nombre de ${C.lots} doit diviser ${a} et ${b}, et être le plus grand possible.`,`Le PPCM de ${a} et de ${b}, car on cherche un multiple commun aux deux nombres.`];
+ const calc=`${decomp(a)} et ${decomp(b)}. ${communs(c)} PGCD = ${c.length>1?prod(c)+' = ':''}${g}.`;
+ return {head:`<p>${C.txt(a,b)}</p>`,tasks:[
+  {guide:true,q:`Quel nombre faut-il chercher pour trouver le nombre maximal de ${C.lots} ?`,a:opts[0],options:opts,hint:'Pour faire des lots identiques sans reste, le nombre de lots doit diviser chacune des deux quantités.',corr:opts[0]},
+  {q:`Quel est le nombre maximal de ${C.lots} ?`,a:g,hint:`Décompose ${a} et ${b}, puis multiplie les facteurs communs.`,corr:`${calc} ${C.fin(g)}`},
+  {q:`Combien de ${C.A} y aura-t-il dans ${C.un} ?`,a:a/g,hint:`Divise le nombre de ${C.A} par le nombre de ${C.lots}.`,corr:`${a} ÷ ${g} = ${a/g}. Il y aura ${a/g} ${C.A} dans ${C.un}.`},
+  {q:`Combien de ${C.B} y aura-t-il dans ${C.un} ?`,a:b/g,hint:`Divise le nombre de ${C.B} par le nombre de ${C.lots}.`,corr:`${b} ÷ ${g} = ${b/g}. Il y aura ${b/g} ${C.B} dans ${C.un}.`}],
+  correction:`<p>Le nombre de ${C.lots} doit diviser ${a} et ${b}, et être le plus grand possible : on cherche le PGCD de ${a} et de ${b}.</p><p>${decomp(a)}.</p><p>${decomp(b)}.</p><p>${communs(c)} PGCD = ${c.length>1?prod(c)+' = ':''}${g}.</p><p>${a} ÷ ${g} = ${a/g} et ${b} ÷ ${g} = ${b/g}.</p><p>${C.fin(g)} Il y aura ${a/g} ${C.A} et ${b/g} ${C.B} dans ${C.un}.</p>`};
+}
+function cycleExercise(level,ex){
+ const ctx=[
+  {txt:(a,b)=>`Au terminus, un bus de la ligne 1 part toutes les ${a} minutes et un bus de la ligne 2 part toutes les ${b} minutes. À 7 h, deux bus partent ensemble.`,q:'Au bout de combien de minutes deux bus partiront-ils de nouveau ensemble pour la première fois ?',q1:'Combien de bus de la ligne 1 seront partis pendant ce temps, sans compter celui de 7 h ?',q2:'Combien de bus de la ligne 2 seront partis pendant ce temps, sans compter celui de 7 h ?',r1:x=>`${x} bus de la ligne 1 seront partis.`,r2:x=>`${x} bus de la ligne 2 seront partis.`,fin:m=>`Deux bus partiront de nouveau ensemble au bout de ${m} minutes.`,u:'durées'},
+  {txt:(a,b)=>`Deux coureurs partent ensemble de la ligne de départ d’une piste. Le premier fait un tour en ${a} secondes et le second en ${b} secondes.`,q:'Au bout de combien de secondes repasseront-ils ensemble sur la ligne de départ pour la première fois ?',q1:'Combien de tours le premier coureur aura-t-il faits ?',q2:'Combien de tours le second coureur aura-t-il faits ?',r1:x=>`Le premier coureur aura fait ${x} tours.`,r2:x=>`Le second coureur aura fait ${x} tours.`,fin:m=>`Les deux coureurs repasseront ensemble sur la ligne de départ au bout de ${m} secondes.`,u:'durées'}];
+ let k,a,b;
+ if(ex){k=0;a=16;b=20;}else{k=R(0,1);do{a=R(6,30);b=R(a+1,40);}while(b%a===0||gcd(a,b)===1||lcm(a,b)>240||AVOID.has(a)||AVOID.has(b));}
+ const C=ctx[k],m=lcm(a,b),miss=missing(a,b);
+ const opts=[`Le PPCM de ${a} et de ${b}, car on cherche le plus petit multiple commun strictement positif des deux durées.`,`Le PGCD de ${a} et de ${b}, car on cherche un diviseur commun aux deux durées.`];
+ const calc=`${decomp(a)} et ${decomp(b)}. On garde ${fx(a)} et on ajoute ${prod(miss)} : PPCM = ${fx(a)} × ${prod(miss)} = ${fmt(m)}.`;
+ return {head:`<p>${C.txt(a,b)}</p>`,tasks:[
+  {guide:true,q:'Quel nombre faut-il chercher ?',a:opts[0],options:opts,hint:'Les instants où chaque événement se reproduit sont des multiples de sa durée. On cherche le premier instant commun après le départ.',corr:opts[0]},
+  {q:C.q,a:m,hint:`Décompose ${a} et ${b}. Garde les facteurs de ${a}, puis ajoute ceux de ${b} qui manquent.`,corr:`${calc} ${C.fin(fmt(m))}`},
+  {q:C.q1,a:m/a,hint:`Divise ${fmt(m)} par ${a}.`,corr:`${fmt(m)} ÷ ${a} = ${m/a}. ${C.r1(m/a)}`},
+  {q:C.q2,a:m/b,hint:`Divise ${fmt(m)} par ${b}.`,corr:`${fmt(m)} ÷ ${b} = ${m/b}. ${C.r2(m/b)}`}],
+  correction:`<p>Les instants cherchés sont des multiples de ${a} et de ${b}. On cherche le plus petit multiple commun strictement positif : le PPCM.</p><p>${decomp(a)}.</p><p>${decomp(b)}.</p><p>On garde ${fx(a)} et on ajoute ${prod(miss)} : PPCM = ${fmt(m)}.</p><p>${C.fin(fmt(m))}</p><p>${fmt(m)} ÷ ${a} = ${m/a} et ${fmt(m)} ÷ ${b} = ${m/b}.</p>`};
+}
+const MODULES={
+ diviseurs:{title:'1. Multiples et diviseurs',desc:'Utiliser les critères de divisibilité, puis trouver tous les diviseurs d’un nombre.',retain:'Quand une division tombe juste, le nombre divisé est un multiple du diviseur. Les critères de divisibilité permettent de le savoir sans poser la division.',levels:[['crit','Critères de divisibilité',critExercise],['list','Liste des diviseurs',listExercise]]},
+ premiers:{title:'2. Nombres premiers',desc:'Reconnaître un nombre premier, puis décomposer un nombre en produit de facteurs premiers.',retain:'Un nombre premier a exactement deux diviseurs : 1 et lui-même. Pour décomposer un nombre, on le divise par le plus petit nombre premier possible, puis on recommence jusqu’à obtenir 1.',levels:[['test','Nombre premier ?',primeExercise],['decomp','Décomposer',decompExercise]]},
+ pgcd:{title:'3. PGCD, PPCM et fractions',desc:'Chercher le plus grand diviseur commun, le plus petit multiple commun strictement positif, puis rendre une fraction irréductible.',retain:'PGCD : on multiplie les facteurs communs aux deux décompositions. PPCM : on prend les facteurs du premier nombre, puis on ajoute ceux du second qui manquent. Fraction irréductible : on divise le numérateur et le dénominateur par leur PGCD.',levels:[['pgcd','PGCD',pgcdExercise],['ppcm','PPCM',ppcmExercise],['frac','Fraction irréductible',fracExercise]]},
+ problems:{title:'4. Problèmes',desc:'Reconnaître un partage en lots ou un rendez-vous, calculer, puis répondre par une phrase.',retain:'Partage en lots identiques, le plus grand nombre possible : on cherche le PGCD. Événements qui se répètent et qui se reproduisent ensemble : on cherche le PPCM.',levels:[['lots','Partage en lots',lotsExercise],['cycle','Rendez-vous',cycleExercise]]}
+};
+const VIEW={page:'home',mode:'exemple',level:{}};
 function go(id){VIEW.page=id;render();window.scrollTo({top:0});}
 function modeBar(parent){const bar=dom('div','subtabs');for(const[key,label]of[['exemple','Je regarde un exemple'],['aide','Je m’entraîne avec de l’aide'],['seul','Je m’entraîne seul']])bar.append(button(label,()=>{VIEW.mode=key;render();},VIEW.mode===key?'on':''));parent.append(bar);}
+/* Modelage : toutes les étapes, avec l'explication. Pratique guidée : les sous-étapes, avec l'aide affichée une seule fois.
+   Pratique autonome : sans les sous-étapes. Dans les deux pratiques : deux essais, puis la correction. */
 function renderExercise(parent,ex){
+ const alone=VIEW.mode==='seul';
+ if(alone)parent.append(dom('p','small','Rédige les calculs et les justifications sur ton cahier, puis saisis seulement tes résultats. Pour un produit de facteurs premiers, tu peux taper <span class="no-math">2x3x3</span> ou utiliser les boutons.'));
  parent.append(dom('div','exo-head',ex.head));const box=dom('div','steps');parent.append(box);
- const tasks=VIEW.mode==='seul'&&VIEW.page==='solve'?[ex.tasks.at(-1)]:ex.tasks;
- if(VIEW.mode==='seul')parent.prepend(dom('p','small','Rédige les calculs et les justifications sur ton cahier avant de saisir tes réponses. Sépare les listes par des points-virgules. Pour les produits, écris par exemple 2*2*3 ou 2^2*3 ; pour les fractions, écris a/b.'));
+ const tasks=(alone?ex.tasks.filter(t=>!t.guide):ex.tasks).map(t=>alone&&t.alone?{...t,...t.alone}:t);
  let step=0;
  function next(){
   if(step>=tasks.length){parent.append(dom('div','seyes','<h4>Correction rédigée</h4>'+ex.correction));parent.append(button('Nouvel exercice',render));return;}
-  const t=tasks[step],i=step++;const row=dom('div','step',`<div class="step-n">Étape ${step} sur ${tasks.length}</div><div class="step-q">${t.q}</div>`);box.append(row);
-  if(VIEW.mode==='exemple'){row.classList.add('done');row.append(dom('div','model-a',answer(t)),dom('div','model-e',t.corr));row.append(button(step<tasks.length?'Étape suivante':'Voir la rédaction',()=>{row.querySelector('button').remove();next();}));return;}
-  const area=dom('div','step-a'),feedback=dom('div','fb');feedback.setAttribute('aria-live','polite');row.append(area,feedback);let input;
-  if(t.options){input=dom('select');input.append(new Option('Choisir une réponse',''));for(const o of t.options)input.append(new Option(o,o));}
-  else {input=dom('input');input.type='text';input.className='eq-input';input.placeholder=typeof t.a==='number'?'Nombre ou fraction':'Réponse';if(typeof t.a==='number')input.inputMode='text';}
-  input.setAttribute('aria-label','Réponse à l’étape '+step);let tries=0;
+  const t=tasks[step++];const row=dom('div','step',`<div class="step-n">Étape ${step} sur ${tasks.length}</div><div class="step-q">${t.q}</div>`);box.append(row);
+  if(VIEW.mode==='exemple'){row.classList.add('done');row.append(dom('div','model-e',t.corr));row.append(button(step<tasks.length?'Étape suivante':'Voir la rédaction',()=>{row.querySelector('button').remove();next();}));return;}
+  if(VIEW.mode==='aide'&&t.hint)row.append(dom('p','small aide','<b>Aide :</b> '+t.hint));
+  const area=dom('div','step-a'),feedback=dom('div','fb');feedback.setAttribute('aria-live','polite');row.append(area,feedback);
+  const field=makeField(t,'Réponse à l’étape '+step);let tries=0;
   const valid=button('Valider',()=>{
-   if(!input.value.trim()){feedback.className='fb warn';feedback.textContent='Donne une réponse avant de valider.';return;}
-   const ok=correct(input.value,t.a);tries++;
-   if(!ok&&VIEW.mode==='aide'&&tries<2){feedback.className='fb warn';feedback.innerHTML='Pas encore. '+(t.hint||'Relis la méthode et réessaie.');return;}
-   input.disabled=true;valid.disabled=true;row.classList.add(ok?'done':'missed');feedback.className='fb '+(ok?'ok':'ko');feedback.innerHTML=`<b>${ok?"C’est juste.":'Réponse attendue : '+answer(t)+'.'}</b> ${t.corr}`;row.append(button('Continuer',()=>{row.querySelectorAll('button').forEach(b=>b.remove());next();}));
-  });input.addEventListener('keydown',e=>{if(e.key==='Enter')valid.click();});area.append(input,valid);if(VIEW.mode==='aide'&&t.hint)row.append(dom('p','small',t.hint));
+   const v=field.get();
+   if(!v.trim()){feedback.className='fb warn';feedback.textContent='Donne une réponse avant de valider.';return;}
+   const ok=check(v,t.a);tries++;
+   if(!ok&&tries<2){feedback.className='fb warn';feedback.textContent=VIEW.mode==='aide'&&t.hint?'Ce n’est pas encore juste. Relis l’aide, puis fais un deuxième essai.':'Ce n’est pas encore juste. Vérifie ton calcul, puis fais un deuxième essai.';field.bad(true);return;}
+   field.bad(false);field.disable();valid.disabled=true;row.classList.add(ok?'done':'missed');feedback.className='fb '+(ok?'ok':'ko');feedback.innerHTML=`<b>${ok?'C’est juste.':'Ce n’est pas juste.'}</b> ${t.corr}`;
+   row.append(button('Continuer',()=>{row.querySelectorAll('.step-a button,.fb~button').forEach(b=>b.remove());next();}));
+  });
+  field.onEnter(()=>valid.click());area.append(field.el,valid);
  }
  next();
 }
+/* D.S. blancs : nombres absents du cours et des exemples ; le sujet B ne reprend aucun exercice du sujet A.
+   L'élève rédige sur une feuille et ne saisit que le résultat final de chaque question. */
+function dsData(variant){
+ const YN=['Oui','Non'],VF=['Vrai','Faux'];
+ const D=(n,extra='')=>({q:`Décompose ${fmt(n)} en produit de facteurs premiers.`,a:F(n),corr:ladder(n)+`<p>${decomp(n)}.</p>${extra}`});
+ if(variant==='B')return [
+ {title:'Vrai ou faux',pts:3,head:'<p>Pour chaque affirmation, indique si elle est vraie ou fausse, puis justifie sur ta feuille.</p>',items:[
+  {q:'17 est un diviseur de 391.',options:VF,a:'Vrai',corr:'<p>391 ÷ 17 = 23, donc 391 = 17 × 23. L’affirmation est vraie.</p>'},
+  {q:'1 236 est divisible par 9.',options:VF,a:'Faux',corr:'<p>1 + 2 + 3 + 6 = 12, et 12 n’est pas divisible par 9. L’affirmation est fausse.</p>'},
+  {q:'1 est un nombre premier.',options:VF,a:'Faux',corr:'<p>1 n’a qu’un seul diviseur : lui-même. Un nombre premier en a exactement deux. L’affirmation est fausse.</p>'}]},
+ {title:'Nombres premiers et décomposition',pts:4,head:'',items:[
+  {q:'Parmi les nombres 121, 127, 129 et 143, un seul est un nombre premier. Lequel ? Justifie.',options:['121','127','129','143'],a:'127',corr:'<p>121 = 11 × 11, 129 = 3 × 43 (car 1 + 2 + 9 = 12 est divisible par 3) et 143 = 11 × 13 : ces trois nombres ne sont pas premiers.</p><p>127 n’est divisible ni par 2, ni par 3, ni par 5, ni par 7, ni par 11, et 13 × 13 = 169 dépasse 127. Donc 127 est un nombre premier.</p>'},
+  D(588),
+  {q:'Le nombre 588 est-il divisible par 49 ? Justifie à l’aide de sa décomposition.',options:YN,a:'Oui',corr:'<p>La décomposition de 588 contient le facteur 7 × 7 = 49 : 588 = 2 × 2 × 3 × 49 = 12 × 49.</p><p>Donc 588 est divisible par 49.</p>'}]},
+ {title:'PGCD et PPCM',pts:4,head:'<p>On considère les nombres 300 et 405.</p>',items:[
+  D(300),D(405),
+  {q:'Calcule le PGCD de 300 et de 405.',a:15,corr:'<p>Les facteurs communs aux deux décompositions sont 3 et 5.</p><p>PGCD = 3 × 5 = 15.</p>'},
+  {q:'Calcule le PPCM de 300 et de 405.',a:8100,corr:'<p>On garde 2 × 2 × 3 × 5 × 5, puis on ajoute les facteurs 3, 3 et 3 de 405, qui manquent.</p><p>PPCM = 2 × 2 × 3 × 5 × 5 × 3 × 3 × 3 = 8 100.</p><p>Vérification : 8 100 = 300 × 27 = 405 × 20.</p>'}]},
+ {title:'Carrelage',pts:5,head:'<p>Une pièce rectangulaire mesure 330 cm de long et 210 cm de large. On veut couvrir tout le sol avec des carreaux carrés identiques, les plus grands possibles, sans en découper aucun. Le côté d’un carreau mesure un nombre entier de centimètres.</p>',items:[
+  {q:'Quelle est la longueur du côté d’un carreau, en cm ? Justifie.',a:30,corr:'<p>Le côté d’un carreau doit diviser 330 et 210, et être le plus grand possible : on cherche le PGCD de 330 et de 210.</p><p>330 = 2 × 3 × 5 × 11 et 210 = 2 × 3 × 5 × 7.</p><p>PGCD = 2 × 3 × 5 = 30. Le côté d’un carreau mesure 30 cm.</p>'},
+  {q:'Combien de carreaux y aura-t-il dans la longueur de la pièce ?',a:11,corr:'<p>330 ÷ 30 = 11.</p>'},
+  {q:'Combien de carreaux y aura-t-il dans la largeur de la pièce ?',a:7,corr:'<p>210 ÷ 30 = 7.</p>'},
+  {q:'Combien de carreaux faut-il en tout ?',a:77,corr:'<p>11 × 7 = 77. Il faut 77 carreaux.</p>'}]},
+ {title:'Engrenage',pts:4,head:'<p>Deux roues dentées tournent ensemble. La roue A a 32 dents et la roue B a 44 dents. On marque d’un point la dent de chaque roue qui se trouve au point de contact. À chaque instant, le même nombre de dents est passé sur les deux roues.</p>',items:[
+  {q:'Combien de dents seront passées sur chaque roue lorsque les deux points se retrouveront face à face pour la première fois ?',a:352,corr:'<p>Le nombre de dents passées doit être un multiple de 32 et de 44, le plus petit possible : on cherche le PPCM de 32 et de 44.</p><p>32 = 2 × 2 × 2 × 2 × 2 et 44 = 2 × 2 × 11.</p><p>On garde 2 × 2 × 2 × 2 × 2, puis on ajoute le facteur 11 qui manque : PPCM = 352.</p><p>Il faudra que 352 dents soient passées.</p>'},
+  {q:'Combien de tours la roue A aura-t-elle faits ?',a:11,corr:'<p>352 ÷ 32 = 11. La roue A aura fait 11 tours.</p>'},
+  {q:'Combien de tours la roue B aura-t-elle faits ?',a:8,corr:'<p>352 ÷ 44 = 8. La roue B aura fait 8 tours.</p>'}]}
+ ];
+ return [
+ {title:'Divisibilité',pts:3,head:'<p>On considère le nombre 2 754.</p>',items:[
+  {q:'Par lesquels des nombres 2, 3, 5 et 9 ce nombre est-il divisible ? Coche toutes les bonnes réponses, et justifie chacune à l’aide d’un critère.',options:['2','3','5','9'],multi:true,a:S(['2','3','9']),corr:'<p>Le chiffre des unités est 4, qui est pair : 2 754 est divisible par 2.</p><p>Il n’est pas divisible par 5, car son chiffre des unités n’est ni 0 ni 5.</p><p>2 + 7 + 5 + 4 = 18. Comme 18 est divisible par 3 et par 9, 2 754 est divisible par 3 et par 9.</p>'},
+  {q:'Calcule le quotient de 2 754 par 9.',a:306,corr:'<p>2 754 ÷ 9 = 306, donc 2 754 = 9 × 306.</p>'}]},
+ {title:'Diviseurs et nombres premiers',pts:4,head:'',items:[
+  {q:'Écris la liste de tous les diviseurs de 52.',a:L([1,2,4,13,26,52]),corr:'<p>52 = 1 × 52 = 2 × 26 = 4 × 13.</p><p>52 n’est divisible ni par 3, ni par 5, ni par 6, ni par 7. On s’arrête, car 8 × 8 = 64 dépasse 52.</p><p>Les diviseurs de 52 sont 1 ; 2 ; 4 ; 13 ; 26 ; 52.</p>'},
+  {q:'Le nombre 149 est-il un nombre premier ? Justifie.',options:YN,a:'Oui',corr:'<p>149 n’est pas divisible par 2 (son chiffre des unités est impair), ni par 3 (1 + 4 + 9 = 14), ni par 5 (son chiffre des unités est 9).</p><p>149 = 7 × 21 + 2 et 149 = 11 × 13 + 6 : les divisions par 7 et par 11 ne tombent pas juste.</p><p>On peut s’arrêter, car 13 × 13 = 169 dépasse 149. Donc 149 est un nombre premier.</p>'},
+  D(1050)]},
+ {title:'Fraction irréductible',pts:4,head:`<p>On considère la fraction ${frac(154,198)}.</p>`,items:[
+  D(154),D(198),
+  {q:`Déduis-en la fraction irréductible égale à ${frac(154,198)}.`,a:Q(154,198),corr:`<p>Les facteurs communs sont 2 et 11, donc le PGCD de 154 et de 198 vaut 2 × 11 = 22.</p><p>On divise le numérateur et le dénominateur par 22 : ${frac(154,198)} = ${frac(7,9)}.</p><p>7 et 9 n’ont pas d’autre diviseur commun que 1 : la fraction est irréductible.</p>`}]},
+ {title:'Colis',pts:5,head:'<p>Une association a reçu 252 cahiers et 189 stylos. Elle veut préparer des colis tous identiques, en utilisant tous les cahiers et tous les stylos.</p>',items:[
+  {q:'Peut-elle préparer 21 colis ? Justifie.',options:YN,a:'Oui',corr:'<p>252 ÷ 21 = 12 et 189 ÷ 21 = 9 : les deux divisions tombent juste. Elle peut préparer 21 colis, avec 12 cahiers et 9 stylos dans chacun.</p>'},
+  {q:'Quel est le nombre maximal de colis qu’elle peut préparer ? Justifie.',a:63,corr:'<p>Le nombre de colis doit diviser 252 et 189, et être le plus grand possible : on cherche le PGCD de 252 et de 189.</p><p>252 = 2 × 2 × 3 × 3 × 7 et 189 = 3 × 3 × 3 × 7.</p><p>Les facteurs communs sont 3, 3 et 7 : PGCD = 3 × 3 × 7 = 63.</p><p>Elle peut préparer au maximum 63 colis.</p>'},
+  {q:'Combien de cahiers y aura-t-il alors dans chaque colis ?',a:4,corr:'<p>252 ÷ 63 = 4. Il y aura 4 cahiers dans chaque colis.</p>'},
+  {q:'Combien de stylos y aura-t-il dans chaque colis ?',a:3,corr:'<p>189 ÷ 63 = 3. Il y aura 3 stylos dans chaque colis.</p>'}]},
+ {title:'Deux phares',pts:4,head:'<p>Depuis la plage, on voit deux phares. Le premier s’allume toutes les 25 secondes, le second toutes les 35 secondes. Ils viennent de s’allumer en même temps.</p>',items:[
+  {q:'Au bout de combien de secondes s’allumeront-ils de nouveau en même temps pour la première fois ? Justifie.',a:175,corr:'<p>Chaque phare s’allume à des instants qui sont des multiples de sa durée. On cherche le plus petit multiple commun strictement positif de 25 et de 35 : le PPCM.</p><p>25 = 5 × 5 et 35 = 5 × 7.</p><p>On garde 5 × 5, puis on ajoute le facteur 7 qui manque : PPCM = 5 × 5 × 7 = 175.</p><p>Ils s’allumeront de nouveau ensemble au bout de 175 secondes, soit 2 minutes et 55 secondes.</p>'},
+  {q:'Combien de fois le premier phare se sera-t-il allumé pendant ce temps, sans compter l’allumage du départ ?',a:7,corr:'<p>175 ÷ 25 = 7. Le premier phare se sera allumé 7 fois.</p>'},
+  {q:'Combien de fois le second phare se sera-t-il allumé pendant ce temps, sans compter l’allumage du départ ?',a:5,corr:'<p>175 ÷ 35 = 5. Le second phare se sera allumé 5 fois.</p>'}]}
+ ];
+}
 function renderDS(){
- const main=$('#app');main.append(dom('h2','ttl','<span>6. D.S. blanc</span>'));const bar=dom('div','subtabs');let variant=VIEW.variant||'A';for(const v of ['A','B'])bar.append(button('Sujet '+v,()=>{VIEW.variant=v;render();},variant===v?'on':''));bar.append(button('Imprimer le sujet',()=>window.print(),'btn light'));main.append(bar);
- const paper=dom('div','card ds');paper.append(dom('h3','','Sujet '+variant),dom('p','','Travaille sur une feuille. Chaque réponse vaut 1 point. Rédige aussi les critères utilisés, les décompositions, les calculs et la conclusion. Pour les produits, utilise * ou × et éventuellement les puissances, comme 2^3*5. Sépare les listes par des points-virgules.'));main.append(paper);const controls=[];
- dsData(variant).forEach((ex,ei)=>{const block=dom('section','ds-exo',`<h3>${ex.title} <span class="small">(4 points)</span></h3>${ex.head}`);paper.append(block);ex.tasks.forEach((t,qi)=>{const row=dom('div','step');const lab=dom('label','step-q',t.q);const input=dom('input','eq-input');input.type='text';input.id=`ds-${ei}-${qi}`;input.autocomplete='off';lab.htmlFor=input.id;row.append(lab,input);block.append(row);controls.push({t,row,input});});});
- const end=button('Vérifier mes réponses et afficher la correction',()=>{let score=0;for(const{t,row,input}of controls){const ok=correct(input.value,t.a);if(ok)score++;input.disabled=true;row.append(dom('div','fb '+(ok?'ok':'ko'),`<b>${ok?'Réponse juste.':'Réponse attendue : '+answer(t)+'.'}</b> ${t.corr}`));}end.replaceWith(dom('div','corrige',`<b>${score} réponse${score===1?'':'s'} juste${score===1?'':'s'} sur 20.</b><p>Vérifie aussi ta rédaction : critère de divisibilité, décompositions, choix du PGCD ou du PPCM, calculs et phrase de conclusion avec l’unité.</p>`));});paper.append(end);
+ const main=$('#app');main.append(dom('h2','ttl','<span>5. D.S. blanc</span>'));const bar=dom('div','subtabs');const variant=VIEW.variant||'A';for(const v of ['A','B'])bar.append(button('Sujet '+v,()=>{VIEW.variant=v;render();},variant===v?'on':''));bar.append(button('Imprimer le sujet',()=>window.print(),'btn light'));main.append(bar);
+ const exos=dsData(variant),total=exos.reduce((s,e)=>s+e.pts,0);
+ const paper=dom('div','card ds');paper.append(dom('h3','ds-title','D.S. blanc · Arithmétique · Sujet '+variant),dom('p','','Rédige toutes tes réponses sur une feuille : les critères utilisés, les décompositions, les calculs et une phrase de conclusion. Le D.S. est noté sur '+total+' points.'),dom('p','consigne','Quand tu as fini, écris seulement le résultat final de chaque question dans sa case, puis vérifie. Pour un produit de facteurs premiers, tu peux taper <span class="no-math">2x3x3</span> ou utiliser les boutons.'));main.append(paper);const controls=[],corrs=[];
+ exos.forEach((ex,ei)=>{
+  const block=dom('section','ds-exo',`<h3>Exercice ${ei+1} · ${ex.title} <span class="small">(${ex.pts} points)</span></h3>${ex.head}`);paper.append(block);
+  ex.items.forEach((t,qi)=>{
+   const letter=ex.items.length>1?'abcdefgh'[qi]+') ':'',id=`ds-${ei}-${qi}`,row=dom('div','ds-item'),ans=dom('div','ds-ans');row.append(dom('div','ds-q',letter+t.q),ans);block.append(row);let get,fields;
+   if(t.options){const g=dom('div',t.multi?'ds-checks':'ds-radios');g.setAttribute('role',t.multi?'group':'radiogroup');g.setAttribute('aria-label','Réponse '+(ei+1)+letter.trim());for(const o of t.options){const l=dom('label'),r=dom('input');r.type=t.multi?'checkbox':'radio';r.name=id;r.value=o;l.append(r,' '+o);g.append(l);}ans.append(g);
+    get=t.multi?()=>[...g.querySelectorAll('input:checked')].map(c=>c.value):()=>{const c=g.querySelector('input:checked');return c?c.value:'';};fields=[...g.querySelectorAll('input')];}
+   else{const lab=dom('label','ds-lab','Résultat :'),f=makeField(t,'Résultat '+(ei+1)+letter.trim());ans.append(lab,f.el);get=f.get;fields=[f];}
+   controls.push({t,ans,get,fields});
+  });
+  const corr=dom('div','seyes ds-corr');corr.hidden=true;corr.innerHTML=`<h4>Correction de l’exercice ${ei+1}</h4>`+ex.items.map((t,qi)=>(ex.items.length>1?`<p><b>${'abcdefgh'[qi]})</b></p>`:'')+t.corr).join('');block.append(corr);corrs.push(corr);
+ });
+ const end=button('Vérifier mes résultats et afficher la correction',()=>{let score=0;
+  for(const{t,ans,get,fields}of controls){const ok=check(get(),t.a);if(ok)score++;fields.forEach(f=>f.disable?f.disable():(f.disabled=true));
+   if(t.options)ans.querySelectorAll('label').forEach(l=>{const v=l.querySelector('input').value;if(t.multi?t.a.values.includes(v):v===t.a)l.classList.add('good');});
+   ans.append(dom('span',ok?'okm':'kom',ok?' Juste.':' La bonne réponse est '+answer(t)+'.'));}
+  corrs.forEach(c=>c.hidden=false);
+  end.replaceWith(dom('div','corrige',`<b>${score} résultat${score>1?'s':''} juste${score>1?'s':''} sur ${controls.length}.</b><p>Ta note dépend aussi de ta rédaction : critères de divisibilité, décompositions, choix du PGCD ou du PPCM, calculs et phrase de conclusion. Compare ta feuille avec la correction de chaque exercice.</p>`));});
+ paper.append(end);
 }
 function render(){
- const main=$('#app');main.innerHTML='';document.querySelectorAll('nav [data-page]').forEach(b=>b.classList.toggle('on',b.dataset.page===VIEW.page));
+ const main=$('#app');main.innerHTML='';document.querySelectorAll('nav [data-page]').forEach(b=>b.classList.toggle('on',b.dataset.page===VIEW.page));$('.navsel').value=VIEW.page;
  if(VIEW.page==='cours'){main.append(dom('h2','ttl','<span>Cours · Arithmétique</span>'),dom('div','card',$('#course-source').innerHTML));return;}
  if(VIEW.page==='ds'){renderDS();return;}
- if(VIEW.page==='home'){main.append(dom('div','retenir','<b>À retenir</b>Distingue multiples et diviseurs. Les facteurs premiers permettent de calculer un PGCD, un PPCM et de simplifier une fraction.'));const grid=dom('div','home');for(const[k,m]of Object.entries(MODULES)){const card=dom('section','card',`<h2>${m.title}</h2><p>${m.desc}</p>`);card.append(button('Commencer',()=>go(k)));grid.append(card);}const ds=dom('section','card','<h2>6. D.S. blanc</h2><p>Deux sujets avec vérification des réponses et correction.</p>');ds.append(button('Commencer',()=>go('ds')));grid.append(ds);main.append(grid,button('Relire le cours',()=>go('cours'),'btn light'));return;}
- const mod=MODULES[VIEW.page];main.append(dom('h2','ttl','<span>'+mod.title+'</span>'));modeBar(main);main.append(dom('div','retenir','<b>À retenir</b>'+mod.retain));if(VIEW.page==='solve'){const levels=dom('div','levels');for(const[n,label]of[[1,'1. Simples'],[2,'2. Deux membres'],[3,'3. Parenthèses']])levels.append(button(label,()=>{VIEW.level=n;render();},VIEW.level===n?'on':''));main.append(levels);}
- if(VIEW.page==='problems'){const choices=dom('div','levels');for(const[k,l]of[['sharing','Partage maximal'],['period','Cycles et périodicité']])choices.append(button(l,()=>{problemKind=k;render();},problemKind===k?'on':''));main.append(choices);}const panel=dom('div','card');main.append(panel);renderExercise(panel,VIEW.page==='problems'?(problemKind==='sharing'?sharingExercise(VIEW.mode==='exemple'):periodExercise(VIEW.mode==='exemple')):mod.gen(VIEW.mode==='exemple'));
+ if(VIEW.page==='home'){main.append(dom('div','retenir','<b>À retenir</b>Tout nombre entier supérieur ou égal à 2 s’écrit comme un produit de nombres premiers. Ces décompositions permettent de trouver le PGCD et le PPCM de deux nombres, et de rendre une fraction irréductible.'));const grid=dom('div','home');for(const[k,m]of Object.entries(MODULES)){const card=dom('section','card',`<h2>${m.title}</h2><p>${m.desc}</p>`);card.append(button('Commencer',()=>go(k)));grid.append(card);}const ds=dom('section','card','<h2>5. D.S. blanc</h2><p>Deux sujets différents : tu rédiges sur une feuille, puis tu vérifies tes résultats et tu lis la correction de chaque exercice.</p>');ds.append(button('Commencer',()=>go('ds')));grid.append(ds);main.append(grid);return;}
+ const mod=MODULES[VIEW.page];main.append(dom('h2','ttl','<span>'+mod.title+'</span>'));modeBar(main);
+ if(VIEW.mode!=='seul'){const part=$('#course-source').content.querySelector(`[data-mod="${VIEW.page}"]`);if(part){const det=dom('details','cours-part','<summary>Relire le cours de cette partie</summary>');det.append(part.cloneNode(true));main.append(det);}main.append(dom('div','retenir','<b>À retenir</b>'+mod.retain));}
+ const lv=mod.levels.find(l=>l[0]===VIEW.level[VIEW.page])||mod.levels[0];
+ const levels=dom('div','levels');for(const[key,label]of mod.levels)levels.append(button(label,()=>{VIEW.level[VIEW.page]=key;render();},lv[0]===key?'on':''));main.append(levels);
+ const panel=dom('div','card');main.append(panel);renderExercise(panel,lv[2](lv[0],VIEW.mode==='exemple'));
 }
-document.querySelectorAll('nav [data-page]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));render();
+document.querySelectorAll('nav [data-page]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));$('.navsel').addEventListener('change',e=>go(e.target.value));render();
 })();
 </script><script>
 /* Charte : dans le texte courant, la lettre x (seule ou après un chiffre : 3x, x²),
