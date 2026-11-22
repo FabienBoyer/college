@@ -1,0 +1,1017 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Chapitre 3 : Fonctions (1) – Je prépare mon D.S.</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&family=Playwrite+FR+Moderne&display=swap" rel="stylesheet"><style>
+:root{
+  --bg:#f6f4ef; --card:#fff; --ink:#1d2433; --muted:#5b6475; --line:#d9d4c7;
+  --accent:#0f7c8c; --accent-soft:#e1f1f3;
+  --ant:#d0342c; --img:#1f63c6;
+  --ok:#1d8a4b; --ok-soft:#e3f4ea; --ko:#c0392b; --ko-soft:#fbe7e5; --miss:#c27c00; --miss-soft:#fdf1da;
+  --grid:#e7e3d9; --axis:#2b3140; --curve:#7a3fa0;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:18px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.m,.m *{font-family:"Cambria Math",Cambria,"Times New Roman",serif}
+i{font-family:"Cambria Math",Cambria,"Times New Roman",serif;font-style:italic}
+.ca{color:var(--ant);font-weight:700}
+.cb{color:var(--img);font-weight:700}
+button{font:inherit;color:inherit}
+
+header{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.bar{max-width:1260px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.chap{font-weight:700;color:#fff;background:var(--accent);border-radius:6px;padding:3px 10px;font-size:15px}
+h1{font-size:21px;margin:0}
+nav{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+nav button,.btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 15px;cursor:pointer;font-size:16px}
+nav button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.btn:hover,nav button:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.btn.primary:disabled{opacity:.45;cursor:default}
+.btn.ghost{background:transparent}
+.icon{border:none;background:none;cursor:pointer;color:var(--muted);font-size:14px;padding:2px 6px;border-radius:6px}
+.icon:hover{background:var(--accent-soft);color:var(--accent)}
+
+main{max-width:1260px;margin:0 auto;padding:16px 16px 40px}
+section[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;position:relative}
+.card h2{font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:0 0 6px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.card h2 i{text-transform:none;font-size:16px}
+.card.masked .body{visibility:hidden}
+.card.masked::after{content:"?";position:absolute;left:0;right:0;top:34px;bottom:0;display:grid;place-items:center;font-size:52px;font-weight:700;color:#c9c3b5}
+
+/* ---------- Mode 1 ---------- */
+.toolbar{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;margin-bottom:14px}
+.group{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.lbl{font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-right:4px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 12px;cursor:pointer;font-size:18px}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
+.xb{min-width:46px;text-align:center}
+.xb[aria-pressed="true"]{background:var(--ant);border-color:var(--ant);color:#fff;box-shadow:none}
+.grid1{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:14px}
+.col{display:flex;flex-direction:column;gap:14px}
+.big{font-size:24px}
+table.tv{border-collapse:collapse;width:100%;font-size:22px}
+table.tv th,table.tv td{border:1.5px solid #7d8597;text-align:center;padding:6px 4px}
+table.tv th{background:#faf8f3;width:70px;font-weight:400}
+table.tv td{cursor:pointer}
+table.tv td.on{background:var(--accent-soft)}
+table.tv tr:first-child td{color:var(--ant)}
+table.tv tr:last-child td{color:var(--img)}
+.vocab{margin-top:14px}
+.vocab .body{display:grid;grid-template-columns:auto 1fr;gap:6px 26px;align-items:center}
+.vocab .nota{font-size:34px;grid-row:span 4;padding-right:22px;border-right:1px solid var(--line)}
+.vocab ul{margin:0;padding-left:20px}
+.vocab li{margin:3px 0}
+.note{font-size:15px;color:var(--muted);margin-top:8px}
+svg{display:block;width:100%;height:auto;touch-action:manipulation}
+
+/* ---------- Mode 2 ---------- */
+.narrow{max-width:860px;margin:0 auto}
+.prompt{font-size:26px;text-align:center;padding:18px 10px;background:#faf8f3;border-radius:10px;margin:6px 0 14px}
+.prompt table{margin:0 auto;border-collapse:collapse}
+.prompt table th,.prompt table td{border:1.5px solid #7d8597;padding:4px 18px;font-weight:400}
+.q{font-weight:600;margin:4px 0 10px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:10px 14px;cursor:pointer;font-size:20px}
+.opt .box{flex:0 0 26px;height:26px;border:2px solid #9aa1ae;border-radius:6px;display:grid;place-items:center;font-size:17px;color:#fff}
+.opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.opt[aria-pressed="true"] .box{background:var(--accent);border-color:var(--accent)}
+.opt[aria-pressed="true"] .box::after{content:"✓"}
+.opt .tag{margin-left:auto;font-size:14px;font-weight:700;white-space:nowrap}
+.opt.ok{border-color:var(--ok);background:var(--ok-soft)} .opt.ok .tag{color:var(--ok)}
+.opt.ko{border-color:var(--ko);background:var(--ko-soft)} .opt.ko .tag{color:var(--ko)}
+.opt.miss{border-color:var(--miss);background:var(--miss-soft);border-style:dashed} .opt.miss .tag{color:var(--miss)}
+.opt.done{cursor:default}
+.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.score{margin-left:auto;font-weight:600;color:var(--muted)}
+.fb{margin-top:12px;padding:10px 14px;border-radius:10px;font-size:18px}
+.fb:empty{display:none}
+.fb.good{background:var(--ok-soft);border:1px solid var(--ok)}
+.fb.bad{background:var(--ko-soft);border:1px solid var(--ko)}
+
+/* ---------- Mode 3 ---------- */
+.grid3{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:14px;align-items:start}
+.question{font-size:24px;margin:4px 0 6px}
+.consigne{color:var(--muted);font-size:16px;margin-bottom:10px}
+.answer{font-size:24px;padding:10px 14px;background:#faf8f3;border-radius:10px;min-height:56px}
+.answer .lab{font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);display:block}
+.btn.none[aria-pressed="true"]{background:var(--ant);border-color:var(--ant);color:#fff}
+
+/* SVG */
+.gl{stroke:var(--grid);stroke-width:1}
+.ax{stroke:var(--axis);stroke-width:1.7}
+.tk{font:15px system-ui,sans-serif;fill:var(--muted)}
+.cv{fill:none;stroke:var(--curve);stroke-width:3;stroke-linejoin:round}
+.da{stroke:var(--ant);stroke-width:2.2;stroke-dasharray:7 5;fill:none}
+.db{stroke:var(--img);stroke-width:2.2;stroke-dasharray:7 5;fill:none}
+.hl{stroke:var(--img);stroke-width:2;stroke-dasharray:3 6;fill:none;opacity:.8}
+.hla{stroke:var(--ant);stroke-width:2;stroke-dasharray:3 6;fill:none;opacity:.8}
+.badge rect{fill:#fff;fill-opacity:.8}
+.badge text{font:700 16px system-ui,sans-serif}
+.pnt{fill:var(--curve)}
+.pnt.sel{fill:var(--ink)}
+.hit{fill:transparent;cursor:pointer}
+.tb{cursor:pointer}
+.tb rect{fill:#fff;stroke:#b9b3a5;stroke-width:1.2}
+.tb text{font:600 16px system-ui,sans-serif;fill:var(--ink)}
+.tb:hover rect{stroke:var(--accent);stroke-width:2}
+.tb.sa rect{fill:var(--ant);stroke:var(--ant)} .tb.sa text{fill:#fff}
+.tb.sb rect{fill:var(--img);stroke:var(--img)} .tb.sb text{fill:#fff}
+.tb.ok rect{fill:var(--ok);stroke:var(--ok)} .tb.ok text{fill:#fff}
+.tb.ko rect{fill:#fff;stroke:var(--ko);stroke-width:2.6} .tb.ko text{fill:var(--ko);text-decoration:line-through}
+.tb.miss rect{fill:var(--miss-soft);stroke:var(--miss);stroke-width:2.6;stroke-dasharray:4 3} .tb.miss text{fill:var(--miss)}
+.tb.locked{cursor:default}
+
+footer{max-width:1260px;margin:0 auto;padding:0 16px 24px;color:var(--muted);font-size:13px}
+
+@media (max-width:900px){
+  .grid1,.grid3{grid-template-columns:1fr}
+  .vocab .body{grid-template-columns:1fr}
+  .vocab .nota{grid-row:auto;border-right:none;border-bottom:1px solid var(--line);padding:0 0 6px}
+  h1{font-size:18px}
+  nav{margin-left:0}
+}
+
+
+:root{
+  --paper:#fbf8f1; --card:#fffefa; --ink:#1d3a8a; --ink2:#2c4fb5; --red:#b8322a; --margin:#e7a4a0;
+  --line:#dbe3f3; --text:#1b2333; --muted:#5b6478;
+  --ok:#1f7a4d; --okbg:#e7f5ed; --ko:#b8322a; --kobg:#fcecea; --warn:#7a5200; --warnbg:#fff4d6;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; color:var(--text); background:var(--paper);
+  background-image:repeating-linear-gradient(to bottom, transparent 0 31px, #e6ecf7 31px 32px);
+  font:17px/1.55 "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+}
+.m,.frac,.ang,svg text{font-family:"STIX Two Text","Cambria Math",Cambria,"Times New Roman",serif}
+.m{font-size:1.08em}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+header{padding:26px 0 10px}
+header h1{margin:0;color:var(--red);font-size:1.9rem;font-weight:700;letter-spacing:.2px}
+header h1 span{border-bottom:2px solid var(--red)}
+header p{margin:.35em 0 0;color:var(--muted)}
+nav{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 0;border-bottom:2px solid var(--ink)}
+nav button{font:inherit;font-size:.95rem;border:2px solid var(--ink);border-bottom:none;background:#eef2fb;color:var(--ink);
+  padding:.45em .9em;border-radius:10px 10px 0 0;cursor:pointer;margin-bottom:-2px}
+nav button.on{background:var(--card);font-weight:700}
+nav button:hover{background:#fff}
+main{padding:18px 0 40px}
+.card{background:var(--card);border:1px solid #e2e6ef;border-radius:4px 14px 14px 4px;padding:22px 24px 26px 34px;position:relative;
+  box-shadow:0 1px 0 rgba(0,0,0,.03),0 6px 18px -12px rgba(29,58,138,.35)}
+.card::before{content:"";position:absolute;left:18px;top:0;bottom:0;width:2px;background:var(--margin)}
+h2.ttl{margin:0 0 .6em;color:var(--red);font-size:1.45rem}
+h2.ttl span{border-bottom:2px solid var(--red)}
+h3{color:var(--ink);margin:1.2em 0 .4em}
+.retenir{border:2px solid var(--ink);border-radius:6px;padding:.6em .9em;margin:0 0 16px;color:var(--ink);background:#f6f8fe}
+.retenir b{display:block;color:var(--red);margin-bottom:.15em}
+.retenir ol,.retenir ul{margin:.2em 0 0;padding-left:1.3em}
+.subtabs{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px}
+.subtabs button,.levels button{font:inherit;font-size:.95rem;padding:.45em .9em;border-radius:999px;border:2px solid var(--ink2);background:#fff;color:var(--ink2);cursor:pointer}
+.subtabs button.on,.levels button.on{background:var(--ink2);color:#fff}
+.levels{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px}
+.levels .lab{color:var(--muted);margin-right:4px}
+.home{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.home .card h2{font-size:1.2rem;margin:0 0 .3em;color:var(--red)}
+.home .card p{margin:.2em 0 1em;color:var(--text)}
+.btn{font:inherit;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:.5em 1.05em;cursor:pointer;margin:.3em .4em .2em 0}
+.btn:hover{background:var(--ink2)}
+.btn.light{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.btn:disabled{opacity:.45;cursor:default}
+.consigne{margin:.2em 0 .6em}
+.question{margin:.6em 0;font-weight:700;color:var(--ink)}
+svg.fig{display:block;width:100%;max-width:600px;height:auto;margin:6px auto 4px}
+.step{background:#fff;border:1px solid #e3e8f2;border-left:5px solid var(--line);border-radius:4px 10px 10px 4px;padding:.65em 1em .75em;margin:.8em 0}
+.step.done{border-left-color:var(--ok)}
+.step.missed{border-left-color:#e0a63a}
+.step-n{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.step-q{margin:.15em 0 .45em}
+.step-a{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.opt{font:inherit;text-align:left;background:#fff;color:var(--text);border:2px solid #cfd8ea;border-radius:8px;padding:.45em .8em;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--ink2)}
+.opt.good{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--ko);background:var(--kobg)}
+.opt:disabled{cursor:default}
+.col{flex-direction:column;align-items:stretch}
+.col>.btn{align-self:flex-start}
+.numf{display:inline-flex;align-items:center;gap:6px;margin-right:10px}
+.numf input{font:inherit;font-family:"STIX Two Text",Cambria,serif;font-size:1.1em;width:6.2em;padding:.3em .45em;border:2px solid #cfd8ea;border-radius:6px;background:#fff}
+.numf input:focus{outline:none;border-color:var(--ink2)}
+.numf input.bad{border-color:var(--ko)}
+.unit{color:var(--muted)}
+select{font:inherit;font-family:"STIX Two Text",Cambria,serif;padding:.25em .35em;border:2px solid #cfd8ea;border-radius:6px;background:#fff}
+select.bad{border-color:var(--ko)}
+.fb{margin-top:.5em;border-radius:6px}
+.fb:empty{display:none}
+.fb.ok{background:var(--okbg);color:#123d28;padding:.45em .7em}
+.fb.ko{background:var(--kobg);color:#5c1712;padding:.45em .7em}
+.fb.warn{background:var(--warnbg);color:#4a3300;padding:.45em .7em}
+.fb .btn{margin-top:.5em}
+.model-a{color:var(--ink);font-weight:700;margin:.2em 0}
+.model-e{color:var(--text);background:#f4f6fb;border-radius:6px;padding:.35em .6em;margin:.3em 0 .4em}
+.corrige{margin:1em 0;border:2px solid var(--ink);border-radius:8px;padding:.7em 1em;background:#fff;color:var(--ink)}
+.corrige h4{margin:0 0 .4em;color:var(--red)}
+.corrige p{margin:.3em 0}
+.box{display:inline-block;border:2px solid var(--ink);border-radius:6px;padding:.1em .5em;margin-top:.2em;font-weight:700}
+.endmsg{margin:.8em 0 .2em;font-weight:700;color:var(--ink)}
+table.tab{border-collapse:collapse;margin:.4em 0;font-size:.97em}
+table.tab th,table.tab td{border:1.5px solid var(--ink2);padding:.3em .6em;text-align:center}
+table.tab th{font-weight:400;color:var(--ink)}
+.rankrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:.2em 0}
+.rankrow .rn{min-width:8.5em}
+.rankrow label{display:inline-flex;gap:4px;align-items:center;color:var(--muted)}
+.homorow{display:inline-flex;align-items:center;gap:6px;margin-right:16px}
+.pool,.answer{display:flex;flex-direction:column;gap:6px;width:100%}
+.answer:empty{display:none}
+.answer .opt{border-color:var(--ok);background:var(--okbg)}
+.shake{animation:sh .35s}
+@keyframes sh{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 .12em;font-size:1.02em;line-height:1.2}
+.frac>span:first-child{border-bottom:1.4px solid currentColor;padding:0 .2em}
+.frac>span:last-child{padding:0 .2em}
+.ang{position:relative;display:inline-block;padding:0 .04em}
+.ang::before{content:"";position:absolute;left:6%;right:6%;top:-.12em;height:.42em;border:1.4px solid currentColor;border-bottom:none;border-radius:50% 50% 0 0/100% 100% 0 0}
+.ang.one::before{left:-4%;right:-4%}
+.codebox{font-family:"STIX Two Text",Cambria,serif;font-size:1.6rem;letter-spacing:.08em;color:var(--ink);background:#fff;border:2px dashed var(--ink);border-radius:8px;padding:.3em .7em;display:inline-block;margin:.3em 0}
+.stats td,.stats th{text-align:left}
+.small{font-size:.9rem;color:var(--muted)}
+/* Correction sur papier Seyès (grands carreaux : interligne 8 px, ligne principale tous les 32 px) */
+.seyes{margin:1em 0;position:relative;color:#1d3a8a;background-color:#fff;border:1px solid #d6ddec;border-radius:4px;
+  padding:32px 18px 32px 64px;font-family:"Playwrite FR Moderne","Segoe Script","Comic Sans MS",cursive;font-size:15px;line-height:32px;
+  background-image:linear-gradient(90deg,transparent 0 50px,#e46d6d 50px 52px,transparent 52px),
+    repeating-linear-gradient(to bottom,transparent 0 31px,#8ea6d6 31px 32px),
+    repeating-linear-gradient(to bottom,transparent 0 7px,#dfe5f2 7px 8px);
+  background-position:0 var(--sy,6px)}
+.seyes h4{margin:0 0 32px;color:var(--red);font-weight:400;font-size:17px;line-height:32px;display:inline-block;border-bottom:1.5px solid var(--red);line-height:30px}
+.seyes p{margin:0;line-height:32px}
+.seyes p:has(.frac){line-height:64px;padding:16px 0}
+.seyes .frac{line-height:1.15;vertical-align:middle}
+.seyes b{font-weight:600}
+.seyes .m,.seyes .ang{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-size:1.38em}
+.seyes .frac{font-size:1.3em}
+.seyes .frac .m{font-size:1em}
+.seyes .box{border-color:#1d3a8a;font-weight:400;line-height:26px;margin:3px 0}
+.ds-tools{margin:0 0 6px}
+.ds-exo{border-top:2px solid var(--line);margin-top:18px;padding-top:4px}
+.ds-exo h3{color:var(--red);margin:.6em 0 .3em}
+.ds-title{color:var(--ink);font-size:1.25rem;margin:.8em 0 .2em}
+.ds-part h3{margin:1.2em 0 .1em;color:var(--ink);font-size:1.15rem;border-bottom:2px solid var(--ink);padding-bottom:.15em}
+.ds-info{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin:.2em 0;color:var(--muted)}
+.ds-info span{font-weight:700;color:var(--ink)}
+.ds-ans{background:#f6f8fe;border:2px solid var(--ink2);border-radius:8px;padding:.5em .8em;margin:.8em 0}
+.ds-ans b{color:var(--ink)}
+.ds-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:.35em 0}
+.ds-lab{min-width:2.5em}
+.ds-radios{display:inline-flex;flex-wrap:wrap;gap:8px}
+.ds-radios label{border:2px solid #cfd8ea;border-radius:8px;padding:.15em .6em;background:#fff;cursor:pointer}
+.ds-radios label.good{border-color:var(--ok);background:var(--okbg)}
+.okm{color:var(--ok);font-weight:700}.kom{color:var(--ko);font-weight:700}
+@media print{
+  body{background:#fff;font-size:12pt}
+  nav,footer,.btn,.ds-tools,.ds-ans,.ds-corr,header,.levels,.ds>.consigne,.ds>h2{display:none!important}
+  .ds-title{margin-top:0}
+  .card{box-shadow:none;border:none;padding:0}.card::before{display:none}
+  .ds-exo{break-inside:avoid;border-top:1px solid #999}
+  .ds-part{break-after:avoid}
+  svg.fig{max-width:430px}
+}
+.cl-line{margin:.35em 0;line-height:2.3}
+.blankw{position:relative;display:inline-block}
+.blank{font:inherit;min-width:3.2em;padding:.05em .5em;border:2px dashed var(--ink2);border-radius:6px;background:#f6f8fe;color:var(--ink);cursor:pointer}
+.blank.good,.cl-num.good{border-style:solid;border-color:var(--ok);background:var(--okbg)}
+.blank.bad,.cl-num.bad{border-style:solid;border-color:var(--ko);background:var(--kobg)}
+.blank.fixed,.cl-num.fixed{border-style:solid;border-color:#e0a63a;background:#fff4d6}
+.cl-num{width:4.5em!important}
+.blank-menu{position:absolute;left:0;top:calc(100% + 4px);z-index:20;display:flex;flex-direction:column;gap:4px;background:#fff;border:1px solid #cfd8ea;border-radius:8px;padding:6px;box-shadow:0 8px 24px -8px rgba(29,58,138,.45);min-width:max-content;max-width:min(560px,86vw);line-height:1.4}
+.blank-menu .opt{white-space:normal}
+.grille{margin:.8em 0;border:2px solid var(--ok);border-radius:8px;padding:.6em .9em;background:#f3faf6}
+.grille h4{margin:0 0 .2em;color:var(--ok)}
+.grille-item{display:flex;gap:.6em;align-items:flex-start;margin:.3em 0;cursor:pointer}
+.grille-item input{margin-top:.35em;width:1.1em;height:1.1em}
+.grille-msg{font-weight:700;color:var(--ok);margin:.3em 0 0}
+footer{padding:10px 0 30px;color:var(--muted);font-size:.9rem}
+footer button{font:inherit;background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;padding:0}
+@media (max-width:600px){.card{padding:18px 14px 20px 26px}.card::before{left:12px}header h1{font-size:1.5rem}}
+
+
+:root{--bg:var(--paper);--accent:var(--ink2);--accent-soft:#eef2fb;--line:#dbe3f3;--grid:#e2e8f3;--ant:#b8322a;--img:#2c4fb5;--curve:#7044a3;--ok-soft:var(--okbg);--ko-soft:var(--kobg);--miss:#7a5200;--miss-soft:var(--warnbg)}
+header{position:static;background:transparent;border:0;z-index:auto}header h1{font-size:1.9rem}nav{margin-left:0}nav button{border:2px solid var(--ink);border-bottom:0;border-radius:10px 10px 0 0;background:#eef2fb;color:var(--ink);font-size:.95rem;padding:.45em .8em}nav button[aria-selected=true]{background:var(--card);color:var(--ink);font-weight:700}main{max-width:none;margin:0;padding:18px 0 40px}main>section[hidden]{display:none!important}.bar{max-width:none;margin:0;padding:0;display:block}.card h2{font-size:1.1rem;text-transform:none;letter-spacing:0;color:var(--red)}.card h2 i{font-size:inherit}.card.narrow{max-width:none}.m,.m *,i{font-family:"STIX Two Text","Cambria Math",Cambria,serif}.home .card{padding-top:20px}.home .card h2{font-size:1.15rem}.toolbar{margin-top:1rem}.chip{font-size:1rem}.grid1{grid-template-columns:1fr 1.1fr}.grid3{grid-template-columns:1.1fr 1fr}.prompt,.answer{background:#f4f6fb}.score{font-size:.9rem}.note{font-size:.9rem}.table-scroll{max-width:100%;overflow-x:auto}.table-scroll table{min-width:490px}.calc-input{font:inherit;font-family:"STIX Two Text",Cambria,serif;padding:.35em .5em;min-width:0;max-width:100%;width:12em;border:2px solid #cfd8ea;border-radius:6px;background:white}.step-q{display:block}.model-e{font-size:1rem}.section-lead{margin-top:0}button:focus-visible,input:focus-visible,[role=button]:focus-visible{outline:3px solid #b8322a;outline-offset:3px}.tb:focus-visible rect{stroke:#b8322a;stroke-width:3}.ds-exo{margin-bottom:1.5rem}summary{cursor:pointer;font-weight:700;color:var(--ink);padding:.5rem 0}footer{max-width:none;padding:10px 0 30px;font-size:.9rem}.print-note{display:none}
+@media(max-width:780px){.grid1,.grid3{grid-template-columns:1fr}.vocab .body{grid-template-columns:1fr}.vocab .nota{border-right:0;border-bottom:1px solid var(--line);padding-bottom:.4rem}.prompt{font-size:1.25rem}.opt{font-size:1rem}.question{font-size:1.2rem}.card{padding-right:16px}nav button{font-size:.9rem}header h1{font-size:1.5rem}.opt .tag{white-space:normal}.step-a{align-items:start}}
+@media print{header,footer,.subtabs,.learning-modes,.levels,.btn,#m1,#m2,#m3,#m4,#home{display:none!important}#m5:not([hidden]){display:block!important}.card{border:0;box-shadow:none;padding:0}.card:before{display:none}.step{border:0;padding:.25rem 0;break-inside:avoid}.step-a{display:none}.step-q:after{content:' …………………………………………………………………………';display:block}.ds-exo{break-inside:avoid}.ds-exo svg{max-height:300px}.fb{display:none!important}body{background:white;font-size:12pt}}
+</style></head><body><div class="wrap"><header><h1><span>Chapitre 3 : Fonctions (1)</span></h1><p>Je prépare mon D.S. de fin de chapitre.</p><nav aria-label="Parcours du chapitre"><button type="button" data-tab="home" aria-selected="true">Accueil</button><button type="button" data-tab="cours" aria-selected="false">Cours</button><button type="button" data-tab="m1" aria-selected="false">1. Découvrir</button><button type="button" data-tab="m2" aria-selected="false">2. Vocabulaire</button><button type="button" data-tab="m3" aria-selected="false">3. Lecture graphique</button><button type="button" data-tab="m4" aria-selected="false">4. Calculs</button><button type="button" data-tab="m5" aria-selected="false">5. D.S. blanc</button><button type="button" class="icon" id="fs" title="Plein écran">Plein écran</button></nav></header><main><section id="home"><div class="retenir"><b>À retenir</b>Une fonction associe à un nombre de départ une seule image, lorsqu’elle est définie pour ce nombre. Un nombre peut avoir aucun, un ou plusieurs antécédents.</div><div class="home"><article class="card"><h2>1. Découvrir une fonction</h2><p>Passer d’une phrase à une formule, à un tableau et à une courbe.</p><button type="button" class="btn" data-open="m1">Commencer</button></article><article class="card"><h2>2. Images et antécédents</h2><p>Traduire une information entre phrase, notation et coordonnées.</p><button type="button" class="btn" data-open="m2">Commencer</button></article><article class="card"><h2>3. Lecture graphique</h2><p>Lire une image et chercher tous les antécédents sur une courbe.</p><button type="button" class="btn" data-open="m3">Commencer</button></article><article class="card"><h2>4. Calculs et programmes</h2><p>Calculer des images, compléter un tableau et chercher un antécédent.</p><button type="button" class="btn" data-open="m4">Commencer</button></article><article class="card"><h2>5. D.S. blanc</h2><p>Deux sujets pour se préparer, avec vérification et correction.</p><button type="button" class="btn" data-open="m5">Commencer</button></article></div><p><button type="button" class="btn light" data-open="cours">Relire le cours</button></p></section><section id="cours" hidden><h2 class="ttl"><span>Cours · Fonctions (1)</span></h2><div class="card">
+<h3>1. Fonction, image et antécédent</h3>
+<div class="retenir"><b>Définition</b>Une fonction est un procédé qui, à un nombre de départ pour lequel elle est définie, associe un seul nombre obtenu, appelé son image.</div>
+<p>La notation <span class="m">f(x)</span> se lit « f de x ». Si <span class="m">f(a) = b</span>, alors :</p>
+<ul><li><span class="m">b</span> est <strong>l’image de a</strong> par f ;</li><li><span class="m">a</span> est <strong>un antécédent de b</strong> par f ;</li><li>le point de coordonnées <span class="m">(a ; b)</span> appartient à la courbe représentative de f.</li></ul>
+<p>On peut aussi écrire <span class="m">f : a ↦ b</span>. Chaque nombre de départ autorisé a une seule image. Un nombre peut avoir aucun, un ou plusieurs antécédents.</p>
+<div class="seyes"><h4>Exemple</h4><p>Si f(−1) = 3, alors 3 est l’image de −1.</p><p>−1 est un antécédent de 3.</p><p>Le point (−1 ; 3) appartient à la courbe de f.</p></div>
+<h3>2. Lire dans un tableau</h3>
+<p>Une colonne associe le nombre de départ, sur la ligne x, à son image, sur la ligne f(x). Pour chercher des antécédents, on repère la valeur demandée dans la ligne des images puis on remonte à la ligne x.</p>
+<table class="tab m"><tr><th>x</th><td>−2</td><td>0</td><td>2</td></tr><tr><th>f(x)</th><td>0</td><td>0</td><td>8</td></tr></table>
+<p>On lit f(2) = 8. Dans ce tableau, −2 et 0 sont des antécédents de 0. Un tableau partiel ne permet pas d’affirmer qu’il n’en existe pas d’autres.</p>
+<h3>3. Lire sur une courbe</h3>
+<ol><li><strong>Image :</strong> partir du nombre de départ sur l’axe horizontal, rejoindre la courbe verticalement, puis lire l’ordonnée sur l’axe vertical.</li><li><strong>Antécédents :</strong> regarder toutes les intersections de la courbe avec la droite horizontale à la hauteur demandée, puis lire les abscisses correspondantes.</li></ol>
+<p>S’il n’y a aucune intersection, il n’y a aucun antécédent <strong>sur l’intervalle représenté</strong>. Une lecture graphique peut être approchée.</p>
+<h3>4. Calculer une image avec une formule</h3>
+<p>On remplace chaque x par le nombre donné, entre parenthèses s’il est négatif, puis on respecte les priorités opératoires.</p>
+<div class="seyes"><h4>Exemple · f(x) = 10 − 2x</h4><p>f(3) = 10 − 2 × 3 = 4.</p><p>f(−4) = 10 − 2 × (−4) = 18.</p></div>
+<h3>5. Chercher un antécédent par le calcul</h3>
+<p>Chercher un antécédent de b revient à chercher x tel que f(x) = b.</p>
+<div class="seyes"><h4>Exemple · Antécédent de 0</h4><p>Pour f(x) = 10 − 2x, on résout 10 − 2x = 0.</p><p>En soustrayant 10 : −2x = −10.</p><p>En divisant par −2 : x = 5.</p><p>On vérifie : f(5) = 10 − 2 × 5 = 0.</p></div>
+<h3>6. Traduire un programme de calcul</h3>
+<p>« Choisir un nombre, soustraire 4, puis multiplier par le nombre de départ » donne <span class="m">p(x) = (x − 4) × x</span>.</p>
+<p>Avec 7 : <span class="m">(7 − 4) × 7 = 21</span>. Avec −1 : <span class="m">(−1 − 4) × (−1) = 5</span>. Les nombres 0 et 4 donnent tous deux 0.</p>
+</div></section>
+
+<!-- ================= MODE 1 ================= -->
+<section id="m1" hidden><h2 class="ttl"><span>1. Découvrir une fonction</span></h2><div class="retenir"><b>À retenir</b>Dans f(x), x est le nombre de départ ; f(x) est son image. On lit « f de x ». Une fonction peut être décrite par un texte, une formule, un tableau ou une courbe.</div>
+  <div class="toolbar">
+    <div class="group"><span class="lbl">Fonction</span><span id="fnChips" class="group"></span></div>
+    <div class="group"><span class="lbl">Nombre de départ <i>x</i></span><span id="xChips" class="group"></span></div>
+  </div>
+  <div class="grid1">
+    <div class="col">
+      <div class="card" data-mask>
+        <h2>Texte <button class="icon" data-toggle>masquer</button></h2>
+        <div class="body"><div id="m1Texte" class="big"></div></div>
+      </div>
+      <div class="card" data-mask>
+        <h2>Formule <button class="icon" data-toggle>masquer</button></h2>
+        <div class="body m big" id="m1Formule"></div>
+      </div>
+      <div class="card" data-mask>
+        <h2>Tableau de valeurs <button class="icon" data-toggle>masquer</button></h2>
+        <div class="body"><div class="table-scroll"><table class="tv m" id="m1Table"></table></div></div>
+      </div>
+    </div>
+    <div class="card" data-mask>
+      <h2>Graphique <button class="icon" data-toggle>masquer</button></h2>
+      <div class="body"><svg id="m1Svg"></svg></div>
+    </div>
+  </div>
+  <div class="card vocab" data-mask>
+    <h2>Vocabulaire <button class="icon" data-toggle>masquer</button></h2>
+    <div class="body">
+      <div class="nota m" id="m1Nota"></div>
+      <ul id="m1Vocab"></ul>
+    </div>
+  </div>
+  <p class="note">En <span class="ca">rouge</span> : le nombre de départ (un antécédent). En <span class="cb">bleu</span> : le nombre obtenu (son image). On peut cliquer dans le tableau ou sur les points de la courbe. Tu peux masquer un cadre pour vérifier que tu sais retrouver les informations.</p>
+</section>
+
+<!-- ================= MODE 2 ================= -->
+<section id="m2" hidden><h2 class="ttl"><span>2. Images et antécédents</span></h2><div class="subtabs learning-modes"><button type="button" data-mode="exemple" class="on">Je regarde un exemple</button><button type="button" data-mode="aide" class="">Je m’entraîne avec de l’aide</button><button type="button" data-mode="seul" class="">Je m’entraîne seul</button></div><div class="retenir" id="m2Method"><b>Méthode</b>Repère le nombre de départ et le nombre obtenu. f(a) = b signifie que b est l’image de a et que a est un antécédent de b. Le point (a ; b) appartient à la courbe.</div>
+  <div class="card narrow">
+    <h2>On sait que…</h2>
+    <div class="prompt m" id="m2Prompt"></div>
+    <div class="q">Quelles affirmations traduisent la même information ? <span style="font-weight:400;color:var(--muted)">(une ou plusieurs réponses)</span></div>
+    <div class="opts" id="m2Opts"></div>
+    <div class="actions">
+      <button class="btn primary" id="m2Valid">Valider</button>
+      <button class="btn" id="m2Next">Question suivante</button>
+      <span class="score" id="m2Score"></span>
+    </div>
+    <div class="fb" id="m2Fb"></div>
+  </div>
+</section>
+
+<!-- ================= MODE 3 ================= -->
+<section id="m3" hidden><h2 class="ttl"><span>3. Lecture graphique</span></h2><div class="subtabs learning-modes"><button type="button" data-mode="exemple" class="on">Je regarde un exemple</button><button type="button" data-mode="aide" class="">Je m’entraîne avec de l’aide</button><button type="button" data-mode="seul" class="">Je m’entraîne seul</button></div><div class="retenir" id="m3Method"><b>Méthode</b>Image : partir de l’axe horizontal, rejoindre la courbe, puis lire l’ordonnée. Antécédents : partir de la hauteur demandée et regarder toutes les intersections avec la courbe. On travaille uniquement sur l’intervalle représenté, de −5 à 5.</div>
+  <div class="grid3">
+    <div class="card">
+      <h2 id="m3Title">Courbe représentative</h2>
+      <svg id="m3Svg"></svg>
+    </div>
+    <div class="card">
+      <h2>Question</h2>
+      <div class="question" id="m3Q"></div>
+      <div class="consigne" id="m3C"></div>
+      <div class="answer"><span class="lab">Ta réponse</span><span class="m" id="m3A"></span></div>
+      <div class="actions">
+        <button class="btn none" id="m3None" aria-pressed="false">Aucun antécédent</button>
+        <button class="btn ghost" id="m3Hint">Coup de pouce</button>
+      </div>
+      <div class="actions">
+        <button class="btn primary" id="m3Valid">Valider</button>
+        <button class="btn" id="m3Next">Question suivante</button>
+        <button class="btn ghost" id="m3New">Nouvelle courbe</button>
+      </div>
+      <div class="actions"><span class="score" id="m3Score" style="margin-left:0"></span></div>
+      <div class="fb" id="m3Fb"></div>
+    </div>
+  </div>
+</section>
+<section id="m4" hidden><h2 class="ttl"><span>4. Calculs et programmes</span></h2><div class="subtabs learning-modes"><button type="button" data-mode="exemple" class="on">Je regarde un exemple</button><button type="button" data-mode="aide" class="">Je m’entraîne avec de l’aide</button><button type="button" data-mode="seul" class="">Je m’entraîne seul</button></div>
+<div class="levels"><button class="on" type="button" data-calc="image">Calculer une image</button><button type="button" data-calc="tableau">Tableau de valeurs</button><button type="button" data-calc="antecedent">Chercher un antécédent</button><button type="button" data-calc="programme">Programme de calcul</button></div>
+<div class="retenir"><b>À retenir</b>Pour calculer une image, remplace x par le nombre donné. Pour chercher un antécédent de b, cherche x tel que f(x) = b. Pour un programme de calcul, garde le nombre de départ jusqu’à la fin.</div><div class="card" id="calcPanel"></div><button class="btn" type="button" id="calcNext">Nouvel exercice</button></section>
+<section id="m5" hidden><h2 class="ttl"><span>5. D.S. blanc</span></h2><div class="subtabs"><button type="button" class="on" data-ds="A">Sujet A</button><button type="button" data-ds="B">Sujet B</button><button class="btn light" type="button" id="dsPrint">Imprimer le sujet</button></div><div class="card" id="dsPanel"></div></section></main><footer>Collège La Rochefoucauld · Mathématiques 3<sup>e</sup> · <a href="../">Retour aux applications</a></footer></div><script>
+(() => {
+const learnModes = {m2:"exemple",m3:"exemple",m4:"exemple"};
+/* ---------- utilitaires ---------- */
+const $ = s => document.querySelector(s);
+const NS = 'http://www.w3.org/2000/svg';
+const rint = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+const shuffle = arr => { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; };
+const fmt = n => { n = Math.round(n * 100) / 100; if (n === 0) return '0'; return String(n).replace('.', ',').replace('-', '−'); };
+const par = n => n < 0 ? '(' + fmt(n) + ')' : fmt(n);
+const A = v => `<span class="ca">${v}</span>`;
+const B = v => `<span class="cb">${v}</span>`;
+const I = n => `<i>${n}</i>`;
+const SP = '&nbsp;';
+
+function sv(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function st(parent, x, y, str, attrs = {}) { const t = sv('text', { x, y, ...attrs }, parent); t.textContent = str; return t; }
+
+/* Repère : grille, axes, graduations */
+function frame(svg, o) {
+  svg.innerHTML = '';
+  svg.setAttribute('viewBox', `0 0 ${o.W} ${o.H}`);
+  const X = x => o.pl + (x - o.xmin) / (o.xmax - o.xmin) * (o.W - o.pl - o.pr);
+  const Y = y => o.pt + (o.ymax - y) / (o.ymax - o.ymin) * (o.H - o.pt - o.pb);
+  const defs = sv('defs', {}, svg);
+  const mk = sv('marker', { id: o.id + 'arr', viewBox: '0 0 10 10', refX: 8, refY: 5, markerWidth: 8, markerHeight: 8, orient: 'auto-start-reverse' }, defs);
+  sv('path', { d: 'M0,0 L10,5 L0,10 z', fill: '#2b3140' }, mk);
+  const cp = sv('clipPath', { id: o.id + 'clip' }, defs);
+  sv('rect', { x: X(o.xmin), y: Y(o.ymax), width: X(o.xmax) - X(o.xmin), height: Y(o.ymin) - Y(o.ymax) }, cp);
+  const g = sv('g', {}, svg);
+  for (let x = Math.ceil(o.xmin); x <= o.xmax; x++) sv('line', { x1: X(x), x2: X(x), y1: Y(o.ymin), y2: Y(o.ymax), class: 'gl' }, g);
+  for (let y = Math.ceil(o.ymin / o.ystep) * o.ystep; y <= o.ymax; y += o.ystep) sv('line', { y1: Y(y), y2: Y(y), x1: X(o.xmin), x2: X(o.xmax), class: 'gl' }, g);
+  sv('line', { x1: X(o.xmin), x2: X(o.xmax), y1: Y(0), y2: Y(0), class: 'ax', 'marker-end': `url(#${o.id}arr)` }, g);
+  sv('line', { x1: X(0), x2: X(0), y1: Y(o.ymin), y2: Y(o.ymax), class: 'ax', 'marker-end': `url(#${o.id}arr)` }, g);
+  for (let x = Math.ceil(o.xmin); x <= o.xmax; x++) if (x !== 0) sv('line', { x1: X(x), x2: X(x), y1: Y(0) - 4, y2: Y(0) + 4, class: 'ax' }, g);
+  for (let y = Math.ceil(o.ymin / o.ystep) * o.ystep; y <= o.ymax; y += o.ystep) if (y !== 0) sv('line', { y1: Y(y), y2: Y(y), x1: X(0) - 4, x2: X(0) + 4, class: 'ax' }, g);
+  if (o.xlabels !== false) for (let x = Math.ceil(o.xmin); x <= Math.floor(o.xmax); x++) if (x !== 0) st(g, X(x), Y(0) + 20, fmt(x), { class: 'tk', 'text-anchor': 'middle' });
+  if (o.ylabels !== false) for (let y = Math.ceil(o.ymin / o.ystep) * o.ystep; y <= o.ymax; y += o.ystep) if (y !== 0) st(g, X(0) - 9, Y(y) + 5, fmt(y), { class: 'tk', 'text-anchor': 'end' });
+  if (o.origin !== false) st(g, X(0) - 9, Y(0) + 20, '0', { class: 'tk', 'text-anchor': 'end' });
+  return { X, Y, clip: `url(#${o.id}clip)` };
+}
+function curvePath(fn, x0, x1, X, Y, n = 300) {
+  let d = '';
+  for (let i = 0; i <= n; i++) { const x = x0 + (x1 - x0) * i / n; d += (i ? 'L' : 'M') + X(x).toFixed(1) + ',' + Y(fn(x)).toFixed(1); }
+  return d;
+}
+function badge(parent, x, y, str, color) {
+  const g = sv('g', { class: 'badge' }, parent);
+  const w = 10 * str.length + 12;
+  sv('rect', { x: x - w / 2, y: y - 15, width: w, height: 22, rx: 5 }, g);
+  st(g, x, y + 1, str, { 'text-anchor': 'middle', fill: color });
+  return g;
+}
+
+/* ---------- onglets ---------- */
+document.querySelectorAll('nav [data-tab]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('nav [data-tab]').forEach(o => o.setAttribute('aria-selected', o === b));
+  ['home', 'cours', 'm1', 'm2', 'm3', 'm4', 'm5'].forEach(id => $('#' + id).hidden = id !== b.dataset.tab);
+}));
+$('#fs').addEventListener('click', () => {
+  if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen?.();
+});
+document.querySelectorAll('[data-toggle]').forEach(b => b.addEventListener('click', () => {
+  const c = b.closest('.card'); c.classList.toggle('masked');
+  b.textContent = c.classList.contains('masked') ? 'afficher' : 'masquer';
+}));
+
+/* =========================================================
+   MODE 1 — quatre façons de décrire une fonction
+   ========================================================= */
+const FUNCS = [
+  {key:'produit', formula:'x(x + 2)', texte:'À tout nombre, la fonction <i>f</i> associe le produit de ce nombre par ce nombre augmenté de 2.', f:x=>x*(x+2),steps:x=>[`${A(par(x))} × (${fmt(x)} + 2)`,`${A(par(x))} × ${par(x+2)}`],ant:y=>y < -1 ? [] : y === -1 ? [-1] : [-1-Math.sqrt(y+1),-1+Math.sqrt(y+1)]},
+  {key:'programme', formula:'x(x − 4)', texte:'On soustrait 4 au nombre de départ, puis on multiplie le résultat par le nombre de départ.', f:x=>x*(x-4),steps:x=>[`(${fmt(x)} − 4) × ${A(par(x))}`,`${par(x-4)} × ${A(par(x))}`],ant:y=>y < -4 ? [] : y === -4 ? [2] : [2-Math.sqrt(y+4),2+Math.sqrt(y+4)]},
+  { key: 'carre', formula: '<i>x</i>²', texte: 'À tout nombre, la fonction <i>f</i> associe son carré.',
+    f: x => x * x, steps: x => [`${A(par(x))}²`], ant: y => y < 0 ? [] : y === 0 ? [0] : [-Math.sqrt(y), Math.sqrt(y)] },
+  { key: 'carre4', formula: '<i>x</i>² − 4', texte: 'À tout nombre, la fonction <i>f</i> associe son carré diminué de 4.',
+    f: x => x * x - 4, steps: x => [`${A(par(x))}² − 4`, `${fmt(x * x)} − 4`], ant: y => y < -4 ? [] : y === -4 ? [0] : [-Math.sqrt(y + 4), Math.sqrt(y + 4)] },
+  { key: 'aff', formula: '10 − 2<i>x</i>', texte: 'À tout nombre, la fonction <i>f</i> associe 10 moins le double de ce nombre.',
+    f: x => 10 - 2 * x, steps: x => [`10 − 2 × ${A(par(x))}`, `10 ${x < 0 ? '+' : '−'} ${fmt(Math.abs(2 * x))}`], ant: y => [(10 - y) / 2] },
+  { key: 'aff2', formula: '2<i>x</i> + 1', texte: 'À tout nombre, la fonction <i>f</i> associe le double de ce nombre augmenté de 1.',
+    f: x => 2 * x + 1, steps: x => [`2 × ${A(par(x))} + 1`, `${fmt(2 * x)} + 1`], ant: y => [(y - 1) / 2] },
+];
+const XS = [-3, -2, -1, 0, 1, 2, 3];
+const m1 = { fn: FUNCS[4], x: -2 };
+
+FUNCS.forEach(F => {
+  const b = document.createElement('button');
+  b.className = 'chip m'; b.innerHTML = `<i>f</i>(<i>x</i>) = ${F.formula}`;
+  b.addEventListener('click', () => { m1.fn = F; renderM1(); });
+  F.btn = b; $('#fnChips').appendChild(b);
+});
+XS.forEach(x => {
+  const b = document.createElement('button');
+  b.className = 'chip xb m'; b.textContent = fmt(x); b.dataset.x = x;
+  b.addEventListener('click', () => { m1.x = x; renderM1(); });
+  $('#xChips').appendChild(b);
+});
+
+function renderM1() {
+  const F = m1.fn, x = m1.x, y = F.f(x);
+  FUNCS.forEach(o => o.btn.setAttribute('aria-pressed', o === F));
+  document.querySelectorAll('#xChips .xb').forEach(b => b.setAttribute('aria-pressed', +b.dataset.x === x));
+
+  $('#m1Texte').innerHTML = `<div>${F.texte}</div><div style="margin-top:8px">À ${A(fmt(x))}, la fonction <i>f</i> associe ${B(fmt(y))}.</div>`;
+
+  const steps = F.steps(x);
+  $('#m1Formule').innerHTML =
+    `<div><i>f</i>(<i>x</i>) = ${F.formula} &nbsp;&nbsp; ou &nbsp;&nbsp; <i>f</i>${SP}:${SP}<i>x</i> ↦ ${F.formula}</div>` +
+    `<div style="margin-top:8px"><i>f</i>(${A(fmt(x))}) = ${steps.join(' = ')} = ${B(fmt(y))}</div>`;
+
+  let r1 = '<tr><th><i>x</i></th>', r2 = '<tr><th><i>f</i>(<i>x</i>)</th>';
+  XS.forEach(v => {
+    const on = v === x ? ' class="on"' : '';
+    r1 += `<td${on} data-x="${v}">${fmt(v)}</td>`; r2 += `<td${on} data-x="${v}">${fmt(F.f(v))}</td>`;
+  });
+  $('#m1Table').innerHTML = r1 + '</tr>' + r2 + '</tr>';
+  $('#m1Table').querySelectorAll('td').forEach(td => td.addEventListener('click', () => { m1.x = +td.dataset.x; renderM1(); }));
+
+  drawM1Graph();
+
+  $('#m1Nota').innerHTML = `<i>f</i>(${A(fmt(x))}) = ${B(fmt(y))}`;
+  const ants = F.ant(y).sort((p, q) => p - q);
+  const antTxt = ants.length === 2
+    ? `${B(fmt(y))} a <b>deux antécédents</b> par <i>f</i> : ${A(fmt(ants[0]))} et ${A(fmt(ants[1]))}.`
+    : `${B(fmt(y))} a <b>un seul antécédent</b> par <i>f</i> : ${A(fmt(ants[0]))}.`;
+  $('#m1Vocab').innerHTML =
+    `<li>${B(fmt(y))} est <b>l'image</b> de ${A(fmt(x))} par la fonction <i>f</i>.</li>` +
+    `<li>${A(fmt(x))} est <b>un antécédent</b> de ${B(fmt(y))} par la fonction <i>f</i>.</li>` +
+    `<li>Le point de coordonnées (${A(fmt(x))}${SP};${SP}${B(fmt(y))}) appartient à la courbe représentative de <i>f</i>.</li>` +
+    `<li>${antTxt}</li>`;
+}
+
+function drawM1Graph() {
+  const F = m1.fn, x = m1.x, y = F.f(x);
+  const vals = XS.map(F.f);
+  const ymin = Math.floor(Math.min(0, ...vals)) - 1, ymax = Math.ceil(Math.max(...vals)) + 1;
+  const ystep = (ymax - ymin) > 14 ? 2 : 1;
+  const svg = $('#m1Svg');
+  const { X, Y, clip } = frame(svg, { id: 'g1', W: 560, H: 470, pl: 34, pr: 18, pt: 14, pb: 30, xmin: -3.6, xmax: 3.6, ymin, ymax, ystep });
+  sv('path', { d: curvePath(F.f, -3.6, 3.6, X, Y), class: 'cv', 'clip-path': clip }, svg);
+  // lecture du point choisi
+  sv('path', { d: `M${X(x)},${Y(0)} L${X(x)},${Y(y)}`, class: 'da' }, svg);
+  sv('path', { d: `M${X(x)},${Y(y)} L${X(0)},${Y(y)}`, class: 'db' }, svg);
+  XS.forEach(v => {
+    const sel = v === x;
+    sv('circle', { cx: X(v), cy: Y(F.f(v)), r: sel ? 8 : 5, class: 'pnt' + (sel ? ' sel' : '') }, svg);
+    const h = sv('circle', { cx: X(v), cy: Y(F.f(v)), r: 18, class: 'hit' }, svg);
+    h.addEventListener('click', () => { m1.x = v; renderM1(); });
+  });
+  if (x !== 0) badge(svg, X(x), Y(0) + 20, fmt(x), 'var(--ant)');
+  badge(svg, X(0) - 9 - (fmt(y).length * 5), Y(y) + 5, fmt(y), 'var(--img)');
+  const lx = X(x) + (x >= 0 ? 12 : -12);
+  const lab = st(svg, lx, Y(y) - 10, `(${fmt(x)} ; ${fmt(y)})`, { 'text-anchor': x >= 0 ? 'start' : 'end', style: 'font:600 16px system-ui;fill:var(--ink);paint-order:stroke;stroke:#fff;stroke-width:4px' });
+}
+renderM1();
+
+/* =========================================================
+   MODE 2 — phrase ou notation ?
+   ========================================================= */
+const m2 = { ok: 0, tot: 0, opts: [], done: false };
+function statements(n, p, q) {
+  return {
+    not: `${I(n)}(${p}) = ${q}`,
+    img: `${q} est l'image de ${p} par la fonction ${I(n)}.`,
+    ant: `${p} est un antécédent de ${q} par la fonction ${I(n)}.`,
+    pt: `Le point de coordonnées (${p}${SP};${SP}${q}) appartient à la courbe représentative de ${I(n)}.`,
+    map: `${I(n)}${SP}:${SP}${p} ↦ ${q}`,
+  };
+}
+function m2New() {
+  let a, b;
+  do { a = rint(-9, 9); b = rint(-9, 9); } while (a === b);
+  const n = pick(['f', 'g', 'h']);
+  const fa = fmt(a), fb = fmt(b);
+  const T = statements(n, fa, fb), Fx = statements(n, fb, fa);
+  const kind = pick(['not', 'not', 'img', 'ant', 'pt', 'tab']);
+  const promptHtml = kind === 'tab'
+    ? `<table><tr><th><i>x</i></th><td>${fa}</td></tr><tr><th>${I(n)}(<i>x</i>)</th><td>${fb}</td></tr></table>`
+    : T[kind];
+  const trues = Object.keys(T).filter(k => k !== kind).map(k => ({ html: T[k], v: true }));
+  const falses = Object.keys(Fx).map(k => ({ html: Fx[k], v: false }));
+  const nt = rint(1, 3);
+  m2.opts = shuffle([...shuffle(trues).slice(0, nt), ...shuffle(falses).slice(0, 4 - nt)]);
+  m2.a = fa; m2.b = fb; m2.done = false;
+  $('#m2Prompt').innerHTML = promptHtml;
+  const box = $('#m2Opts'); box.innerHTML = '';
+  m2.opts.forEach(o => {
+    const b2 = document.createElement('button');
+    b2.className = 'opt'; b2.setAttribute('aria-pressed', 'false');
+    b2.innerHTML = `<span class="box"></span><span class="m">${o.html}</span><span class="tag"></span>`;
+    b2.addEventListener('click', () => { if (!m2.done) b2.setAttribute('aria-pressed', b2.getAttribute('aria-pressed') !== 'true'); });
+    o.btn = b2; box.appendChild(b2);
+  });
+  $('#m2Fb').className = 'fb'; $('#m2Fb').innerHTML = '';
+  $('#m2Valid').disabled = false;
+  syncMode2();
+}
+$('#m2Valid').addEventListener('click', () => {
+  if (m2.done) return;
+  m2.done = true; $('#m2Valid').disabled = true;
+  let all = true;
+  m2.opts.forEach(o => {
+    const s = o.btn.getAttribute('aria-pressed') === 'true';
+    o.btn.classList.add('done');
+    const tag = o.btn.querySelector('.tag');
+    if (s && o.v) { o.btn.classList.add('ok'); tag.textContent = '✓ juste'; }
+    else if (s && !o.v) { o.btn.classList.add('ko'); tag.textContent = '✗ inversé'; all = false; }
+    else if (!s && o.v) { o.btn.classList.add('miss'); tag.textContent = 'oublié'; all = false; }
+  });
+  m2.tot++; if (all) m2.ok++;
+  const expl = `Ici, on part de ${A(m2.a)} et on obtient ${B(m2.b)} : ${A(m2.a)} est un antécédent, ${B(m2.b)} est son image.`;
+  $('#m2Fb').className = 'fb ' + (all ? 'good' : 'bad');
+  $('#m2Fb').innerHTML = (all ? '<b>Bravo !</b> ' : '<b>Pas tout à fait.</b> ') + expl;
+  $('#m2Score').textContent = `Score : ${m2.ok} / ${m2.tot}`;
+});
+$('#m2Next').addEventListener('click', m2New);
+m2New();
+
+/* =========================================================
+   MODE 3 — lecture graphique
+   Courbe : interpolation monotone par morceaux (Fritsch–Carlson)
+   entre des points entiers d'abscisses −5…5, avec des pas de ±1 :
+   toutes les images et tous les antécédents demandés sont entiers.
+   ========================================================= */
+const m3 = { ok: 0, tot: 0 };
+/* Courbe « sinusoïdale » : extremums à abscisses entières espacées de 2,
+   dénivelés pairs → valeurs entières en toute abscisse entière. */
+function genCurve() {
+  for (let t = 0; t < 800; t++) {
+    const off = Math.random() < .5 ? -5 : -6;
+    const ex = []; let y = rint(-4, 4), dir = Math.random() < .5 ? 1 : -1;
+    for (let x = off; x <= 7; x += 2) { ex.push([x, y]); y += dir * pick([2, 2, 4, 4, 6]); dir = -dir; }
+    const fn = makeFn(ex);
+    let ok = true, lo = 99, hi = -99;
+    for (let x = -5; x <= 5; x += 0.05) { const v = fn(x); lo = Math.min(lo, v); hi = Math.max(hi, v); }
+    if (lo < -5 || hi > 5 || lo > -1 || hi < 1 || hi - lo < 5) ok = false;
+    if (ok) return fn;
+  }
+  return makeFn([[-5, 2], [-3, -2], [-1, 2], [1, -2], [3, 2], [5, -2], [7, 2]]);
+}
+function makeFn(ex) {
+  return x => {
+    let i = 0; while (i < ex.length - 2 && x > ex[i + 1][0]) i++;
+    const [x0, y0] = ex[i], [, y1] = ex[i + 1];
+    const s = Math.min(Math.max((x - x0) / 2, 0), 1);
+    return y0 + (y1 - y0) * (1 - Math.cos(Math.PI * s)) / 2;
+  };
+}
+const nodeVal = x => Math.round(m3.fn(x));
+const antOf = k => { const r = []; for (let x = -5; x <= 5; x++) if (Math.abs(m3.fn(x) - k) < 1e-9) r.push(x); return r; };
+/* k est « lisible » si toutes les intersections avec y = k sont à abscisse entière */
+function readable(k) {
+  const ints = antOf(k);
+  let prev = m3.fn(-5) - k;
+  for (let i = 1; i <= 2000; i++) {
+    const x = -5 + i * 0.005, cur = m3.fn(x) - k;
+    if (prev * cur < 0 && !ints.some(a => Math.abs(a - x) < 0.02)) return false;
+    prev = cur;
+  }
+  return true;
+}
+function m3NewCurve() {
+  m3.fn = genCurve(); m3.name = pick(['f', 'g', 'h']); m3.last = null;
+  $('#m3Title').innerHTML = `<span>Courbe représentative de la fonction <i>${m3.name}</i></span>`;
+  m3NewQuestion();
+}
+function m3NewQuestion() {
+  let q;
+  for (let t = 0; t < 50; t++) {
+    if (Math.random() < 0.5) {
+      q = { type: 'img', a: rint(-5, 5) }; q.ans = nodeVal(q.a); q.v = rint(0, 2);
+    } else {
+      const r = Math.random(); let k;
+      const vals = []; for (let v = -5; v <= 5; v++) if (antOf(v).length && readable(v)) vals.push(v);
+      const multi = vals.filter(v => antOf(v).length >= 2), single = vals.filter(v => antOf(v).length === 1);
+      const none = []; for (let v = -5; v <= 5; v++) if (!antOf(v).length && readable(v)) none.push(v);
+      if (r < 0.6 && multi.length) k = pick(multi);
+      else if (r < 0.9 && single.length) k = pick(single);
+      else if (none.length) k = pick(none);
+      else k = pick(vals);
+      q = { type: 'ant', k, ans: antOf(k), v: rint(0, 2) };
+    }
+    const sig = q.type + (q.a ?? q.k);
+    if (sig !== m3.last) { m3.last = sig; break; }
+  }
+  m3.q = q; m3.sel = new Set(); m3.none = false; m3.done = false; m3.hint = false;
+  const n = I(m3.name);
+  if (q.type === 'img') {
+    const a = A(fmt(q.a));
+    $('#m3Q').innerHTML = [`Quelle est l'image de ${a} par la fonction ${n} ?`, `Compléter : <span class="m">${n}(${a}) = …</span>`, `Quelle est l'ordonnée du point de la courbe d'abscisse ${a} ?`][q.v];
+    $('#m3C').textContent = "Sur l’intervalle représenté de −5 à 5, clique sur la bonne valeur de l'axe vertical.";
+  } else {
+    const k = B(fmt(q.k));
+    $('#m3Q').innerHTML = [`Quel(s) est (sont) le(s) antécédent(s) de ${k} par la fonction ${n} ?`, `Trouver tous les nombres qui complètent : <span class="m">${n}(…) = ${k}</span>`, `Quels nombres ont pour image ${k} par la fonction ${n} ?`][q.v];
+    $('#m3C').textContent = "Sur l’intervalle représenté de −5 à 5, clique sur toutes les bonnes valeurs de l'axe horizontal, ou sur « Aucun antécédent ».";
+  }
+  $('#m3None').style.display = q.type === 'ant' ? '' : 'none';
+  $('#m3None').setAttribute('aria-pressed', 'false');
+  $('#m3Fb').className = 'fb'; $('#m3Fb').innerHTML = '';
+  $('#m3Valid').disabled = false;
+  renderM3();
+  syncMode3();
+}
+
+function renderM3() {
+  const q = m3.q, svg = $('#m3Svg');
+  svg.setAttribute('aria-label', 'Courbe représentative sur l’intervalle de −5 à 5. Les graduations valent une unité. Les boutons des axes permettent de répondre.');
+  const fn = m3.fn;
+  const { X, Y, clip } = frame(svg, { id: 'g3', W: 600, H: 600, pl: 30, pr: 22, pt: 18, pb: 34, xmin: -5.8, xmax: 5.8, ymin: -5.8, ymax: 5.8, ystep: 1,
+    xlabels: q.type !== 'ant', ylabels: q.type !== 'img', origin: false });
+  sv('path', { d: curvePath(fn, -5, 5, X, Y, 500), class: 'cv', 'clip-path': clip }, svg);
+
+  // coup de pouce
+  if (m3.hint && !m3.done) {
+    if (q.type === 'img') sv('line', { x1: X(q.a), x2: X(q.a), y1: Y(-5.8), y2: Y(5.8), class: 'hla' }, svg);
+    else sv('line', { x1: X(-5.8), x2: X(5.8), y1: Y(q.k), y2: Y(q.k), class: 'hl' }, svg);
+  }
+  // correction
+  if (m3.done) {
+    if (q.type === 'img') {
+      sv('path', { d: `M${X(q.a)},${Y(0)} L${X(q.a)},${Y(q.ans)}`, class: 'da' }, svg);
+      sv('path', { d: `M${X(q.a)},${Y(q.ans)} L${X(0)},${Y(q.ans)}`, class: 'db' }, svg);
+      sv('circle', { cx: X(q.a), cy: Y(q.ans), r: 7, class: 'pnt sel' }, svg);
+    } else {
+      sv('line', { x1: X(-5.8), x2: X(5.8), y1: Y(q.k), y2: Y(q.k), class: 'db' }, svg);
+      q.ans.forEach(x => {
+        sv('path', { d: `M${X(x)},${Y(q.k)} L${X(x)},${Y(0)}`, class: 'da' }, svg);
+        sv('circle', { cx: X(x), cy: Y(q.k), r: 7, class: 'pnt sel' }, svg);
+      });
+    }
+  }
+  // badge de la donnée
+  if (q.type === 'img') badge(svg, X(q.a), Y(0) + 22, fmt(q.a), 'var(--ant)');
+  else badge(svg, X(0) - 18, Y(q.k) + 5, fmt(q.k), 'var(--img)');
+
+  // boutons-graduations sur l'axe de la réponse
+  for (let v = -5; v <= 5; v++) {
+    const isX = q.type === 'ant';
+    const cx = isX ? X(v) : X(0) - 22, cy = isX ? Y(0) + 22 : Y(v);
+    if (!isX && v === q.k) continue;
+    const g = sv('g', { class: 'tb', role: 'button', tabindex: 0, 'aria-label': (isX ? 'Abscisse ' : 'Ordonnée ') + fmt(v), 'aria-pressed': String(m3.sel.has(v)) }, svg);
+    sv('rect', { x: cx - 18, y: cy - 14, width: 36, height: 28, rx: 7 }, g);
+    st(g, cx, cy + 6, fmt(v), { 'text-anchor': 'middle' });
+    g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') {e.preventDefault();g.dispatchEvent(new MouseEvent('click',{bubbles:true}));} });
+    const selected = m3.sel.has(v);
+    if (!m3.done) {
+      if (selected) g.classList.add(isX ? 'sa' : 'sb');
+      g.addEventListener('click', () => {
+        if (isX) { m3.sel.has(v) ? m3.sel.delete(v) : m3.sel.add(v); m3.none = false; $('#m3None').setAttribute('aria-pressed', 'false'); }
+        else { m3.sel = new Set(m3.sel.has(v) ? [] : [v]); }
+        renderM3();
+      });
+    } else {
+      g.classList.add('locked');
+      const good = isX ? q.ans.includes(v) : v === q.ans;
+      if (selected && good) g.classList.add('ok');
+      else if (selected && !good) g.classList.add('ko');
+      else if (!selected && good) g.classList.add('miss');
+    }
+  }
+  if (q.type === 'img' && !m3.done) { /* rien */ }
+  renderM3Answer();
+}
+
+function renderM3Answer() {
+  const q = m3.q, n = I(m3.name);
+  if (q.type === 'img') {
+    const v = [...m3.sel][0];
+    $('#m3A').innerHTML = `${n}(${A(fmt(q.a))}) = ${v === undefined ? '…' : B(fmt(v))}`;
+  } else {
+    const l = [...m3.sel].sort((p, r) => p - r);
+    $('#m3A').innerHTML = m3.none ? 'aucun antécédent' : l.length ? `Antécédent(s) de ${B(fmt(q.k))} : ${l.map(v => A(fmt(v))).join(' ; ')}` : '…';
+  }
+}
+
+$('#m3None').addEventListener('click', () => {
+  if (m3.done) return;
+  m3.none = !m3.none; if (m3.none) m3.sel = new Set();
+  $('#m3None').setAttribute('aria-pressed', m3.none);
+  renderM3();
+});
+$('#m3Hint').addEventListener('click', () => { if (!m3.done) { m3.hint = true; renderM3(); } });
+$('#m3Valid').addEventListener('click', () => {
+  if (m3.done) return;
+  const q = m3.q, n = I(m3.name);
+  if (q.type === 'img' && m3.sel.size === 0) return;
+  if (q.type === 'ant' && m3.sel.size === 0 && !m3.none) return;
+  m3.done = true; $('#m3Valid').disabled = true;
+  let good, msg;
+  if (q.type === 'img') {
+    good = [...m3.sel][0] === q.ans;
+    msg = `On part de ${A(fmt(q.a))} sur l'axe horizontal, on monte (ou on descend) jusqu'à la courbe, puis on lit sur l'axe vertical : <span class="m">${n}(${A(fmt(q.a))}) = ${B(fmt(q.ans))}</span>.`;
+  } else {
+    const s = [...m3.sel].sort((p, r) => p - r);
+    good = s.length === q.ans.length && s.every((v, i) => v === q.ans[i]);
+    const c = q.ans.length;
+    msg = `On trace la droite horizontale à la hauteur ${B(fmt(q.k))} : chaque point où elle coupe la courbe donne un antécédent. `;
+    msg += c === 0 ? `Ici, elle ne coupe pas la courbe : ${B(fmt(q.k))} n'a <b>aucun antécédent</b>.`
+      : c === 1 ? `${B(fmt(q.k))} a <b>un seul antécédent</b> : ${A(fmt(q.ans[0]))}.`
+      : `${B(fmt(q.k))} a <b>${c} antécédents</b> : ${q.ans.map(v => A(fmt(v))).join(' ; ')}.`;
+  }
+  m3.tot++; if (good) m3.ok++;
+  $('#m3Fb').className = 'fb ' + (good ? 'good' : 'bad');
+  $('#m3Fb').innerHTML = (good ? '<b>Bravo !</b> ' : '<b>Pas tout à fait.</b> ') + msg;
+  $('#m3Score').textContent = `Score : ${m3.ok} / ${m3.tot}`;
+  renderM3();
+});
+$('#m3Next').addEventListener('click', m3NewQuestion);
+$('#m3New').addEventListener('click', m3NewCurve);
+m3NewCurve();
+/* Parcours de révision, cohérent avec le chapitre 4. */
+function switchPage(id) {
+  document.querySelectorAll('main > section').forEach(s => s.hidden = s.id !== id);
+  document.querySelectorAll('nav [data-tab]').forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === id)));
+  window.scrollTo({top:0});
+}
+document.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => switchPage(b.dataset.open)));
+function setupModes(id, callback) {
+  document.querySelectorAll(`#${id} [data-mode]`).forEach(b => b.addEventListener('click', () => {
+    learnModes[id] = b.dataset.mode;
+    document.querySelectorAll(`#${id} [data-mode]`).forEach(x => x.classList.toggle('on', x === b));
+    callback();
+  }));
+}
+function syncMode2() {
+  const mode = learnModes.m2;
+  $('#m2Method').hidden = mode === 'seul';
+  $('#m2Score').hidden = mode === 'exemple';
+  if (mode !== 'exemple') return;
+  m2.done = true;
+  m2.opts.forEach(o => {
+    o.btn.classList.add('done');
+    if (o.v) { o.btn.classList.add('ok'); o.btn.setAttribute('aria-pressed','true'); o.btn.querySelector('.tag').textContent = 'équivalent'; }
+    else o.btn.querySelector('.tag').textContent = 'information inversée';
+  });
+  $('#m2Valid').disabled = true;
+  $('#m2Fb').className = 'fb good';
+  $('#m2Fb').innerHTML = `Le nombre de départ est ${A(m2.a)} ; son image est ${B(m2.b)}. Les phrases cochées traduisent cette même information. Une phrase inversée peut être vraie dans certains cas, mais elle n'est pas équivalente à l'information donnée.`;
+}
+function syncMode3() {
+  const mode = learnModes.m3, q = m3.q;
+  $('#m3Method').hidden = mode === 'seul';
+  $('#m3Score').hidden = mode === 'exemple';
+  if (mode === 'aide') { m3.hint = true; renderM3(); }
+  if (mode !== 'exemple') return;
+  m3.sel = new Set(q.type === 'img' ? [q.ans] : q.ans);
+  m3.none = q.type === 'ant' && !q.ans.length;
+  m3.done = true; $('#m3Valid').disabled = true; renderM3();
+  $('#m3Fb').className = 'fb good';
+  $('#m3Fb').innerHTML = q.type === 'img'
+    ? `On part de ${A(fmt(q.a))} sur l'axe horizontal, on rejoint la courbe, puis on lit ${B(fmt(q.ans))} sur l'axe vertical. Donc ${I(m3.name)}(${fmt(q.a)}) = ${fmt(q.ans)}.`
+    : `On regarde toutes les intersections de la courbe avec la droite horizontale d'ordonnée ${B(fmt(q.k))}. Sur l'intervalle représenté, ${q.ans.length ? 'les antécédents sont : '+q.ans.map(fmt).join(' ; ')+'.' : 'ce nombre ne possède aucun antécédent.'}`;
+}
+setupModes('m2', m2New);
+setupModes('m3', m3NewQuestion);
+
+const nf = n => fmt(n);
+const frac = (a,b) => `<span class="frac"><span>${a}</span><span>${b}</span></span>`;
+function readNumber(value) {
+  const s = value.trim().replace(/\s/g,'').replace(/−/g,'-').replace(',','.');
+  if (/^[+-]?\d+(?:\.\d+)?\/[+-]?\d+(?:\.\d+)?$/.test(s)) {
+    const [a,b]=s.split('/').map(Number); return b ? a/b : null;
+  }
+  return /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(s) ? Number(s) : null;
+}
+function sameAnswer(value, answer) {
+  if (Array.isArray(answer)) {
+    const s = value.trim().toLowerCase();
+    if (!answer.length) return ['aucun','aucune','aucun antécédent','aucun antecedent','∅'].includes(s);
+    const parts = s.split(/[;\s]+/).filter(Boolean).map(readNumber);
+    return parts.length===answer.length && parts.every(v=>v!==null) && new Set(parts).size===parts.length && parts.slice().sort((a,b)=>a-b).every((v,i)=>Math.abs(v-answer.slice().sort((a,b)=>a-b)[i])<1e-8);
+  }
+  if (typeof answer === 'number') { const n=readNumber(value);return n!==null&&Math.abs(n-answer)<1e-8; }
+  return value.trim().toLocaleLowerCase('fr') === String(answer).toLocaleLowerCase('fr');
+}
+const ansText = a => Array.isArray(a) ? a.length ? a.map(nf).join(' ; ') : 'aucun' : typeof a==='number' ? nf(a) : a;
+function tableHtml(xs, ys, name='h') {
+  return `<div class="table-scroll"><table class="tab m"><tr><th>x</th>${xs.map(x=>`<td>${nf(x)}</td>`).join('')}</tr><tr><th>${name}(x)</th>${ys.map(y=>`<td>${typeof y==='number'?nf(y):y}</td>`).join('')}</tr></table></div>`;
+}
+function taskInput(task, index, onValidate) {
+  const row=document.createElement('div');row.className='step';
+  const lab=document.createElement('label');lab.className='step-q';lab.innerHTML=task.q;lab.htmlFor='answer-'+index;
+  const area=document.createElement('div');area.className='step-a';
+  const input=document.createElement('input');input.type='text';input.className='calc-input';input.id='answer-'+index;input.autocomplete='off';
+  if(typeof task.a==='number')input.inputMode='decimal';
+  if(Array.isArray(task.a))input.placeholder='Ex. : −2 ; 3 ou aucun';
+  const button=document.createElement('button');button.type='button';button.className='btn';button.textContent='Valider';
+  const feedback=document.createElement('div');feedback.className='fb';feedback.setAttribute('aria-live','polite');
+  function check(){if(!input.value.trim()){feedback.className='fb warn';feedback.textContent='Écris une réponse avant de valider.';return;}onValidate(input,button,feedback,row);}
+  button.addEventListener('click',check);input.addEventListener('keydown',e=>{if(e.key==='Enter')check();});
+  area.append(input,button);row.append(lab,area,feedback);return row;
+}
+let calcKind='image';
+function makeCalc(kind, example=false, variant=0) {
+  if(kind==='image'){
+    const choice=example?0:rint(0,2), x=example?-4:pick([-5,-4,-3,-2,-1,0,1,2,3,4]);
+    const c=choice===0?10:choice===1?2:4;
+    const name=choice===1?'h':'f';
+    const formula=choice===0?'10 − 2x':choice===1?'x(x + 2)':'x² − 4';
+    const f=choice===0?x=>10-2*x:choice===1?x=>x*(x+2):x=>x*x-4;
+    const replacement=choice===0?`10 − 2 × ${par(x)}`:choice===1?`${par(x)} × (${nf(x)} + 2)`:`${par(x)}² − 4`;
+    return {head:`<p>On définit la fonction <span class="m">${name}(x) = ${formula}</span>.</p>`,tasks:[
+      {q:`Calcule l'image de <span class="m">${nf(x)}</span> par ${name}.`,a:f(x),hint:'Remplace chaque x par le nombre donné. Écris les nombres négatifs entre parenthèses et respecte les priorités.',corr:`${name}(${nf(x)}) = ${replacement} = ${nf(f(x))}. L'image de ${nf(x)} par ${name} est ${nf(f(x))}.`}
+    ]};
+  }
+  if(kind==='tableau'){
+    const a=example?2:pick([1,2,3,4]);const xs=[-4,-3,-2,-1,0,1,2,3];
+    const ys=xs.map(x=>x*(x+a));const target=pick([0,1,2]);
+    return {head:`<p>On définit <span class="m">h(x) = x(x + ${a})</span>. Complète le tableau sur ton cahier, puis vérifie les valeurs demandées.</p>${tableHtml(xs,xs.map(()=> '…'))}`,
+      tasks:xs.map(x=>({q:`Pour <span class="m">x = ${nf(x)}</span>, que vaut <span class="m">h(x)</span> ?`,a:x*(x+a),hint:`Écris ${par(x)} × (${nf(x)} + ${a}). Calcule d'abord la parenthèse.`,corr:`h(${nf(x)}) = ${par(x)} × (${nf(x)} + ${a}) = ${par(x)} × ${par(x+a)} = ${nf(x*(x+a))}.`})),
+      ending:tableHtml(xs,ys)};
+  }
+  if(kind==='antecedent'){
+    const a=example?10:pick([6,8,10,12]),b=example?-2:pick([-3,-2,2,3]);
+    const solution=example?5:rint(-4,6),target=a+b*solution;
+    const expression=`${a} ${b<0?'−':'+'} ${Math.abs(b)}x`;
+    return {head:`<p>On définit <span class="m">f(x) = ${expression}</span>. On cherche l'antécédent de <span class="m">${nf(target)}</span>.</p>`,tasks:[
+      {q:'Quelle valeur de x permet d’obtenir ce nombre ?',a:solution,hint:`Il faut résoudre ${expression} = ${nf(target)}. Soustrais ${a} aux deux membres, puis divise les deux membres par ${nf(b)}.`,corr:`On cherche x tel que ${expression} = ${nf(target)}. En soustrayant ${a} aux deux membres : ${nf(b)}x = ${nf(target-a)}. En divisant par ${nf(b)} : x = ${nf(target-a)} / ${par(b)} = ${nf(solution)}. Vérification : f(${nf(solution)}) = ${a} + (${nf(b)}) × ${par(solution)} = ${nf(target)}. L'antécédent recherché est ${nf(solution)}.`}
+    ]};
+  }
+  const k=example?4:pick([2,3,4,5]),x=example?7:pick([-3,-2,-1,0,2,6,7,10]);
+  return {head:`<p><strong>Programme de calcul</strong></p><ol><li>Choisir un nombre.</li><li>Soustraire ${k}.</li><li>Multiplier le résultat par le nombre choisi au départ.</li></ol>`,tasks:[
+    {q:`Quel résultat obtient-on en choisissant ${nf(x)} ?`,a:x*(x-k),hint:`Le résultat intermédiaire est ${nf(x)} − ${k}. Multiplie-le ensuite par ${par(x)}, le nombre de départ.`,corr:`(${nf(x)} − ${k}) × ${par(x)} = ${par(x-k)} × ${par(x)} = ${nf(x*(x-k))}.`},
+    {q:'Quels sont les deux nombres de départ qui donnent 0 ?',a:[0,k],hint:`Le résultat est x(x − ${k}). Un produit est nul si au moins un de ses facteurs est nul.`,corr:`x(x − ${k}) = 0 si x = 0 ou x − ${k} = 0. Les deux nombres sont donc 0 et ${k}.`}
+  ],ending:`<p>En notant x le nombre de départ : <span class="m">p(x) = (x − ${k}) × x = x² − ${k}x</span>.</p>`};
+}
+function renderCalc(){
+  const mode=learnModes.m4, exercise=makeCalc(calcKind,mode==='exemple'),box=$('#calcPanel');box.innerHTML=exercise.head;
+  const instruction=document.createElement('p');instruction.className='small';instruction.textContent=mode==='seul'?'Rédige les calculs sur ton cahier avant de saisir tes résultats.':mode==='aide'?'Un coup de pouce est proposé à chaque étape.':'Observe les calculs et la rédaction de cet exemple.';box.append(instruction);
+  exercise.tasks.forEach((task,i)=>{
+    if(mode==='exemple'){
+      const row=document.createElement('div');row.className='step done';row.innerHTML=`<div class="step-q">${task.q}</div><div class="model-a">${ansText(task.a)}</div><div class="model-e">${task.corr}</div>`;box.append(row);return;
+    }
+    let tries=0;
+    const row=taskInput(task,'calc-'+i,(input,button,fb,row)=>{
+      const good=sameAnswer(input.value,task.a);tries++;
+      if(!good && mode==='aide' && tries<2){fb.className='fb warn';fb.textContent='Pas encore. '+task.hint;return;}
+      input.disabled=true;button.disabled=true;row.classList.add(good?'done':'missed');fb.className='fb '+(good?'ok':'ko');fb.innerHTML=`<b>${good?"C'est juste.":'Réponse attendue : '+ansText(task.a)+'.'}</b> ${task.corr}`;
+    });
+    if(mode==='aide'){const h=document.createElement('p');h.className='small';h.textContent=task.hint;row.append(h);}box.append(row);
+  });
+  if(exercise.ending){const end=document.createElement('details');end.innerHTML=`<summary>Voir la synthèse</summary><div class="corrige">${exercise.ending}</div>`;box.append(end);}
+}
+setupModes('m4',renderCalc);
+document.querySelectorAll('[data-calc]').forEach(b=>b.addEventListener('click',()=>{calcKind=b.dataset.calc;document.querySelectorAll('[data-calc]').forEach(x=>x.classList.toggle('on',x===b));renderCalc();}));
+$('#calcNext').addEventListener('click',renderCalc);
+
+function drawFixedGraph(svg, points, name='g'){
+  svg.setAttribute('role','img');svg.setAttribute('aria-label',`Courbe de ${name} sur l'intervalle de −5 à 5, graduations de une unité.`);
+  const {X,Y,clip}=frame(svg,{id:'dsGraph',W:600,H:420,pl:40,pr:28,pt:24,pb:38,xmin:-5.7,xmax:5.7,ymin:-4.7,ymax:4.7,ystep:1});
+  sv('path',{d:points.map((p,i)=>(i?'L':'M')+X(p[0])+','+Y(p[1])).join(' '),class:'cv','clip-path':clip},svg);
+  points.forEach(p=>sv('circle',{cx:X(p[0]),cy:Y(p[1]),r:3,class:'pnt'},svg));
+}
+function dsTasks(variant){
+  const b=variant==='B',sign=b?-1:1,k=b?5:4,a=b?8:10;
+  const points=[[-5,0],[-4,2],[-3,0],[-2,-2],[-1,-3],[0,-1],[1,-3],[2,0],[3,2],[4,0],[5,1]].map(([x,y])=>[x,sign*y]);
+  const xs=[-4,-3,-2,-1,0,1,2,3],ys=xs.map(x=>x*(x+2));
+  return [
+    {title:'Exercice 1 · Vocabulaire',pts:4,head:`<p>On sait que <span class="m">f(−1) = 3</span>.</p>`,tasks:[
+      {q:'Quelle est l’image de −1 par f ?',a:3,corr:'L’image est le nombre obtenu : f(−1) = 3.'},
+      {q:'Quel antécédent de 3 peut-on donner ?',a:-1,corr:'−1 est un antécédent de 3, car f(−1) = 3.'},
+      {q:'Quelle est l’abscisse du point correspondant de la courbe ?',a:-1,corr:'L’abscisse est le nombre de départ, −1.'},
+      {q:'Quelle est l’ordonnée de ce point ?',a:3,corr:'L’ordonnée est l’image, 3. Le point a pour coordonnées (−1 ; 3).'}]},
+    {title:'Exercice 2 · Tableau de valeurs',pts:4,head:tableHtml(xs,ys),tasks:[
+      {q:'Quelle est l’image de −4 par h ?',a:8,corr:'Dans la colonne de −4, on lit h(−4) = 8.'},
+      {q:'Donne tous les antécédents de 0 que l’on voit dans ce tableau.',a:[-2,0],corr:'Les colonnes où h(x) = 0 ont pour nombres de départ −2 et 0.'},
+      {q:'Donne tous les antécédents de 3 que l’on voit dans ce tableau.',a:[-3,1],corr:'On lit h(−3) = 3 et h(1) = 3.'},
+      {q:'Quelle est l’ordonnée du point de la courbe d’abscisse 2 ?',a:8,corr:'On lit h(2) = 8 : le point a pour coordonnées (2 ; 8).'}]},
+    {title:'Exercice 3 · Lecture graphique',pts:4,head:`<p>La courbe de g est représentée pour <span class="m">−5 ≤ x ≤ 5</span>. Les graduations valent une unité.</p><svg id="dsFixedGraph"></svg>`,points,tasks:[
+      {q:'Lis l’image de −1 par g.',a:-3*sign,corr:`Le point d’abscisse −1 a pour ordonnée ${nf(-3*sign)}.`},
+      {q:'Lis l’image de 3 par g.',a:2*sign,corr:`Le point d’abscisse 3 a pour ordonnée ${nf(2*sign)}.`},
+      {q:'Quels sont tous les antécédents de 0 sur l’intervalle représenté ?',a:[-5,-3,2,4],corr:'La courbe coupe l’axe des abscisses en −5, −3, 2 et 4.'},
+      {q:`Quels sont tous les antécédents de ${nf(-3*sign)} ?`,a:[-1,1],corr:`La droite horizontale d’ordonnée ${nf(-3*sign)} rencontre la courbe aux abscisses −1 et 1.`}]},
+    {title:'Exercice 4 · Calculer et chercher un antécédent',pts:4,head:`<p>On définit <span class="m">f(x) = ${a} − 2x</span>.</p>`,tasks:[
+      {q:'Calcule f(3).',a:a-6,corr:`f(3) = ${a} − 2 × 3 = ${a} − 6 = ${nf(a-6)}.`},
+      {q:'Calcule f(−4).',a:a+8,corr:`f(−4) = ${a} − 2 × (−4) = ${a} + 8 = ${a+8}.`},
+      {q:'Trouve l’antécédent de 0 par f.',a:a/2,corr:`${a} − 2x = 0, donc −2x = −${a}, puis x = ${nf(a/2)}.`},
+      {q:'Un point M de la courbe a pour abscisse 2. Quelle est son ordonnée ?',a:a-4,corr:`Son ordonnée vaut f(2) = ${a} − 4 = ${a-4}.`}]},
+    {title:'Exercice 5 · Programme de calcul',pts:4,head:`<p>On choisit un nombre, on lui soustrait ${k}, puis on multiplie ce résultat par le nombre de départ.</p>`,tasks:[
+      {q:'Quel résultat obtient-on avec 10 ?',a:10*(10-k),corr:`(10 − ${k}) × 10 = ${10*(10-k)}.`},
+      {q:'Quel résultat obtient-on avec 7 ?',a:7*(7-k),corr:`(7 − ${k}) × 7 = ${7*(7-k)}.`},
+      {q:'Quel résultat obtient-on avec −1 ?',a:1+k,corr:`(−1 − ${k}) × (−1) = ${1+k}.`},
+      {q:'Quels sont les deux nombres de départ qui donnent 0 ?',a:[0,k],corr:`Le résultat est x(x − ${k}). Un produit est nul si un facteur est nul : x = 0 ou x = ${k}.`}]}
+  ];
+}
+function renderDS(variant='A'){
+  const box=$('#dsPanel');box.innerHTML=`<h3>D.S. blanc · Sujet ${variant}</h3><p>Travaille d’abord sur une feuille. Chaque réponse vaut 1 point ; rédige aussi les calculs et les justifications. La vérification des réponses ne remplace pas la vérification de ta rédaction.</p><p class="small">Pour plusieurs antécédents, sépare les nombres par des points-virgules. Tu peux écrire « aucun » quand il n’y en a pas.</p>`;
+  const sections=dsTasks(variant),controls=[];
+  sections.forEach((ex,ei)=>{
+    const panel=document.createElement('section');panel.className='ds-exo';panel.innerHTML=`<h3>${ex.title} <span class="small">(${ex.pts} points)</span></h3>${ex.head}`;box.append(panel);
+    if(ex.points)drawFixedGraph($('#dsFixedGraph'),ex.points);
+    ex.tasks.forEach((task,qi)=>{
+      const row=taskInput(task,`ds-${ei}-${qi}`,()=>{});row.querySelector('button').remove();panel.append(row);controls.push({task,row,input:row.querySelector('input')});
+    });
+  });
+  const finish=document.createElement('button');finish.type='button';finish.className='btn';finish.textContent='Vérifier mes réponses et afficher la correction';
+  finish.addEventListener('click',()=>{
+    let good=0;controls.forEach(({task,row,input})=>{const ok=sameAnswer(input.value,task.a);if(ok)good++;input.disabled=true;row.classList.add(ok?'done':'missed');const fb=row.querySelector('.fb');fb.className='fb '+(ok?'ok':'ko');fb.innerHTML=`<b>${ok?'Réponse juste.':input.value.trim()?'Réponse attendue : '+ansText(task.a)+'.':'Non répondu. Réponse attendue : '+ansText(task.a)+'.'}</b> <span class="m">${task.corr}</span>`;});
+    const result=document.createElement('div');result.className='corrige';result.setAttribute('role','status');result.innerHTML=`<strong>${good} réponse${good===1?'':'s'} juste${good===1?'':'s'} sur 20.</strong><p>Vérifie sur ta feuille : parenthèses avec les nombres négatifs, calculs intermédiaires, phrase de conclusion, tous les antécédents demandés.</p>`;finish.replaceWith(result);
+  });box.append(finish);
+}
+document.querySelectorAll('[data-ds]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-ds]').forEach(x=>x.classList.toggle('on',x===b));renderDS(b.dataset.ds);}));
+$('#dsPrint').addEventListener('click',()=>window.print());
+renderCalc();renderDS();switchPage('home');
+
+})();</script></body></html>

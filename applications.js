@@ -20,6 +20,15 @@
  */
 window.APPLICATIONS_ELEVES = [
   {
+    titre: "Chapitre 3 : Fonctions (1)",
+    description: "Cours, images et antécédents, lectures graphiques, calculs et programmes de calcul. Exemples, entraînements guidés et deux D.S. blancs.",
+    niveaux: ["3e"],
+    chapitre: "Fonctions",
+    url: "apps/fonctions-1.html",
+    symbole: "ƒ",
+    couleur: "bleu"
+  },
+  {
     titre: "Chapitre 4 : Triangles semblables",
     description: "Reconnaître les éléments homologues, démontrer la similitude et calculer des longueurs. Exercices guidés, problèmes type brevet et D.S. blanc.",
     niveaux: ["3e"],
