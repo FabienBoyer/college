@@ -29,34 +29,45 @@ button{font:inherit;color:inherit;cursor:pointer}
 button:focus-visible,input:focus-visible,summary:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid var(--rouge);outline-offset:2px}
 i.m{font-family:var(--math);font-style:italic}
 
-/* En-tête */
-.top{padding:1rem 1.2rem .6rem calc(var(--mw) + 1.2rem);border-bottom:2px solid var(--bleu);background:var(--papier)}
-:root{--mw:150px}
-.back-home{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:0 0 .7rem;padding:8px 14px;border:2px solid var(--bleu);border-radius:7px;background:var(--carte);color:var(--bleu);font:inherit;font-size:1rem;font-weight:700;text-decoration:none}
+/* En-tête, onglets et cartes : mêmes règles que les autres apps du site */
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+.top{padding:26px 0 10px}
+.back-home{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:0 0 16px;padding:8px 14px;border:2px solid var(--bleu);border-radius:7px;background:var(--carte);color:var(--bleu);font:inherit;font-size:1rem;font-weight:700;text-decoration:none}
 .back-home:hover{background:#eef2fb}
-.top-row{display:flex;align-items:baseline;gap:1.5rem;flex-wrap:wrap}
-.brand{margin:0 auto 0 0;color:var(--rouge);font-size:1.6rem;font-weight:700;line-height:1.25}
+.brand{margin:0;color:var(--rouge);font-size:1.9rem;font-weight:700;letter-spacing:.2px;line-height:1.3}
 .brand span{border-bottom:2px solid var(--rouge)}
-.topnav{display:flex;gap:1.3rem;flex-wrap:wrap}
-.topnav button{background:none;border:0;padding:.1rem 0;border-bottom:3px solid transparent;color:var(--bleu)}
-.topnav button:hover{border-bottom-color:var(--carreau)}
-.topnav button.on{border-bottom-color:var(--bleu);font-weight:700}
+.top p.sub{margin:.35em 0 0;color:var(--gris)}
+.topnav{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 0;border-bottom:2px solid var(--bleu)}
+.topnav button{font:inherit;font-size:.95rem;border:2px solid var(--bleu);border-bottom:none;background:#eef2fb;color:var(--bleu);padding:.45em .68em;border-radius:10px 10px 0 0;margin-bottom:-2px}
+.topnav button.on{background:var(--carte);font-weight:700}
+.topnav button:hover{background:#fff}
 .navsel{display:none}
-
-/* Page : marge + contenu */
-.page{display:grid;grid-template-columns:var(--mw) minmax(0,1fr);min-height:calc(100vh - 52px)}
-.marge{border-right:2px solid var(--marge);padding:1.3rem .8rem 1rem .9rem;font-size:.92rem}
-main{padding:1.3rem 1.6rem 4rem;max-width:860px}
-.m-date{color:var(--bleu);font-style:italic;line-height:1.3}
-.m-back{background:none;border:0;padding:0;color:var(--bleu);text-decoration:underline;text-underline-offset:3px;margin-bottom:1.2rem;display:block}
-.m-pal{font-weight:700;margin-bottom:.5rem}
-.etapes{display:flex;flex-direction:column;gap:.15rem}
-.etapes .tab{display:flex;gap:.45rem;align-items:baseline;text-align:left;background:none;border:0;padding:.3rem .2rem;line-height:1.25;color:var(--gris)}
-.etapes .tab .tn{font-weight:700;min-width:1rem}
-.etapes .tab:hover{color:var(--encre)}
-.etapes .tab.on{color:var(--bleu);font-weight:700}
-.etapes .tab.on span:last-child{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
-.timer{font-variant-numeric:tabular-nums;font-size:1.25rem;font-weight:700;color:var(--bleu)}
+.page{padding-top:18px;padding-bottom:40px}
+.marge{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 14px}
+.marge:empty{display:none}
+.m-date,.m-pal{display:none}
+.m-back,.etapes .tab{font:inherit;font-size:.95rem;padding:.45em .9em;border-radius:999px;border:2px solid var(--bleu2);background:#fff;color:var(--bleu2)}
+.etapes{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.marge .etapes{margin:0}
+.etapes .tab .tn{display:none}
+.etapes .tab.on{background:var(--bleu2);color:#fff}
+.etapes .tab:hover:not(.on),.m-back:hover{background:#eef2fb}
+.timer{font-variant-numeric:tabular-nums;font-size:1.25rem;font-weight:700;color:var(--bleu);margin-left:.4rem}
+.card,.pane{background:var(--carte);border:1px solid #e2e6ef;border-radius:4px 14px 14px 4px;padding:22px 24px 26px 34px;position:relative;margin:0 0 16px;
+  box-shadow:0 1px 0 rgba(0,0,0,.03),0 6px 18px -12px rgba(29,58,138,.35)}
+.card::before,.pane::before{content:"";position:absolute;left:18px;top:0;bottom:0;width:2px;background:var(--marge)}
+.pane .card{background:none;border:0;box-shadow:none;padding:0;margin:0 0 1.2rem}
+.pane .card::before{display:none}
+.retenir{border:2px solid var(--bleu);border-radius:6px;padding:.6em .9em;margin:0 0 16px;color:var(--bleu);background:#f6f8fe}
+.retenir b{display:block;color:var(--rouge);margin-bottom:.15em}
+.home{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.home .card{margin:0;display:flex;flex-direction:column}
+.home .card h2{font-size:1.2rem;margin:0 0 .3em;color:var(--rouge)}
+.home .card p{margin:.2em 0 .6em}
+.home .card .st{color:var(--gris);font-size:.9rem;margin:auto 0 .6em}
+.home .card .st.started{color:var(--bleu);font-weight:700}
+.home .card button{align-self:flex-start}
+footer{color:var(--gris);font-size:.9rem;padding:0 0 30px}
 
 /* Titres : soulignés à la règle */
 .chap{margin:0;color:var(--gris)}
@@ -83,8 +94,8 @@ p{margin:.5rem 0}
 .slist{margin-top:.6rem}
 
 /* Boutons */
-button.primary,.actions button,.navnext button{border:2px solid var(--encre);background:var(--papier);padding:.45rem 1rem;border-radius:3px}
-button.primary{background:var(--bleu);border-color:var(--bleu);color:#fff;font-weight:700}
+button.primary,.actions button,.navnext button{border:2px solid var(--bleu);background:#fff;color:var(--bleu);padding:.5em 1.05em;border-radius:8px}
+button.primary{background:var(--bleu);border-color:var(--bleu);color:#fff}
 button.primary:hover{background:var(--bleu2)}
 .actions button:not(.primary):hover{border-color:var(--bleu);color:var(--bleu)}
 button.ghost{border-style:dashed !important}
@@ -156,7 +167,7 @@ mark{background:var(--surligneur);padding:0 1px;color:inherit}
 .inp input{width:100%;font-family:var(--math);font-size:1.45rem;color:var(--bleu);padding:.35rem .5rem;border:0;border-bottom:3px solid var(--bleu);background:var(--papier)}
 .inp input:focus{outline:none;background:#fff;box-shadow:0 3px 0 var(--bleu-clair)}
 .keys{display:flex;gap:.35rem;margin:.55rem 0 .2rem;flex-wrap:wrap;align-items:center}
-.key{min-width:2.6rem;padding:.25rem .55rem;font-family:var(--math);font-size:1.15rem;background:var(--papier);border:2px solid var(--encre);border-radius:3px}
+.key{min-width:2.6rem;padding:.25rem .55rem;font-family:var(--math);font-size:1.15rem;background:#fff;border:2px solid var(--bleu);color:var(--bleu);border-radius:6px}
 .key:hover{border-color:var(--bleu);color:var(--bleu)}
 .preview{min-height:1.6rem;color:var(--gris)}
 
@@ -261,8 +272,8 @@ mark{background:var(--surligneur);padding:0 1px;color:inherit}
 
 /* Choix de la méthode dans l'exemple */
 .meth{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin:-.4rem 0 1rem}
-.mbtn{background:var(--papier);border:2px solid var(--encre);padding:.3rem .8rem;border-radius:3px}
-.mbtn.on{background:var(--encre);color:#fff;font-weight:700}
+.mbtn{background:#fff;border:2px solid var(--bleu2);color:var(--bleu2);padding:.35rem .9rem;border-radius:999px}
+.mbtn.on{background:var(--bleu2);color:#fff}
 .mbtn:hover:not(.on){border-color:var(--bleu);color:var(--bleu)}
 .vtab .dtab td{min-width:5.6rem}
 .vtab .dtab td.pop{background:#fff8c4;animation:pop .5s ease-out both}
@@ -280,20 +291,13 @@ mark{background:var(--surligneur);padding:0 1px;color:inherit}
 @media (prefers-reduced-motion:reduce){.vstep.now .line,.vstep.now .shaft,.vstep.now .head{animation:none;opacity:1;stroke-dashoffset:0}}
 
 @media (max-width:760px){
-  :root{--mw:0px}
-  .top{padding-left:1rem}
-  .page{grid-template-columns:1fr}
-  .marge{border-right:0;border-bottom:2px solid var(--marge);padding:.7rem 1rem}
-  .etapes{flex-direction:row;flex-wrap:wrap;gap:.2rem 1rem}
-  .m-back{margin-bottom:.5rem}
-  main{padding:1rem 1rem 4rem}
-  .som-t{max-width:none}.som-l{display:none}.som{flex-wrap:wrap}.som-st{width:100%;padding-left:2.7rem}
   .m{white-space:normal}
-  .brand{font-size:1.35rem}
 }
 @media (max-width:600px){
+  .topnav{border-bottom:none}
   .topnav button{display:none}
-  .topnav{width:100%}
+  .card,.pane{padding:18px 14px 20px 26px}.card::before,.pane::before{left:12px}
+  .brand{font-size:1.5rem}
   .navsel{display:block;width:100%;min-height:44px;margin:.5rem 0 .2rem;font-family:var(--texte);font-size:1rem;font-weight:700;color:var(--bleu);border:2px solid var(--bleu);border-radius:8px;background:var(--carte)}
 }
 /* Étapes à choix, programmes de calcul */
@@ -317,19 +321,21 @@ mark{background:var(--surligneur);padding:0 1px;color:inherit}
 .ds-radios{display:flex;flex-wrap:wrap;gap:.5rem}
 .ds-radios label{border:2px solid var(--carreau);border-radius:6px;padding:.2rem .6rem;background:var(--carte);cursor:pointer}
 [hidden]{display:none!important}
-@media print{.top,.marge,.actions,.navnext,.feu,.noprint,.ds-corr,#dsres{display:none!important}.page{display:block}body{background:#fff}main{padding:0}}
+@media print{.top,.marge,.actions,.navnext,.feu,.noprint,.ds-corr,#dsres,footer{display:none!important}body{background:#fff}.card,.pane{box-shadow:none;border:0;padding:0}.card::before,.pane::before{display:none}.ds-exo{break-inside:avoid}}
 </style>
 </head>
 <body>
+<div class="wrap">
 <header class="top">
   <a class="back-home" href="../">← Toutes les applications</a>
-  <div class="top-row">
-    <h1 class="brand"><span>Chapitre 5 : Calcul littéral (1)</span></h1>
-    <nav class="topnav" aria-label="Menu"><button data-nav="home">Sommaire</button><button data-nav="ds">D.S. blanc</button><button data-nav="series">Séries chronométrées</button><button data-nav="travail">Mon travail</button>
-      <select class="navsel" id="navsel" aria-label="Aller à une partie du chapitre"><option value="home">Sommaire</option><option value="ds">D.S. blanc</option><option value="series">Séries chronométrées</option><option value="travail">Mon travail</option></select></nav>
-  </div>
+  <h1 class="brand"><span>Chapitre 5 : Calcul littéral (1)</span></h1>
+  <p class="sub">Je prépare mon D.S. de fin de chapitre.</p>
+  <nav class="topnav" aria-label="Parcours du chapitre"><button type="button" data-nav="home">Sommaire</button><button type="button" data-nav="p0">0. Lettre</button><button type="button" data-nav="p1">1. Réduire</button><button type="button" data-nav="p2">2. Simple</button><button type="button" data-nav="p3">3. Double</button><button type="button" data-nav="p4">4. Factoriser</button><button type="button" data-nav="p5">5. Prouver</button><button type="button" data-nav="pB">Bilan</button><button type="button" data-nav="ds">D.S. blanc</button>
+    <select class="navsel" id="navsel" aria-label="Aller à une partie du chapitre"><option value="home">Sommaire</option><option value="p0">0. Le sens de la lettre</option><option value="p1">1. Réduire</option><option value="p2">2. Simple distributivité</option><option value="p3">3. Double distributivité</option><option value="p4">4. Factoriser</option><option value="p5">5. Prouver</option><option value="pB">Bilan</option><option value="ds">D.S. blanc</option><option value="series">Séries chronométrées</option><option value="travail">Mon travail</option></select></nav>
 </header>
-<div class="page"><aside class="marge" id="marge"></aside><main id="main"></main></div>
+<div class="page"><div class="marge" id="marge"></div><main id="main"></main></div>
+<footer>Collège La Rochefoucauld · Mathématiques 3<sup>e</sup></footer>
+</div>
 <script>
 /* ================= Moteur algébrique ================= */
 const Alg = (() => {
@@ -1584,8 +1590,9 @@ let view = { name: 'home' };
 function go(v) { stopVideo(); view = v; render(); window.scrollTo(0, 0); }
 function setMarge(html) { $('#marge').innerHTML = html; const b = $('#marge #back'); }
 function render() {
-  document.querySelectorAll('.topnav button').forEach(b => b.classList.toggle('on', b.dataset.nav === view.name || (view.name === 'palier' && b.dataset.nav === 'home')));
-  const ns = $('#navsel'); if (ns) ns.value = view.name === 'palier' ? 'home' : view.name;
+  const cur = view.name === 'palier' ? 'p' + view.p : view.name;
+  document.querySelectorAll('.topnav button').forEach(b => b.classList.toggle('on', b.dataset.nav === cur));
+  const ns = $('#navsel'); if (ns) ns.value = cur;
   ({ home: renderHome, palier: renderPalier, series: renderSeries, travail: renderTravail, ds: renderDS })[view.name]();
   requestAnimationFrame(() => drawArrows());
 }
@@ -1596,38 +1603,30 @@ function statLine(p) {
   return f ? `${f} fait${f > 1 ? 's' : ''}, ${r} du premier coup` : 'pas commencé';
 }
 function renderHome() {
-  const d = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
-  setMarge(`<div class="m-date">${d}</div>`);
+  setMarge('');
+  const nb = store.series.length;
+  const card = (title, desc, st, started, attr) => `<section class="card"><h2>${title}</h2><p>${desc}</p><p class="st ${started ? 'started' : ''}">${st}</p><button class="primary" ${attr}>Commencer</button></section>`;
   $('#main').innerHTML = `
-    <h2 class="titre">Réduire, développer, factoriser et prouver</h2>
-    <p class="lead">Pour chaque palier, tu revois le cours, tu regardes un exemple corrigé, tu fais un exercice avec de l’aide, puis tu t’entraînes seul.</p>
-    <ol class="sommaire">${PALIERS.map(p => `
-      <li><button class="som" data-p="${p}">
-        <span class="som-n">${p === 'B' ? 'B' : p}</span>
-        <span class="som-t"><span class="som-h">${INFO[p].t}</span><span class="som-s">${INFO[p].s}</span></span>
-        <span class="som-l" aria-hidden="true"></span>
-        <span class="som-st ${store.stats[p] && LV.some(l => store.stats[p][l][0]) ? 'started' : ''}">${statLine(p)}</span>
-      </button></li>`).join('')}
-    </ol>
-    <h2 class="sous">Entraînement technique</h2>
-    <button class="som solo" data-nav2="series">
-      <span class="som-t"><span class="som-h">Séries chronométrées</span><span class="som-s">8 calculs à faire le plus juste et le plus vite possible, sans calculatrice.</span></span>
-      <span class="som-l" aria-hidden="true"></span>
-      <span class="som-st">${store.series.length ? store.series.length + ' essai' + (store.series.length > 1 ? 's' : '') : 'pas d’essai'}</span>
-    </button>`;
-  document.querySelectorAll('.som[data-p]').forEach(b => b.onclick = () => go({ name: 'palier', p: b.dataset.p === 'B' ? 'B' : +b.dataset.p, tab: 'cours' }));
-  document.querySelector('[data-nav2="series"]').onclick = () => go({ name: 'series' });
+    <div class="retenir"><b>À retenir</b>Développer un produit, c’est l’écrire sous la forme d’une somme. Factoriser une somme, c’est l’écrire sous la forme d’un produit. Dans chaque partie : je lis le cours, je regarde un exemple, je m’entraîne avec de l’aide, puis je m’entraîne seul.</div>
+    <div class="home">
+      ${PALIERS.map(p => card((p === 'B' ? '' : p + '. ') + INFO[p].t, INFO[p].s, statLine(p), store.stats[p] && LV.some(l => store.stats[p][l][0]), `data-p="${p}"`)).join('')}
+      ${card('D.S. blanc', 'Deux sujets différents : tu rédiges sur une feuille, puis tu vérifies tes résultats et tu lis la correction.', 'Sujets A et B', false, 'data-nav2="ds"')}
+      ${card('Séries chronométrées', '8 calculs à faire le plus juste et le plus vite possible, sans calculatrice.', nb ? nb + ' essai' + (nb > 1 ? 's' : '') : 'pas d’essai', nb > 0, 'data-nav2="series"')}
+      ${card('Mon travail', 'Ce que j’ai fait seul, palier par palier, et mon code pour le professeur.', '', false, 'data-nav2="travail"')}
+    </div>`;
+  document.querySelectorAll('[data-p]').forEach(b => b.onclick = () => go({ name: 'palier', p: b.dataset.p === 'B' ? 'B' : +b.dataset.p, tab: 'cours' }));
+  document.querySelectorAll('[data-nav2]').forEach(b => b.onclick = () => go({ name: b.dataset.nav2 }));
 }
 
 /* ---------- Palier ---------- */
-const TABS = [['cours', 'Le cours'], ['exemple', 'Je regarde un exemple'], ['guide', 'Je fais avec de l’aide'], ['seul', 'Je fais seul']];
+const TABS = [['cours', 'Le cours'], ['exemple', 'Je regarde un exemple'], ['guide', 'Je m’entraîne avec de l’aide'], ['seul', 'Je m’entraîne seul']];
 function renderPalier() {
   const p = view.p;
-  setMarge(`<button class="m-back" id="back">Sommaire</button>
-    <div class="m-pal">${p === 'B' ? 'Bilan' : 'Palier ' + p}</div>
-    <div class="etapes" role="tablist" aria-label="Étapes">${TABS.map(([k, l], i) => `<button role="tab" aria-selected="${view.tab === k}" class="tab ${view.tab === k ? 'on' : ''}" data-tab="${k}"><span class="tn">${i + 1}</span><span>${l}</span></button>`).join('')}</div>`);
-  $('#main').innerHTML = `<h2 class="titre">${INFO[p].t}</h2><div id="pane" class="pane"></div>`;
-  $('#back').onclick = () => go({ name: 'home' });
+  setMarge('');
+  $('#main').innerHTML = `<h2 class="titre">${p === 'B' ? '' : p + '. '}${INFO[p].t}</h2>
+    <div class="etapes" role="tablist" aria-label="Étapes">${TABS.map(([k, l]) => `<button role="tab" aria-selected="${view.tab === k}" class="tab ${view.tab === k ? 'on' : ''}" data-tab="${k}"><span>${l}</span></button>`).join('')}</div>
+    <div id="pane" class="pane"></div>`;
+  { const bk = $('#back'); if (bk) bk.onclick = () => go({ name: 'home' }); }
   document.querySelectorAll('.tab').forEach(b => b.onclick = () => { stopVideo(); view.tab = b.dataset.tab; view.sess = null; renderPalier(); requestAnimationFrame(() => drawArrows()); });
   ({ cours: paneCours, exemple: paneExemple, guide: paneGuide, seul: paneSeul })[view.tab](p);
   requestAnimationFrame(() => drawArrows());
@@ -1721,7 +1720,7 @@ function paneExemple(p) {
       <button role="radio" aria-checked="${meth === 'tableau'}" class="mbtn ${meth === 'tableau' ? 'on' : ''}" data-meth="tableau">avec le tableau</button></div>` : '';
   $('#pane').innerHTML = `${levelChips(lv)}${methChoice}<div class="video" id="video"></div>
     <div class="actions"><button id="exnew">Un autre exemple</button></div>
-    ${nextTabBtn('J’ai compris : je fais un exercice avec de l’aide', 'guide')}`;
+    ${nextTabBtn('J’ai compris : je m’entraîne avec de l’aide', 'guide')}`;
   document.querySelectorAll('.chip').forEach(c => c.onclick = () => { view.exLv = c.dataset.lv; view.exQ = null; paneExemple(p); });
   document.querySelectorAll('.mbtn').forEach(b => b.onclick = () => { view.exMeth = b.dataset.meth; paneExemple(p); });
   $('#exnew').onclick = () => { view.exQ = null; paneExemple(p); };
@@ -1852,7 +1851,7 @@ function paneGuide(p) {
       <div class="guided">${rows}</div>
       ${g.fin ? correctionHTML(q, 'La correction complète') + '<div class="actions"><button class="primary" id="gnew">Un autre exercice avec de l’aide</button></div>' : ''}
     </div>
-    ${g.fin ? nextTabBtn('Je suis prêt : je fais seul', 'seul') : ''}`;
+    ${g.fin ? nextTabBtn('Je suis prêt : je m’entraîne seul', 'seul') : ''}`;
   document.querySelectorAll('.chip').forEach(c => c.onclick = () => { view.gLv = c.dataset.lv; view.g = null; paneGuide(p); requestAnimationFrame(() => drawArrows()); });
   document.querySelectorAll('.mbtn').forEach(bt => bt.onclick = () => { view.gMeth = bt.dataset.meth; paneGuide(p); requestAnimationFrame(() => drawArrows()); });
   const nw = $('#gnew'); if (nw) nw.onclick = () => { view.g = null; paneGuide(p); requestAnimationFrame(() => drawArrows()); };
@@ -2092,13 +2091,13 @@ function renderSeries() {
   const R0 = view.run;
   if (!R0) {
     const hist = store.series.slice(-15).reverse();
-    setMarge('<button class="m-back" id="back">Sommaire</button>');
+    setMarge('');
     $('#main').innerHTML = `
       <h2 class="titre">Séries chronométrées</h2>
       <div class="card"><p>Objectif : 8 bonnes réponses sur 8 en moins de 5 minutes, sans calculatrice. Le chronomètre démarre quand tu cliques sur une série. Tu as un seul essai par calcul : la correction s’affiche à la fin.</p>
       <div class="slist">${Object.entries(SERIES).map(([k, s]) => { const tries = store.series.filter(h => h.s === k); const best = tries.reduce((a, h) => Math.max(a, h.score), 0); return `<button class="som solo" data-s="${k}"><span class="som-t"><span class="som-h">${s.t}</span></span><span class="som-l" aria-hidden="true"></span><span class="som-st ${tries.length ? 'started' : ''}">${tries.length ? 'meilleur score : ' + best + ' / 8' : 'pas d’essai'}</span></button>`; }).join('')}</div></div>
       <div class="card"><h2 class="sous">Mes essais</h2>${hist.length ? `<table class="recap"><tr><th>Date</th><th>Série</th><th>Score</th><th>Temps</th></tr>${hist.map(h => `<tr><td>${new Date(h.d).toLocaleDateString('fr-FR')}</td><td>${h.s}</td><td>${h.score} / 8</td><td>${fmtTime(h.ms)}</td></tr>`).join('')}</table>` : '<p class="muted">Pas encore d’essai.</p>'}</div>`;
-    $('#back').onclick = () => go({ name: 'home' });
+    { const bk = $('#back'); if (bk) bk.onclick = () => go({ name: 'home' }); }
     document.querySelectorAll('[data-s]').forEach(b => b.onclick = () => { view.run = { s: b.dataset.s, qs: SERIES[b.dataset.s].mk(), i: 0, ans: [], t0: Date.now() }; renderSeries(); });
     return;
   }
@@ -2175,11 +2174,11 @@ function travailTable(get) {
 }
 function renderTravail() {
   const code = makeCode();
-  setMarge('<button class="m-back" id="back">Sommaire</button>');
+  setMarge('');
   $('#main').innerHTML = `
     <h2 class="titre">Mon travail</h2><p class="lead">Ce que j’ai fait seul, palier par palier.</p>
     <div class="card">${travailTable((p, l) => store.stats[p][l])}
-      <p class="muted">Seuls les exercices de l’onglet « Je fais seul » sont comptés.</p></div>
+      <p class="muted">Seuls les exercices de l’onglet « Je m’entraîne seul » sont comptés.</p></div>
     <div class="card"><h2 class="sous">Mon code pour le professeur</h2>
       <p>Ce code résume ton travail. Copie-le et envoie-le à ton professeur s’il te le demande.</p>
       <div class="code" id="code">${code}</div>
@@ -2189,7 +2188,7 @@ function renderTravail() {
       <input id="dec" type="text" placeholder="CL…" autocomplete="off"><div class="actions"><button id="decb">Lire le code</button></div><div id="decout"></div>
       <hr><p class="muted">Effacer les données de cet ordinateur (tous les exercices et les essais des séries) :</p><button id="reset">Tout effacer</button>
     </details>`;
-  $('#back').onclick = () => go({ name: 'home' });
+  { const bk = $('#back'); if (bk) bk.onclick = () => go({ name: 'home' }); }
   $('#copy').onclick = () => { const t = code; (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => { $('#copy').textContent = 'Code copié'; }).catch(() => { const r = document.createRange(); r.selectNode($('#code')); getSelection().removeAllRanges(); getSelection().addRange(r); }); };
   $('#decb').onclick = () => {
     const d = decodeCode($('#dec').value);
@@ -2263,20 +2262,19 @@ function dsCheck(it, v) {
 }
 function renderDS() {
   const sub = view.sujet || 'A', exos = DS[sub], total = exos.reduce((s, e) => s + e.pts, 0);
-  setMarge(`<button class="m-back" id="back">Sommaire</button><div class="m-pal">D.S. blanc</div>
-    <div class="etapes">${['A', 'B'].map(k => `<button class="tab ${k === sub ? 'on' : ''}" data-sujet="${k}"><span>Sujet ${k}</span></button>`).join('')}</div>`);
+  setMarge(`<div class="etapes">${['A', 'B'].map(k => `<button class="tab ${k === sub ? 'on' : ''}" data-sujet="${k}"><span>Sujet ${k}</span></button>`).join('')}</div>`);
   let n = 0;
   $('#main').innerHTML = `<h2 class="titre">D.S. blanc · Sujet ${sub}</h2>
-    <p class="lead">Rédige toutes tes réponses sur une feuille : les calculs ligne par ligne et une phrase de conclusion quand on te demande de justifier. Le D.S. est noté sur ${total} points.</p>
+    <div class="card"><p class="lead">Rédige toutes tes réponses sur une feuille : les calculs ligne par ligne et une phrase de conclusion quand on te demande de justifier. Le D.S. est noté sur ${total} points.</p>
     <p class="consigne noprint">Quand tu as fini, écris seulement le résultat final de chaque question dans sa case, puis vérifie. Pour écrire x², tape x^2 ou x².</p>
-    <div class="actions noprint"><button id="dsprint">Imprimer le sujet</button></div>
-    ${exos.map((ex, ei) => `<section class="ds-exo"><h3>Exercice ${ei + 1} · ${ex.t} <span class="muted small">(${ex.pts} points)</span></h3>${ex.head}
+    <div class="actions noprint"><button id="dsprint">Imprimer le sujet</button></div></div>
+    ${exos.map((ex, ei) => `<section class="ds-exo card"><h3>Exercice ${ei + 1} · ${ex.t} <span class="muted small">(${ex.pts} points)</span></h3>${ex.head}
       ${ex.items.map((it, qi) => { const id = n++; return `<div class="ds-item"><div class="ds-q">${ex.items.length > 1 ? `<b>${'abcd'[qi]})</b> ` : ''}${it.q}</div>
         <div class="ds-ans noprint" id="dsa${id}">${it.options ? `<div class="ds-radios" role="radiogroup">${it.options.map(o => `<label><input type="radio" name="dsr${id}" value="${esc(o)}"> ${o}</label>`).join('')}</div>`
           : `<label class="ds-lab" for="dsi${id}">Résultat :</label><input class="dsin" id="dsi${id}" type="text" autocomplete="off" spellcheck="false">`}</div></div>`; }).join('')}
       <div class="corr ds-corr" hidden><div class="corr-t">Correction de l’exercice ${ei + 1}</div>${ex.items.map((it, qi) => `${ex.items.length > 1 ? `<p><b>${'abcd'[qi]})</b></p>` : ''}<div class="calc">${it.c}</div>`).join('')}</div></section>`).join('')}
     <div class="actions noprint"><button class="primary" id="dscheck">Vérifier mes résultats et afficher la correction</button></div><div id="dsres"></div>`;
-  $('#back').onclick = () => go({ name: 'home' });
+  { const bk = $('#back'); if (bk) bk.onclick = () => go({ name: 'home' }); }
   document.querySelectorAll('[data-sujet]').forEach(b => b.onclick = () => { view.sujet = b.dataset.sujet; render(); window.scrollTo(0, 0); });
   $('#dsprint').onclick = () => window.print();
   document.querySelectorAll('.dsin').forEach(el => el.addEventListener('input', () => starToTimes(el)));
@@ -2297,8 +2295,9 @@ function renderDS() {
 }
 
 /* ---------- Démarrage ---------- */
-document.querySelectorAll('.topnav button').forEach(b => b.onclick = () => { view.run = null; go({ name: b.dataset.nav }); });
-$('#navsel').onchange = e => { view.run = null; go({ name: e.target.value }); };
+function navGo(k) { stopVideo(); clearInterval(TIMER); view.run = null; if (k[0] === 'p') go({ name: 'palier', p: k === 'pB' ? 'B' : +k.slice(1), tab: 'cours' }); else go({ name: k }); }
+document.querySelectorAll('.topnav button').forEach(b => b.onclick = () => navGo(b.dataset.nav));
+$('#navsel').onchange = e => navGo(e.target.value);
 render();
 
 </script>
