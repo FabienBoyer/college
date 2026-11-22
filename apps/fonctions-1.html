@@ -300,33 +300,53 @@ header{position:static;background:transparent;border:0;z-index:auto}header h1{fo
 
 .back-home{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:0 0 16px;padding:8px 14px;border:2px solid var(--ink);border-radius:7px;background:var(--card);color:var(--ink);font:inherit;font-size:1rem;font-weight:700;text-decoration:none}.back-home:hover{background:#eef2fb}.back-home:focus-visible{outline:3px solid var(--red);outline-offset:3px}
 i.m{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-style:italic;text-transform:none;letter-spacing:0}
-</style></head><body><div class="wrap"><header><a class="back-home" href="../">← Toutes les applications</a><h1><span>Chapitre 3 : Fonctions (1)</span></h1><p>Je prépare mon D.S. de fin de chapitre.</p><nav aria-label="Parcours du chapitre"><button type="button" data-tab="home" aria-selected="true">Sommaire</button><button type="button" data-tab="cours" aria-selected="false">Cours</button><button type="button" data-tab="m1" aria-selected="false">1. Découvrir</button><button type="button" data-tab="m2" aria-selected="false">2. Vocabulaire</button><button type="button" data-tab="m3" aria-selected="false">3. Lecture graphique</button><button type="button" data-tab="m4" aria-selected="false">4. Calculs</button><button type="button" data-tab="m5" aria-selected="false">5. D.S. blanc</button><button type="button" class="icon" id="fs" title="Plein écran">Plein écran</button></nav></header><main><section id="home"><div class="retenir"><b>À retenir</b>Une fonction associe à un nombre de départ une seule image, lorsqu’elle est définie pour ce nombre. Un nombre peut avoir aucun, un ou plusieurs antécédents.</div><div class="home"><article class="card"><h2>1. Découvrir une fonction</h2><p>Passer d’une phrase à une formule, à un tableau et à une courbe.</p><button type="button" class="btn" data-open="m1">Commencer</button></article><article class="card"><h2>2. Images et antécédents</h2><p>Traduire une information entre phrase, notation et coordonnées.</p><button type="button" class="btn" data-open="m2">Commencer</button></article><article class="card"><h2>3. Lecture graphique</h2><p>Lire une image et chercher tous les antécédents sur une courbe.</p><button type="button" class="btn" data-open="m3">Commencer</button></article><article class="card"><h2>4. Calculs et programmes</h2><p>Calculer des images, compléter un tableau et chercher un antécédent.</p><button type="button" class="btn" data-open="m4">Commencer</button></article><article class="card"><h2>5. D.S. blanc</h2><p>Deux sujets pour se préparer, avec vérification et correction.</p><button type="button" class="btn" data-open="m5">Commencer</button></article></div><p><button type="button" class="btn light" data-open="cours">Relire le cours</button></p></section><section id="cours" hidden><h2 class="ttl"><span>Cours · Fonctions (1)</span></h2><div class="card">
-<h3>1. Fonction, image et antécédent</h3>
-<div class="retenir"><b>Définition</b>Une fonction est un procédé qui, à un nombre de départ pour lequel elle est définie, associe un seul nombre obtenu, appelé son image.</div>
-<p>La notation <span class="m">f(x)</span> se lit « f de x ». Si <span class="m">f(a) = b</span>, alors :</p>
-<ul><li><span class="m">b</span> est <strong>l’image de a</strong> par f ;</li><li><span class="m">a</span> est <strong>un antécédent de b</strong> par f ;</li><li>le point de coordonnées <span class="m">(a ; b)</span> appartient à la courbe représentative de f.</li></ul>
-<p>On peut aussi écrire <span class="m">f : a ↦ b</span>. Chaque nombre de départ autorisé a une seule image. Un nombre peut avoir aucun, un ou plusieurs antécédents.</p>
-<div class="seyes"><h4>Exemple</h4><p>Si f(−1) = 3, alors 3 est l’image de −1.</p><p>−1 est un antécédent de 3.</p><p>Le point (−1 ; 3) appartient à la courbe de f.</p></div>
-<h3>2. Lire dans un tableau</h3>
-<p>Une colonne associe le nombre de départ, sur la ligne x, à son image, sur la ligne f(x). Pour chercher des antécédents, on repère la valeur demandée dans la ligne des images puis on remonte à la ligne x.</p>
-<table class="tab m"><tr><th>x</th><td>−2</td><td>0</td><td>2</td></tr><tr><th>f(x)</th><td>0</td><td>0</td><td>8</td></tr></table>
-<p>On lit f(2) = 8. Dans ce tableau, −2 et 0 sont des antécédents de 0. Un tableau partiel ne permet pas d’affirmer qu’il n’en existe pas d’autres.</p>
-<h3>3. Lire sur une courbe</h3>
-<ol><li><strong>Image :</strong> partir du nombre de départ sur l’axe horizontal, rejoindre la courbe verticalement, puis lire l’ordonnée sur l’axe vertical.</li><li><strong>Antécédents :</strong> regarder toutes les intersections de la courbe avec la droite horizontale à la hauteur demandée, puis lire les abscisses correspondantes.</li></ol>
-<p>S’il n’y a aucune intersection, il n’y a aucun antécédent <strong>sur l’intervalle représenté</strong>. Une lecture graphique peut être approchée.</p>
-<h3>4. Calculer une image avec une formule</h3>
-<p>On remplace chaque x par le nombre donné, entre parenthèses s’il est négatif, puis on respecte les priorités opératoires.</p>
-<div class="seyes"><h4>Exemple · f(x) = 10 − 2x</h4><p>f(3) = 10 − 2 × 3 = 4.</p><p>f(−4) = 10 − 2 × (−4) = 18.</p></div>
-<h3>5. Chercher un antécédent par le calcul</h3>
-<p>Chercher un antécédent de b revient à chercher x tel que f(x) = b.</p>
-<div class="seyes"><h4>Exemple · Antécédent de 0</h4><p>Pour f(x) = 10 − 2x, on résout 10 − 2x = 0.</p><p>En soustrayant 10 : −2x = −10.</p><p>En divisant par −2 : x = 5.</p><p>On vérifie : f(5) = 10 − 2 × 5 = 0.</p></div>
-<h3>6. Traduire un programme de calcul</h3>
-<p>« Choisir un nombre, soustraire 4, puis multiplier par le nombre de départ » donne <span class="m">p(x) = (x − 4) × x</span>.</p>
-<p>Avec 7 : <span class="m">(7 − 4) × 7 = 21</span>. Avec −1 : <span class="m">(−1 − 4) × (−1) = 5</span>. Les nombres 0 et 4 donnent tous deux 0.</p>
+
+/* Chantier 5 : navigation, mise en page, moteur d’exercices */
+header .toprow{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 0 16px}header .toprow .back-home{margin:0}.fs-btn{margin:0;min-height:44px;font-size:.95rem}
+.lbl{text-transform:none;letter-spacing:0;font-size:1rem;font-weight:700;color:var(--ink)}.answer .lab{text-transform:none;letter-spacing:0;font-size:.9rem}
+.tk,.tb text,.badge text{font-family:"STIX Two Text","Cambria Math",Cambria,serif}.tk{font-size:16px}#m1Svg .tk{font-size:20px}
+.qcard .question{margin:.1em 0 .3em}.qcard .consigne{margin:0 0 .6em}.qcard .answer{min-height:0;gap:2px;padding:.5em .8em}.qcard .actions{margin-top:10px}.qcard .fb{margin-top:10px}.qcard .step{margin:.4em 0 .8em}
+.nw{white-space:nowrap}
+.demo{margin-bottom:14px}.demo ol{margin:.2em 0 0;padding-left:1.4em}.demo li{margin:.15em 0}
+.choices{display:flex;flex-wrap:wrap;gap:8px}.ch{font:inherit;min-height:44px;padding:.35em .9em;border:2px solid #cfd8ea;border-radius:8px;background:#fff;color:var(--text);cursor:pointer;text-align:left}.ch:hover:not(:disabled){border-color:var(--ink2)}.ch.sel{border-color:var(--ink2);background:#eef2fb;font-weight:700}.choices.bad .ch.sel{border-color:var(--ko);background:var(--kobg)}.ch.good{border-color:var(--ok);background:var(--okbg)}.ch:disabled{cursor:default}
+.aide{background:#f6f8fe;border-left:3px solid var(--ink2);padding:.3em .6em;color:var(--text);margin:.2em 0 .5em}.exo-head p{margin-top:0}.step .btn{min-height:44px}
+details.cours-part{background:var(--card);border:1px solid #e2e6ef;border-radius:8px;padding:.5em 1em;margin:0 0 14px}details.cours-part>summary{cursor:pointer;color:var(--ink);font-weight:700;min-height:32px}details.cours-part[open]>summary{margin-bottom:.4em}details.cours-part h3:first-child{margin-top:.4em}
+.ds-item{margin:.8em 0}.ds-q{margin:.1em 0 .35em}.ds-ans{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:.3em 0 .6em;padding:.4em .7em}.ds-ans .calc-input{width:13em}.ds-corr{margin-top:.8em}.ds-exo svg{max-width:600px;margin:6px auto}
+[hidden]{display:none!important}
+.navsel{display:none}
+@media (max-width:600px){nav{border-bottom:none}nav button{display:none}nav .navsel{display:block;width:100%;min-height:44px;margin:0 0 4px;font-family:"Atkinson Hyperlegible","STIX Two Text",sans-serif;font-size:1rem;font-weight:700;color:var(--ink);border:2px solid var(--ink);border-radius:8px;background:var(--card)}.fs-btn{display:none}.tk{font-size:28px}.tb text{font-size:26px}.badge text{font-size:26px}.toolbar .chip{font-size:1rem}}
+@media print{.ds-ans,.ds-corr,.choices{display:none!important}.ds-q{break-after:avoid}}
+.seyes p{font-family:"STIX Two Text",Cambria,serif;font-size:1.08rem}
+</style></head><body><div class="wrap"><header><div class="toprow"><a class="back-home" href="../">← Toutes les applications</a><button type="button" class="btn light fs-btn" id="fs">Plein écran</button></div><h1><span>Chapitre 3 : Fonctions (1)</span></h1><p>Je prépare mon D.S. de fin de chapitre.</p><nav aria-label="Parcours du chapitre"><select class="navsel" aria-label="Aller à une partie du chapitre"><option value="home">Sommaire</option><option value="cours">Cours</option><option value="m1">1. Quatre représentations</option><option value="m2">2. Image et antécédent</option><option value="m3">3. Lecture graphique</option><option value="m4">4. Calculs et programmes</option><option value="m5">5. D.S. blanc</option></select><button type="button" data-tab="home" aria-selected="true">Sommaire</button><button type="button" data-tab="cours" aria-selected="false">Cours</button><button type="button" data-tab="m1" aria-selected="false">1. Quatre représentations</button><button type="button" data-tab="m2" aria-selected="false">2. Vocabulaire</button><button type="button" data-tab="m3" aria-selected="false">3. Lecture graphique</button><button type="button" data-tab="m4" aria-selected="false">4. Calculs</button><button type="button" data-tab="m5" aria-selected="false">5. D.S. blanc</button></nav></header><main><section id="home"><div class="retenir"><b>À retenir</b>Une fonction associe à chaque nombre de départ un seul nombre, appelé son image. Un nombre peut avoir aucun, un ou plusieurs antécédents.</div><div class="home"><article class="card"><h2>1. Quatre représentations</h2><p>Décrire une même fonction par une phrase, une formule, un tableau et une courbe.</p><button type="button" class="btn" data-open="m1">Commencer</button></article><article class="card"><h2>2. Image et antécédent</h2><p>Traduire une information entre phrase, notation et coordonnées.</p><button type="button" class="btn" data-open="m2">Commencer</button></article><article class="card"><h2>3. Lecture graphique</h2><p>Lire une image et chercher tous les antécédents sur une courbe.</p><button type="button" class="btn" data-open="m3">Commencer</button></article><article class="card"><h2>4. Calculs et programmes</h2><p>Calculer des images, compléter un tableau, chercher un antécédent et traduire un programme de calcul.</p><button type="button" class="btn" data-open="m4">Commencer</button></article><article class="card"><h2>5. D.S. blanc</h2><p>Deux sujets différents : tu rédiges sur une feuille, puis tu vérifies tes résultats et tu lis la correction de chaque exercice.</p><button type="button" class="btn" data-open="m5">Commencer</button></article></div></section><section id="cours" hidden><h2 class="ttl"><span>Cours · Fonctions (1)</span></h2><div class="card">
+<div data-mod="m1"><h3>1. Une fonction et ses quatre représentations</h3>
+<div class="retenir"><b>Définition</b>Une fonction est un procédé qui, à un nombre de départ, associe un seul nombre, appelé son <strong>image</strong>.</div>
+<p>On appelle souvent la fonction f et le nombre de départ x. L’image de x se note f(x), et se lit « f de x ».</p>
+<p>Une même fonction peut être décrite de quatre façons : par une phrase, par une formule, par un tableau de valeurs ou par une courbe.</p>
+<div class="seyes"><h4>Exemple</h4><p>Phrase : à tout nombre, la fonction f associe son triple diminué de 5.</p><p>Formule : f(x) = 3x − 5.</p><p>Tableau : pour x = 0, 1 et 2, on obtient −5, −2 et 1.</p><p>Courbe : les points (0&nbsp;;&nbsp;−5), (1&nbsp;;&nbsp;−2) et (2&nbsp;;&nbsp;1) sont sur la courbe de f.</p></div></div>
+<div data-mod="m2"><h3>2. Image et antécédent</h3>
+<div class="retenir"><b>Vocabulaire</b>Si f(a) = b, alors b est <strong>l’image</strong> de a par f, et a est <strong>un antécédent</strong> de b par f. Le point de coordonnées (a&nbsp;;&nbsp;b) appartient à la courbe de f.</div>
+<p>Un nombre de départ a une seule image. Un nombre peut avoir aucun, un ou plusieurs antécédents.</p>
+<div class="seyes"><h4>Exemple</h4><p>On sait que g(2) = 9.</p><p>9 est l’image de 2 par g, et 2 est un antécédent de 9 par g.</p><p>Le point de coordonnées (2&nbsp;;&nbsp;9) appartient à la courbe de g.</p></div>
+<p>Dans un tableau de valeurs, la première ligne contient les nombres de départ et la deuxième ligne contient leurs images.</p>
+<div class="table-scroll"><table class="tab m"><tr><th>x</th><td>−2</td><td>−1</td><td>0</td><td>1</td><td>2</td></tr><tr><th>h(x)</th><td>3</td><td>0</td><td>−1</td><td>0</td><td>3</td></tr></table></div>
+<p>On lit h(−2) = 3. Dans ce tableau, les antécédents de 0 sont −1 et 1.</p></div>
+<div data-mod="m3"><h3>3. Lire sur une courbe</h3>
+<div class="retenir"><b>Méthode</b><ul><li><strong>Image de a :</strong> je pars de a sur l’axe horizontal, je rejoins la courbe verticalement, puis je lis l’ordonnée sur l’axe vertical.</li><li><strong>Antécédents de b :</strong> je trace la droite horizontale à la hauteur b, je repère tous ses points communs avec la courbe, puis je lis leurs abscisses.</li></ul></div>
+<p>Si la droite ne coupe pas la courbe, le nombre b n’a aucun antécédent sur l’intervalle représenté.</p></div>
+<div data-mod="m4"><h3>4. Calculer avec une formule</h3>
+<p><strong>Calculer une image.</strong> On remplace x par le nombre donné. Un nombre négatif s’écrit entre parenthèses. On respecte les priorités opératoires.</p>
+<div class="seyes"><h4>Exemple · f(x) = 3x − 5</h4><p>f(4) = 3 × 4 − 5 = 12 − 5 = 7.</p><p>f(−2) = 3 × (−2) − 5 = −6 − 5 = −11.</p></div>
+<p><strong>Chercher un antécédent.</strong> Chercher un antécédent de 10, c’est chercher le nombre x tel que f(x) = 10. On résout une équation.</p>
+<div class="seyes"><h4>Exemple · antécédent de 10</h4><p>3x − 5 = 10.</p><p>J’ajoute 5 aux deux membres : 3x = 15.</p><p>Je divise les deux membres par 3 : x = 5.</p><p>Je vérifie : f(5) = 3 × 5 − 5 = 10. L’antécédent de 10 par f est 5.</p></div>
+<p><strong>Traduire un programme de calcul.</strong> On note x le nombre choisi, puis on écrit chaque étape du programme.</p>
+<div class="seyes"><h4>Exemple</h4><p>Choisir un nombre. Ajouter 3. Multiplier le résultat par le nombre choisi.</p><p>Avec le nombre x, on obtient p(x) = (x + 3) × x.</p><p>Avec 5 : (5 + 3) × 5 = 8 × 5 = 40.</p></div></div>
 </div></section>
 
-<!-- ================= MODE 1 ================= -->
-<section id="m1" hidden><h2 class="ttl"><span>1. Découvrir une fonction</span></h2><div class="retenir"><b>À retenir</b>Dans f(x), x est le nombre de départ ; f(x) est son image. On lit « f de x ». Une fonction peut être décrite par un texte, une formule, un tableau ou une courbe.</div>
+<!-- ================= 1. Quatre représentations ================= -->
+<section id="m1" hidden><h2 class="ttl"><span>1. Quatre représentations</span></h2><div class="subtabs learning-modes"><button type="button" data-mode="exemple" class="on">Je regarde un exemple</button><button type="button" data-mode="aide" class="">Je m’entraîne avec de l’aide</button><button type="button" data-mode="seul" class="">Je m’entraîne seul</button></div><div class="cours-slot" data-mod="m1"></div><div class="retenir"><b>À retenir</b>Dans f(x), x est le nombre de départ et f(x) est son image. Une fonction peut être décrite par une phrase, une formule, un tableau ou une courbe.</div>
+<div id="m1Explore">
+  <div class="card demo"><h2>Comment passer d’une représentation à l’autre</h2><ol><li>La phrase dit ce que la fonction fait au nombre de départ.</li><li>La formule traduit la phrase. Pour calculer une image, on remplace x par le nombre de départ.</li><li>Le tableau range les nombres de départ sur la première ligne et leurs images sur la deuxième.</li><li>Chaque colonne du tableau donne un point de la courbe : (nombre de départ ; image).</li></ol></div>
+  <p class="note">Choisis une fonction, puis un nombre de départ : les quatre cadres changent ensemble. En <span class="ca">rouge</span>, le nombre de départ ; en <span class="cb">bleu</span>, son image. Tu peux aussi cliquer dans le tableau ou sur les points de la courbe.</p>
   <div class="toolbar">
     <div class="group"><span class="lbl">Fonction</span><span id="fnChips" class="group"></span></div>
     <div class="group"><span class="lbl">Nombre de départ <i>x</i></span><span id="xChips" class="group"></span></div>
@@ -334,7 +354,7 @@ i.m{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-style:italic;t
   <div class="grid1">
     <div class="col">
       <div class="card" data-mask>
-        <h2>Texte <button class="icon" data-toggle>masquer</button></h2>
+        <h2>Phrase <button class="icon" data-toggle>masquer</button></h2>
         <div class="body"><div id="m1Texte" class="big"></div></div>
       </div>
       <div class="card" data-mask>
@@ -347,7 +367,7 @@ i.m{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-style:italic;t
       </div>
     </div>
     <div class="card" data-mask>
-      <h2>Graphique <button class="icon" data-toggle>masquer</button></h2>
+      <h2>Courbe <button class="icon" data-toggle>masquer</button></h2>
       <div class="body"><svg id="m1Svg"></svg></div>
     </div>
   </div>
@@ -358,57 +378,65 @@ i.m{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-style:italic;t
       <ul id="m1Vocab"></ul>
     </div>
   </div>
-  <p class="note">En <span class="ca">rouge</span> : le nombre de départ (un antécédent). En <span class="cb">bleu</span> : le nombre obtenu (son image). On peut cliquer dans le tableau ou sur les points de la courbe. Tu peux masquer un cadre pour vérifier que tu sais retrouver les informations.</p>
+</div>
+<div id="m1Practice" hidden><div class="card" id="m1Panel"></div></div>
 </section>
 
-<!-- ================= MODE 2 ================= -->
-<section id="m2" hidden><h2 class="ttl"><span>2. Images et antécédents</span></h2><div class="subtabs learning-modes"><button type="button" data-mode="exemple" class="on">Je regarde un exemple</button><button type="button" data-mode="aide" class="">Je m’entraîne avec de l’aide</button><button type="button" data-mode="seul" class="">Je m’entraîne seul</button></div><div class="retenir" id="m2Method"><b>Méthode</b>Repère le nombre de départ et le nombre obtenu. f(a) = b signifie que b est l’image de a et que a est un antécédent de b. Le point (a ; b) appartient à la courbe.</div>
+<!-- ================= 2. Image et antécédent ================= -->
+<section id="m2" hidden><h2 class="ttl"><span>2. Image et antécédent</span></h2><div class="subtabs learning-modes"><button type="button" data-mode="exemple" class="on">Je regarde un exemple</button><button type="button" data-mode="aide" class="">Je m’entraîne avec de l’aide</button><button type="button" data-mode="seul" class="">Je m’entraîne seul</button></div><div class="cours-slot" data-mod="m2"></div><div class="retenir" id="m2Method"><b>Méthode</b>Je repère le nombre de départ et le nombre obtenu. Si f(a) = b, alors b est l’image de a, et a est un antécédent de b. Le point (a ; b) appartient à la courbe.</div>
   <div class="card narrow">
     <h2>On sait que…</h2>
     <div class="prompt m" id="m2Prompt"></div>
-    <div class="q">Quelles affirmations traduisent la même information ? <span style="font-weight:400;color:var(--muted)">(une ou plusieurs réponses)</span></div>
-    <div class="opts" id="m2Opts"></div>
-    <div class="actions">
-      <button class="btn primary" id="m2Valid">Valider</button>
-      <button class="btn" id="m2Next">Question suivante</button>
-      <span class="score" id="m2Score"></span>
+    <div id="m2Guide"></div>
+    <div id="m2Main">
+      <div class="q">Quelles phrases traduisent la même information ? <span style="font-weight:400;color:var(--muted)">(une ou plusieurs réponses)</span></div>
+      <div class="opts" id="m2Opts"></div>
+      <div class="actions">
+        <button class="btn primary" id="m2Valid">Valider</button>
+        <button class="btn light" id="m2Next">Question suivante</button>
+        <span class="score" id="m2Score"></span>
+      </div>
+      <div class="fb" id="m2Fb"></div>
     </div>
-    <div class="fb" id="m2Fb"></div>
   </div>
 </section>
 
-<!-- ================= MODE 3 ================= -->
-<section id="m3" hidden><h2 class="ttl"><span>3. Lecture graphique</span></h2><div class="subtabs learning-modes"><button type="button" data-mode="exemple" class="on">Je regarde un exemple</button><button type="button" data-mode="aide" class="">Je m’entraîne avec de l’aide</button><button type="button" data-mode="seul" class="">Je m’entraîne seul</button></div><div class="retenir" id="m3Method"><b>Méthode</b>Image : partir de l’axe horizontal, rejoindre la courbe, puis lire l’ordonnée. Antécédents : partir de la hauteur demandée et regarder toutes les intersections avec la courbe. On travaille uniquement sur l’intervalle représenté, de −5 à 5.</div>
+<!-- ================= 3. Lecture graphique ================= -->
+<section id="m3" hidden><h2 class="ttl"><span>3. Lecture graphique</span></h2><div class="subtabs learning-modes"><button type="button" data-mode="exemple" class="on">Je regarde un exemple</button><button type="button" data-mode="aide" class="">Je m’entraîne avec de l’aide</button><button type="button" data-mode="seul" class="">Je m’entraîne seul</button></div><div class="cours-slot" data-mod="m3"></div><div class="retenir" id="m3Method"><b>Méthode</b>Image : je pars de l’axe horizontal, je rejoins la courbe, puis je lis l’ordonnée. Antécédents : je pars de la hauteur demandée et je regarde tous les points communs avec la courbe. On travaille seulement sur l’intervalle représenté, de −5 à 5.</div>
   <div class="grid3">
     <div class="card">
       <h2 id="m3Title">Courbe représentative</h2>
       <svg id="m3Svg"></svg>
     </div>
-    <div class="card">
+    <div class="card qcard">
       <h2>Question</h2>
       <div class="question" id="m3Q"></div>
       <div class="consigne" id="m3C"></div>
+      <div id="m3Guide"></div>
       <div class="answer"><span class="lab">Ta réponse</span><span class="m" id="m3A"></span></div>
       <div class="actions">
-        <button class="btn none" id="m3None" aria-pressed="false">Aucun antécédent</button>
-        <button class="btn ghost" id="m3Hint">Coup de pouce</button>
-      </div>
-      <div class="actions">
+        <button class="btn light none" id="m3None" aria-pressed="false">Aucun antécédent</button>
         <button class="btn primary" id="m3Valid">Valider</button>
-        <button class="btn" id="m3Next">Question suivante</button>
-        <button class="btn ghost" id="m3New">Nouvelle courbe</button>
       </div>
-      <div class="actions"><span class="score" id="m3Score" style="margin-left:0"></span></div>
       <div class="fb" id="m3Fb"></div>
+      <div class="actions">
+        <button class="btn light" id="m3Next">Question suivante</button>
+        <button class="btn light" id="m3New">Nouvelle courbe</button>
+        <span class="score" id="m3Score"></span>
+      </div>
     </div>
   </div>
 </section>
-<section id="m4" hidden><h2 class="ttl"><span>4. Calculs et programmes</span></h2><div class="subtabs learning-modes"><button type="button" data-mode="exemple" class="on">Je regarde un exemple</button><button type="button" data-mode="aide" class="">Je m’entraîne avec de l’aide</button><button type="button" data-mode="seul" class="">Je m’entraîne seul</button></div>
+<section id="m4" hidden><h2 class="ttl"><span>4. Calculs et programmes</span></h2><div class="subtabs learning-modes"><button type="button" data-mode="exemple" class="on">Je regarde un exemple</button><button type="button" data-mode="aide" class="">Je m’entraîne avec de l’aide</button><button type="button" data-mode="seul" class="">Je m’entraîne seul</button></div><div class="cours-slot" data-mod="m4"></div>
+<div class="retenir"><b>À retenir</b>Pour calculer une image, je remplace x par le nombre donné. Pour chercher un antécédent de b, je résous l’équation f(x) = b. Dans un programme de calcul, je garde le nombre de départ jusqu’à la fin.</div>
 <div class="levels"><button class="on" type="button" data-calc="image">Calculer une image</button><button type="button" data-calc="tableau">Tableau de valeurs</button><button type="button" data-calc="antecedent">Chercher un antécédent</button><button type="button" data-calc="programme">Programme de calcul</button></div>
-<div class="retenir"><b>À retenir</b>Pour calculer une image, remplace x par le nombre donné. Pour chercher un antécédent de b, cherche x tel que f(x) = b. Pour un programme de calcul, garde le nombre de départ jusqu’à la fin.</div><div class="card" id="calcPanel"></div><button class="btn" type="button" id="calcNext">Nouvel exercice</button></section>
-<section id="m5" hidden><h2 class="ttl"><span>5. D.S. blanc</span></h2><div class="subtabs"><button type="button" class="on" data-ds="A">Sujet A</button><button type="button" data-ds="B">Sujet B</button><button class="btn light" type="button" id="dsPrint">Imprimer le sujet</button></div><div class="card" id="dsPanel"></div></section></main><footer>Collège La Rochefoucauld · Mathématiques 3<sup>e</sup></footer></div><script>
+<div class="card" id="calcPanel"></div></section>
+<section id="m5" hidden><h2 class="ttl"><span>5. D.S. blanc</span></h2><div class="subtabs"><button type="button" class="on" data-ds="A">Sujet A</button><button type="button" data-ds="B">Sujet B</button><button class="btn light" type="button" id="dsPrint">Imprimer le sujet</button></div><div class="card ds" id="dsPanel"></div></section></main><footer>Collège La Rochefoucauld · Mathématiques 3<sup>e</sup></footer></div><script>
 (() => {
-const learnModes = {m2:"exemple",m3:"exemple",m4:"exemple"};
+const learnModes = {m1:"exemple",m2:"exemple",m3:"exemple",m4:"exemple"};
+/* Sur téléphone, les graduations et les boutons des repères sont agrandis. */
+const MQ = window.matchMedia('(max-width:600px)');
+const Z = () => MQ.matches ? 1.4 : 1;
 /* ---------- utilitaires ---------- */
 const $ = s => document.querySelector(s);
 const NS = 'http://www.w3.org/2000/svg';
@@ -430,6 +458,117 @@ function sv(tag, attrs, parent) {
 }
 function st(parent, x, y, str, attrs = {}) { const t = sv('text', { x, y, ...attrs }, parent); t.textContent = str; return t; }
 
+/* ---------- réponses saisies ---------- */
+function nf(n) { return fmt(n); }
+function sg(b) { return b < 0 ? '−' : '+'; }
+function readNumber(value) {
+  const s = value.trim().replace(/\s/g,'').replace(/−/g,'-').replace(',','.');
+  if (/^[+-]?\d+(?:\.\d+)?\/[+-]?\d+(?:\.\d+)?$/.test(s)) {
+    const [a,b]=s.split('/').map(Number); return b ? a/b : null;
+  }
+  return /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(s) ? Number(s) : null;
+}
+function sameAnswer(value, answer) {
+  if (Array.isArray(answer)) {
+    const s = value.trim().toLowerCase();
+    if (!answer.length) return ['aucun','aucune','aucun antécédent','aucun antecedent','∅'].includes(s);
+    const parts = s.split(/[;\s]+/).filter(Boolean).map(readNumber);
+    const sorted = answer.slice().sort((a,b)=>a-b);
+    return parts.length===answer.length && parts.every(v=>v!==null) && new Set(parts).size===parts.length && parts.slice().sort((a,b)=>a-b).every((v,i)=>Math.abs(v-sorted[i])<1e-8);
+  }
+  if (typeof answer === 'number') { const n=readNumber(value);return n!==null&&Math.abs(n-answer)<1e-8; }
+  return value.trim().toLocaleLowerCase('fr') === String(answer).toLocaleLowerCase('fr');
+}
+function check(t, v) { return t.options ? v === t.a : sameAnswer(v, t.a); }
+function ansText(a) { return Array.isArray(a) ? a.length ? a.map(nf).join(' ; ') : 'aucun' : typeof a==='number' ? nf(a) : a; }
+function tableHtml(xs, ys, name='h') {
+  return `<div class="table-scroll"><table class="tab m"><tr><th>x</th>${xs.map(x=>`<td>${nf(x)}</td>`).join('')}</tr><tr><th>${name}(x)</th>${ys.map(y=>`<td>${typeof y==='number'?nf(y):y}</td>`).join('')}</tr></table></div>`;
+}
+function el(tag, cls, html) { const e = document.createElement(tag); if (cls) e.className = cls; if (html !== undefined) e.innerHTML = html; return e; }
+function btn(label, fn, cls = 'btn') { const b = el('button', cls, label); b.type = 'button'; b.addEventListener('click', fn); return b; }
+/* Champ de réponse : boutons de choix (t.options) ou zone de saisie. */
+function makeField(t, label) {
+  if (t.options) {
+    const wrap = el('div', 'choices'); wrap.setAttribute('role', 'radiogroup'); wrap.setAttribute('aria-label', label);
+    let val = '';
+    const bs = t.options.map(o => {
+      const b = btn(o, () => { val = o; bs.forEach(x => { x.classList.toggle('sel', x === b); x.setAttribute('aria-checked', String(x === b)); }); }, 'ch');
+      b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', 'false'); wrap.append(b); return b;
+    });
+    return { el: wrap, get: () => val, disable: () => bs.forEach(b => { b.disabled = true; if (b.textContent === el('span', '', t.a).textContent) b.classList.add('good'); }), bad: on => wrap.classList.toggle('bad', on), onEnter: () => {} };
+  }
+  const input = el('input', 'calc-input'); input.type = 'text'; input.autocomplete = 'off'; input.setAttribute('aria-label', label);
+  if (typeof t.a === 'number') input.inputMode = 'decimal';
+  if (Array.isArray(t.a)) input.placeholder = 'Ex. : −2 ; 3 ou aucun';
+  return { el: input, get: () => input.value, disable: () => { input.disabled = true; }, bad: on => input.classList.toggle('bad', on), onEnter: fn => input.addEventListener('keydown', e => { if (e.key === 'Enter') fn(); }) };
+}
+/* Modelage : toutes les étapes avec leur explication, l’une après l’autre.
+   Pratique guidée : toutes les sous-étapes, l’aide affichée une seule fois.
+   Pratique autonome : sans les sous-étapes (guide:true) ; alone = variante de l’étape.
+   Dans les deux pratiques : deux essais, puis la correction (qui contient la réponse). */
+function runSteps(panel, ex, mode, again, onDone) {
+  panel.innerHTML = '';
+  const alone = mode === 'seul';
+  if (!onDone) panel.append(el('p', 'small', alone ? 'Rédige les calculs sur ton cahier, puis saisis seulement tes résultats.' : mode === 'aide' ? 'Réponds étape par étape. Tu as droit à deux essais à chaque étape.' : 'Lis chaque étape de l’exemple, puis passe à la suivante.'));
+  if (ex.head) panel.append(el('div', 'exo-head', ex.head));
+  const box = el('div', 'steps'); panel.append(box);
+  const tasks = (alone ? ex.tasks.filter(t => !t.guide) : ex.tasks).map(t => alone && t.alone ? { ...t, ...t.alone } : t);
+  let step = 0;
+  const lastLabel = onDone ? 'Continuer' : ex.correction ? 'Voir la rédaction' : 'Terminer';
+  function finish() {
+    if (onDone) { onDone(); return; }
+    if (ex.correction) panel.append(el('div', 'seyes', '<h4>Rédaction</h4>' + ex.correction));
+    if (again) panel.append(btn(mode === 'exemple' ? 'Voir un autre exemple' : 'Nouvel exercice', again));
+  }
+  function next() {
+    if (step >= tasks.length) { finish(); return; }
+    const t = tasks[step++];
+    const row = el('div', 'step', `${tasks.length > 1 ? `<div class="step-n">Étape ${step} sur ${tasks.length}</div>` : ''}<div class="step-q">${t.q}</div>`); box.append(row);
+    const goOn = label => { const c = btn(label, () => { c.remove(); next(); }); row.append(c); };
+    if (mode === 'exemple') { row.classList.add('done'); row.append(el('div', 'model-e', t.corr)); goOn(step < tasks.length ? 'Étape suivante' : lastLabel); return; }
+    if (mode === 'aide' && t.hint) row.append(el('p', 'small aide', '<b>Aide :</b> ' + t.hint));
+    const area = el('div', 'step-a'), fb = el('div', 'fb'); fb.setAttribute('aria-live', 'polite'); row.append(area, fb);
+    const field = makeField(t, 'Réponse à l’étape ' + step); let tries = 0;
+    const valid = btn('Valider', () => {
+      const v = field.get();
+      if (!String(v).trim()) { fb.className = 'fb warn'; fb.textContent = 'Donne une réponse avant de valider.'; return; }
+      const ok = check(t, v); tries++;
+      if (!ok && tries < 2) { fb.className = 'fb warn'; fb.textContent = mode === 'aide' && t.hint ? 'Ce n’est pas encore juste. Relis l’aide, puis fais un deuxième essai.' : 'Ce n’est pas encore juste. Vérifie ton travail, puis fais un deuxième essai.'; field.bad(true); return; }
+      field.bad(false); field.disable(); valid.remove(); row.classList.add(ok ? 'done' : 'missed');
+      fb.className = 'fb ' + (ok ? 'ok' : 'ko'); fb.innerHTML = `<b>${ok ? 'C’est juste.' : 'Ce n’est pas juste.'}</b> ${t.corr}`;
+      goOn(step < tasks.length ? 'Continuer' : lastLabel);
+    });
+    field.onEnter(() => valid.click()); area.append(field.el, valid);
+  }
+  next();
+}
+
+/* ---------- familles de fonctions pour les exercices ----------
+   Les fonctions du cours (3x − 5, (x + 3) × x) et des D.S. ne sont jamais tirées. */
+const ORD = { 2: 'double', 3: 'triple', 4: 'quadruple', 5: 'quintuple' };
+function nz(a, b, avoid = []) { let v; do v = rint(a, b); while (v === 0 || avoid.includes(v)); return v; }
+function family(kind) {
+  if (kind === 'aff') {
+    const a = pick([2, 3, 4, 5]), b = nz(-9, 9, a === 3 ? [-5] : a === 4 ? [-7] : a === 2 ? [3, 1] : []), s = sg(b), c = Math.abs(b);
+    return { kind, formula: `${a}x ${s} ${c}`, txt: `son ${ORD[a]} ${b > 0 ? 'augmenté' : 'diminué'} de ${c}`, f: x => a * x + b,
+      sub: x => `${a} × ${par(x)} ${s} ${c}`, mid: x => `${nf(a * x)} ${s} ${c}`,
+      first: x => ({ q: `Calcule d’abord ${a} × ${par(x)}.`, a: a * x, hint: 'La multiplication est prioritaire sur l’addition et la soustraction.', corr: `${a} × ${par(x)} = ${nf(a * x)}.` }),
+      wrong: [`${a}(x ${s} ${c})`, `x² ${s} ${c}`, c !== a ? `${c}x ${sg(a)} ${a}` : `x ${s} ${a + c}`] };
+  }
+  if (kind === 'carre') {
+    const b = nz(-9, 9, [-1, 1, -4]), s = sg(b), c = Math.abs(b);
+    return { kind, formula: `x² ${s} ${c}`, txt: `son carré ${b > 0 ? 'augmenté' : 'diminué'} de ${c}`, f: x => x * x + b,
+      sub: x => `${par(x)}² ${s} ${c}`, mid: x => `${nf(x * x)} ${s} ${c}`,
+      first: x => ({ q: `Calcule d’abord ${par(x)}².`, a: x * x, hint: `${par(x)}² = ${par(x)} × ${par(x)}. Le produit de deux nombres négatifs est positif.`, corr: `${par(x)}² = ${par(x)} × ${par(x)} = ${nf(x * x)}.` }),
+      wrong: [`2x ${s} ${c}`, `(x ${s} ${c})²`, `${c}x²`] };
+  }
+  const b = nz(-6, 6, [2, -4, 3]), s = sg(b), c = Math.abs(b);
+  return { kind, formula: `x(x ${s} ${c})`, txt: `le produit de ce nombre par ce nombre ${b > 0 ? 'augmenté' : 'diminué'} de ${c}`, f: x => x * (x + b),
+    sub: x => `${par(x)} × (${nf(x)} ${s} ${c})`, mid: x => `${par(x)} × ${par(x + b)}`,
+    first: x => ({ q: `Calcule d’abord la parenthèse : ${nf(x)} ${s} ${c}.`, a: x + b, hint: 'On calcule toujours d’abord ce qui est entre parenthèses.', corr: `${nf(x)} ${s} ${c} = ${nf(x + b)}.` }),
+    wrong: [`x² ${s} ${c}`, `(x ${s} ${c}) × ${c}`, `x + x ${s} ${c}`] };
+}
+
 /* Repère : grille, axes, graduations */
 function frame(svg, o) {
   svg.innerHTML = '';
@@ -448,9 +587,10 @@ function frame(svg, o) {
   sv('line', { x1: X(0), x2: X(0), y1: Y(o.ymin), y2: Y(o.ymax), class: 'ax', 'marker-end': `url(#${o.id}arr)` }, g);
   for (let x = Math.ceil(o.xmin); x <= o.xmax; x++) if (x !== 0) sv('line', { x1: X(x), x2: X(x), y1: Y(0) - 4, y2: Y(0) + 4, class: 'ax' }, g);
   for (let y = Math.ceil(o.ymin / o.ystep) * o.ystep; y <= o.ymax; y += o.ystep) if (y !== 0) sv('line', { y1: Y(y), y2: Y(y), x1: X(0) - 4, x2: X(0) + 4, class: 'ax' }, g);
-  if (o.xlabels !== false) for (let x = Math.ceil(o.xmin); x <= Math.floor(o.xmax); x++) if (x !== 0) st(g, X(x), Y(0) + 20, fmt(x), { class: 'tk', 'text-anchor': 'middle' });
-  if (o.ylabels !== false) for (let y = Math.ceil(o.ymin / o.ystep) * o.ystep; y <= o.ymax; y += o.ystep) if (y !== 0) st(g, X(0) - 9, Y(y) + 5, fmt(y), { class: 'tk', 'text-anchor': 'end' });
-  if (o.origin !== false) st(g, X(0) - 9, Y(0) + 20, '0', { class: 'tk', 'text-anchor': 'end' });
+  const z = Z();
+  if (o.xlabels !== false) for (let x = Math.ceil(o.xmin); x <= Math.floor(o.xmax); x++) if (x !== 0) st(g, X(x), Y(0) + 20 * z, fmt(x), { class: 'tk', 'text-anchor': 'middle' });
+  if (o.ylabels !== false) for (let y = Math.ceil(o.ymin / o.ystep) * o.ystep; y <= o.ymax; y += o.ystep) if (y !== 0) st(g, X(0) - 9, Y(y) + 5 * z, fmt(y), { class: 'tk', 'text-anchor': 'end' });
+  if (o.origin !== false) st(g, X(0) - 9, Y(0) + 20 * z, '0', { class: 'tk', 'text-anchor': 'end' });
   return { X, Y, clip: `url(#${o.id}clip)` };
 }
 function curvePath(fn, x0, x1, X, Y, n = 300) {
@@ -460,17 +600,16 @@ function curvePath(fn, x0, x1, X, Y, n = 300) {
 }
 function badge(parent, x, y, str, color) {
   const g = sv('g', { class: 'badge' }, parent);
-  const w = 10 * str.length + 12;
-  sv('rect', { x: x - w / 2, y: y - 15, width: w, height: 22, rx: 5 }, g);
+  const z = Z(), w = (10 * str.length + 12) * z;
+  sv('rect', { x: x - w / 2, y: y - 15 * z, width: w, height: 22 * z, rx: 5 }, g);
   st(g, x, y + 1, str, { 'text-anchor': 'middle', fill: color });
   return g;
 }
 
 /* ---------- onglets ---------- */
-document.querySelectorAll('nav [data-tab]').forEach(b => b.addEventListener('click', () => {
-  document.querySelectorAll('nav [data-tab]').forEach(o => o.setAttribute('aria-selected', o === b));
-  ['home', 'cours', 'm1', 'm2', 'm3', 'm4', 'm5'].forEach(id => $('#' + id).hidden = id !== b.dataset.tab);
-}));
+document.querySelectorAll('nav [data-tab]').forEach(b => b.addEventListener('click', () => switchPage(b.dataset.tab)));
+$('.navsel').addEventListener('change', e => switchPage(e.target.value));
+if (!document.documentElement.requestFullscreen) $('#fs').hidden = true;
 $('#fs').addEventListener('click', () => {
   if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen?.();
 });
@@ -500,17 +639,17 @@ const m1 = { fn: FUNCS[4], x: -2 };
 FUNCS.forEach(F => {
   const b = document.createElement('button');
   b.className = 'chip m'; b.innerHTML = `<i>f</i>(<i>x</i>) = ${F.formula}`;
-  b.addEventListener('click', () => { m1.fn = F; renderM1(); });
+  b.addEventListener('click', () => { m1.fn = F; renderExplorer(); });
   F.btn = b; $('#fnChips').appendChild(b);
 });
 XS.forEach(x => {
   const b = document.createElement('button');
   b.className = 'chip xb m'; b.textContent = fmt(x); b.dataset.x = x;
-  b.addEventListener('click', () => { m1.x = x; renderM1(); });
+  b.addEventListener('click', () => { m1.x = x; renderExplorer(); });
   $('#xChips').appendChild(b);
 });
 
-function renderM1() {
+function renderExplorer() {
   const F = m1.fn, x = m1.x, y = F.f(x);
   FUNCS.forEach(o => o.btn.setAttribute('aria-pressed', o === F));
   document.querySelectorAll('#xChips .xb').forEach(b => b.setAttribute('aria-pressed', +b.dataset.x === x));
@@ -528,7 +667,7 @@ function renderM1() {
     r1 += `<td${on} data-x="${v}">${fmt(v)}</td>`; r2 += `<td${on} data-x="${v}">${fmt(F.f(v))}</td>`;
   });
   $('#m1Table').innerHTML = r1 + '</tr>' + r2 + '</tr>';
-  $('#m1Table').querySelectorAll('td').forEach(td => td.addEventListener('click', () => { m1.x = +td.dataset.x; renderM1(); }));
+  $('#m1Table').querySelectorAll('td').forEach(td => td.addEventListener('click', () => { m1.x = +td.dataset.x; renderExplorer(); }));
 
   drawM1Graph();
 
@@ -559,31 +698,39 @@ function drawM1Graph() {
     const sel = v === x;
     sv('circle', { cx: X(v), cy: Y(F.f(v)), r: sel ? 8 : 5, class: 'pnt' + (sel ? ' sel' : '') }, svg);
     const h = sv('circle', { cx: X(v), cy: Y(F.f(v)), r: 18, class: 'hit' }, svg);
-    h.addEventListener('click', () => { m1.x = v; renderM1(); });
+    h.addEventListener('click', () => { m1.x = v; renderExplorer(); });
   });
   if (x !== 0) badge(svg, X(x), Y(0) + 20, fmt(x), 'var(--ant)');
   badge(svg, X(0) - 9 - (fmt(y).length * 5), Y(y) + 5, fmt(y), 'var(--img)');
   const lx = X(x) + (x >= 0 ? 12 : -12);
-  const lab = st(svg, lx, Y(y) - 10, `(${fmt(x)} ; ${fmt(y)})`, { 'text-anchor': x >= 0 ? 'start' : 'end', style: 'font:600 16px system-ui;fill:var(--ink);paint-order:stroke;stroke:#fff;stroke-width:4px' });
+  const lab = st(svg, lx, Y(y) - 10, `(${fmt(x)} ; ${fmt(y)})`, { 'text-anchor': x >= 0 ? 'start' : 'end', style: `font:600 ${16 * Z()}px "STIX Two Text",serif;fill:var(--ink);paint-order:stroke;stroke:#fff;stroke-width:4px` });
 }
-renderM1();
 
 /* =========================================================
    MODE 2 — phrase ou notation ?
    ========================================================= */
-const m2 = { ok: 0, tot: 0, opts: [], done: false };
+const m2 = { ok: 0, tot: 0, opts: [], done: false, tries: 0 };
+/* Couples déjà utilisés dans le cours et les D.S. : jamais tirés ici. */
+const M2_AVOID = ['2|9', '5|-8', '-6|2'];
 function statements(n, p, q) {
   return {
     not: `${I(n)}(${p}) = ${q}`,
-    img: `${q} est l'image de ${p} par la fonction ${I(n)}.`,
+    img: `${q} est l’image de ${p} par la fonction ${I(n)}.`,
     ant: `${p} est un antécédent de ${q} par la fonction ${I(n)}.`,
     pt: `Le point de coordonnées (${p}${SP};${SP}${q}) appartient à la courbe représentative de ${I(n)}.`,
     map: `${I(n)}${SP}:${SP}${p} ↦ ${q}`,
   };
 }
+const M2_HINT = {
+  not: 'Dans une écriture comme f(…) = …, le nombre de départ est écrit entre les parenthèses.',
+  img: 'L’image est le nombre obtenu. Le nombre de départ est celui qui est écrit après « l’image de ».',
+  ant: 'Un antécédent est un nombre de départ.',
+  pt: 'Un point de la courbe s’écrit (nombre de départ ; image).',
+  tab: 'Dans un tableau de valeurs, le nombre de départ est sur la ligne x et son image est juste en dessous.',
+};
 function m2New() {
   let a, b;
-  do { a = rint(-9, 9); b = rint(-9, 9); } while (a === b);
+  do { a = rint(-9, 9); b = rint(-9, 9); } while (a === b || M2_AVOID.includes(a + '|' + b));
   const n = pick(['f', 'g', 'h']);
   const fa = fmt(a), fb = fmt(b);
   const T = statements(n, fa, fb), Fx = statements(n, fb, fa);
@@ -595,7 +742,7 @@ function m2New() {
   const falses = Object.keys(Fx).map(k => ({ html: Fx[k], v: false }));
   const nt = rint(1, 3);
   m2.opts = shuffle([...shuffle(trues).slice(0, nt), ...shuffle(falses).slice(0, 4 - nt)]);
-  m2.a = fa; m2.b = fb; m2.done = false;
+  m2.a = fa; m2.b = fb; m2.done = false; m2.tries = 0; m2.kind = kind;
   $('#m2Prompt').innerHTML = promptHtml;
   const box = $('#m2Opts'); box.innerHTML = '';
   m2.opts.forEach(o => {
@@ -611,23 +758,55 @@ function m2New() {
 }
 $('#m2Valid').addEventListener('click', () => {
   if (m2.done) return;
-  m2.done = true; $('#m2Valid').disabled = true;
   let all = true;
+  m2.opts.forEach(o => { if ((o.btn.getAttribute('aria-pressed') === 'true') !== o.v) all = false; });
+  if (!all && m2.tries === 0) {
+    m2.tries = 1;
+    $('#m2Fb').className = 'fb warn';
+    $('#m2Fb').innerHTML = 'Ce n’est pas encore juste. Pour chaque phrase, demande-toi quel est le nombre de départ et quelle est l’image. Modifie tes choix, puis fais un deuxième essai.';
+    return;
+  }
+  m2.done = true; $('#m2Valid').disabled = true;
   m2.opts.forEach(o => {
     const s = o.btn.getAttribute('aria-pressed') === 'true';
     o.btn.classList.add('done');
     const tag = o.btn.querySelector('.tag');
     if (s && o.v) { o.btn.classList.add('ok'); tag.textContent = '✓ juste'; }
-    else if (s && !o.v) { o.btn.classList.add('ko'); tag.textContent = '✗ inversé'; all = false; }
-    else if (!s && o.v) { o.btn.classList.add('miss'); tag.textContent = 'oublié'; all = false; }
+    else if (s && !o.v) { o.btn.classList.add('ko'); tag.textContent = '✗ inversé'; }
+    else if (!s && o.v) { o.btn.classList.add('miss'); tag.textContent = 'oublié'; }
   });
   m2.tot++; if (all) m2.ok++;
-  const expl = `Ici, on part de ${A(m2.a)} et on obtient ${B(m2.b)} : ${A(m2.a)} est un antécédent, ${B(m2.b)} est son image.`;
+  const expl = `Ici, on part de ${A(m2.a)} et on obtient ${B(m2.b)} : ${A(m2.a)} est un antécédent de ${B(m2.b)}, et ${B(m2.b)} est l’image de ${A(m2.a)}. Une phrase où les deux nombres sont échangés ne dit pas la même chose.`;
   $('#m2Fb').className = 'fb ' + (all ? 'good' : 'bad');
-  $('#m2Fb').innerHTML = (all ? '<b>Bravo !</b> ' : '<b>Pas tout à fait.</b> ') + expl;
+  $('#m2Fb').innerHTML = (all ? '<b>C’est juste.</b> ' : '<b>Ce n’est pas juste.</b> ') + expl;
   $('#m2Score').textContent = `Score : ${m2.ok} / ${m2.tot}`;
 });
 $('#m2Next').addEventListener('click', m2New);
+function syncMode2() {
+  const mode = learnModes.m2;
+  $('#m2Score').hidden = mode === 'exemple';
+  const guide = $('#m2Guide'); guide.innerHTML = '';
+  $('#m2Main').hidden = false;
+  if (mode === 'aide') {
+    /* Pratique guidée : repérer le nombre de départ, puis l’image, avant de choisir les phrases. */
+    $('#m2Main').hidden = true;
+    const two = shuffle([m2.a, m2.b]);
+    runSteps(guide, { head: '', tasks: [
+      { q: 'Quel est le nombre de départ ?', options: two, a: m2.a, hint: M2_HINT[m2.kind], corr: `Le nombre de départ est ${A(m2.a)}.` },
+      { q: 'Quelle est son image ?', options: two, a: m2.b, hint: 'L’image est le nombre obtenu à partir du nombre de départ.', corr: `Son image est ${B(m2.b)}.` },
+    ] }, 'aide', null, () => { $('#m2Main').hidden = false; });
+  }
+  if (mode !== 'exemple') return;
+  m2.done = true;
+  m2.opts.forEach(o => {
+    o.btn.classList.add('done');
+    if (o.v) { o.btn.classList.add('ok'); o.btn.setAttribute('aria-pressed','true'); o.btn.querySelector('.tag').textContent = 'même information'; }
+    else o.btn.querySelector('.tag').textContent = 'nombres échangés';
+  });
+  $('#m2Valid').disabled = true;
+  $('#m2Fb').className = 'fb good';
+  $('#m2Fb').innerHTML = `<b>Je repère le nombre de départ :</b> ${A(m2.a)}. <b>Je repère son image :</b> ${B(m2.b)}.<br>Je coche chaque phrase où ${A(m2.a)} est le nombre de départ (ou l’antécédent, ou l’abscisse) et ${B(m2.b)} le nombre obtenu (ou l’image, ou l’ordonnée). Je ne coche pas les phrases où les deux nombres sont échangés.`;
+}
 m2New();
 
 /* =========================================================
@@ -697,35 +876,34 @@ function m3NewQuestion() {
     const sig = q.type + (q.a ?? q.k);
     if (sig !== m3.last) { m3.last = sig; break; }
   }
-  m3.q = q; m3.sel = new Set(); m3.none = false; m3.done = false; m3.hint = false;
+  m3.q = q; m3.sel = new Set(); m3.none = false; m3.done = false; m3.tries = 0;
   const n = I(m3.name);
   if (q.type === 'img') {
     const a = A(fmt(q.a));
-    $('#m3Q').innerHTML = [`Quelle est l'image de ${a} par la fonction ${n} ?`, `Compléter : <span class="m">${n}(${a}) = …</span>`, `Quelle est l'ordonnée du point de la courbe d'abscisse ${a} ?`][q.v];
-    $('#m3C').textContent = "Sur l’intervalle représenté de −5 à 5, clique sur la bonne valeur de l'axe vertical.";
+    $('#m3Q').innerHTML = [`Quelle est l’image de ${a} par la fonction ${n} ?`, `Complète : <span class="m">${n}(${a}) = …</span>`, `Quelle est l’ordonnée du point de la courbe d’abscisse ${a} ?`][q.v];
+    $('#m3C').textContent = 'Clique sur la bonne valeur de l’axe vertical.';
   } else {
     const k = B(fmt(q.k));
-    $('#m3Q').innerHTML = [`Quel(s) est (sont) le(s) antécédent(s) de ${k} par la fonction ${n} ?`, `Trouver tous les nombres qui complètent : <span class="m">${n}(…) = ${k}</span>`, `Quels nombres ont pour image ${k} par la fonction ${n} ?`][q.v];
-    $('#m3C').textContent = "Sur l’intervalle représenté de −5 à 5, clique sur toutes les bonnes valeurs de l'axe horizontal, ou sur « Aucun antécédent ».";
+    $('#m3Q').innerHTML = [`Quels sont tous les antécédents de ${k} par la fonction ${n} ?`, `Trouve tous les nombres qui complètent : <span class="m">${n}(…) = ${k}</span>`, `Quels nombres ont pour image ${k} par la fonction ${n} ?`][q.v];
+    $('#m3C').textContent = 'Clique sur toutes les bonnes valeurs de l’axe horizontal, ou sur « Aucun antécédent ».';
   }
   $('#m3None').style.display = q.type === 'ant' ? '' : 'none';
   $('#m3None').setAttribute('aria-pressed', 'false');
   $('#m3Fb').className = 'fb'; $('#m3Fb').innerHTML = '';
   $('#m3Valid').disabled = false;
-  renderM3();
   syncMode3();
 }
 
 function renderM3() {
-  const q = m3.q, svg = $('#m3Svg');
+  const q = m3.q, svg = $('#m3Svg'), z = Z();
   svg.setAttribute('aria-label', 'Courbe représentative sur l’intervalle de −5 à 5. Les graduations valent une unité. Les boutons des axes permettent de répondre.');
   const fn = m3.fn;
   const { X, Y, clip } = frame(svg, { id: 'g3', W: 600, H: 600, pl: 30, pr: 22, pt: 18, pb: 34, xmin: -5.8, xmax: 5.8, ymin: -5.8, ymax: 5.8, ystep: 1,
     xlabels: q.type !== 'ant', ylabels: q.type !== 'img', origin: false });
   sv('path', { d: curvePath(fn, -5, 5, X, Y, 500), class: 'cv', 'clip-path': clip }, svg);
 
-  // coup de pouce
-  if (m3.hint && !m3.done) {
+  // aide : la droite à suivre (pratique guidée)
+  if (learnModes.m3 === 'aide' && !m3.done) {
     if (q.type === 'img') sv('line', { x1: X(q.a), x2: X(q.a), y1: Y(-5.8), y2: Y(5.8), class: 'hla' }, svg);
     else sv('line', { x1: X(-5.8), x2: X(5.8), y1: Y(q.k), y2: Y(q.k), class: 'hl' }, svg);
   }
@@ -744,17 +922,18 @@ function renderM3() {
     }
   }
   // badge de la donnée
-  if (q.type === 'img') badge(svg, X(q.a), Y(0) + 22, fmt(q.a), 'var(--ant)');
-  else badge(svg, X(0) - 18, Y(q.k) + 5, fmt(q.k), 'var(--img)');
+  if (q.type === 'img') badge(svg, X(q.a), Y(0) + 22 * z, fmt(q.a), 'var(--ant)');
+  else badge(svg, X(0) - 18 * z, Y(q.k) + 5 * z, fmt(q.k), 'var(--img)');
 
   // boutons-graduations sur l'axe de la réponse
+  const bw = Math.min(36 * z, 44), bh = 28 * z;
   for (let v = -5; v <= 5; v++) {
     const isX = q.type === 'ant';
-    const cx = isX ? X(v) : X(0) - 22, cy = isX ? Y(0) + 22 : Y(v);
+    const cx = isX ? X(v) : X(0) - 22 * z, cy = isX ? Y(0) + 22 * z : Y(v);
     if (!isX && v === q.k) continue;
     const g = sv('g', { class: 'tb', role: 'button', tabindex: 0, 'aria-label': (isX ? 'Abscisse ' : 'Ordonnée ') + fmt(v), 'aria-pressed': String(m3.sel.has(v)) }, svg);
-    sv('rect', { x: cx - 18, y: cy - 14, width: 36, height: 28, rx: 7 }, g);
-    st(g, cx, cy + 6, fmt(v), { 'text-anchor': 'middle' });
+    sv('rect', { x: cx - bw / 2, y: cy - bh / 2, width: bw, height: bh, rx: 7 }, g);
+    st(g, cx, cy + 6 * z, fmt(v), { 'text-anchor': 'middle' });
     g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') {e.preventDefault();g.dispatchEvent(new MouseEvent('click',{bubbles:true}));} });
     const selected = m3.sel.has(v);
     if (!m3.done) {
@@ -772,7 +951,6 @@ function renderM3() {
       else if (!selected && good) g.classList.add('miss');
     }
   }
-  if (q.type === 'img' && !m3.done) { /* rien */ }
   renderM3Answer();
 }
 
@@ -780,11 +958,19 @@ function renderM3Answer() {
   const q = m3.q, n = I(m3.name);
   if (q.type === 'img') {
     const v = [...m3.sel][0];
-    $('#m3A').innerHTML = `${n}(${A(fmt(q.a))}) = ${v === undefined ? '…' : B(fmt(v))}`;
+    $('#m3A').innerHTML = `<span class="nw">${n}(${A(fmt(q.a))}) = ${v === undefined ? '…' : B(fmt(v))}</span>`;
   } else {
     const l = [...m3.sel].sort((p, r) => p - r);
-    $('#m3A').innerHTML = m3.none ? 'aucun antécédent' : l.length ? `Antécédent(s) de ${B(fmt(q.k))} : ${l.map(v => A(fmt(v))).join(' ; ')}` : '…';
+    $('#m3A').innerHTML = m3.none ? 'aucun antécédent' : l.length ? `Antécédents de ${B(fmt(q.k))} : <span class="nw">${l.map(v => A(fmt(v))).join(' ; ')}</span>` : '…';
   }
+}
+function m3Explain() {
+  const q = m3.q, n = I(m3.name);
+  if (q.type === 'img') return `1. Je pars de ${A(fmt(q.a))} sur l’axe horizontal.<br>2. Je monte ou je descends verticalement jusqu’à la courbe.<br>3. Je lis l’ordonnée de ce point sur l’axe vertical : ${B(fmt(q.ans))}.<br>Donc <span class="m">${n}(${A(fmt(q.a))}) = ${B(fmt(q.ans))}</span>.`;
+  const c = q.ans.length;
+  return `1. Je repère ${B(fmt(q.k))} sur l’axe vertical et je trace la droite horizontale à cette hauteur.<br>2. Je compte ses points communs avec la courbe : ${c === 0 ? 'il n’y en a aucun' : c === 1 ? 'il y en a un' : 'il y en a ' + c}.<br>` +
+    (c === 0 ? `Donc ${B(fmt(q.k))} n’a <b>aucun antécédent</b> sur l’intervalle représenté.`
+      : `3. Je lis ${c === 1 ? 'son abscisse' : 'leurs abscisses'} sur l’axe horizontal.<br>Donc ${B(fmt(q.k))} a ${c === 1 ? '<b>un seul antécédent</b> : ' : '<b>' + c + ' antécédents</b> : '}<span class="nw">${q.ans.map(v => A(fmt(v))).join(' ; ')}</span>.`);
 }
 
 $('#m3None').addEventListener('click', () => {
@@ -793,238 +979,297 @@ $('#m3None').addEventListener('click', () => {
   $('#m3None').setAttribute('aria-pressed', m3.none);
   renderM3();
 });
-$('#m3Hint').addEventListener('click', () => { if (!m3.done) { m3.hint = true; renderM3(); } });
 $('#m3Valid').addEventListener('click', () => {
   if (m3.done) return;
-  const q = m3.q, n = I(m3.name);
-  if (q.type === 'img' && m3.sel.size === 0) return;
-  if (q.type === 'ant' && m3.sel.size === 0 && !m3.none) return;
-  m3.done = true; $('#m3Valid').disabled = true;
-  let good, msg;
-  if (q.type === 'img') {
-    good = [...m3.sel][0] === q.ans;
-    msg = `On part de ${A(fmt(q.a))} sur l'axe horizontal, on monte (ou on descend) jusqu'à la courbe, puis on lit sur l'axe vertical : <span class="m">${n}(${A(fmt(q.a))}) = ${B(fmt(q.ans))}</span>.`;
-  } else {
-    const s = [...m3.sel].sort((p, r) => p - r);
-    good = s.length === q.ans.length && s.every((v, i) => v === q.ans[i]);
-    const c = q.ans.length;
-    msg = `On trace la droite horizontale à la hauteur ${B(fmt(q.k))} : chaque point où elle coupe la courbe donne un antécédent. `;
-    msg += c === 0 ? `Ici, elle ne coupe pas la courbe : ${B(fmt(q.k))} n'a <b>aucun antécédent</b>.`
-      : c === 1 ? `${B(fmt(q.k))} a <b>un seul antécédent</b> : ${A(fmt(q.ans[0]))}.`
-      : `${B(fmt(q.k))} a <b>${c} antécédents</b> : ${q.ans.map(v => A(fmt(v))).join(' ; ')}.`;
+  const q = m3.q;
+  if ((q.type === 'img' && m3.sel.size === 0) || (q.type === 'ant' && m3.sel.size === 0 && !m3.none)) {
+    $('#m3Fb').className = 'fb warn'; $('#m3Fb').textContent = 'Donne une réponse avant de valider.'; return;
   }
+  let good;
+  if (q.type === 'img') good = [...m3.sel][0] === q.ans;
+  else { const s = [...m3.sel].sort((p, r) => p - r); good = s.length === q.ans.length && s.every((v, i) => v === q.ans[i]); }
+  m3.tries++;
+  if (!good && m3.tries < 2) {
+    $('#m3Fb').className = 'fb warn';
+    $('#m3Fb').textContent = q.type === 'img'
+      ? 'Ce n’est pas encore juste. Suis la droite verticale jusqu’à la courbe, puis fais un deuxième essai.'
+      : 'Ce n’est pas encore juste. Regarde tous les points communs de la droite horizontale avec la courbe, puis fais un deuxième essai.';
+    return;
+  }
+  m3.done = true; $('#m3Valid').disabled = true;
   m3.tot++; if (good) m3.ok++;
   $('#m3Fb').className = 'fb ' + (good ? 'good' : 'bad');
-  $('#m3Fb').innerHTML = (good ? '<b>Bravo !</b> ' : '<b>Pas tout à fait.</b> ') + msg;
+  $('#m3Fb').innerHTML = (good ? '<b>C’est juste.</b><br>' : '<b>Ce n’est pas juste.</b><br>') + m3Explain();
   $('#m3Score').textContent = `Score : ${m3.ok} / ${m3.tot}`;
   renderM3();
 });
 $('#m3Next').addEventListener('click', m3NewQuestion);
 $('#m3New').addEventListener('click', m3NewCurve);
+function syncMode3() {
+  const mode = learnModes.m3, q = m3.q;
+  $('#m3Score').hidden = mode === 'exemple';
+  const guide = $('#m3Guide'); guide.innerHTML = '';
+  $('#m3Valid').disabled = false;
+  if (mode === 'aide') {
+    /* Pratique guidée : une première sous-étape, puis la lecture sur l’axe. */
+    $('#m3Valid').disabled = true;
+    const t = q.type === 'img'
+      ? { q: `Le point de la courbe d’abscisse ${A(fmt(q.a))} est-il au-dessus de l’axe horizontal, sur cet axe, ou au-dessous ?`, options: ['Au-dessus', 'Sur l’axe', 'Au-dessous'], a: q.ans > 0 ? 'Au-dessus' : q.ans === 0 ? 'Sur l’axe' : 'Au-dessous', hint: 'Suis la droite verticale en pointillés jusqu’à la courbe.', corr: q.ans > 0 ? 'Le point est au-dessus de l’axe : son ordonnée est positive.' : q.ans === 0 ? 'Le point est sur l’axe : son ordonnée est 0.' : 'Le point est au-dessous de l’axe : son ordonnée est négative.' }
+      : { q: `Combien de points communs la droite horizontale d’ordonnée ${B(fmt(q.k))} a-t-elle avec la courbe ?`, options: ['0', '1', '2', '3', '4'], a: String(q.ans.length), hint: 'Suis la droite horizontale en pointillés d’un bout à l’autre et compte les points où elle touche la courbe.', corr: `Il y a ${q.ans.length} point${q.ans.length > 1 ? 's' : ''} commun${q.ans.length > 1 ? 's' : ''} : ${q.ans.length === 0 ? 'ce nombre n’a donc aucun antécédent' : 'il faut donc trouver ' + q.ans.length + ' antécédent' + (q.ans.length > 1 ? 's' : '')}.` };
+    runSteps(guide, { head: '', tasks: [t] }, 'aide', null, () => { $('#m3Valid').disabled = false; });
+  }
+  if (mode === 'exemple') {
+    m3.sel = new Set(q.type === 'img' ? [q.ans] : q.ans);
+    m3.none = q.type === 'ant' && !q.ans.length;
+    $('#m3None').setAttribute('aria-pressed', String(m3.none));
+    m3.done = true; $('#m3Valid').disabled = true;
+    $('#m3Fb').className = 'fb good';
+    $('#m3Fb').innerHTML = m3Explain();
+  }
+  renderM3();
+}
+MQ.addEventListener?.('change', () => { drawM1Graph(); renderM3(); });
 m3NewCurve();
-/* Parcours de révision, cohérent avec le chapitre 4. */
+/* ---------- navigation et modes ---------- */
 function switchPage(id) {
   document.querySelectorAll('main > section').forEach(s => s.hidden = s.id !== id);
   document.querySelectorAll('nav [data-tab]').forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === id)));
+  $('.navsel').value = id;
   window.scrollTo({top:0});
 }
 document.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => switchPage(b.dataset.open)));
+/* « Relire le cours de cette partie » : copie de la partie du cours correspondante. */
+document.querySelectorAll('.cours-slot').forEach(slot => {
+  const part = document.querySelector(`#cours [data-mod="${slot.dataset.mod}"]`);
+  if (!part) return;
+  const det = el('details', 'cours-part', '<summary>Relire le cours de cette partie</summary>');
+  det.append(part.cloneNode(true)); slot.append(det);
+});
+/* En pratique autonome, le cours et l’encadré « À retenir » sont masqués. */
+function syncHelp(id) {
+  const alone = learnModes[id] === 'seul';
+  document.querySelectorAll(`#${id} > .cours-slot, #${id} > .retenir`).forEach(e => e.hidden = alone);
+}
 function setupModes(id, callback) {
   document.querySelectorAll(`#${id} [data-mode]`).forEach(b => b.addEventListener('click', () => {
     learnModes[id] = b.dataset.mode;
     document.querySelectorAll(`#${id} [data-mode]`).forEach(x => x.classList.toggle('on', x === b));
+    syncHelp(id);
     callback();
   }));
 }
-function syncMode2() {
-  const mode = learnModes.m2;
-  $('#m2Method').hidden = mode === 'seul';
-  $('#m2Score').hidden = mode === 'exemple';
-  if (mode !== 'exemple') return;
-  m2.done = true;
-  m2.opts.forEach(o => {
-    o.btn.classList.add('done');
-    if (o.v) { o.btn.classList.add('ok'); o.btn.setAttribute('aria-pressed','true'); o.btn.querySelector('.tag').textContent = 'équivalent'; }
-    else o.btn.querySelector('.tag').textContent = 'information inversée';
-  });
-  $('#m2Valid').disabled = true;
-  $('#m2Fb').className = 'fb good';
-  $('#m2Fb').innerHTML = `Le nombre de départ est ${A(m2.a)} ; son image est ${B(m2.b)}. Les phrases cochées traduisent cette même information. Une phrase inversée peut être vraie dans certains cas, mais elle n'est pas équivalente à l'information donnée.`;
+
+/* =========================================================
+   1. Quatre représentations — pratique guidée et autonome
+   ========================================================= */
+function makeRep() {
+  const F = family(pick(['aff', 'aff', 'carre', 'prod']));
+  let x0, y;
+  do { x0 = nz(-4, 4); y = F.f(x0); } while (y === 0 || y === x0 || y === -x0);
+  const pt = (p, q) => `(${nf(p)} ; ${nf(q)})`;
+  const formulas = shuffle([F.formula, ...F.wrong]);
+  const points = shuffle([pt(x0, y), pt(y, x0), pt(x0, -y)]);
+  return {
+    head: `<p>À tout nombre, la fonction f associe ${F.txt}.</p><p>On choisit le nombre de départ ${nf(x0)}.</p>`,
+    tasks: [
+      { q: 'Quelle formule traduit cette phrase ?', options: formulas, a: F.formula, hint: 'Lis la phrase dans l’ordre : qu’arrive-t-il au nombre x ?', corr: `La phrase se traduit par la formule f(x) = ${F.formula}.` },
+      { guide: true, ...F.first(x0) },
+      { q: `Calcule f(${nf(x0)}).`, a: y, hint: `Remplace x par ${par(x0)}, puis termine le calcul.`, corr: `f(${nf(x0)}) = ${F.sub(x0)} = ${F.mid(x0)} = ${nf(y)}.` },
+      { q: `Complète la phrase : « ${nf(y)} est … de ${nf(x0)} par la fonction f. »`, options: ['l’image', 'un antécédent'], a: 'l’image', hint: 'L’image est le nombre obtenu.', corr: `${nf(y)} est l’image de ${nf(x0)}, et ${nf(x0)} est un antécédent de ${nf(y)}.` },
+      { q: 'Quel point de la courbe de f correspond à ce calcul ?', options: points, a: pt(x0, y), hint: 'Un point de la courbe s’écrit (nombre de départ ; image).', corr: `Le point de coordonnées ${pt(x0, y)} appartient à la courbe de f.` },
+    ],
+    correction: `<p>Formule : f(x) = ${F.formula}.</p><p>f(${nf(x0)}) = ${F.sub(x0)} = ${F.mid(x0)} = ${nf(y)}.</p><p>Dans le tableau de valeurs, on écrit ${nf(y)} sous ${nf(x0)}.</p><p>Le point ${pt(x0, y)} appartient à la courbe de f.</p>`,
+  };
 }
-function syncMode3() {
-  const mode = learnModes.m3, q = m3.q;
-  $('#m3Method').hidden = mode === 'seul';
-  $('#m3Score').hidden = mode === 'exemple';
-  if (mode === 'aide') { m3.hint = true; renderM3(); }
-  if (mode !== 'exemple') return;
-  m3.sel = new Set(q.type === 'img' ? [q.ans] : q.ans);
-  m3.none = q.type === 'ant' && !q.ans.length;
-  m3.done = true; $('#m3Valid').disabled = true; renderM3();
-  $('#m3Fb').className = 'fb good';
-  $('#m3Fb').innerHTML = q.type === 'img'
-    ? `On part de ${A(fmt(q.a))} sur l'axe horizontal, on rejoint la courbe, puis on lit ${B(fmt(q.ans))} sur l'axe vertical. Donc ${I(m3.name)}(${fmt(q.a)}) = ${fmt(q.ans)}.`
-    : `On regarde toutes les intersections de la courbe avec la droite horizontale d'ordonnée ${B(fmt(q.k))}. Sur l'intervalle représenté, ${q.ans.length ? 'les antécédents sont : '+q.ans.map(fmt).join(' ; ')+'.' : 'ce nombre ne possède aucun antécédent.'}`;
+function renderM1() {
+  const ex = learnModes.m1 === 'exemple';
+  $('#m1Explore').hidden = !ex; $('#m1Practice').hidden = ex;
+  if (ex) { renderExplorer(); return; }
+  runSteps($('#m1Panel'), makeRep(), learnModes.m1, renderM1);
 }
+setupModes('m1', renderM1);
 setupModes('m2', m2New);
 setupModes('m3', m3NewQuestion);
 
-const nf = n => fmt(n);
-const frac = (a,b) => `<span class="frac"><span>${a}</span><span>${b}</span></span>`;
-function readNumber(value) {
-  const s = value.trim().replace(/\s/g,'').replace(/−/g,'-').replace(',','.');
-  if (/^[+-]?\d+(?:\.\d+)?\/[+-]?\d+(?:\.\d+)?$/.test(s)) {
-    const [a,b]=s.split('/').map(Number); return b ? a/b : null;
+/* =========================================================
+   4. Calculs et programmes
+   ========================================================= */
+let calcKind = 'image';
+function makeCalc(kind) {
+  if (kind === 'image') {
+    const F = family(pick(['aff', 'carre', 'prod'])), x = nz(-5, 5), y = F.f(x), name = pick(['f', 'g', 'h']);
+    return { head: `<p>On définit la fonction ${name} par ${name}(x) = ${F.formula}.</p>`, tasks: [
+      { guide: true, ...F.first(x) },
+      { q: `Calcule l’image de ${nf(x)} par la fonction ${name}.`, a: y, hint: `Remplace x par ${par(x)}, puis termine le calcul en respectant les priorités.`, corr: `${name}(${nf(x)}) = ${F.sub(x)} = ${F.mid(x)} = ${nf(y)}.` },
+    ], correction: `<p>${name}(${nf(x)}) = ${F.sub(x)}</p><p>${name}(${nf(x)}) = ${F.mid(x)}</p><p>${name}(${nf(x)}) = ${nf(y)}</p><p>L’image de ${nf(x)} par ${name} est ${nf(y)}.</p>` };
   }
-  return /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(s) ? Number(s) : null;
-}
-function sameAnswer(value, answer) {
-  if (Array.isArray(answer)) {
-    const s = value.trim().toLowerCase();
-    if (!answer.length) return ['aucun','aucune','aucun antécédent','aucun antecedent','∅'].includes(s);
-    const parts = s.split(/[;\s]+/).filter(Boolean).map(readNumber);
-    return parts.length===answer.length && parts.every(v=>v!==null) && new Set(parts).size===parts.length && parts.slice().sort((a,b)=>a-b).every((v,i)=>Math.abs(v-answer.slice().sort((a,b)=>a-b)[i])<1e-8);
+  if (kind === 'tableau') {
+    const F = family(pick(['carre', 'prod'])), xs = [-3, -2, -1, 0, 1, 2], ys = xs.map(F.f);
+    return { head: `<p>On définit la fonction h par h(x) = ${F.formula}. Recopie le tableau sur ton cahier et complète-le.</p>${tableHtml(xs, xs.map(() => '…'))}`,
+      tasks: xs.map((x, i) => ({ q: `Quelle est l’image de ${nf(x)} ?`, a: F.f(x), hint: i === 0 ? `Écris h(${nf(x)}) = ${F.sub(x)}, puis calcule.` : 'Fais le même calcul qu’à l’étape précédente avec ce nouveau nombre.', corr: `h(${nf(x)}) = ${F.sub(x)} = ${F.mid(x)} = ${nf(F.f(x))}.` })),
+      correction: `<p>Voici le tableau complet.</p>${tableHtml(xs, ys)}` };
   }
-  if (typeof answer === 'number') { const n=readNumber(value);return n!==null&&Math.abs(n-answer)<1e-8; }
-  return value.trim().toLocaleLowerCase('fr') === String(answer).toLocaleLowerCase('fr');
-}
-const ansText = a => Array.isArray(a) ? a.length ? a.map(nf).join(' ; ') : 'aucun' : typeof a==='number' ? nf(a) : a;
-function tableHtml(xs, ys, name='h') {
-  return `<div class="table-scroll"><table class="tab m"><tr><th>x</th>${xs.map(x=>`<td>${nf(x)}</td>`).join('')}</tr><tr><th>${name}(x)</th>${ys.map(y=>`<td>${typeof y==='number'?nf(y):y}</td>`).join('')}</tr></table></div>`;
-}
-function taskInput(task, index, onValidate) {
-  const row=document.createElement('div');row.className='step';
-  const lab=document.createElement('label');lab.className='step-q';lab.innerHTML=task.q;lab.htmlFor='answer-'+index;
-  const area=document.createElement('div');area.className='step-a';
-  const input=document.createElement('input');input.type='text';input.className='calc-input';input.id='answer-'+index;input.autocomplete='off';
-  if(typeof task.a==='number')input.inputMode='decimal';
-  if(Array.isArray(task.a))input.placeholder='Ex. : −2 ; 3 ou aucun';
-  const button=document.createElement('button');button.type='button';button.className='btn';button.textContent='Valider';
-  const feedback=document.createElement('div');feedback.className='fb';feedback.setAttribute('aria-live','polite');
-  function check(){if(!input.value.trim()){feedback.className='fb warn';feedback.textContent='Écris une réponse avant de valider.';return;}onValidate(input,button,feedback,row);}
-  button.addEventListener('click',check);input.addEventListener('keydown',e=>{if(e.key==='Enter')check();});
-  area.append(input,button);row.append(lab,area,feedback);return row;
-}
-let calcKind='image';
-function makeCalc(kind, example=false, variant=0) {
-  if(kind==='image'){
-    const choice=example?0:rint(0,2), x=example?-4:pick([-5,-4,-3,-2,-1,0,1,2,3,4]);
-    const c=choice===0?10:choice===1?2:4;
-    const name=choice===1?'h':'f';
-    const formula=choice===0?'10 − 2x':choice===1?'x(x + 2)':'x² − 4';
-    const f=choice===0?x=>10-2*x:choice===1?x=>x*(x+2):x=>x*x-4;
-    const replacement=choice===0?`10 − 2 × ${par(x)}`:choice===1?`${par(x)} × (${nf(x)} + 2)`:`${par(x)}² − 4`;
-    return {head:`<p>On définit la fonction <span class="m">${name}(x) = ${formula}</span>.</p>`,tasks:[
-      {q:`Calcule l'image de <span class="m">${nf(x)}</span> par ${name}.`,a:f(x),hint:'Remplace chaque x par le nombre donné. Écris les nombres négatifs entre parenthèses et respecte les priorités.',corr:`${name}(${nf(x)}) = ${replacement} = ${nf(f(x))}. L'image de ${nf(x)} par ${name} est ${nf(f(x))}.`}
-    ]};
+  if (kind === 'antecedent') {
+    let a, b;
+    do { a = pick([2, 3, 4, 5, -2, -3]); b = nz(-9, 9); } while ((a === 3 && b === -5) || (a === 4 && b === -7) || (a === 2 && (b === 3 || b === 1)));
+    const sol = nz(-5, 6), t = a * sol + b, expr = `${nf(a)}x ${sg(b)} ${Math.abs(b)}`, c = Math.abs(b);
+    return { head: `<p>On définit la fonction f par f(x) = ${expr}. On cherche l’antécédent de ${nf(t)} par f.</p>`, tasks: [
+      { guide: true, q: 'Quelle équation faut-il résoudre ?', options: shuffle([`${expr} = ${nf(t)}`, `x = ${nf(t)}`, `${nf(a)} × ${par(t)} ${sg(b)} ${c}`]), a: `${expr} = ${nf(t)}`, hint: `Chercher un antécédent de ${nf(t)}, c’est chercher x tel que f(x) = ${nf(t)}.`, corr: `On cherche x tel que f(x) = ${nf(t)} : on résout ${expr} = ${nf(t)}.` },
+      { guide: true, q: `${b > 0 ? 'Soustrais' : 'Ajoute'} ${c} aux deux membres. Complète : ${nf(a)}x = …`, a: t - b, hint: `Calcule ${nf(t)} ${b > 0 ? '−' : '+'} ${c}.`, corr: `${nf(a)}x = ${nf(t)} ${b > 0 ? '−' : '+'} ${c}, donc ${nf(a)}x = ${nf(t - b)}.` },
+      { q: `Quel est l’antécédent de ${nf(t)} par f ?`, a: sol, hint: `Divise les deux membres par ${nf(a)}.`, corr: `x = ${nf(t - b)} ÷ ${par(a)} = ${nf(sol)}. Je vérifie : f(${nf(sol)}) = ${nf(a)} × ${par(sol)} ${sg(b)} ${c} = ${nf(t)}. L’antécédent de ${nf(t)} par f est ${nf(sol)}.` },
+    ], correction: `<p>${expr} = ${nf(t)}</p><p>${nf(a)}x = ${nf(t)} ${b > 0 ? '−' : '+'} ${c}</p><p>${nf(a)}x = ${nf(t - b)}</p><p>x = ${nf(t - b)} ÷ ${par(a)}</p><p>x = ${nf(sol)}</p><p>Vérification : f(${nf(sol)}) = ${nf(a)} × ${par(sol)} ${sg(b)} ${c} = ${nf(t)}. L’antécédent de ${nf(t)} par f est ${nf(sol)}.</p>` };
   }
-  if(kind==='tableau'){
-    const a=example?2:pick([1,2,3,4]);const xs=[-4,-3,-2,-1,0,1,2,3];
-    const ys=xs.map(x=>x*(x+a));const target=pick([0,1,2]);
-    return {head:`<p>On définit <span class="m">h(x) = x(x + ${a})</span>. Complète le tableau sur ton cahier, puis vérifie les valeurs demandées.</p>${tableHtml(xs,xs.map(()=> '…'))}`,
-      tasks:xs.map(x=>({q:`Pour <span class="m">x = ${nf(x)}</span>, que vaut <span class="m">h(x)</span> ?`,a:x*(x+a),hint:`Écris ${par(x)} × (${nf(x)} + ${a}). Calcule d'abord la parenthèse.`,corr:`h(${nf(x)}) = ${par(x)} × (${nf(x)} + ${a}) = ${par(x)} × ${par(x+a)} = ${nf(x*(x+a))}.`})),
-      ending:tableHtml(xs,ys)};
+  /* Programme de calcul : trois modèles, différents de celui du cours. */
+  const type = pick(['plus', 'moins', 'affine']), x = pick([-4, -3, -2, -1, 2, 4, 6, 7]);
+  if (type === 'affine') {
+    const m = pick([2, 4, 5]), k = rint(1, 9), r1 = m * x, r = r1 + k, target = m * rint(1, 6) + k;
+    const lines = [`Multiplier ce nombre par ${m}.`, `Ajouter ${k}.`];
+    return { head: progHtml(lines), tasks: [
+      { guide: true, q: `Avec ${nf(x)}, quel résultat obtient-on après la deuxième ligne du programme ?`, a: r1, hint: `Calcule ${nf(x)} × ${m}.`, corr: `${par(x)} × ${m} = ${nf(r1)}.` },
+      { q: `Quel résultat obtient-on en choisissant ${nf(x)} ?`, a: r, hint: `Ajoute ${k} au résultat précédent.`, corr: `${par(x)} × ${m} = ${nf(r1)}, puis ${nf(r1)} + ${k} = ${nf(r)}.` },
+      { q: 'On note x le nombre choisi. Quelle expression donne le résultat du programme ?', options: shuffle([`${m}x + ${k}`, `${m}(x + ${k})`, `x + ${m} + ${k}`, `${m} + ${k}x`]), a: `${m}x + ${k}`, hint: 'Écris les étapes dans l’ordre : on multiplie d’abord x, puis on ajoute.', corr: `On multiplie x par ${m}, puis on ajoute ${k} : le résultat est ${m}x + ${k}.` },
+      { q: `Quel nombre faut-il choisir pour obtenir ${target} ?`, a: (target - k) / m, hint: `Résous l’équation ${m}x + ${k} = ${target}.`, corr: `${m}x + ${k} = ${target}, donc ${m}x = ${target - k}, puis x = ${(target - k) / m}.` },
+    ], correction: `<p>Avec ${nf(x)} : ${par(x)} × ${m} + ${k} = ${nf(r1)} + ${k} = ${nf(r)}.</p><p>Avec le nombre x, le programme donne ${m}x + ${k}.</p>` };
   }
-  if(kind==='antecedent'){
-    const a=example?10:pick([6,8,10,12]),b=example?-2:pick([-3,-2,2,3]);
-    const solution=example?5:rint(-4,6),target=a+b*solution;
-    const expression=`${a} ${b<0?'−':'+'} ${Math.abs(b)}x`;
-    return {head:`<p>On définit <span class="m">f(x) = ${expression}</span>. On cherche l'antécédent de <span class="m">${nf(target)}</span>.</p>`,tasks:[
-      {q:'Quelle valeur de x permet d’obtenir ce nombre ?',a:solution,hint:`Il faut résoudre ${expression} = ${nf(target)}. Soustrais ${a} aux deux membres, puis divise les deux membres par ${nf(b)}.`,corr:`On cherche x tel que ${expression} = ${nf(target)}. En soustrayant ${a} aux deux membres : ${nf(b)}x = ${nf(target-a)}. En divisant par ${nf(b)} : x = ${nf(target-a)} / ${par(b)} = ${nf(solution)}. Vérification : f(${nf(solution)}) = ${a} + (${nf(b)}) × ${par(solution)} = ${nf(target)}. L'antécédent recherché est ${nf(solution)}.`}
-    ]};
-  }
-  const k=example?4:pick([2,3,4,5]),x=example?7:pick([-3,-2,-1,0,2,6,7,10]);
-  return {head:`<p><strong>Programme de calcul</strong></p><ol><li>Choisir un nombre.</li><li>Soustraire ${k}.</li><li>Multiplier le résultat par le nombre choisi au départ.</li></ol>`,tasks:[
-    {q:`Quel résultat obtient-on en choisissant ${nf(x)} ?`,a:x*(x-k),hint:`Le résultat intermédiaire est ${nf(x)} − ${k}. Multiplie-le ensuite par ${par(x)}, le nombre de départ.`,corr:`(${nf(x)} − ${k}) × ${par(x)} = ${par(x-k)} × ${par(x)} = ${nf(x*(x-k))}.`},
-    {q:'Quels sont les deux nombres de départ qui donnent 0 ?',a:[0,k],hint:`Le résultat est x(x − ${k}). Un produit est nul si au moins un de ses facteurs est nul.`,corr:`x(x − ${k}) = 0 si x = 0 ou x − ${k} = 0. Les deux nombres sont donc 0 et ${k}.`}
-  ],ending:`<p>En notant x le nombre de départ : <span class="m">p(x) = (x − ${k}) × x = x² − ${k}x</span>.</p>`};
+  const k = type === 'plus' ? pick([1, 2, 4, 5, 6]) : pick([1, 2, 3, 5, 6]), s = type === 'plus' ? '+' : '−', d = type === 'plus' ? k : -k;
+  const r1 = x + d, r = r1 * x, zero = -d;
+  const lines = [`${type === 'plus' ? 'Ajouter' : 'Soustraire'} ${k}.`, 'Multiplier le résultat par le nombre choisi au départ.'];
+  return { head: progHtml(lines), tasks: [
+    { guide: true, q: `Avec ${nf(x)}, quel résultat obtient-on après la deuxième ligne du programme ?`, a: r1, hint: `Calcule ${nf(x)} ${s} ${k}.`, corr: `${nf(x)} ${s} ${k} = ${nf(r1)}.` },
+    { q: `Quel résultat obtient-on en choisissant ${nf(x)} ?`, a: r, hint: `Multiplie le résultat précédent par ${par(x)}, le nombre choisi au départ.`, corr: `${nf(x)} ${s} ${k} = ${nf(r1)}, puis ${par(r1)} × ${par(x)} = ${nf(r)}.` },
+    { q: 'On note x le nombre choisi. Quelle expression donne le résultat du programme ?', options: shuffle([`(x ${s} ${k}) × x`, `x ${s} ${k} × x`, `(x ${s} ${k}) × ${k}`, `x² ${s} ${k}`]), a: `(x ${s} ${k}) × x`, hint: 'Le résultat de la deuxième ligne doit être entre parenthèses, car on le multiplie ensuite en entier.', corr: `On calcule x ${s} ${k}, puis on multiplie ce résultat par x : (x ${s} ${k}) × x.` },
+    { q: 'Quels sont les deux nombres de départ qui donnent 0 ?', a: [0, zero], hint: `Un produit est nul quand l’un de ses facteurs est nul : x = 0, ou x ${s} ${k} = 0.`, corr: `(x ${s} ${k}) × x = 0 quand x = 0 ou quand x ${s} ${k} = 0, c’est-à-dire x = ${nf(zero)}. Les deux nombres sont 0 et ${nf(zero)}.` },
+  ], correction: `<p>Avec ${nf(x)} : (${nf(x)} ${s} ${k}) × ${par(x)} = ${par(r1)} × ${par(x)} = ${nf(r)}.</p><p>Avec le nombre x, le programme donne (x ${s} ${k}) × x.</p><p>Les deux nombres de départ qui donnent 0 sont 0 et ${nf(zero)}.</p>` };
 }
-function renderCalc(){
-  const mode=learnModes.m4, exercise=makeCalc(calcKind,mode==='exemple'),box=$('#calcPanel');box.innerHTML=exercise.head;
-  const instruction=document.createElement('p');instruction.className='small';instruction.textContent=mode==='seul'?'Rédige les calculs sur ton cahier avant de saisir tes résultats.':mode==='aide'?'Un coup de pouce est proposé à chaque étape.':'Observe les calculs et la rédaction de cet exemple.';box.append(instruction);
-  exercise.tasks.forEach((task,i)=>{
-    if(mode==='exemple'){
-      const row=document.createElement('div');row.className='step done';row.innerHTML=`<div class="step-q">${task.q}</div><div class="model-a">${ansText(task.a)}</div><div class="model-e">${task.corr}</div>`;box.append(row);return;
-    }
-    let tries=0;
-    const row=taskInput(task,'calc-'+i,(input,button,fb,row)=>{
-      const good=sameAnswer(input.value,task.a);tries++;
-      if(!good && mode==='aide' && tries<2){fb.className='fb warn';fb.textContent='Pas encore. '+task.hint;return;}
-      input.disabled=true;button.disabled=true;row.classList.add(good?'done':'missed');fb.className='fb '+(good?'ok':'ko');fb.innerHTML=`<b>${good?"C'est juste.":'Réponse attendue : '+ansText(task.a)+'.'}</b> ${task.corr}`;
-    });
-    if(mode==='aide'){const h=document.createElement('p');h.className='small';h.textContent=task.hint;row.append(h);}box.append(row);
-  });
-  if(exercise.ending){const end=document.createElement('details');end.innerHTML=`<summary>Voir la synthèse</summary><div class="corrige">${exercise.ending}</div>`;box.append(end);}
-}
-setupModes('m4',renderCalc);
+function progHtml(lines) { return `<p><strong>Programme de calcul</strong></p><ol><li>Choisir un nombre.</li>${lines.map(l => `<li>${l}</li>`).join('')}</ol>`; }
+function renderCalc() { runSteps($('#calcPanel'), makeCalc(calcKind), learnModes.m4, renderCalc); }
+setupModes('m4', renderCalc);
 document.querySelectorAll('[data-calc]').forEach(b=>b.addEventListener('click',()=>{calcKind=b.dataset.calc;document.querySelectorAll('[data-calc]').forEach(x=>x.classList.toggle('on',x===b));renderCalc();}));
-$('#calcNext').addEventListener('click',renderCalc);
 
-function drawFixedGraph(svg, points, name='g'){
-  svg.setAttribute('role','img');svg.setAttribute('aria-label',`Courbe de ${name} sur l'intervalle de −5 à 5, graduations de une unité.`);
+/* =========================================================
+   5. D.S. blancs
+   Nombres et fonctions absents du cours et des exemples ;
+   le sujet B ne reprend aucun exercice du sujet A.
+   L’élève rédige sur une feuille et saisit seulement le résultat final.
+   ========================================================= */
+function drawFixedGraph(svg, points, name){
+  svg.setAttribute('role','img');svg.setAttribute('aria-label',`Courbe de la fonction ${name} sur l’intervalle de −5 à 5, graduations de une unité.`);
   const {X,Y,clip}=frame(svg,{id:'dsGraph',W:600,H:420,pl:40,pr:28,pt:24,pb:38,xmin:-5.7,xmax:5.7,ymin:-4.7,ymax:4.7,ystep:1});
   sv('path',{d:points.map((p,i)=>(i?'L':'M')+X(p[0])+','+Y(p[1])).join(' '),class:'cv','clip-path':clip},svg);
   points.forEach(p=>sv('circle',{cx:X(p[0]),cy:Y(p[1]),r:3,class:'pnt'},svg));
 }
-function dsTasks(variant){
-  const b=variant==='B',sign=b?-1:1,k=b?5:4,a=b?8:10;
-  const points=[[-5,0],[-4,2],[-3,0],[-2,-2],[-1,-3],[0,-1],[1,-3],[2,0],[3,2],[4,0],[5,1]].map(([x,y])=>[x,sign*y]);
-  const xs=[-4,-3,-2,-1,0,1,2,3],ys=xs.map(x=>x*(x+2));
+const YN = ['Oui', 'Non'], VF = ['Vrai', 'Faux'];
+function dsData(variant) {
+  if (variant === 'B') return [
+    { title: 'Vrai ou faux', pts: 3, head: '<p>On sait que l’image de −6 par la fonction h est 2.</p><p>Pour chaque affirmation, indique si elle est vraie ou fausse, puis justifie sur ta feuille.</p>', items: [
+      { q: 'h(2) = −6.', options: VF, a: 'Faux', corr: '<p>L’information s’écrit h(−6) = 2. On ne connaît pas l’image de 2. L’affirmation est fausse.</p>' },
+      { q: '−6 est un antécédent de 2 par la fonction h.', options: VF, a: 'Vrai', corr: '<p>Comme h(−6) = 2, le nombre −6 est un antécédent de 2. L’affirmation est vraie.</p>' },
+      { q: 'Le point de coordonnées (−6 ; 2) appartient à la courbe de h.', options: VF, a: 'Vrai', corr: '<p>Un point de la courbe s’écrit (nombre de départ ; image). L’affirmation est vraie.</p>' }] },
+    { title: 'Formule et tableau de valeurs', pts: 5, head: '<p>On définit la fonction m par m(x) = x² − 2x.</p>', items: [
+      { q: 'Calcule m(−3).', a: 15, corr: '<p>m(−3) = (−3)² − 2 × (−3) = 9 + 6 = 15.</p>' },
+      { q: 'Calcule m(5).', a: 15, corr: '<p>m(5) = 5² − 2 × 5 = 25 − 10 = 15.</p>' },
+      { q: 'Déduis-en deux antécédents de 15 par la fonction m.', a: [-3, 5], corr: '<p>m(−3) = 15 et m(5) = 15 : −3 et 5 sont deux antécédents de 15.</p>' },
+      { q: `On a complété ce tableau avec la formule de m.${tableHtml([-1, 0, 1, 2, 3], [3, 0, -1, 0, 3], 'm')}Donne tous les antécédents de 3 que l’on peut lire dans ce tableau.`, a: [-1, 3], corr: '<p>Dans la ligne des images, on trouve 3 sous −1 et sous 3. Les antécédents de 3 lus dans le tableau sont −1 et 3.</p>' },
+      { q: 'Dans ce tableau, quelle image n’a qu’un seul antécédent ?', a: -1, corr: '<p>Le nombre −1 n’apparaît qu’une fois dans la ligne des images, sous 1 : c’est l’image −1, dont le seul antécédent lu est 1.</p>' }] },
+    { title: 'Lecture graphique', pts: 4, head: '<p>La courbe de la fonction f est représentée ci-dessous pour x compris entre −5 et 5. Les graduations valent une unité.</p><svg class="ds-graph"></svg>', graph: { name: 'f', points: [[-5, -4], [-4, -1], [-3, 1], [-2, 2], [-1, 1], [0, -1], [1, -2], [2, -1], [3, 1], [4, 3], [5, 4]] }, items: [
+      { q: 'Quelle est l’ordonnée du point de la courbe d’abscisse −2 ?', a: 2, corr: '<p>Je pars de −2 sur l’axe horizontal, je rejoins la courbe et je lis 2 sur l’axe vertical.</p>' },
+      { q: 'Lis f(4).', a: 3, corr: '<p>Le point de la courbe d’abscisse 4 a pour ordonnée 3 : f(4) = 3.</p>' },
+      { q: 'Quels nombres ont pour image −1 par la fonction f ?', a: [-4, 0, 2], corr: '<p>La droite horizontale d’ordonnée −1 coupe la courbe en trois points, d’abscisses −4, 0 et 2.</p>' },
+      { q: 'Combien d’antécédents le nombre 1 a-t-il par la fonction f ?', a: 3, corr: '<p>La droite horizontale d’ordonnée 1 coupe la courbe en trois points, d’abscisses −3, −1 et 3. Le nombre 1 a donc 3 antécédents.</p>' }] },
+    { title: 'Le taxi', pts: 4, head: '<p>Un taxi fait payer 3 € de prise en charge, puis 2 € par kilomètre parcouru. Pour un trajet de x kilomètres, le prix payé, en euros, est donné par la fonction t définie par t(x) = 2x + 3.</p>', items: [
+      { q: 'Calcule t(12). Que représente ce nombre ?', a: 27, corr: '<p>t(12) = 2 × 12 + 3 = 24 + 3 = 27. Un trajet de 12 km coûte 27 €.</p>' },
+      { q: 'Combien coûte un trajet de 7,5 km, en euros ?', a: 18, corr: '<p>t(7,5) = 2 × 7,5 + 3 = 15 + 3 = 18. Le trajet coûte 18 €.</p>' },
+      { q: 'Léa a payé 45 €. Combien de kilomètres a-t-elle parcourus ? Justifie par un calcul.', a: 21, corr: '<p>On cherche l’antécédent de 45 par t : 2x + 3 = 45.</p><p>2x = 42, donc x = 21. Léa a parcouru 21 km.</p>' },
+      { q: 'Quel est l’antécédent de 3 par la fonction t ?', a: 0, corr: '<p>2x + 3 = 3, donc 2x = 0 et x = 0. Pour 0 km, on paie 3 € : c’est la prise en charge.</p>' }] },
+    { title: 'Programme de calcul', pts: 4, head: progHtml(['Ajouter 5.', 'Multiplier le résultat par 3.']), items: [
+      { q: 'Quel résultat obtient-on en choisissant −7 ?', a: -6, corr: '<p>−7 + 5 = −2, puis −2 × 3 = −6.</p>' },
+      { q: 'On note x le nombre choisi. Quelle expression donne le résultat du programme ?', options: ['(x + 5) × 3', 'x + 5 × 3', '3x + 5', '(x + 3) × 5'], a: '(x + 5) × 3', corr: '<p>On calcule x + 5, puis on multiplie ce résultat en entier par 3 : (x + 5) × 3.</p>' },
+      { q: 'Quel nombre faut-il choisir pour obtenir 0 ?', a: -5, corr: '<p>(x + 5) × 3 = 0 quand x + 5 = 0, c’est-à-dire x = −5.</p>' },
+      { q: 'Quel nombre faut-il choisir pour obtenir 27 ? Justifie.', a: 4, corr: '<p>(x + 5) × 3 = 27, donc x + 5 = 27 ÷ 3 = 9, puis x = 9 − 5 = 4.</p><p>Vérification : (4 + 5) × 3 = 27.</p>' }] },
+  ];
   return [
-    {title:'Exercice 1 · Vocabulaire',pts:4,head:`<p>On sait que <span class="m">f(−1) = 3</span>.</p>`,tasks:[
-      {q:'Quelle est l’image de −1 par f ?',a:3,corr:'L’image est le nombre obtenu : f(−1) = 3.'},
-      {q:'Quel antécédent de 3 peut-on donner ?',a:-1,corr:'−1 est un antécédent de 3, car f(−1) = 3.'},
-      {q:'Quelle est l’abscisse du point correspondant de la courbe ?',a:-1,corr:'L’abscisse est le nombre de départ, −1.'},
-      {q:'Quelle est l’ordonnée de ce point ?',a:3,corr:'L’ordonnée est l’image, 3. Le point a pour coordonnées (−1 ; 3).'}]},
-    {title:'Exercice 2 · Tableau de valeurs',pts:4,head:tableHtml(xs,ys),tasks:[
-      {q:'Quelle est l’image de −4 par h ?',a:8,corr:'Dans la colonne de −4, on lit h(−4) = 8.'},
-      {q:'Donne tous les antécédents de 0 que l’on voit dans ce tableau.',a:[-2,0],corr:'Les colonnes où h(x) = 0 ont pour nombres de départ −2 et 0.'},
-      {q:'Donne tous les antécédents de 3 que l’on voit dans ce tableau.',a:[-3,1],corr:'On lit h(−3) = 3 et h(1) = 3.'},
-      {q:'Quelle est l’ordonnée du point de la courbe d’abscisse 2 ?',a:8,corr:'On lit h(2) = 8 : le point a pour coordonnées (2 ; 8).'}]},
-    {title:'Exercice 3 · Lecture graphique',pts:4,head:`<p>La courbe de g est représentée pour <span class="m">−5 ≤ x ≤ 5</span>. Les graduations valent une unité.</p><svg id="dsFixedGraph"></svg>`,points,tasks:[
-      {q:'Lis l’image de −1 par g.',a:-3*sign,corr:`Le point d’abscisse −1 a pour ordonnée ${nf(-3*sign)}.`},
-      {q:'Lis l’image de 3 par g.',a:2*sign,corr:`Le point d’abscisse 3 a pour ordonnée ${nf(2*sign)}.`},
-      {q:'Quels sont tous les antécédents de 0 sur l’intervalle représenté ?',a:[-5,-3,2,4],corr:'La courbe coupe l’axe des abscisses en −5, −3, 2 et 4.'},
-      {q:`Quels sont tous les antécédents de ${nf(-3*sign)} ?`,a:[-1,1],corr:`La droite horizontale d’ordonnée ${nf(-3*sign)} rencontre la courbe aux abscisses −1 et 1.`}]},
-    {title:'Exercice 4 · Calculer et chercher un antécédent',pts:4,head:`<p>On définit <span class="m">f(x) = ${a} − 2x</span>.</p>`,tasks:[
-      {q:'Calcule f(3).',a:a-6,corr:`f(3) = ${a} − 2 × 3 = ${a} − 6 = ${nf(a-6)}.`},
-      {q:'Calcule f(−4).',a:a+8,corr:`f(−4) = ${a} − 2 × (−4) = ${a} + 8 = ${a+8}.`},
-      {q:'Trouve l’antécédent de 0 par f.',a:a/2,corr:`${a} − 2x = 0, donc −2x = −${a}, puis x = ${nf(a/2)}.`},
-      {q:'Un point M de la courbe a pour abscisse 2. Quelle est son ordonnée ?',a:a-4,corr:`Son ordonnée vaut f(2) = ${a} − 4 = ${a-4}.`}]},
-    {title:'Exercice 5 · Programme de calcul',pts:4,head:`<p>On choisit un nombre, on lui soustrait ${k}, puis on multiplie ce résultat par le nombre de départ.</p>`,tasks:[
-      {q:'Quel résultat obtient-on avec 10 ?',a:10*(10-k),corr:`(10 − ${k}) × 10 = ${10*(10-k)}.`},
-      {q:'Quel résultat obtient-on avec 7 ?',a:7*(7-k),corr:`(7 − ${k}) × 7 = ${7*(7-k)}.`},
-      {q:'Quel résultat obtient-on avec −1 ?',a:1+k,corr:`(−1 − ${k}) × (−1) = ${1+k}.`},
-      {q:'Quels sont les deux nombres de départ qui donnent 0 ?',a:[0,k],corr:`Le résultat est x(x − ${k}). Un produit est nul si un facteur est nul : x = 0 ou x = ${k}.`}]}
+    { title: 'Vocabulaire', pts: 4, head: '<p>On sait que g(5) = −8.</p>', items: [
+      { q: 'Quelle est l’image de 5 par la fonction g ?', a: -8, corr: '<p>Le nombre de départ est 5 et le nombre obtenu est −8 : l’image de 5 par g est −8.</p>' },
+      { q: 'Donne un antécédent de −8 par la fonction g.', a: 5, corr: '<p>Comme g(5) = −8, le nombre 5 est un antécédent de −8.</p>' },
+      { q: 'Quel point de la courbe de g correspond à cette information ?', options: ['(5 ; −8)', '(−8 ; 5)'], a: '(5 ; −8)', corr: '<p>Un point de la courbe s’écrit (nombre de départ ; image) : c’est le point (5 ; −8).</p>' },
+      { q: 'Peut-on affirmer que g(−8) = 5 ?', options: YN, a: 'Non', corr: '<p>Non. On sait seulement ce que la fonction g associe au nombre 5. On ne sait rien de l’image de −8.</p>' }] },
+    { title: 'Tableau de valeurs', pts: 4, head: `<p>Voici un tableau de valeurs de la fonction k.</p>${tableHtml([-2, -1, 0, 1, 2, 3, 4, 5], [10, 4, 0, -2, -2, 0, 4, 10], 'k')}`, items: [
+      { q: 'Quelle est l’image de −1 par la fonction k ?', a: 4, corr: '<p>Dans la colonne de −1, on lit k(−1) = 4.</p>' },
+      { q: 'Donne tous les antécédents de 0 que l’on peut lire dans ce tableau.', a: [0, 3], corr: '<p>On trouve 0 dans la ligne des images sous 0 et sous 3 : k(0) = 0 et k(3) = 0.</p>' },
+      { q: 'Donne tous les antécédents de 10 que l’on peut lire dans ce tableau.', a: [-2, 5], corr: '<p>On lit k(−2) = 10 et k(5) = 10.</p>' },
+      { q: 'Le point de coordonnées (4 ; 4) appartient-il à la courbe de k ?', options: YN, a: 'Oui', corr: '<p>Dans la colonne de 4, on lit k(4) = 4. Le point (4 ; 4) appartient donc à la courbe de k.</p>' }] },
+    { title: 'Lecture graphique', pts: 4, head: '<p>La courbe de la fonction h est représentée ci-dessous pour x compris entre −5 et 5. Les graduations valent une unité.</p><svg class="ds-graph"></svg>', graph: { name: 'h', points: [[-5, -2], [-4, 0], [-3, 2], [-2, 3], [-1, 2], [0, 0], [1, -2], [2, -3], [3, -2], [4, 0], [5, 1]] }, items: [
+      { q: 'Lis l’image de −2 par la fonction h.', a: 3, corr: '<p>Je pars de −2 sur l’axe horizontal, je rejoins la courbe et je lis 3 sur l’axe vertical : h(−2) = 3.</p>' },
+      { q: 'Lis h(3).', a: -2, corr: '<p>Le point de la courbe d’abscisse 3 a pour ordonnée −2 : h(3) = −2.</p>' },
+      { q: 'Lis tous les antécédents de 0 par la fonction h.', a: [-4, 0, 4], corr: '<p>La courbe coupe l’axe horizontal en trois points, d’abscisses −4, 0 et 4.</p>' },
+      { q: 'Lis tous les antécédents de 2 par la fonction h.', a: [-3, -1], corr: '<p>La droite horizontale d’ordonnée 2 coupe la courbe en deux points, d’abscisses −3 et −1.</p>' }] },
+    { title: 'Calculs', pts: 4, head: '<p>On définit la fonction f par f(x) = 4x − 7.</p>', items: [
+      { q: 'Calcule f(3).', a: 5, corr: '<p>f(3) = 4 × 3 − 7 = 12 − 7 = 5.</p>' },
+      { q: 'Calcule f(−3).', a: -19, corr: '<p>f(−3) = 4 × (−3) − 7 = −12 − 7 = −19.</p>' },
+      { q: 'Calcule l’antécédent de 17 par la fonction f.', a: 6, corr: '<p>On résout 4x − 7 = 17.</p><p>4x = 17 + 7 = 24, donc x = 24 ÷ 4 = 6.</p><p>Vérification : f(6) = 24 − 7 = 17.</p>' },
+      { q: 'Le point M de coordonnées (−4 ; −9) appartient-il à la courbe de f ? Justifie par un calcul.', options: YN, a: 'Non', corr: '<p>f(−4) = 4 × (−4) − 7 = −16 − 7 = −23.</p><p>Comme −23 n’est pas égal à −9, le point M n’appartient pas à la courbe de f.</p>' }] },
+    { title: 'Programme de calcul', pts: 4, head: progHtml(['Multiplier ce nombre par 2.', 'Soustraire 10.', 'Multiplier le résultat par le nombre choisi au départ.']), items: [
+      { q: 'Quel résultat obtient-on en choisissant 4 ?', a: -8, corr: '<p>4 × 2 = 8, puis 8 − 10 = −2, puis −2 × 4 = −8.</p>' },
+      { q: 'Quel résultat obtient-on en choisissant −3 ?', a: 48, corr: '<p>−3 × 2 = −6, puis −6 − 10 = −16, puis −16 × (−3) = 48.</p>' },
+      { q: 'On note x le nombre choisi. Quelle expression donne le résultat du programme ?', options: ['(2x − 10) × x', '2x − 10 × x', '2(x − 10) × x', '2x − 10x'], a: '(2x − 10) × x', corr: '<p>On calcule 2x − 10, puis on multiplie ce résultat en entier par x : (2x − 10) × x.</p>' },
+      { q: 'Quels sont les deux nombres de départ qui donnent 0 ?', a: [0, 5], corr: '<p>(2x − 10) × x est un produit. Il est nul quand x = 0, ou quand 2x − 10 = 0, c’est-à-dire 2x = 10 et x = 5.</p><p>Les deux nombres sont 0 et 5.</p>' }] },
   ];
 }
-function renderDS(variant='A'){
-  const box=$('#dsPanel');box.innerHTML=`<h3>D.S. blanc · Sujet ${variant}</h3><p>Travaille d’abord sur une feuille. Chaque réponse vaut 1 point ; rédige aussi les calculs et les justifications. La vérification des réponses ne remplace pas la vérification de ta rédaction.</p><p class="small">Pour plusieurs antécédents, sépare les nombres par des points-virgules. Tu peux écrire « aucun » quand il n’y en a pas.</p>`;
-  const sections=dsTasks(variant),controls=[];
-  sections.forEach((ex,ei)=>{
-    const panel=document.createElement('section');panel.className='ds-exo';panel.innerHTML=`<h3>${ex.title} <span class="small">(${ex.pts} points)</span></h3>${ex.head}`;box.append(panel);
-    if(ex.points)drawFixedGraph($('#dsFixedGraph'),ex.points);
-    ex.tasks.forEach((task,qi)=>{
-      const row=taskInput(task,`ds-${ei}-${qi}`,()=>{});row.querySelector('button').remove();panel.append(row);controls.push({task,row,input:row.querySelector('input')});
+let dsVariant = 'A';
+function renderDS() {
+  const variant = dsVariant, box = $('#dsPanel');
+  const exos = dsData(variant), total = exos.reduce((s, e) => s + e.pts, 0);
+  box.innerHTML = '';
+  box.append(el('h3', 'ds-title', 'D.S. blanc · Fonctions (1) · Sujet ' + variant),
+    el('p', '', 'Rédige toutes tes réponses sur une feuille : les calculs, les lectures et une phrase de conclusion. Le D.S. est noté sur ' + total + ' points.'),
+    el('p', 'consigne', 'Quand tu as fini, écris seulement le résultat final de chaque question dans sa case, puis vérifie. Pour plusieurs nombres, sépare-les par des points-virgules.'));
+  const controls = [], corrs = [];
+  exos.forEach((ex, ei) => {
+    const block = el('section', 'ds-exo', `<h3>Exercice ${ei + 1} · ${ex.title} <span class="small">(${ex.pts} points)</span></h3>${ex.head}`); box.append(block);
+    if (ex.graph) drawFixedGraph(block.querySelector('svg'), ex.graph.points, ex.graph.name);
+    ex.items.forEach((t, qi) => {
+      const letter = ex.items.length > 1 ? 'abcdefgh'[qi] + ') ' : '', id = `ds-${ei}-${qi}`;
+      const row = el('div', 'ds-item'), ans = el('div', 'ds-ans'); row.append(el('div', 'ds-q', letter + t.q), ans); block.append(row);
+      let get, fields;
+      if (t.options) {
+        const g = el('div', 'ds-radios'); g.setAttribute('role', 'radiogroup'); g.setAttribute('aria-label', 'Réponse ' + (ei + 1) + letter.trim());
+        for (const o of t.options) { const l = el('label'), r = el('input'); r.type = 'radio'; r.name = id; r.value = o; l.append(r, ' ' + o); g.append(l); }
+        ans.append(g); get = () => { const c = g.querySelector('input:checked'); return c ? c.value : ''; }; fields = [...g.querySelectorAll('input')];
+      } else {
+        const f = makeField(t, 'Résultat ' + (ei + 1) + letter.trim()); ans.append(el('span', 'ds-lab', 'Résultat :'), f.el); get = f.get; fields = [f];
+      }
+      controls.push({ t, ans, get, fields });
     });
+    const corr = el('div', 'seyes ds-corr'); corr.hidden = true;
+    corr.innerHTML = `<h4>Correction de l’exercice ${ei + 1}</h4>` + ex.items.map((t, qi) => (ex.items.length > 1 ? `<p><b>${'abcdefgh'[qi]})</b></p>` : '') + t.corr).join('');
+    block.append(corr); corrs.push(corr);
   });
-  const finish=document.createElement('button');finish.type='button';finish.className='btn';finish.textContent='Vérifier mes réponses et afficher la correction';
-  finish.addEventListener('click',()=>{
-    let good=0;controls.forEach(({task,row,input})=>{const ok=sameAnswer(input.value,task.a);if(ok)good++;input.disabled=true;row.classList.add(ok?'done':'missed');const fb=row.querySelector('.fb');fb.className='fb '+(ok?'ok':'ko');fb.innerHTML=`<b>${ok?'Réponse juste.':input.value.trim()?'Réponse attendue : '+ansText(task.a)+'.':'Non répondu. Réponse attendue : '+ansText(task.a)+'.'}</b> <span class="m">${task.corr}</span>`;});
-    const result=document.createElement('div');result.className='corrige';result.setAttribute('role','status');result.innerHTML=`<strong>${good} réponse${good===1?'':'s'} juste${good===1?'':'s'} sur 20.</strong><p>Vérifie sur ta feuille : parenthèses avec les nombres négatifs, calculs intermédiaires, phrase de conclusion, tous les antécédents demandés.</p>`;finish.replaceWith(result);
-  });box.append(finish);
+  const end = btn('Vérifier mes résultats et afficher la correction', () => {
+    let score = 0;
+    for (const { t, ans, get, fields } of controls) {
+      const ok = check(t, get()); if (ok) score++;
+      fields.forEach(f => f.disable ? f.disable() : (f.disabled = true));
+      if (t.options) ans.querySelectorAll('label').forEach(l => { if (l.querySelector('input').value === t.a) l.classList.add('good'); });
+      ans.append(el('span', ok ? 'okm' : 'kom', ok ? ' Juste.' : ' La bonne réponse est ' + ansText(t.a) + '.'));
+    }
+    corrs.forEach(c => c.hidden = false);
+    end.replaceWith(el('div', 'corrige', `<b>${score} résultat${score > 1 ? 's' : ''} juste${score > 1 ? 's' : ''} sur ${controls.length}.</b><p>Ta note dépend aussi de ta rédaction : calculs avec les parenthèses, lectures sur le graphique, équations et phrases de conclusion. Compare ta feuille avec la correction de chaque exercice.</p>`));
+  });
+  box.append(end);
 }
-document.querySelectorAll('[data-ds]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-ds]').forEach(x=>x.classList.toggle('on',x===b));renderDS(b.dataset.ds);}));
+document.querySelectorAll('[data-ds]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-ds]').forEach(x=>x.classList.toggle('on',x===b));dsVariant=b.dataset.ds;renderDS();}));
 $('#dsPrint').addEventListener('click',()=>window.print());
-renderCalc();renderDS();switchPage('home');
+['m1', 'm2', 'm3', 'm4'].forEach(syncHelp);
+renderM1();renderCalc();renderDS();switchPage('home');
 
 })();</script><script>
 /* Charte : dans le texte courant, la lettre x (seule ou après un chiffre : 3x, x²),
-   la lettre f seule et g, h, p suivies d'une parenthèse sont des lettres mathématiques.
+   la lettre f seule, g, h, k, m, p, t suivies d'une parenthèse, et g, h, k, m, t après « fonction », « de » ou « par » sont des lettres mathématiques.
    On les affiche en italique STIX pour ne pas confondre x avec le signe ×.
    Le texte déjà en italique (<i>), le SVG et les champs de saisie ne sont pas touchés. */
 (() => {
   "use strict";
-  const RE = /(^|[^\p{L}\p{M}])(x|f|[ghp](?=\())(?![\p{L}\p{M}])/gu;
+  const RE = /(^|[^\p{L}\p{M}])(x|f|[ghkmpt](?=\()|(?<=(?:fonction|de|par) )[ghkmt])(?![\p{L}\p{M}])/gu;
   const SKIP = "i, em, svg, code, pre, script, style, textarea, select, option, title, [contenteditable], .no-math";
   function fix(text) {
     const parent = text.parentElement;

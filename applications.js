@@ -48,8 +48,8 @@ window.APPLICATIONS_ELEVES = [
     titre: "Fonctions (1)",
     niveau: "3e",
     theme: "Fonctions",
-    description: "Images et antécédents, lecture graphique, calculs et programmes de calcul. Le chapitre se termine par deux D.S. blancs.",
-    parties: ["Cours", "1. Découvrir", "2. Vocabulaire", "3. Lecture graphique", "4. Calculs", "5. D.S. blanc"],
+    description: "Quatre représentations d’une fonction, images et antécédents, lecture graphique, calculs et programmes de calcul. Le chapitre se termine par deux D.S. blancs.",
+    parties: ["Cours", "1. Quatre représentations", "2. Vocabulaire", "3. Lecture graphique", "4. Calculs", "5. D.S. blanc"],
     url: "apps/fonctions-1.html"
   },
   {
