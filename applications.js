@@ -20,6 +20,15 @@
  */
 window.APPLICATIONS_ELEVES = [
   {
+    titre: "Chapitre 1 : Arithmétique",
+    description: "Cours, divisibilité, nombres premiers, décompositions, PGCD/PPCM et fractions irréductibles. Problèmes de partage et de cycles, entraînements et deux D.S. blancs.",
+    niveaux: ["3e"],
+    chapitre: "Nombres et calculs",
+    url: "apps/arithmetique.html",
+    symbole: "ℕ",
+    couleur: "bleu"
+  },
+  {
     titre: "Chapitre 2 : Équations",
     description: "Cours, tests de solutions, règles de transformation, résolutions et mises en équation. Exemples, entraînements guidés et deux D.S. blancs.",
     niveaux: ["3e"],
