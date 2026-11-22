@@ -238,6 +238,8 @@ mark{background:var(--surligneur);padding:0 1px;color:inherit}
 .lin{flex:1;font-family:var(--math);font-size:1.4rem;color:var(--bleu);padding:.2rem .4rem;border:0;border-bottom:2px solid var(--bleu-clair);background:transparent}
 .lin:focus{outline:none;border-bottom-color:var(--bleu);background:#fff}
 .lnote{font-size:.85rem;color:var(--rouge);white-space:nowrap;min-width:7rem}
+.lin{min-width:0}
+@media (max-width:600px){.lrow{flex-wrap:wrap}.lnote{min-width:0}.lnote:empty{display:none}}
 .lrow.bad .lin{border-bottom:3px solid var(--rouge);color:var(--rouge)}
 .lrow.bad .lsrc .m{color:var(--rouge)}
 .lrow.unread .lin{border-bottom-color:var(--orange)}
@@ -1354,7 +1356,7 @@ const COURSE = {
     <p>On écrit le carré comme un produit, puis on développe avec la double distributivité :<br>${m('(x + 3)^2 = (x + 3)(x + 3) = x^2 + 3x + 3x + 9 = x^2 + 6x + 9')}.</p>`,
   4: () => `
     <p>Factoriser, c’est utiliser la distributivité « dans l’autre sens » : ${m('ka + kb = k(a + b)')}.</p>
-    ${box('meth', 'Méthode 5 : factoriser avec un facteur commun', ol([
+    ${box('meth', 'Méthode 4 : factoriser avec un facteur commun', ol([
       'J’écris chaque terme sous la forme d’un produit.',
       'Je repère et je surligne le facteur commun à tous les termes. Je choisis le plus grand possible.',
       'J’écris ce facteur devant une parenthèse, puis je mets dans la parenthèse ce qui reste de chaque terme.']))}
@@ -1368,7 +1370,7 @@ const COURSE = {
     <div><b>Exemple 4 : le facteur commun est une parenthèse.</b>
       <div class="calc">${['C = (x + 1)(x + 5) + (x + 1) * 2', 'C = ==(x + 1)==(x + 5) + ==(x + 1)== * 2', 'C = ==(x + 1)==(x + 5 + 2)'].map(s => `<div>${m(s)}</div>`).join('')}${res('C = (x + 1)(x + 7)')}</div></div>`,
   5: () => `
-    ${box('meth', 'Méthode 6 : démontrer qu’une propriété est toujours vraie', ol([
+    ${box('meth', 'Méthode 5 : démontrer qu’une propriété est toujours vraie', ol([
       'Je désigne le nombre de départ par une lettre (par exemple x ou n).',
       'J’écris l’expression obtenue, puis je la développe et je la réduis.',
       'Je conclus par une phrase.']))}
@@ -2260,6 +2262,14 @@ function dsCheck(it, v) {
   const q = { kind: it.k === 'fact' ? 'fact' : it.k, expected: Alg.poly(it.a), errors: [], needFull: true };
   try { return checkAnswer(q, v).st === 'ok'; } catch (e) { return false; }
 }
+/* D.S. blanc : les réponses restent enregistrées dans le navigateur (une clé par app et par sujet),
+   et la vérification affiche une note provisoire, calculée sur les résultats seulement. */
+function dsKeep(paper,key){const els=()=>[...paper.querySelectorAll('input,select,textarea')].filter(e=>!['button','hidden','submit'].includes(e.type));
+ try{const v=JSON.parse(localStorage.getItem(key)||'null');if(Array.isArray(v))els().forEach((e,i)=>{if(i>=v.length)return;if(e.type==='radio'||e.type==='checkbox')e.checked=!!v[i];else e.value=v[i]==null?'':v[i];});}catch(e){}
+ let dead=false;const save=()=>setTimeout(()=>{if(dead)return;try{localStorage.setItem(key,JSON.stringify(els().map(e=>e.type==='radio'||e.type==='checkbox'?e.checked:e.value)));}catch(e){}},0);
+ ['input','change','click'].forEach(ev=>paper.addEventListener(ev,save));
+ return ()=>{dead=true;try{localStorage.removeItem(key);}catch(e){}};}
+function dsNote(n,total){return String(Math.round(n*2)/2).replace('.',',')+' / '+total;}
 function renderDS() {
   const sub = view.sujet || 'A', exos = DS[sub], total = exos.reduce((s, e) => s + e.pts, 0);
   setMarge(`<div class="etapes">${['A', 'B'].map(k => `<button class="tab ${k === sub ? 'on' : ''}" data-sujet="${k}"><span>Sujet ${k}</span></button>`).join('')}</div>`);
@@ -2278,19 +2288,22 @@ function renderDS() {
   document.querySelectorAll('[data-sujet]').forEach(b => b.onclick = () => { view.sujet = b.dataset.sujet; render(); window.scrollTo(0, 0); });
   $('#dsprint').onclick = () => window.print();
   document.querySelectorAll('.dsin').forEach(el => el.addEventListener('input', () => starToTimes(el)));
+  const clear = dsKeep($('#main'), 'calcul-litteral-1-ds-' + sub);
   $('#dscheck').onclick = () => {
-    let k = 0, score = 0;
+    let k = 0, score = 0, note = 0;
     exos.forEach(ex => ex.items.forEach(it => {
       const id = k++, box = $('#dsa' + id);
       let v = '', ok;
       if (it.options) { const c = box.querySelector('input:checked'); v = c ? c.value : ''; ok = v === it.a; box.querySelectorAll('input').forEach(i => i.disabled = true); }
       else { const inp = $('#dsi' + id); v = inp.value; ok = v.trim() !== '' && dsCheck(it, v); inp.disabled = true; }
-      if (ok) score++;
-      box.insertAdjacentHTML('beforeend', ok ? '<span class="tag ok">Juste.</span>' : `<span class="tag shown">La bonne réponse est ${it.options ? it.a : m(it.a)}.</span>`);
+      if (ok) { score++; note += ex.pts / ex.items.length; }
+      box.insertAdjacentHTML('beforeend', ok ? '<span class="tag ok">Juste.</span>' : `<span class="tag shown">La bonne réponse est ${it.options ? String(it.a).replace(/\.$/, '') : m(it.a)}.</span>`);
     }));
     document.querySelectorAll('.ds-corr').forEach(c => c.hidden = false);
     $('#dscheck').remove();
-    $('#dsres').innerHTML = `<div class="fb info"><b>${score} résultat${score > 1 ? 's' : ''} juste${score > 1 ? 's' : ''} sur ${k}.</b> Ta note dépend aussi de ta rédaction : calculs ligne par ligne, développement complet et phrase de conclusion. Compare ta feuille avec la correction de chaque exercice.</div>`;
+    $('#dsres').innerHTML = `<div class="fb info"><b>Note provisoire : ${dsNote(note, total)}</b> (${score} résultat${score > 1 ? 's' : ''} juste${score > 1 ? 's' : ''} sur ${k}). Cette note ne compte que tes résultats. Ta vraie note dépend aussi de ta rédaction : calculs ligne par ligne, développement complet et phrase de conclusion. Compare ta feuille avec la correction de chaque exercice.</div><div class="actions noprint"><button id="dsclear">Effacer mes réponses et recommencer</button></div>`;
+    $('#dsclear').onclick = () => { clear(); render(); window.scrollTo(0, 0); };
+    $('#main').querySelector('.titre').insertAdjacentHTML('afterend', `<div class="fb info"><b>Note provisoire : ${dsNote(note, total)}</b> (${score} sur ${k} résultats justes). La correction est sous chaque exercice, et le détail en bas de la page.</div>`);
   };
 }
 

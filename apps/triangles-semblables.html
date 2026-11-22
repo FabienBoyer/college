@@ -49,6 +49,7 @@ h3{color:var(--ink);margin:1.2em 0 .4em}
 .home{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
 .home .card h2{font-size:1.2rem;margin:0 0 .3em;color:var(--red)}
 .home .card p{margin:.2em 0 1em;color:var(--text)}
+.home .card{display:flex;flex-direction:column}.home .card>button,.home .card>.btn{margin-top:auto;align-self:flex-start}.home .card p.suivi-st{margin:auto 0 .7em;font-size:.88rem;color:var(--muted,#5b6478)}.home .card p.suivi-st+button,.home .card p.suivi-st+.btn{margin-top:0}
 .btn{font:inherit;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:.5em 1.05em;cursor:pointer;margin:.3em .4em .2em 0}
 .btn:hover{background:var(--ink2)}
 .btn.light{background:#fff;color:var(--ink);border:2px solid var(--ink)}
@@ -995,10 +996,54 @@ function render(){
   if(VIEW.page==="m5")return renderDS();
   renderModule(VIEW.page);
 }
+/* Mon travail : suivi léger, enregistré dans le navigateur (clé propre à l'app).
+   On compte les exercices finis dans « Je m'entraîne seul » (et ceux réussis sans erreur),
+   et la dernière note provisoire de chaque D.S. blanc. Le code résume ce travail pour le professeur. */
+function makeSuivi(app,prefix,modules){
+ const KEY=app+'-suivi',B36=n=>Math.max(0,Math.min(1295,n|0)).toString(36).toUpperCase().padStart(2,'0');
+ let st={};try{st=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){}
+ st.m=st.m||{};st.ds=st.ds||{};
+ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}};
+ const sum=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))%1296;return h;};
+ const nf=x=>String(x).replace('.',',');
+ const fait=(f,r)=>f?`${f} exercice${f>1?'s':''} fait${f>1?'s':''} seul, dont ${r} sans erreur`:'pas commencé';
+ function code(){const day=Math.floor((Date.now()-Date.UTC(2026,0,1))/864e5);let b=B36(day);
+  modules.forEach(([k],i)=>{const r=st.m[k];if(r&&r[0])b+=String(i)+'M'+B36(r[0])+B36(r[1]);});
+  Object.keys(st.ds).sort().forEach(s=>{const d=st.ds[s];b+='D'+s+B36(Math.round(d.n*2))+B36(Math.round(d.max*2));});
+  return (prefix+b+B36(sum(b))).match(/.{1,6}/g).join('-');}
+ function decode(str){const s=String(str).toUpperCase().replace(/[^0-9A-Z]/g,'');if(!s.startsWith(prefix)||s.length<prefix.length+4)return null;
+  const b=s.slice(prefix.length,-2);if(sum(b)!==parseInt(s.slice(-2),36))return null;
+  const out={date:new Date(Date.UTC(2026,0,1)+parseInt(b.slice(0,2),36)*864e5),m:{},ds:{}};
+  for(let i=2;i+6<=b.length;i+=6){const e=b.slice(i,i+6);
+   if(e[0]==='D')out.ds[e[1]]={n:parseInt(e.slice(2,4),36)/2,max:parseInt(e.slice(4,6),36)/2};
+   else{const mod=modules[+e[0]];if(!mod||e[1]!=='M')return null;out.m[mod[0]]=[parseInt(e.slice(2,4),36),parseInt(e.slice(4,6),36)];}}
+  return out;}
+ function table(d){const rows=modules.map(([k,l])=>{const r=d.m[k]||[0,0];return `<tr><td>${l}</td><td>${r[0]?r[0]:'—'}</td><td>${r[0]?r[1]:'—'}</td></tr>`;}).join('');
+  const ds=Object.keys(d.ds).sort().map(s=>`Sujet ${s === 'R' ? 'tiré au hasard' : s} : ${nf(d.ds[s].n)} / ${nf(d.ds[s].max)}`).join(' ; ');
+  return `<table class="suivi-t"><tr><th>Partie</th><th>Exercices faits seul</th><th>Sans erreur</th></tr>${rows}</table><p>Dernière note provisoire au D.S. blanc : ${ds||'pas encore de D.S. vérifié'}.</p>`;}
+ if(!document.getElementById('suivi-css')){const c=document.createElement('style');c.id='suivi-css';c.textContent='.suivi{margin-top:18px}.suivi h2{color:#b8322a;font-size:1.2rem;line-height:1.3;margin:0 0 .5em}.suivi-st{margin:.2em 0 .6em;font-size:.88rem;color:#5b6478}.suivi-t{border-collapse:collapse;width:100%;margin:.4em 0;font-size:.95rem}.suivi-t th,.suivi-t td{border:1px solid #c9d3ee;padding:.35em .5em;text-align:left}.suivi-t th{background:#f4f6fb;font-weight:700}.suivi-code{display:inline-block;font-family:"STIX Two Text",Cambria,serif;font-size:1.2rem;letter-spacing:.06em;padding:.2em .6em;border:2px dashed #1d3a8a;border-radius:8px;background:#fff;margin:.3em .5em .3em 0}.suivi details{margin-top:.8em}.suivi summary{cursor:pointer;font-weight:700;color:#1d3a8a}.suivi input[type=text]{font:inherit;padding:.4em .6em;border:2px solid #c9d3ee;border-radius:8px;min-width:0;width:16em;max-width:100%}.suivi .suivi-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:.5em 0}.suivi .suivi-bad{color:#b8322a}';document.head.append(c);}
+ return {
+  done(mod,first){const r=st.m[mod]||[0,0];r[0]++;if(first)r[1]++;st.m[mod]=r;save();},
+  ds(s,n,max){st.ds[s]={n:Math.round(n*2)/2,max};save();},
+  status(mod){const r=st.m[mod]||[0,0];return fait(r[0],r[1]);},
+  box(){const sec=document.createElement('section');sec.className='card suivi';const c=code();
+   sec.innerHTML=`<h2>Mon travail</h2><p>Ce que j’ai fait dans « Je m’entraîne seul », partie par partie, et ma dernière note provisoire au D.S. blanc.</p>${table(st)}
+    <p><b>Mon code pour le professeur.</b> Copie-le et envoie-le à ton professeur s’il te le demande.</p>
+    <div class="suivi-row"><span class="suivi-code">${c}</span><button type="button" class="btn light" data-s="copy">Copier le code</button></div>
+    <details><summary>Espace professeur : lire un code</summary><div class="suivi-row"><input type="text" data-s="in" placeholder="${prefix}…" autocomplete="off" aria-label="Code d’un élève"><button type="button" class="btn" data-s="read">Lire le code</button></div><div data-s="out"></div>
+    <p class="suivi-st">Effacer le suivi enregistré sur cet appareil :</p><button type="button" class="btn light" data-s="reset">Tout effacer</button></details>`;
+   const $s=k=>sec.querySelector(`[data-s="${k}"]`);
+   $s('copy').addEventListener('click',()=>{(navigator.clipboard?navigator.clipboard.writeText(c):Promise.reject()).then(()=>{$s('copy').textContent='Code copié';}).catch(()=>{const r=document.createRange();r.selectNode(sec.querySelector('.suivi-code'));getSelection().removeAllRanges();getSelection().addRange(r);});});
+   $s('read').addEventListener('click',()=>{const d=decode($s('in').value);$s('out').innerHTML=d?`<p>Code créé le ${d.date.toLocaleDateString('fr-FR')}.</p>`+table(d):'<p class="suivi-bad">Ce code n’est pas valide. Vérifiez qu’il a été copié en entier.</p>';});
+   let armed=false;$s('reset').addEventListener('click',()=>{if(!armed){armed=true;$s('reset').textContent='Cliquer encore pour tout effacer';return;}st={m:{},ds:{}};save();sec.replaceWith(this.box());});
+   return sec;}
+ };
+}
+const SUIVI=makeSuivi('triangles-semblables','TR',[['m1','1. Reconnaître les homologues'],['m2','2. Prouver par les angles'],['m3','3. Prouver par les longueurs'],['m4','4. Problèmes type brevet']]);
 function renderHome(){
   const g=el("div","home");
-  Object.entries(MODS).forEach(([k,mo])=>{const c=el("section","card",`<h2>${mo.title}</h2><p>${mo.card}</p>`);c.append(mkBtn("Commencer",()=>go(k,{sub:"exemple"})));g.append(c);});
-  app.append(g);
+  Object.entries(MODS).forEach(([k,mo])=>{const c=el("section","card",`<h2>${mo.title}</h2><p>${mo.card}</p>`);if(k!=="m5")c.append(el("p","suivi-st",SUIVI.status(k)));c.append(mkBtn("Commencer",()=>go(k,{sub:"exemple"})));g.append(c);});
+  app.append(el("div","retenir","<b>À retenir</b>Deux triangles sont semblables lorsque leurs angles sont deux à deux de même mesure. Pour le prouver, il suffit de trouver deux paires d’angles de même mesure, ou de montrer que les longueurs des côtés sont proportionnelles."),g,SUIVI.box());
 }
 function renderModule(k){
   const mo=MODS[k];const c=el("section","card");
@@ -1024,6 +1069,7 @@ function startExercise(k,panel){
   panel.append(el("div","exo-head",ex.head));
   const box=el("div","steps");panel.append(box);
   runSteps(box,ex.steps,sub==="exemple"?"model":"play",2,errors=>{
+    if(sub==="seul")SUIVI.done(k,errors===0);
     if(ex.corrige)panel.append(ex.seyes?el("div","seyes",`<h4>Correction</h4>${ex.corrige}`):el("div","corrige",`<h4>${sub==="exemple"?"La rédaction complète":"La rédaction attendue"}</h4>${ex.corrige}`));
     if(ex.grid&&sub==="seul")panel.append(gridEl(ex.grid));
     if(sub!=="exemple")panel.append(el("p","endmsg",errors===0?"Exercice réussi sans erreur.":"Exercice terminé. Relis bien la correction avant de passer au suivant."));
@@ -1069,7 +1115,7 @@ function eqAffine(a,b,c,d){ // a x + b = c x + d
 function exoEquations(e1,e2){
   return {title:"Exercice 1 (Équations)",pts:2,grid:["J’ai écrit chaque étape de la résolution, ligne par ligne.","J’ai donné la solution de chaque équation."],
     head:P("Résoudre les équations suivantes.")+P(`1. ${m(e1.txt)} (1 point)`)+P(`2. ${m(e2.txt)} (1 point)`),
-    answers:[{label:"1. x =",kind:"num",unit:"",correct:e1.sol},{label:"2. x =",kind:"num",unit:"",correct:e2.sol}],
+    answers:[{label:"1. x =",kind:"num",unit:"",correct:e1.sol,pts:1},{label:"2. x =",kind:"num",unit:"",correct:e2.sol,pts:1}],
     corr:P(`1. ${e1.corr}`)+P(`2. ${e2.corr}`)};
 }
 function randEq1(){let a,c,s,b,d;do{a=R(3,7);c=R(1,a-1);s=pick([2,3,4,5,6,-2,-3]);b=-R(1,9);d=(a-c)*s+b;}while(d===0);return eqAffine(a,b,c,d);}
@@ -1099,8 +1145,8 @@ function exoHomoTexte(o){
     head:P(`Les triangles ${m(T1.join(""))} et ${m(T2.join(""))} ci-dessous sont semblables. Les couples de sommets homologues sont ${pairs}.`)+svg+
       P("1. Compléter le tableau des sommets homologues. (1,5 point)")+tab+
       P(`2. Quel côté est homologue du côté ${SEG(sa+sb)} ? (0,5 point)`)+P(`3. Quel angle est homologue de l’angle ${A3(o.angle.join(""))} ? (1 point)`),
-    answers:[{label:"1.",kind:"selects",from:Fr,choices:To.slice().sort(),correct:Fr.map(h)},
-      {label:"2.",kind:"radio",opts:sideOpts,correct:sideOk},{label:"3.",kind:"radio",opts:angOpts.map(A3),correct:angOk}],
+    answers:[{label:"1.",kind:"selects",from:Fr,choices:To.slice().sort(),correct:Fr.map(h),pts:1.5},
+      {label:"2.",kind:"radio",opts:sideOpts,correct:sideOk,pts:.5},{label:"3.",kind:"radio",opts:angOpts.map(A3),correct:angOk,pts:1}],
     corr:P("1. On recopie les couples donnés dans l’énoncé :")+tabC+
       P(`2. Le côté ${SEG(sa+sb)} relie les sommets ${m(sa)} et ${m(sb)}. Leurs homologues sont ${m(h(sa))} et ${m(h(sb))}, donc le côté homologue est <b>${SEG(h(sa)+h(sb))}</b>.`)+
       P(`3. Le sommet de l’angle ${A3(o.angle.join(""))} est ${m(av)}. Son homologue est ${m(h(av))}, donc l’angle homologue est <b>${A3(angHom)}</b>.`)};
@@ -1121,7 +1167,7 @@ function exoPapillon(o){
   return {title:"Exercice 4",pts:4,grid:GRID_ANG,
     head:P(`Sur la figure ci-dessous, qui n’est pas en vraie grandeur, les droites (AE) et (DC) se coupent au point B. ${o.donnees}`)+P(`On sait que les angles ${A3("BAC")} et ${A3("BDE")} ont la même mesure.`)+svg+
       P("1. Démontrer que les triangles ABC et DBE sont semblables. (2 points)")+P(`2. ${o.ask==="AC"?`Sachant que DE = ${fr(DE)} cm, calculer la longueur AC.`:"Calculer la longueur DE."} (2 points)`),
-    answers:[{label:`2. ${m(o.ask)} =`,kind:"num",unit:"cm",correct:round(ans,2)}],
+    answers:[{label:`2. ${m(o.ask)} =`,kind:"num",unit:"cm",correct:round(ans,2),pts:2}],
     corr:P(`1. Les droites (AE) et (DC) se coupent en B, donc les angles ${A3("ABC")} et ${A3("DBE")} sont opposés par le sommet : ${A3("ABC")} = ${A3("DBE")}.`)+
       P(`De plus, ${A3("BAC")} = ${A3("BDE")} d’après l’énoncé.`)+
       P(`Les triangles ABC et DBE ont deux paires d’angles de même mesure : <b>ils sont semblables</b>.`)+
@@ -1140,7 +1186,7 @@ function exoListe(o){
   const ql=G.map((x,i)=>`${F(fr(x[1]),fr(Pt[i][1]))} ${isDec(q[i],2)?"=":"≈"} ${fr(q[i])}`).join(" ; ");
   return {title:"Exercice 5",pts:3,grid:GRID_LEN,
     head:P(`On considère deux triangles ${m(o.T1)} et ${m(o.T2)} tels que :`)+`<ul><li>${li(o.L1)} ;</li><li>${li(o.L2)}.</li></ul>`+P("Ces deux triangles sont-ils semblables ? Justifier la réponse."),
-    answers:[{label:"Réponse :",kind:"radio",opts:YESNO,correct:sim?0:1}],
+    answers:[{label:"Réponse :",kind:"radio",opts:YESNO,correct:sim?0:1,pts:3}],
     corr:P("On range les longueurs des côtés de chaque triangle dans l’ordre croissant :")+tab+
       P(`On calcule les quotients (triangle ${m(Gn)} divisé par triangle ${m(Pn)}) : ${ql}.`)+
       (sim?P(`Les quotients sont égaux : les longueurs des côtés sont proportionnelles. <b>Les triangles ${m(o.T1)} et ${m(o.T2)} sont semblables.</b>`)
@@ -1162,7 +1208,7 @@ function exoDNB18(o){
       P(`1. Dans le triangle BCD rectangle en B, montrer par le calcul que la longueur BD est égale à ${fr(BD)} cm. (1 point)`)+
       P("2. Démontrer que les triangles CBD et BFE sont semblables. (2 points)")+
       P(`3. Sophie affirme que l’angle ${A3("BFE")} est un angle droit. A-t-elle raison ? Justifier la réponse. (2 points)`),
-    answers:[{label:"3.",kind:"radio",opts:["Oui, Sophie a raison.","Non, Sophie a tort."],correct:0}],
+    answers:[{label:"3.",kind:"radio",opts:["Oui, Sophie a raison.","Non, Sophie a tort."],correct:0,pts:2}],
     note:"Les questions 1 et 2 sont des démonstrations : compare ta rédaction avec la correction.",
     corr:P(`1. Le triangle BCD est rectangle en B. D’après le théorème de Pythagore : CD² = BC² + BD².`)+
       P(`Donc BD² = CD² − BC² = ${fr(CD)}² − ${fr(BC)}² = ${fr(sq(CD),4)} − ${fr(sq(BC),4)} = ${fr(sq(BD),4)}.`)+
@@ -1175,14 +1221,14 @@ function exoDNB18(o){
 }
 // --- Sujets ---
 function sujet2025(v){
-  if(v==="A")return {title:"D.S. 303 – Triangles semblables – Sujet A",parts:[
+  if(v==="A")return {title:"D.S. blanc · Triangles semblables · Sujet A",parts:[
     {title:"Partie 1 : Automatismes (10 minutes)",info:"L’usage de la calculatrice est interdit pour cette partie.",total:5,exos:[exoEquations(eqAffine(5,-3,2,6),eqAffine(-3,7,0,28)),exoFormules(["cercle","triangle","cylindre"])]},
     {title:"Partie 2 : Triangles semblables (45 minutes)",info:"L’usage de la calculatrice est autorisé pour cette partie.",total:15,exos:[
       exoHomoTexte({T1:["A","B","C"],T2:["R","S","T"],corr:[2,1,0],A:[65,45,70],t2:150,flip:true,side:["A","C"],angle:["B","C","A"]}),
       exoPapillon({AB:2.5,AC:3,BC:3,BD:2,ask:"AC",donnees:"On donne AB = 2,5 cm, BC = 3 cm et BD = 2 cm.",labels:[["A","B","2,5 cm"],["B","C","3 cm"],["B","D","2 cm"]]}),
       exoListe({T1:"GHI",T2:"JKL",L1:{GH:8,GI:11,HI:6},L2:{JK:10,JL:13.5,KL:7.5}}),
       exoDNB18({BC:7.5,CD:8.5,k:.8})]}]};
-  return {title:"D.S. 303 – Triangles semblables – Sujet B",parts:[
+  return {title:"D.S. blanc · Triangles semblables · Sujet B",parts:[
     {title:"Partie 1 : Automatismes (10 minutes)",info:"L’usage de la calculatrice est interdit pour cette partie.",total:5,exos:[exoEquations(eqAffine(4,-2,1,7),eqAffine(-2,5,0,21)),exoFormules(["disque","rectP","cone"])]},
     {title:"Partie 2 : Triangles semblables (45 minutes)",info:"L’usage de la calculatrice est autorisé pour cette partie.",total:15,exos:[
       exoHomoTexte({T1:["D","E","F"],T2:["K","L","M"],corr:[1,2,0],A:[55,80,45],t2:-110,flip:false,tableFrom:"T2",side:["D","E"],angle:["E","F","D"]}),
@@ -1215,19 +1261,27 @@ function sujetAleatoire(){
   do{tr=pick([[4,5],[8,10],[6,10],[12,13],[15,17]]);mm=pick([.5,1,1.5]);k6=pick([.8,1.2,1.25,1.5,2]);}
   while(tr[1]*mm>13||tr[1]*mm<5||tr[1]*mm*k6>16||!isDec(k6*tr[0]*mm,2)||!isDec(k6*tr[1]*mm,2));
   const ex6=exoDNB18({BC:round(tr[0]*mm,2),CD:round(tr[1]*mm,2),k:k6});
-  return {title:"D.S. blanc – Triangles semblables – Sujet tiré au hasard",parts:[
+  return {title:"D.S. blanc · Triangles semblables · Sujet tiré au hasard",parts:[
     {title:"Partie 1 : Automatismes (10 minutes)",info:"L’usage de la calculatrice est interdit pour cette partie.",total:5,exos:[exoEquations(randEq1(),randEq2()),exoFormules(shuffle(Object.keys(FORMULES)).slice(0,3))]},
     {title:"Partie 2 : Triangles semblables (45 minutes)",info:"L’usage de la calculatrice est autorisé pour cette partie.",total:15,exos:[ex3,ex4,ex5,ex6]}]};
 }
+/* D.S. blanc : les réponses restent enregistrées dans le navigateur (une clé par app et par sujet),
+   et la vérification affiche une note provisoire, calculée sur les résultats seulement. */
+function dsKeep(paper,key){const els=()=>[...paper.querySelectorAll('input,select,textarea')].filter(e=>!['button','hidden','submit'].includes(e.type));
+ try{const v=JSON.parse(localStorage.getItem(key)||'null');if(Array.isArray(v))els().forEach((e,i)=>{if(i>=v.length)return;if(e.type==='radio'||e.type==='checkbox')e.checked=!!v[i];else e.value=v[i]==null?'':v[i];});}catch(e){}
+ let dead=false;const save=()=>setTimeout(()=>{if(dead)return;try{localStorage.setItem(key,JSON.stringify(els().map(e=>e.type==='radio'||e.type==='checkbox'?e.checked:e.value)));}catch(e){}},0);
+ ['input','change','click'].forEach(ev=>paper.addEventListener(ev,save));
+ return ()=>{dead=true;try{localStorage.removeItem(key);}catch(e){}};}
+function dsNote(n,total){return String(Math.round(n*2)/2).replace('.',',')+' / '+total;}
 function renderDS(){
   DSN++;const ds=DSCHOICE==="A"||DSCHOICE==="B"?sujet2025(DSCHOICE):sujetAleatoire();
   const c=el("section","card ds");
   c.innerHTML=`<h2 class="ttl"><span>5. D.S. blanc</span></h2>`;
   const ch=el("div","levels",`<span class="lab">Sujet :</span>`);
-  [["A","D.S. 2025 – sujet A"],["B","D.S. 2025 – sujet B"],["R","Nouveau sujet"]].forEach(([v,l])=>ch.append(mkBtn(l,()=>{DSCHOICE=v;render();},DSCHOICE===v?"on":"")));
+  [["A","Sujet A"],["B","Sujet B"],["R","Sujet tiré au hasard"]].forEach(([v,l])=>ch.append(mkBtn(l,()=>{DSCHOICE=v;render();},DSCHOICE===v?"on":"")));
   c.append(ch);
   c.append(el("p","consigne small",`Fais le D.S. sur ta feuille, comme en classe, en respectant les durées. Ensuite, écris tes résultats dans les cadres « Mes réponses » et affiche la correction.`));
-  const tools=el("div","ds-tools");tools.append(mkBtn(DSCHOICE==="R"?"Tirer un autre sujet":"Recommencer ce sujet",()=>render()),mkBtn("Imprimer le sujet",()=>window.print(),"btn light"));c.append(tools);
+  const tools=el("div","ds-tools");tools.append(mkBtn(DSCHOICE==="R"?"Tirer un autre sujet":"Effacer mes réponses",()=>{clear();render();},"btn light"),mkBtn("Imprimer le sujet",()=>window.print(),"btn light"));c.append(tools);
   c.append(el("h3","ds-title",ds.title));
   const blocks=[];let n=0;
   ds.parts.forEach(part=>{
@@ -1245,18 +1299,23 @@ function renderDS(){
       b.append(ans);const cz=el("div","ds-corr");b.append(cz);c.append(b);blocks.push({ex,cz});
     });
   });
+  const clear=DSCHOICE==="R"?()=>{}:dsKeep(c,"triangles-semblables-ds-"+DSCHOICE);
   const fin=mkBtn("J’ai fini : afficher la correction",()=>{
+    let note=0,max=0,total=0;setTimeout(()=>SUIVI.ds(DSCHOICE,note,max));ds.parts.forEach(p=>total+=p.total);
     blocks.forEach(({ex,cz})=>{
       ex.answers.forEach(a=>{let ok;
         if(a.kind==="radio"){const r=a.row.querySelector("input:checked");ok=!!r&&Number(r.value)===a.correct;a.row.querySelectorAll("label").forEach((l,i)=>{if(i===a.correct)l.classList.add("good");});}
         else if(a.kind==="num"){const v=parseNum(a.row.querySelector("input").value);ok=v!==null&&Math.abs(v-a.correct)<=.011;}
         else{const ss=[...a.row.querySelectorAll("select")];ok=ss.every((s,i)=>s.value===a.correct[i]);ss.forEach((s,i)=>s.classList.toggle("bad",s.value!==a.correct[i]));}
         a.row.querySelectorAll("input,select").forEach(i=>i.disabled=true);
+        max+=a.pts||0;if(ok)note+=a.pts||0;
         a.row.querySelector(".ds-mark").innerHTML=ok?`<span class="okm">✓ juste</span>`:`<span class="kom">✗ à revoir</span>`;
       });
       cz.innerHTML=seyesBox(ex.corr);if(ex.grid)cz.append(gridEl(ex.grid));
     });
-    fin.remove();
+    const txt=`<b>Note provisoire : ${dsNote(note,max)}</b> sur les questions que l’app peut vérifier.<p>Les ${String(total-max).replace(".",",")} autres points sur ${total} (formules et démonstrations) dépendent de ta rédaction : compare ta feuille avec la correction de chaque exercice.</p>`;
+    const sum=el("div","corrige",txt);sum.append(mkBtn(DSCHOICE==="R"?"Tirer un autre sujet":"Effacer mes réponses et recommencer",()=>{clear();render();window.scrollTo({top:0});},"btn light"));fin.replaceWith(sum);
+    c.querySelector(".ds-title").after(el("div","corrige",txt));
   },"btn");
   c.append(fin);app.append(c);
 }

@@ -41,6 +41,7 @@ h3{color:var(--ink);margin:1.2em 0 .4em}
 .home{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
 .home .card h2{font-size:1.2rem;margin:0 0 .3em;color:var(--red)}
 .home .card p{margin:.2em 0 1em;color:var(--text)}
+.home .card{display:flex;flex-direction:column}.home .card>button,.home .card>.btn{margin-top:auto;align-self:flex-start}.home .card p.suivi-st{margin:auto 0 .7em;font-size:.88rem;color:var(--muted,#5b6478)}.home .card p.suivi-st+button,.home .card p.suivi-st+.btn{margin-top:0}
 .btn{font:inherit;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:.5em 1.05em;cursor:pointer;margin:.3em .4em .2em 0}
 .btn:hover{background:var(--ink2)}
 .btn.light{background:#fff;color:var(--ink);border:2px solid var(--ink)}
@@ -285,6 +286,50 @@ function problemExercise(example=false){
  ];const p=problems[example?0:R(0,4)];return {...p,head:'<p>'+p.head+'</p>'};
 }
 const MODULES={test:{title:'1. Tester une solution',desc:'Calculer séparément les deux membres, puis comparer.',retain:'Un nombre est une solution si l’égalité est vraie lorsqu’on remplace l’inconnue par ce nombre.',gen:testExercise},rules:{title:'2. Règles de transformation',desc:'Faire la même opération sur les deux membres.',retain:'R1 : ajouter ou soustraire la même expression aux deux membres. R2 : multiplier ou diviser les deux membres par un même nombre non nul.',gen:ruleExercise},solve:{title:'3. Résoudre une équation',desc:'Équations simples, avec x dans les deux membres, puis avec des parenthèses.',retain:'Développer et réduire si nécessaire. Regrouper les termes en x, puis les nombres. Diviser par le nombre qui multiplie x, puis conclure.',gen:null},problems:{title:'4. Mettre en équation',desc:'Programmes de calcul, nombres, périmètres et tarifs.',retain:'Choisir l’inconnue, traduire le problème par une égalité, résoudre, puis vérifier que la réponse convient au problème.',gen:problemExercise}};
+/* Mon travail : suivi léger, enregistré dans le navigateur (clé propre à l'app).
+   On compte les exercices finis dans « Je m'entraîne seul » (et ceux réussis sans erreur),
+   et la dernière note provisoire de chaque D.S. blanc. Le code résume ce travail pour le professeur. */
+function makeSuivi(app,prefix,modules){
+ const KEY=app+'-suivi',B36=n=>Math.max(0,Math.min(1295,n|0)).toString(36).toUpperCase().padStart(2,'0');
+ let st={};try{st=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){}
+ st.m=st.m||{};st.ds=st.ds||{};
+ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}};
+ const sum=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))%1296;return h;};
+ const nf=x=>String(x).replace('.',',');
+ const fait=(f,r)=>f?`${f} exercice${f>1?'s':''} fait${f>1?'s':''} seul, dont ${r} sans erreur`:'pas commencé';
+ function code(){const day=Math.floor((Date.now()-Date.UTC(2026,0,1))/864e5);let b=B36(day);
+  modules.forEach(([k],i)=>{const r=st.m[k];if(r&&r[0])b+=String(i)+'M'+B36(r[0])+B36(r[1]);});
+  Object.keys(st.ds).sort().forEach(s=>{const d=st.ds[s];b+='D'+s+B36(Math.round(d.n*2))+B36(Math.round(d.max*2));});
+  return (prefix+b+B36(sum(b))).match(/.{1,6}/g).join('-');}
+ function decode(str){const s=String(str).toUpperCase().replace(/[^0-9A-Z]/g,'');if(!s.startsWith(prefix)||s.length<prefix.length+4)return null;
+  const b=s.slice(prefix.length,-2);if(sum(b)!==parseInt(s.slice(-2),36))return null;
+  const out={date:new Date(Date.UTC(2026,0,1)+parseInt(b.slice(0,2),36)*864e5),m:{},ds:{}};
+  for(let i=2;i+6<=b.length;i+=6){const e=b.slice(i,i+6);
+   if(e[0]==='D')out.ds[e[1]]={n:parseInt(e.slice(2,4),36)/2,max:parseInt(e.slice(4,6),36)/2};
+   else{const mod=modules[+e[0]];if(!mod||e[1]!=='M')return null;out.m[mod[0]]=[parseInt(e.slice(2,4),36),parseInt(e.slice(4,6),36)];}}
+  return out;}
+ function table(d){const rows=modules.map(([k,l])=>{const r=d.m[k]||[0,0];return `<tr><td>${l}</td><td>${r[0]?r[0]:'—'}</td><td>${r[0]?r[1]:'—'}</td></tr>`;}).join('');
+  const ds=Object.keys(d.ds).sort().map(s=>`Sujet ${s === 'R' ? 'tiré au hasard' : s} : ${nf(d.ds[s].n)} / ${nf(d.ds[s].max)}`).join(' ; ');
+  return `<table class="suivi-t"><tr><th>Partie</th><th>Exercices faits seul</th><th>Sans erreur</th></tr>${rows}</table><p>Dernière note provisoire au D.S. blanc : ${ds||'pas encore de D.S. vérifié'}.</p>`;}
+ if(!document.getElementById('suivi-css')){const c=document.createElement('style');c.id='suivi-css';c.textContent='.suivi{margin-top:18px}.suivi h2{color:#b8322a;font-size:1.2rem;line-height:1.3;margin:0 0 .5em}.suivi-st{margin:.2em 0 .6em;font-size:.88rem;color:#5b6478}.suivi-t{border-collapse:collapse;width:100%;margin:.4em 0;font-size:.95rem}.suivi-t th,.suivi-t td{border:1px solid #c9d3ee;padding:.35em .5em;text-align:left}.suivi-t th{background:#f4f6fb;font-weight:700}.suivi-code{display:inline-block;font-family:"STIX Two Text",Cambria,serif;font-size:1.2rem;letter-spacing:.06em;padding:.2em .6em;border:2px dashed #1d3a8a;border-radius:8px;background:#fff;margin:.3em .5em .3em 0}.suivi details{margin-top:.8em}.suivi summary{cursor:pointer;font-weight:700;color:#1d3a8a}.suivi input[type=text]{font:inherit;padding:.4em .6em;border:2px solid #c9d3ee;border-radius:8px;min-width:0;width:16em;max-width:100%}.suivi .suivi-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:.5em 0}.suivi .suivi-bad{color:#b8322a}';document.head.append(c);}
+ return {
+  done(mod,first){const r=st.m[mod]||[0,0];r[0]++;if(first)r[1]++;st.m[mod]=r;save();},
+  ds(s,n,max){st.ds[s]={n:Math.round(n*2)/2,max};save();},
+  status(mod){const r=st.m[mod]||[0,0];return fait(r[0],r[1]);},
+  box(){const sec=document.createElement('section');sec.className='card suivi';const c=code();
+   sec.innerHTML=`<h2>Mon travail</h2><p>Ce que j’ai fait dans « Je m’entraîne seul », partie par partie, et ma dernière note provisoire au D.S. blanc.</p>${table(st)}
+    <p><b>Mon code pour le professeur.</b> Copie-le et envoie-le à ton professeur s’il te le demande.</p>
+    <div class="suivi-row"><span class="suivi-code">${c}</span><button type="button" class="btn light" data-s="copy">Copier le code</button></div>
+    <details><summary>Espace professeur : lire un code</summary><div class="suivi-row"><input type="text" data-s="in" placeholder="${prefix}…" autocomplete="off" aria-label="Code d’un élève"><button type="button" class="btn" data-s="read">Lire le code</button></div><div data-s="out"></div>
+    <p class="suivi-st">Effacer le suivi enregistré sur cet appareil :</p><button type="button" class="btn light" data-s="reset">Tout effacer</button></details>`;
+   const $s=k=>sec.querySelector(`[data-s="${k}"]`);
+   $s('copy').addEventListener('click',()=>{(navigator.clipboard?navigator.clipboard.writeText(c):Promise.reject()).then(()=>{$s('copy').textContent='Code copié';}).catch(()=>{const r=document.createRange();r.selectNode(sec.querySelector('.suivi-code'));getSelection().removeAllRanges();getSelection().addRange(r);});});
+   $s('read').addEventListener('click',()=>{const d=decode($s('in').value);$s('out').innerHTML=d?`<p>Code créé le ${d.date.toLocaleDateString('fr-FR')}.</p>`+table(d):'<p class="suivi-bad">Ce code n’est pas valide. Vérifiez qu’il a été copié en entier.</p>';});
+   let armed=false;$s('reset').addEventListener('click',()=>{if(!armed){armed=true;$s('reset').textContent='Cliquer encore pour tout effacer';return;}st={m:{},ds:{}};save();sec.replaceWith(this.box());});
+   return sec;}
+ };
+}
+const SUIVI=makeSuivi('equations','EQ',[['test','1. Tester une solution'],['rules','2. Règles de transformation'],['solve','3. Résoudre une équation'],['problems','4. Mettre en équation']]);
 const VIEW={page:'home',mode:'exemple',level:1};
 function go(id){VIEW.page=id;render();window.scrollTo({top:0});}
 function modeBar(parent){const bar=dom('div','subtabs');for(const[key,label]of[['exemple','Je regarde un exemple'],['aide','Je m’entraîne avec de l’aide'],['seul','Je m’entraîne seul']])bar.append(button(label,()=>{VIEW.mode=key;render();},VIEW.mode===key?'on':''));parent.append(bar);}
@@ -295,10 +340,10 @@ function renderExercise(parent,ex){
  if(alone)parent.append(dom('p','small','Rédige les calculs et les justifications sur ton cahier, puis saisis seulement ta réponse. Si la solution n’est pas un nombre décimal, écris-la sous forme de fraction, par exemple 2/3.'));
  parent.append(dom('div','exo-head',ex.head));const box=dom('div','steps');parent.append(box);
  const tasks=alone&&(VIEW.page==='solve'||VIEW.page==='problems')?[ex.tasks.at(-1)]:ex.tasks;
- let step=0;
+ let step=0,allFirst=true;
  function next(){
-  if(step>=tasks.length){parent.append(dom('div','seyes','<h4>Correction rédigée</h4>'+ex.correction));parent.append(button('Nouvel exercice',render));return;}
-  const t=tasks[step++],q=alone&&t.qAlone?t.qAlone:t.q;const row=dom('div','step',`<div class="step-n">Étape ${step} sur ${tasks.length}</div><div class="step-q">${q}</div>`);box.append(row);
+  if(step>=tasks.length){if(alone)SUIVI.done(VIEW.page,allFirst);parent.append(dom('div','seyes','<h4>Correction rédigée</h4>'+ex.correction));parent.append(button('Nouvel exercice',render));return;}
+  const t=tasks[step++],q=alone&&t.qAlone?t.qAlone:t.q;const single=tasks.length===1,dup=single&&/\?\s*$/.test(String(ex.head).replace(/<[^>]*>/g,''));const row=dom('div','step',(single?'':`<div class="step-n">Étape ${step} sur ${tasks.length}</div>`)+(dup?'':`<div class="step-q">${q}</div>`));box.append(row);
   if(VIEW.mode==='exemple'){row.classList.add('done');row.append(dom('div','model-a',answer(t)),dom('div','model-e',t.corr));row.append(button(step<tasks.length?'Étape suivante':'Voir la rédaction',()=>{row.querySelector('button').remove();next();}));return;}
   if(VIEW.mode==='aide'&&t.hint)row.append(dom('p','small aide','<b>Aide :</b> '+t.hint));
   const area=dom('div','step-a'),feedback=dom('div','fb');feedback.setAttribute('aria-live','polite');row.append(area,feedback);let input;
@@ -307,7 +352,7 @@ function renderExercise(parent,ex){
   input.setAttribute('aria-label','Réponse à l’étape '+step);let tries=0;
   const valid=button('Valider',()=>{
    if(!input.value.trim()){feedback.className='fb warn';feedback.textContent='Donne une réponse avant de valider.';return;}
-   const ok=correct(input.value,t.a);tries++;
+   const ok=correct(input.value,t.a);tries++;if(!ok)allFirst=false;
    if(!ok&&tries<2){feedback.className='fb warn';feedback.textContent=VIEW.mode==='aide'&&t.hint?'Ce n’est pas encore juste. Relis l’aide, puis fais un deuxième essai.':'Ce n’est pas encore juste. Vérifie tes calculs, puis fais un deuxième essai.';input.classList.add('bad');return;}
    input.classList.remove('bad');input.disabled=true;valid.disabled=true;row.classList.add(ok?'done':'missed');feedback.className='fb '+(ok?'ok':'ko');feedback.innerHTML=`<b>${ok?'C’est juste.':'La bonne réponse est '+answer(t)+'.'}</b> ${t.corr}`;row.append(button('Continuer',()=>{row.querySelectorAll('button').forEach(b=>b.remove());next();}));
   });input.addEventListener('keydown',e=>{if(e.key==='Enter')valid.click();});area.append(input,valid);
@@ -353,6 +398,14 @@ function dsData(variant){
   {q:'Nombre de personnes au tarif réduit :',a:12,corr:'<p>On note x le nombre de personnes au tarif réduit. Les 25 − x autres personnes paient le plein tarif.</p><p>On résout 9(25 − x) + 6x = 189.</p><p>On développe et on réduit : 225 − 3x = 189.</p><p>On soustrait 225 aux deux membres : −3x = −36.</p><p>On divise les deux membres par −3 : x = 12.</p><p>Vérification : 13 × 9 + 12 × 6 = 117 + 72 = 189 €.</p><p>12 personnes ont payé le tarif réduit.</p>'}]}
  ];
 }
+/* D.S. blanc : les réponses restent enregistrées dans le navigateur (une clé par app et par sujet),
+   et la vérification affiche une note provisoire, calculée sur les résultats seulement. */
+function dsKeep(paper,key){const els=()=>[...paper.querySelectorAll('input,select,textarea')].filter(e=>!['button','hidden','submit'].includes(e.type));
+ try{const v=JSON.parse(localStorage.getItem(key)||'null');if(Array.isArray(v))els().forEach((e,i)=>{if(i>=v.length)return;if(e.type==='radio'||e.type==='checkbox')e.checked=!!v[i];else e.value=v[i]==null?'':v[i];});}catch(e){}
+ let dead=false;const save=()=>setTimeout(()=>{if(dead)return;try{localStorage.setItem(key,JSON.stringify(els().map(e=>e.type==='radio'||e.type==='checkbox'?e.checked:e.value)));}catch(e){}},0);
+ ['input','change','click'].forEach(ev=>paper.addEventListener(ev,save));
+ return ()=>{dead=true;try{localStorage.removeItem(key);}catch(e){}};}
+function dsNote(n,total){return String(Math.round(n*2)/2).replace('.',',')+' / '+total;}
 function renderDS(){
  const main=$('#app');main.append(dom('h2','ttl','<span>5. D.S. blanc</span>'));const bar=dom('div','subtabs');const variant=VIEW.variant||'A';for(const v of ['A','B'])bar.append(button('Sujet '+v,()=>{VIEW.variant=v;render();},variant===v?'on':''));bar.append(button('Imprimer le sujet',()=>window.print(),'btn light'));main.append(bar);
  const exos=dsData(variant),total=exos.reduce((s,e)=>s+e.pts,0);
@@ -363,19 +416,20 @@ function renderDS(){
    const letter=ex.items.length>1?'abcdefgh'[qi]+') ':'',id=`ds-${ei}-${qi}`,row=dom('div','ds-item'),ans=dom('div','ds-ans');row.append(dom('div','ds-q',letter+t.q),ans);block.append(row);let get,fields;
    if(t.options){const g=dom('div','ds-radios');g.setAttribute('role','radiogroup');g.setAttribute('aria-label','Réponse '+(ei+1)+letter.trim());for(const o of t.options){const l=dom('label'),r=dom('input');r.type='radio';r.name=id;r.value=o;l.append(r,' '+o);g.append(l);}ans.append(g);get=()=>{const c=g.querySelector('input:checked');return c?c.value:'';};fields=[...g.querySelectorAll('input')];}
    else{const lab=dom('label','ds-lab','Résultat :'),input=dom('input','eq-input');input.type='text';input.id=id;input.autocomplete='off';input.placeholder='Nombre ou fraction';lab.htmlFor=input.id;ans.append(lab,input);get=()=>input.value;fields=[input];}
-   controls.push({t,ans,get,fields});
+   controls.push({t,ans,get,fields,w:ex.pts/ex.items.length});
   });
   const corr=dom('div','seyes ds-corr');corr.hidden=true;corr.innerHTML=`<h4>Correction de l’exercice ${ei+1}</h4>`+ex.items.map((t,qi)=>(ex.items.length>1?`<p><b>${'abcdefgh'[qi]})</b></p>`:'')+t.corr).join('');block.append(corr);corrs.push(corr);
  });
- const end=button('Vérifier mes résultats et afficher la correction',()=>{let score=0;for(const{t,ans,get,fields}of controls){const ok=correct(get(),t.a);if(ok)score++;fields.forEach(f=>f.disabled=true);if(t.options)ans.querySelectorAll('label').forEach(l=>{if(l.querySelector('input').value===t.a)l.classList.add('good');});ans.append(dom('span',ok?'okm':'kom',ok?' Juste.':' La bonne réponse est '+answer(t)+'.'));}corrs.forEach(c=>c.hidden=false);
-  end.replaceWith(dom('div','corrige',`<b>${score} résultat${score>1?'s':''} juste${score>1?'s':''} sur ${controls.length}.</b><p>Ta note dépend aussi de ta rédaction : même opération sur les deux membres, calculs exacts, vérification et phrase de conclusion. Compare ta feuille avec la correction de chaque exercice.</p>`));});
+ const clear=dsKeep(paper,'equations-ds-'+variant);
+ const end=button('Vérifier mes résultats et afficher la correction',()=>{let score=0,note=0;setTimeout(()=>SUIVI.ds(variant,note,total));for(const{t,ans,get,fields,w}of controls){const ok=correct(get(),t.a);if(ok){score++;note+=w;}fields.forEach(f=>f.disabled=true);if(t.options)ans.querySelectorAll('label').forEach(l=>{if(l.querySelector('input').value===t.a)l.classList.add('good');});ans.append(dom('span',ok?'okm':'kom',ok?' Juste.':' La bonne réponse est '+answer(t)+'.'));}corrs.forEach(c=>c.hidden=false);
+  const sum=dom('div','corrige',`<b>Note provisoire : ${dsNote(note,total)}</b> (${score} résultat${score>1?'s':''} juste${score>1?'s':''} sur ${controls.length}).<p>Cette note ne compte que tes résultats. Ta vraie note dépend aussi de ta rédaction : même opération sur les deux membres, calculs exacts, vérification et phrase de conclusion. Compare ta feuille avec la correction de chaque exercice.</p>`);sum.append(button('Effacer mes réponses et recommencer',()=>{clear();render();window.scrollTo({top:0});},'btn light'));end.replaceWith(sum);paper.prepend(dom('div','corrige',`<b>Note provisoire : ${dsNote(note,total)}</b> (${score} sur ${controls.length} résultats justes). La correction est sous chaque exercice, et le détail en bas de la page.`));});
  paper.append(end);
 }
 function render(){
  const main=$('#app');main.innerHTML='';document.querySelectorAll('nav [data-page]').forEach(b=>b.classList.toggle('on',b.dataset.page===VIEW.page));
  if(VIEW.page==='cours'){main.append(dom('h2','ttl','<span>Cours · Équations</span>'),dom('div','card',$('#course-source').innerHTML));return;}
  if(VIEW.page==='ds'){renderDS();return;}
- if(VIEW.page==='home'){main.append(dom('div','retenir','<b>À retenir</b>Résoudre une équation, c’est chercher toutes les valeurs qui rendent l’égalité vraie. À chaque étape, on conserve les mêmes solutions.'));const grid=dom('div','home');for(const[k,m]of Object.entries(MODULES)){const card=dom('section','card',`<h2>${m.title}</h2><p>${m.desc}</p>`);card.append(button('Commencer',()=>go(k)));grid.append(card);}const ds=dom('section','card','<h2>5. D.S. blanc</h2><p>Deux sujets différents : tu rédiges sur une feuille, puis tu vérifies tes résultats et tu lis la correction.</p>');ds.append(button('Commencer',()=>go('ds')));grid.append(ds);main.append(grid);return;}
+ if(VIEW.page==='home'){main.append(dom('div','retenir','<b>À retenir</b>Résoudre une équation, c’est chercher toutes les valeurs qui rendent l’égalité vraie. À chaque étape, on conserve les mêmes solutions.'));const grid=dom('div','home');for(const[k,m]of Object.entries(MODULES)){const card=dom('section','card',`<h2>${m.title}</h2><p>${m.desc}</p>`);card.append(dom('p','suivi-st',SUIVI.status(k)),button('Commencer',()=>go(k)));grid.append(card);}const ds=dom('section','card','<h2>5. D.S. blanc</h2><p>Deux sujets différents : tu rédiges sur une feuille, puis tu vérifies tes résultats et tu lis la correction.</p>');ds.append(button('Commencer',()=>go('ds')));grid.append(ds);main.append(grid,SUIVI.box());return;}
  const mod=MODULES[VIEW.page];main.append(dom('h2','ttl','<span>'+mod.title+'</span>'));modeBar(main);
  if(VIEW.mode!=='seul'){const part=$('#course-source').content.querySelector(`[data-mod="${VIEW.page}"]`);if(part){const det=dom('details','cours-part','<summary>Relire le cours de cette partie</summary>');det.append(part.cloneNode(true));main.append(det);}main.append(dom('div','retenir','<b>À retenir</b>'+mod.retain));}
  if(VIEW.page==='solve'){const levels=dom('div','levels');for(const[n,label]of[[1,'1. Simples'],[2,'2. Deux membres'],[3,'3. Parenthèses']])levels.append(button(label,()=>{VIEW.level=n;render();},VIEW.level===n?'on':''));main.append(levels);}
