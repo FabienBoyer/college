@@ -58,7 +58,7 @@ window.APPLICATIONS_ELEVES = [
     niveau: "3e",
     theme: "Géométrie",
     description: "Reconnaître les éléments homologues, démontrer que deux triangles sont semblables et calculer des longueurs. Le chapitre se termine par un D.S. blanc.",
-    parties: ["1. Homologues", "2. Par les angles", "3. Par les longueurs", "4. Type brevet", "5. D.S. blanc"],
+    parties: ["Cours", "1. Homologues", "2. Par les angles", "3. Par les longueurs", "4. Type brevet", "5. D.S. blanc"],
     url: "apps/triangles-semblables.html"
   },
   {

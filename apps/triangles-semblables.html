@@ -170,6 +170,13 @@ footer button{font:inherit;background:none;border:none;color:var(--muted);text-d
 
 .back-home{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:0 0 16px;padding:8px 14px;border:2px solid var(--ink);border-radius:7px;background:var(--card);color:var(--ink);font:inherit;font-size:1rem;font-weight:700;text-decoration:none}.back-home:hover{background:#eef2fb}.back-home:focus-visible{outline:3px solid var(--red);outline-offset:3px}
 i.m{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-style:italic;text-transform:none;letter-spacing:0}
+/* Cours et « Relire le cours de cette partie » */
+.cours-part h3{color:var(--ink);margin:1.1em 0 .4em}.cours-part:first-child h3{margin-top:.2em}.cours-part+.cours-part{border-top:2px solid var(--line);margin-top:1.2em;padding-top:.4em}
+.cours-part .seyes{margin:.6em 0 1em}.cours-part ol{margin:.2em 0 .6em;padding-left:1.4em}
+details.relire{background:var(--card);border:1px solid #e2e6ef;border-radius:8px;padding:.5em 1em;margin:0 0 14px}details.relire>summary{cursor:pointer;color:var(--ink);font-weight:700;min-height:32px}details.relire[open]>summary{margin-bottom:.4em}details.relire .cours-part h3:first-child{margin-top:.4em}
+/* Sur téléphone, les onglets deviennent un menu déroulant */
+.navsel{display:none}
+@media (max-width:600px){nav{border-bottom:none}nav button{display:none}nav .navsel{display:block;width:100%;min-height:44px;margin:0 0 4px;font-family:"Atkinson Hyperlegible","STIX Two Text",sans-serif;font-size:1rem;font-weight:700;color:var(--ink);border:2px solid var(--ink);border-radius:8px;background:var(--card)}}
 </style>
 </head>
 <body>
@@ -177,7 +184,7 @@ i.m{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-style:italic;t
   <header><a class="back-home" href="../">← Toutes les applications</a>
     <h1><span>Chapitre 4 : Triangles semblables</span></h1>
     <p>Je prépare mon D.S. de fin de chapitre.</p>
-    <nav id="tabs"></nav>
+    <nav id="tabs" aria-label="Parcours du chapitre"></nav>
   </header>
   <main id="app"></main>
   <footer>Collège La Rochefoucauld · Mathématiques 3<sup>e</sup></footer>
@@ -352,7 +359,7 @@ const RENDER={
     shuffle(st.items.map((h,i)=>({h,i}))).forEach(it=>{
       const b=mkBtn(it.h,()=>{
         if(it.i===next){ans.append(b);b.disabled=true;next++;if(next===st.items.length)api.complete(err>0?1:0);}
-        else{err++;b.classList.remove("shake");void b.offsetWidth;b.classList.add("shake");api.warn("Ce n'est pas la phrase suivante. Cherche celle qui vient juste après.");}
+        else{err++;b.classList.remove("shake");void b.offsetWidth;b.classList.add("shake");api.warn("Ce n’est pas la phrase suivante. Cherche celle qui vient juste après.");}
       },"opt");pool.append(b);
     });
   }
@@ -360,14 +367,14 @@ const RENDER={
 function closeMenus(){document.querySelectorAll(".blank-menu").forEach(x=>x.remove());}
 document.addEventListener("click",closeMenus);
 function gridEl(items){
-  const g=el("div","grille",`<h4>Je vérifie ma copie</h4><p class="small">Coche seulement ce qui apparaît vraiment sur ta feuille. Pour chaque case vide, reprends ta copie à l'aide de la correction.</p>`);
+  const g=el("div","grille",`<h4>Je vérifie ma copie</h4><p class="small">Coche seulement ce qui apparaît vraiment sur ta feuille. Pour chaque case vide, reprends ta copie à l’aide de la correction.</p>`);
   const msg=el("p","grille-msg");
   const boxes=items.map(t=>{const l=el("label","grille-item");const c=el("input");c.type="checkbox";l.append(c,el("span","",t));g.append(l);c.onchange=()=>{msg.textContent=boxes.every(x=>x.checked)?"Ta rédaction contient tous les éléments attendus.":"";};return c;});
   g.append(msg);return g;
 }
-const GRID_ANG=["J'ai écrit deux égalités d'angles.","J'ai justifié chaque égalité (angles opposés par le sommet, angle commun, angles droits, parallèles…).","J'ai conclu par une phrase : « les triangles … sont semblables ».","J'ai écrit les sommets homologues.","J'ai écrit l'égalité des trois quotients.","J'ai remplacé par les longueurs connues et j'ai écrit le calcul.","J'ai donné le résultat avec son unité."];
-const GRID_LEN=["J'ai rangé les côtés de chaque triangle dans l'ordre croissant.","J'ai calculé les trois quotients.","J'ai dit si les quotients sont égaux ou non.","J'ai conclu par une phrase : semblables ou pas semblables."];
-const GRID_M2=["J'ai calculé les angles manquants en écrivant les calculs.","J'ai cité la propriété utilisée (somme des angles d'un triangle, triangle isocèle).","J'ai comparé les angles des deux triangles.","J'ai conclu par une phrase : semblables ou pas semblables."];
+const GRID_ANG=["J’ai écrit deux égalités d’angles.","J’ai justifié chaque égalité (angles opposés par le sommet, angle commun, angles droits, parallèles…).","J’ai conclu par une phrase : « les triangles … sont semblables ».","J’ai écrit les sommets homologues.","J’ai écrit l’égalité des trois quotients.","J’ai remplacé par les longueurs connues et j’ai écrit le calcul.","J’ai donné le résultat avec son unité."];
+const GRID_LEN=["J’ai rangé les côtés de chaque triangle dans l’ordre croissant.","J’ai calculé les trois quotients.","J’ai dit si les quotients sont égaux ou non.","J’ai conclu par une phrase : semblables ou pas semblables."];
+const GRID_M2=["J’ai calculé les angles manquants en écrivant les calculs.","J’ai cité la propriété utilisée (somme des angles d’un triangle, triangle isocèle).","J’ai comparé les angles des deux triangles.","J’ai conclu par une phrase : semblables ou pas semblables."];
 function runSteps(box,steps,mode,maxTries,onEnd){
   let idx=0,errors=0;
   const next=()=>{
@@ -387,13 +394,13 @@ function runSteps(box,steps,mode,maxTries,onEnd){
       const api={
         over:()=>over,
         warn:msg=>{if(over)return;fb.className="fb warn";fb.innerHTML=msg;},
-        complete:err=>{fb.className="fb ok";fb.innerHTML=`<b>C'est terminé.</b> ${st.explain||""}`;finish(err);next();},
+        complete:err=>{fb.className="fb ok";fb.innerHTML=`<b>C’est terminé.</b> ${st.explain||""}`;finish(err);next();},
         judge:ok=>{
           if(over)return;
-          if(ok){fb.className="fb ok";fb.innerHTML=`<b>C'est juste.</b> ${st.explain||""}`;finish(tries>0?1:0);next();return;}
+          if(ok){fb.className="fb ok";fb.innerHTML=`<b>C’est juste.</b> ${st.explain||""}`;finish(tries>0?1:0);next();return;}
           tries++;
           if(tries<maxTries){fb.className="fb warn";fb.innerHTML=`<b>Pas encore.</b> ${st.hint||"Relis la consigne et réessaie."}`;return;}
-          fb.className="fb ko";fb.innerHTML=`<b>Réponse attendue :</b> ${st.answerHtml}${st.explain?`<div>${st.explain}</div>`:""}`;finish(1);
+          fb.className="fb ko";fb.innerHTML=`<b>Correction :</b> ${st.answerHtml}${st.explain&&st.explain!==st.answerHtml?`<div>${st.explain}</div>`:""}`;finish(1);
           const b=mkBtn("Continuer",()=>{b.remove();next();});fb.append(b);
         }
       };
@@ -426,7 +433,7 @@ function genM1(kind){
   let p2=transform(triAngles(A),{t:rad(R(0,359)),flip:Math.random()<.5,k:pick([.6,.7,.75,1.3,1.4,1.5])});
   p2=sideBySide(p1,p2);
   const points={};T1.forEach((n,i)=>points[n]=p1[i]);T2.forEach((n,i)=>points[n]=p2[i]);
-  // code[t][i] = style de l'angle i dans le triangle t (-1 : pas codé)
+  // code[t][i] = style de l’angle i dans le triangle t (-1 : pas codé)
   const st=shuffle([0,1,2]),code=[[-1,-1,-1],[-1,-1,-1]];
   let i0=-1,i1=-1,i2=-1;
   if(kind==="full")[0,1,2].forEach(i=>{code[0][i]=code[1][i]=st[i];});
@@ -439,17 +446,17 @@ function genM1(kind){
 function whyVertex(ex,X,Y,i){
   const fwd=X===ex.T1,cx=ex.code?ex.code[fwd?0:1]:null,cy=ex.code?ex.code[fwd?1:0]:null;
   if(ex.kind==="lengths"){const r=ex.pr[i];
-    return `Le sommet ${m(X[i])} est opposé au côté ${SEG(oppSide(X,i))}, ${RANG[r]} de son triangle. Le sommet homologue est opposé ${RANG_AU[r]} de l'autre triangle, ${SEG(oppSide(Y,i))} : c'est ${m(Y[i])}.`;}
+    return `Le sommet ${m(X[i])} est opposé au côté ${SEG(oppSide(X,i))}, ${RANG[r]} de son triangle. Le sommet homologue est opposé ${RANG_AU[r]} de l’autre triangle, ${SEG(oppSide(Y,i))} : c’est ${m(Y[i])}.`;}
   const others=[0,1,2].filter(j=>j!==i);
   if(cx[i]>=0&&cy[i]>=0)return `Les angles en ${m(X[i])} et en ${m(Y[i])} sont codés de la même façon : ces sommets sont homologues.`;
   if(cx[i]>=0){const j=others.find(j=>cy[j]>=0&&cy[j]!==cx[i]&&cx[j]<0);
-    return `L'angle en ${m(X[i])} n'est pas codé comme l'angle en ${m(Y[j])} : ils ne sont pas homologues. Le sommet ${m(X[i])} correspond donc au sommet dont l'angle n'est pas codé, ${m(Y[i])}.`;}
-  return `L'angle en ${m(X[i])} n'est pas codé. Les deux autres sommets sont déjà associés : ${m(X[others[0]])} avec ${m(Y[others[0]])} et ${m(X[others[1]])} avec ${m(Y[others[1]])}. Il reste ${m(Y[i])}.`;
+    return `L’angle en ${m(X[i])} n’est pas codé comme l’angle en ${m(Y[j])} : ils ne sont pas homologues. Le sommet ${m(X[i])} correspond donc au sommet dont l’angle n’est pas codé, ${m(Y[i])}.`;}
+  return `L’angle en ${m(X[i])} n’est pas codé. Les deux autres sommets sont déjà associés : ${m(X[others[0]])} avec ${m(Y[others[0]])} et ${m(X[others[1]])} avec ${m(Y[others[1]])}. Il reste ${m(Y[i])}.`;
 }
 function hintM1(ex){
-  if(ex.kind==="lengths")return "Range les côtés de chaque triangle : petit, moyen, grand. Un sommet est en face d'un côté.";
+  if(ex.kind==="lengths")return "Range les côtés de chaque triangle : petit, moyen, grand. Un sommet est en face d’un côté.";
   if(ex.kind==="pair")return "Commence par les angles codés de la même façon. Deux angles codés différemment ne sont pas homologues.";
-  return "Cherche dans l'autre triangle l'angle codé de la même façon.";
+  return "Cherche dans l’autre triangle l’angle codé de la même façon.";
 }
 function questionsM1(ex){
   const {T1,T2}=ex,hint=hintM1(ex);
@@ -463,21 +470,21 @@ function questionsM1(ex){
       const [i,j]=pick([[0,1],[0,2],[1,2]]),opts=shuffle([[0,1],[0,2],[1,2]]),c=opts.findIndex(p=>p[0]===i&&p[1]===j);
       const kk=[0,1,2].find(x=>x!==i&&x!==j);
       const explain=ex.kind==="lengths"
-        ?`${SEG(X[i]+X[j])} mesure ${fr((fwd?ex.o1:ex.o2)[kk])} : c'est ${RANG[ex.pr[kk]]} de son triangle. Son homologue est ${RANG[ex.pr[kk]]} de l'autre triangle : ${SEG(Y[i]+Y[j])}, qui mesure ${fr((fwd?ex.o2:ex.o1)[kk])}.`
+        ?`${SEG(X[i]+X[j])} mesure ${fr((fwd?ex.o1:ex.o2)[kk])} : c’est ${RANG[ex.pr[kk]]} de son triangle. Son homologue est ${RANG[ex.pr[kk]]} de l’autre triangle : ${SEG(Y[i]+Y[j])}, qui mesure ${fr((fwd?ex.o2:ex.o1)[kk])}.`
         :`${m(X[i])} a pour homologue ${m(Y[i])} et ${m(X[j])} a pour homologue ${m(Y[j])}. Le côté homologue de ${SEG(X[i]+X[j])} est donc ${SEG(Y[i]+Y[j])}.`;
       return {type:"choice",prompt:`Quel est le côté homologue du côté ${SEG(X[i]+X[j])} ?`,options:opts.map(p=>SEG(Y[p[0]]+Y[p[1]])),correct:c,answerHtml:SEG(Y[i]+Y[j]),
-        hint:ex.kind==="lengths"?"Range les côtés de chaque triangle : petit, moyen, grand. Les côtés de même rang sont homologues.":`Cherche d'abord les homologues des sommets ${m(X[i])} et ${m(X[j])}.`,explain};
+        hint:ex.kind==="lengths"?"Range les côtés de chaque triangle : petit, moyen, grand. Les côtés de même rang sont homologues.":`Cherche d’abord les homologues des sommets ${m(X[i])} et ${m(X[j])}.`,explain};
     }
     const i=R(0,2),opts=shuffle([0,1,2]);
-    return {type:"choice",prompt:`Quel est l'angle homologue de l'angle ${A3(angName(X,i))} ?`,options:opts.map(j=>A3(angName(Y,j))),correct:opts.indexOf(i),answerHtml:A3(angName(Y,i)),
-      hint:"Le sommet d'un angle est la lettre du milieu. Cherche l'homologue de ce sommet.",
-      explain:`Le sommet de l'angle ${A3(angName(X,i))} est ${m(X[i])}. ${whyVertex(ex,X,Y,i)} L'angle homologue est donc ${A3(angName(Y,i))}.`};
+    return {type:"choice",prompt:`Quel est l’angle homologue de l’angle ${A3(angName(X,i))} ?`,options:opts.map(j=>A3(angName(Y,j))),correct:opts.indexOf(i),answerHtml:A3(angName(Y,i)),
+      hint:"Le sommet d’un angle est la lettre du milieu. Cherche l’homologue de ce sommet.",
+      explain:`Le sommet de l’angle ${A3(angName(X,i))} est ${m(X[i])}. ${whyVertex(ex,X,Y,i)} L’angle homologue est donc ${A3(angName(Y,i))}.`};
   });
 }
 const M1TXT={
   full:"Les deux triangles sont semblables. Les angles codés de la même façon ont la même mesure.",
-  two:"Les deux triangles sont semblables. Les angles codés de la même façon ont la même mesure. Attention : un des angles n'est pas codé.",
-  pair:"Les deux triangles sont semblables. Les angles codés de la même façon ont la même mesure. Deux angles codés différemment n'ont pas la même mesure.",
+  two:"Les deux triangles sont semblables. Les angles codés de la même façon ont la même mesure. Attention : un des angles n’est pas codé.",
+  pair:"Les deux triangles sont semblables. Les angles codés de la même façon ont la même mesure. Deux angles codés différemment n’ont pas la même mesure.",
   lengths:"Les deux triangles sont semblables. Les longueurs sont en centimètres."
 };
 let M1EX=0;
@@ -491,15 +498,15 @@ function exM1(sub){
     if(kind==="full")first=[{prompt:"Je repère les angles codés de la même façon dans les deux triangles.",answerHtml:tab,explain:"Deux angles codés de la même façon ont la même mesure. Leurs sommets sont homologues."}];
     else if(kind==="pair"){const {i0,i1,i2}=ex;first=[
       {prompt:"Je repère les angles codés de la même façon dans les deux triangles.",answerHtml:`${m(T1[i0])} et ${m(T2[i0])} sont homologues.`,explain:"Ces deux angles ont le même codage : ils ont la même mesure."},
-      {prompt:`Je regarde l'angle en ${m(T1[i1])}. Dans l'autre triangle, l'angle en ${m(T2[i2])} est codé autrement.`,answerHtml:`${m(T1[i1])} et ${m(T2[i2])} ne sont pas homologues, donc ${m(T1[i1])} correspond à ${m(T2[i1])}.`,explain:`Deux angles codés différemment n'ont pas la même mesure. Il reste un seul sommet possible pour ${m(T1[i1])} : celui dont l'angle n'est pas codé.`},
-      {prompt:"J'associe les deux derniers sommets.",answerHtml:tab,explain:`Il reste ${m(T1[i2])} et ${m(T2[i2])} : ils sont homologues.`}];}
+      {prompt:`Je regarde l’angle en ${m(T1[i1])}. Dans l’autre triangle, l’angle en ${m(T2[i2])} est codé autrement.`,answerHtml:`${m(T1[i1])} et ${m(T2[i2])} ne sont pas homologues, donc ${m(T1[i1])} correspond à ${m(T2[i1])}.`,explain:`Deux angles codés différemment n’ont pas la même mesure. Il reste un seul sommet possible pour ${m(T1[i1])} : celui dont l’angle n’est pas codé.`},
+      {prompt:"J’associe les deux derniers sommets.",answerHtml:tab,explain:`Il reste ${m(T1[i2])} et ${m(T2[i2])} : ils sont homologues.`}];}
     else{const rk=`<table class="tab"><tr><th></th><th>petit</th><th>moyen</th><th>grand</th></tr>${[[T1,ex.o1],[T2,ex.o2]].map(([T,o])=>`<tr><th>Triangle ${m(T.join(""))}</th>${[0,1,2].map(r=>{const i=ex.pr.indexOf(r);return `<td>${SEG(oppSide(T,i))} = ${fr(o[i])}</td>`;}).join("")}</tr>`).join("")}</table>`;
       const i=ex.pr.indexOf(0);first=[
       {prompt:"Je range les côtés de chaque triangle, du plus petit au plus grand.",answerHtml:rk,explain:"Les côtés de même rang sont homologues : le plus petit avec le plus petit, et ainsi de suite."},
       {prompt:`Je cherche le sommet homologue de ${m(T1[i])}.`,answerHtml:`Le sommet homologue est ${m(T2[i])}.`,explain:whyVertex(ex,T1,T2,i)}];}
     return {head,steps:[...first,
       {prompt:`Je cherche le côté homologue du côté ${SEG(T1[0]+T1[1])}.`,answerHtml:`Le côté homologue est ${SEG(T2[0]+T2[1])}.`,explain:`${m(T1[0])} a pour homologue ${m(T2[0])} et ${m(T1[1])} a pour homologue ${m(T2[1])}. Je relie ces deux sommets.`},
-      {prompt:`Je cherche l'angle homologue de l'angle ${A3(angName(T1,2))}.`,answerHtml:`L'angle homologue est ${A3(angName(T2,2))}.`,explain:`Le sommet de l'angle est la lettre du milieu, ${m(T1[2])}. Son homologue est ${m(T2[2])}.`}]};
+      {prompt:`Je cherche l’angle homologue de l’angle ${A3(angName(T1,2))}.`,answerHtml:`L’angle homologue est ${A3(angName(T2,2))}.`,explain:`Le sommet de l’angle est la lettre du milieu, ${m(T1[2])}. Son homologue est ${m(T2[2])}.`}]};
   }
   return {head,steps:questionsM1(ex)};
 }
@@ -513,8 +520,8 @@ function genM2(force){
     A1=[a,b,c];show1=[0,1];
     if(sim)A2=[a,b,c];else{let d;do{d=pick([-1,1])*R(6,14);}while(a-d<20||c+d<20||d===a-c||Math.abs(c+d-a)<3||Math.abs(a-d-b)<3);A2=[a-d,b,c+d];}
     show2=[1,2];
-    ex1=`La somme des angles d'un triangle est égale à 180° : 180° − (${a}° + ${b}°) = ${c}°.`;
-    ex2=`La somme des angles d'un triangle est égale à 180° : 180° − (${A2[1]}° + ${A2[2]}°) = ${A2[0]}°.`;
+    ex1=`La somme des angles d’un triangle est égale à 180° : 180° − (${a}° + ${b}°) = ${c}°.`;
+    ex2=`La somme des angles d’un triangle est égale à 180° : 180° − (${A2[1]}° + ${A2[2]}°) = ${A2[0]}°.`;
   }else if(type==="iso"){
     iso=true;do{p=2*R(15,55);}while(p===60);q=(180-p)/2;A1=[p,q,q];show1=[0];
     q2=q;if(!sim){do{q2=q+pick([-1,1])*R(4,10);}while(q2<20||q2>80||q2===p);}
@@ -525,8 +532,8 @@ function genM2(force){
     do{x=R(22,68);}while(x>=40&&x<=50);A1=[90,x,90-x];show1=[0,1];
     y=90-x;if(!sim){do{y=90-x+pick([-1,1])*R(5,12);}while(y<15||y>75||y===x);}
     A2=[90,90-y,y];show2=[0,2];
-    ex1=`La somme des angles d'un triangle est égale à 180° : 180° − (90° + ${x}°) = ${90-x}°.`;
-    ex2=`La somme des angles d'un triangle est égale à 180° : 180° − (90° + ${y}°) = ${90-y}°.`;
+    ex1=`La somme des angles d’un triangle est égale à 180° : 180° − (90° + ${x}°) = ${90-x}°.`;
+    ex2=`La somme des angles d’un triangle est égale à 180° : 180° − (90° + ${y}°) = ${90-y}°.`;
   }
   const i1=[0,1,2].find(i=>!show1.includes(i)),i2=[0,1,2].find(i=>!show2.includes(i));
   // figure
@@ -538,29 +545,29 @@ function genM2(force){
   [[T1,A1,show1],[T2,A2,show2]].forEach(([T,A,sh])=>{sh.forEach(i=>{const o=[0,1,2].filter(j=>j!==i);
     if(A[i]===90)rights.push([T[i],T[o[0]],T[o[1]]]);else angles.push({v:T[i],p:T[o[0]],q:T[o[1]],color:"#2c4fb5",label:A[i]+"°",r:20});});});
   if(iso){ticks.push([T1[0],T1[1],1],[T1[0],T1[2],1],[T2[0],T2[1],2],[T2[0],T2[2],2]);}
-  const svg=fig({points,polys:[T1,T2],angles,rights,ticks,aria:"Deux triangles avec des mesures d'angles"});
+  const svg=fig({points,polys:[T1,T2],angles,rights,ticks,aria:"Deux triangles avec des mesures d’angles"});
   const steps=[
     {type:"num",unit:"°",tol:.01,answer:A1[i1],answerHtml:`${A1[i1]}°`,explain:ex1,
-      prompt:iso?`Le triangle ${m(n1)} est isocèle en ${m(T1[0])}. Calcule la mesure de l'angle ${A3(angName(T1,i1))}.`:`Calcule la mesure de l'angle ${A3(angName(T1,i1))}.`,
-      hint:iso?"Les deux angles à la base d'un triangle isocèle ont la même mesure.":"La somme des angles d'un triangle est égale à 180°."},
+      prompt:iso?`Le triangle ${m(n1)} est isocèle en ${m(T1[0])}. Calcule la mesure de l’angle ${A3(angName(T1,i1))}.`:`Calcule la mesure de l’angle ${A3(angName(T1,i1))}.`,
+      hint:iso?"Les deux angles à la base d’un triangle isocèle ont la même mesure.":"La somme des angles d’un triangle est égale à 180°."},
     {type:"num",unit:"°",tol:.01,answer:A2[i2],answerHtml:`${A2[i2]}°`,explain:ex2,
-      prompt:iso?`Le triangle ${m(n2)} est isocèle en ${m(T2[0])}. Calcule la mesure de l'angle ${A3(angName(T2,i2))}.`:`Calcule la mesure de l'angle ${A3(angName(T2,i2))}.`,
-      hint:iso?`Commence par trouver la mesure de l'autre angle à la base, puis utilise la somme des angles.`:"La somme des angles d'un triangle est égale à 180°."}
+      prompt:iso?`Le triangle ${m(n2)} est isocèle en ${m(T2[0])}. Calcule la mesure de l’angle ${A3(angName(T2,i2))}.`:`Calcule la mesure de l’angle ${A3(angName(T2,i2))}.`,
+      hint:iso?`Commence par trouver la mesure de l’autre angle à la base, puis utilise la somme des angles.`:"La somme des angles d’un triangle est égale à 180°."}
   ];
   const listA=`Les angles du triangle ${m(n1)} mesurent ${listFr(sortedAngles(A1))}. Ceux du triangle ${m(n2)} mesurent ${listFr(sortedAngles(A2))}.`;
-  const nonExpl=`${listA} Les deux triangles n'ont pas leurs angles deux à deux de même mesure : ils ne sont pas semblables.`;
+  const nonExpl=`${listA} Les deux triangles n’ont pas leurs angles deux à deux de même mesure : ils ne sont pas semblables.`;
   steps.push({type:"choice",prompt:`Les triangles ${m(n1)} et ${m(n2)} sont-ils semblables ?`,options:YESNO,correct:sim?0:1,answerHtml:YESNO[sim?0:1],
-    explain:sim?`${listA} Ils ont deux paires d'angles de même mesure.`:nonExpl,hint:"Compare les mesures des angles des deux triangles."});
+    explain:sim?`${listA} Ils ont deux paires d’angles de même mesure.`:nonExpl,hint:"Compare les mesures des angles des deux triangles."});
   let sentences=null,clozeStep=null;
   if(sim){
-    const concl=`Les triangles ${m(n1)} et ${m(n2)} ont deux paires d'angles de même mesure : ils sont donc semblables.`;
+    const concl=`Les triangles ${m(n1)} et ${m(n2)} ont deux paires d’angles de même mesure : ils sont donc semblables.`;
     if(type==="deux")sentences=[`Dans le triangle ${m(n1)}, la somme des angles est égale à 180°.`,`Donc ${A3(angName(T1,2))} = 180° − (${A1[0]}° + ${A1[1]}°) = ${A1[2]}°.`,`On a ${A3(angName(T1,1))} = ${A3(angName(T2,1))} = ${A1[1]}° et ${A3(angName(T1,2))} = ${A3(angName(T2,2))} = ${A1[2]}°.`,concl];
     else if(type==="iso")sentences=[`Le triangle ${m(n1)} est isocèle en ${m(T1[0])}, donc ses angles à la base ont la même mesure.`,`Donc ${A3(angName(T1,1))} = ${A3(angName(T1,2))} = (180° − ${p}°) : 2 = ${q}°.`,`Le triangle ${m(n2)} est isocèle en ${m(T2[0])}, donc ${A3(angName(T2,2))} = ${A3(angName(T2,1))} = ${q}°.`,concl];
     else sentences=[`Dans le triangle ${m(n1)}, la somme des angles est égale à 180°.`,`Donc ${A3(angName(T1,2))} = 180° − (90° + ${x}°) = ${90-x}°.`,`On a ${A3(angName(T1,0))} = ${A3(angName(T2,0))} = 90° et ${A3(angName(T1,2))} = ${A3(angName(T2,2))} = ${90-x}°.`,concl];
-    steps.push({type:"order",prompt:"Remets la rédaction dans l'ordre en cliquant sur les phrases, de la première à la dernière.",items:sentences,
+    steps.push({type:"order",prompt:"Remets la rédaction dans l’ordre en cliquant sur les phrases, de la première à la dernière.",items:sentences,
       answerHtml:`<ol>${sentences.map(s=>`<li>${s}</li>`).join("")}</ol>`,explain:"Voilà une rédaction complète, comme dans un devoir."});
     const AO=[0,1,2].map(i=>A3(angName(T2,i))),sel=i=>({opts:AO,correct:i});
-    const PROP={opts:["180°","90°","360°"],correct:0},CONC={opts:["deux paires d'angles de même mesure","un seul angle de même mesure","des côtés de même longueur"],correct:0};
+    const PROP={opts:["180°","90°","360°"],correct:0},CONC={opts:["deux paires d’angles de même mesure","un seul angle de même mesure","des côtés de même longueur"],correct:0};
     const concL=[`Les triangles ${m(n1)} et ${m(n2)} ont `,CONC," : ils sont donc semblables."];
     let lines;
     if(type==="deux")lines=[[`Dans le triangle ${m(n1)}, la somme des angles est égale à `,PROP,"."],[`Donc ${A3(angName(T1,2))} = 180° − (${A1[0]}° + ${A1[1]}°) = `,{num:A1[2],unit:"°"},"."],
@@ -575,7 +582,7 @@ function genM2(force){
       answerHtml:"les cases corrigées sont maintenant en orange. Relis la rédaction entière avant de continuer.",hint:"Les cases en rouge sont fausses. Relis la figure, puis corrige-les."};
   }
   const corrige=sim?sentences.map(s=>`<p>${s}</p>`).join(""):`<p>${ex1}</p><p>${ex2}</p><p>${nonExpl}</p>`;
-  return {head:`<p class="consigne">Les mesures connues sont indiquées sur la figure, qui n'est pas en vraie grandeur.</p>${svg}`,steps,sim,corrige,n1,n2,clozeStep};
+  return {head:`<p class="consigne">Les mesures connues sont indiquées sur la figure, qui n’est pas en vraie grandeur.</p>${svg}`,steps,sim,corrige,n1,n2,clozeStep};
 }
 function exM2(sub){
   const g=genM2(sub==="exemple");
@@ -608,7 +615,7 @@ function genM3(force){
   const quotLine=bigS.map((v,i)=>`${F(fr(v),fr(s[i]))} ${Math.abs(qs[i]-round(qs[i],2))<1e-9?"=":"≈"} ${fr(qs[i])}`).join(" ; ");
   const steps=[
     {type:"rank",prompt:`Range les côtés de chaque triangle, du plus petit au plus grand. Les longueurs sont en centimètres.`,rows:(first?[[ns,S1],[nbn,S2]]:[[nbn,S2],[ns,S1]]).map(([n,S])=>({name:n,sides:S.sides})),
-      answerHtml:rankTab,hint:"Compare les trois longueurs de chaque triangle. La plus petite va dans la case « petit ».",explain:"Le plus petit côté d'un triangle correspond au plus petit côté de l'autre, et ainsi de suite."},
+      answerHtml:rankTab,hint:"Compare les trois longueurs de chaque triangle. La plus petite va dans la case « petit ».",explain:"Le plus petit côté d’un triangle correspond au plus petit côté de l’autre, et ainsi de suite."},
     {type:"num",prompt:`Calcule les trois quotients : chaque longueur du triangle ${m(nbn)} divisée par la longueur correspondante du triangle ${m(ns)}. Arrondis au centième si besoin.`,
       fields:bigS.map((v,i)=>({label:F(fr(v),fr(s[i])),answer:round(qs[i],2),tol:.011})),answerHtml:quotLine,hint:"Utilise ta calculatrice : grand côté divisé par grand côté, moyen par moyen, petit par petit.",explain:sim?"Les trois quotients sont égaux.":"Les trois quotients ne sont pas tous égaux."},
     {type:"choice",prompt:`Les triangles ${m(ns)} et ${m(nbn)} sont-ils semblables ?`,options:YESNO,correct:sim?0:1,answerHtml:YESNO[sim?0:1],
@@ -616,19 +623,19 @@ function genM3(force){
   ];
   let sentences=null;
   if(sim){
-    sentences=[`On range les longueurs des côtés de chaque triangle dans l'ordre croissant.`,`On calcule les quotients : ${quotLine}.`,`Les quotients sont égaux : les longueurs des côtés sont proportionnelles.`,`Donc les triangles ${m(ns)} et ${m(nbn)} sont semblables.`];
-    steps.push({type:"order",prompt:"Remets la rédaction dans l'ordre en cliquant sur les phrases, de la première à la dernière.",items:sentences,answerHtml:`<ol>${sentences.map(x=>`<li>${x}</li>`).join("")}</ol>`,explain:"Voilà une rédaction complète, comme dans un devoir."});
+    sentences=[`On range les longueurs des côtés de chaque triangle dans l’ordre croissant.`,`On calcule les quotients : ${quotLine}.`,`Les quotients sont égaux : les longueurs des côtés sont proportionnelles.`,`Donc les triangles ${m(ns)} et ${m(nbn)} sont semblables.`];
+    steps.push({type:"order",prompt:"Remets la rédaction dans l’ordre en cliquant sur les phrases, de la première à la dernière.",items:sentences,answerHtml:`<ol>${sentences.map(x=>`<li>${x}</li>`).join("")}</ol>`,explain:"Voilà une rédaction complète, comme dans un devoir."});
   }
-  const corrige=`<p>On range les longueurs dans l'ordre croissant :</p>${rankTab}<p>On calcule les quotients : ${quotLine}.</p>`+
+  const corrige=`<p>On range les longueurs dans l’ordre croissant :</p>${rankTab}<p>On calcule les quotients : ${quotLine}.</p>`+
     (sim?`<p>Les quotients sont égaux : les longueurs des côtés sont proportionnelles. Donc <b>les triangles ${m(ns)} et ${m(nbn)} sont semblables</b>.</p><p>Le triangle ${m(nbn)} est un agrandissement du triangle ${m(ns)} de rapport ${fr(k)}.</p>`
         :`<p>Les quotients ne sont pas tous égaux : les longueurs des côtés ne sont pas proportionnelles. Donc <b>les triangles ${m(ns)} et ${m(nbn)} ne sont pas semblables</b>.</p>`);
-  return {head:`<p class="consigne">Les longueurs sont en centimètres. La figure n'est pas en vraie grandeur.</p>${svg}`,steps,sim,k,ns,nbn,corrige};
+  return {head:`<p class="consigne">Les longueurs sont en centimètres. La figure n’est pas en vraie grandeur.</p>${svg}`,steps,sim,k,ns,nbn,corrige};
 }
 function exM3(sub){
   const g=genM3(sub==="exemple");
   if(sub==="seul"){
     const steps=[{type:"choice",prompt:`Les triangles ${m(g.ns)} et ${m(g.nbn)} sont-ils semblables ? Fais les calculs sur ton cahier, puis réponds.`,options:YESNO,correct:g.sim?0:1,answerHtml:YESNO[g.sim?0:1]}];
-    if(g.sim)steps.push({type:"num",prompt:`Le triangle ${m(g.nbn)} est un agrandissement du triangle ${m(g.ns)}. Quel est le rapport d'agrandissement ?`,answer:g.k,tol:.011,answerHtml:fr(g.k)});
+    if(g.sim)steps.push({type:"num",prompt:`Le triangle ${m(g.nbn)} est un agrandissement du triangle ${m(g.ns)}. Quel est le rapport d’agrandissement ?`,answer:g.k,tol:.011,answerHtml:fr(g.k)});
     return {head:g.head,steps,corrige:g.corrige,grid:GRID_LEN};
   }
   return {head:g.head,steps:g.steps};
@@ -643,8 +650,8 @@ const REASONS={
   alt:"Ces angles sont alternes-internes et les droites sont parallèles.",
   code:"Ces angles sont codés de la même façon sur la figure.",
   mesure:"Ces deux angles ont la même mesure, donnée sur la figure.",
-  somme:"On a calculé sa mesure avec la somme des angles d'un triangle.",
-  iso:"Les angles à la base d'un triangle isocèle ont la même mesure, et on a calculé cette mesure."
+  somme:"On a calculé sa mesure avec la somme des angles d’un triangle.",
+  iso:"Les angles à la base d’un triangle isocèle ont la même mesure, et on a calculé cette mesure."
 };
 function donnees(list,unit){return "On donne : "+listFr(list.map(([n,v])=>`${m(n)} = ${fr(v)} ${unit}`))+".";}
 function buildM4(c){
@@ -666,22 +673,22 @@ function buildM4(c){
   const question=c.question?c.question(uName):`Calcule la longueur ${m(uName)}.`;
   const reasonStep=eq=>{const others=shuffle(Object.keys(REASONS).filter(k=>k!==eq.key)).slice(0,3);const keys=shuffle([eq.key,...others]);
     return {type:"choice",column:true,prompt:`Pourquoi a-t-on ${eq.html} ?`,options:keys.map(k=>REASONS[k]),correct:keys.indexOf(eq.key),answerHtml:REASONS[eq.key],explain:eq.explain,
-      hint:"Regarde la figure et relis l'énoncé : points alignés, parallèles, angles droits, codages…"};};
-  const conclOpts=[`Ils sont semblables, car ils ont deux paires d'angles de même mesure.`,`Ils sont semblables, car ils ont un angle commun.`,`Ils sont semblables, car les longueurs de leurs côtés sont proportionnelles.`];
+      hint:"Regarde la figure et relis l’énoncé : points alignés, parallèles, angles droits, codages…"};};
+  const conclOpts=[`Ils sont semblables, car ils ont deux paires d’angles de même mesure.`,`Ils sont semblables, car ils ont un angle commun.`,`Ils sont semblables, car les longueurs de leurs côtés sont proportionnelles.`];
   const cOrder=shuffle([0,1,2]);
   const steps=[...(c.pre||[]),reasonStep(c.eqs[0]),reasonStep(c.eqs[1]),
     {type:"choice",column:true,prompt:`Que peux-tu en déduire pour les triangles ${m(n1)} et ${m(n2)} ?`,options:cOrder.map(i=>conclOpts[i]),correct:cOrder.indexOf(0),answerHtml:conclOpts[0],
-      explain:"Deux paires d'angles de même mesure suffisent pour prouver que deux triangles sont semblables.",hint:"Qu'as-tu démontré aux deux étapes précédentes ?"},
+      explain:"Deux paires d’angles de même mesure suffisent pour prouver que deux triangles sont semblables.",hint:"Qu’as-tu démontré aux deux étapes précédentes ?"},
     {type:"homo",prompt:`Complète les sommets homologues des triangles ${m(n1)} et ${m(n2)}.`,from:T1,choices:T2.slice().sort(),answer:T2,
       answerHtml:T1.map((x,i)=>`${m(x)} ↔ ${m(T2[i])}`).join(" ; "),hint:"Deux sommets sont homologues quand leurs angles ont la même mesure.",
       explain:"On associe les sommets des angles égaux. Le troisième sommet va avec le troisième."},
     {type:"choice",prompt:"Quelle égalité de quotients peux-tu écrire ?",options:qOpts.map(o=>o.h),correct:qOpts.findIndex(o=>o.ok),answerHtml:qh(pairs),
       explain:"Chaque quotient met en relation un côté et son côté homologue, toujours dans le même ordre.",hint:"Dans chaque quotient, le côté du haut et le côté du bas doivent être homologues, et le premier triangle reste toujours en haut."},
     {type:"num",prompt:`${question} Donne le résultat en ${unit}.`,unit,answer:ans,tol:.011,answerHtml:`${m(uName)} = ${fr(ans)} ${unit}`,
-      hint:`Utilise l'égalité ${eqLine}. Si deux quotients ${F("a","b")} et ${F("c","d")} sont égaux, alors a × d = b × c.`,explain:`${eqLine}, donc ${prodLine}. Alors ${calc} = ${fr(ans)}.`}
+      hint:`Utilise l’égalité ${eqLine}. Si deux quotients ${F("a","b")} et ${F("c","d")} sont égaux, alors a × d = b × c.`,explain:`${eqLine}, donc ${prodLine}. Alors ${calc} = ${fr(ans)}.`}
   ];
   const corr=[...c.corrIntro,
-    `Les triangles ${m(n1)} et ${m(n2)} ont deux paires d'angles de même mesure : <b>ils sont semblables</b>.`,
+    `Les triangles ${m(n1)} et ${m(n2)} ont deux paires d’angles de même mesure : <b>ils sont semblables</b>.`,
     `Les sommets homologues sont : ${listFr(T1.map((x,i)=>`${m(x)} et ${m(T2[i])}`))}.`,
     `Les longueurs des côtés homologues sont donc proportionnelles : ${qh(pairs)}.`,
     `On utilise : ${eqLine}.`,
@@ -689,17 +696,17 @@ function buildM4(c){
     `${calc} = ${fr(ans)}`];
   const RS={commun:"les deux triangles ont cet angle en commun",droit:"ce sont deux angles droits",opp:"ces angles sont opposés par le sommet",corr:"ces angles sont correspondants et les droites sont parallèles",
     alt:"ces angles sont alternes-internes et les droites sont parallèles",code:"ces angles sont codés de la même façon sur la figure",mesure:"ces angles ont la même mesure, donnée sur la figure",
-    somme:"on a calculé cette mesure avec la somme des angles d'un triangle",iso:"les angles à la base d'un triangle isocèle ont la même mesure"};
+    somme:"on a calculé cette mesure avec la somme des angles d’un triangle",iso:"les angles à la base d’un triangle isocèle ont la même mesure"};
   const rb=eq=>{const keys=shuffle([eq.key,...shuffle(Object.keys(RS).filter(k=>k!==eq.key)).slice(0,3)]);return {opts:keys.map(k=>RS[k]),correct:keys.indexOf(eq.key)};};
   const T2s=T2.slice().sort(),cc=cOrder;
   const clozeLines=[[c.eqs[0].html," car ",rb(c.eqs[0]),"."],[c.eqs[1].html," car ",rb(c.eqs[1]),"."],
-    [`Les triangles ${m(n1)} et ${m(n2)} ont `,{opts:["deux paires d'angles de même mesure","un angle commun","des côtés proportionnels"],correct:0}," : ils sont semblables."],
+    [`Les triangles ${m(n1)} et ${m(n2)} ont `,{opts:["deux paires d’angles de même mesure","un angle commun","des côtés proportionnels"],correct:0}," : ils sont semblables."],
     ["Les sommets homologues sont : ",...T1.flatMap((x,i)=>[`${m(x)} et `,{opts:T2s.map(m),correct:T2s.indexOf(T2[i])},i<2?", ":"."])],
     ["Les longueurs des côtés homologues sont proportionnelles : ",{opts:qOpts.map(o=>o.h),correct:qOpts.findIndex(o=>o.ok)},"."],
     [`On utilise : ${eqLine}. Donc ${prodLine}.`],
     [`${calc} = `,{num:ans,unit}]];
   const clozeStep={type:"cloze",prompt:"Complète la rédaction : clique sur chaque case pour choisir, et écris le résultat du calcul.",lines:clozeLines,
-    answerHtml:"les cases corrigées sont maintenant en orange. Relis la rédaction entière avant de continuer.",hint:"Les cases en rouge sont fausses. Relis l'énoncé et la figure, puis corrige-les."};
+    answerHtml:"les cases corrigées sont maintenant en orange. Relis la rédaction entière avant de continuer.",hint:"Les cases en rouge sont fausses. Relis l’énoncé et la figure, puis corrige-les."};
   return {head:`<p class="consigne">${c.enonce}</p>${c.svg}<p class="question">${question}</p>`,steps,ans,uName,unit,pre:c.pre||[],clozeStep,grid:[...(c.gridPre||[]),...GRID_ANG],
     corrige:corr.map(l=>`<p>${l}</p>`).join("")+`<p><span class="box">${m(uName)} = ${fr(ans)} ${unit}</span></p>`};
 }
@@ -718,10 +725,10 @@ function cfgA1(){
   const pts=mirror([[0,0],[SB,0],[SB,BC],[SM,0],[SM,MN]],Math.random()<.5);
   const svg=fig({points:asPoints([S,B,C,M,N],pts),polys:[[S,B,C]],segs:[[M,N]],rights:[[M,S,N],[B,S,C]],aria:"Triangle rectangle avec un segment perpendiculaire"});
   return buildM4({T1:[S,M,N],T2:[S,B,C],vals,unknown:unk,svg,
-    enonce:`Sur la figure ci-dessous, qui n'est pas à l'échelle, le point ${m(M)} est sur le segment ${SEG(S+B)} et le point ${m(N)} est sur le segment ${SEG(S+C)}. Les angles codés sont droits. ${donnees(gl,"cm")}`,
-    eqs:[{html:`${A3(M+S+N)} = ${A3(B+S+C)}`,key:"commun",explain:`Les points ${m(M)} et ${m(N)} sont sur ${SEG(S+B)} et ${SEG(S+C)} : c'est le même angle, de sommet ${m(S)}.`},
+    enonce:`Sur la figure ci-dessous, qui n’est pas à l’échelle, le point ${m(M)} est sur le segment ${SEG(S+B)} et le point ${m(N)} est sur le segment ${SEG(S+C)}. Les angles codés sont droits. ${donnees(gl,"cm")}`,
+    eqs:[{html:`${A3(M+S+N)} = ${A3(B+S+C)}`,key:"commun",explain:`Les points ${m(M)} et ${m(N)} sont sur ${SEG(S+B)} et ${SEG(S+C)} : c’est le même angle, de sommet ${m(S)}.`},
          {html:`${A3(S+M+N)} = ${A3(S+B+C)} = 90°`,key:"droit",explain:"Les deux angles sont codés comme des angles droits."}],
-    corrIntro:[`Les points ${m(M)} et ${m(N)} sont sur ${SEG(S+B)} et ${SEG(S+C)}, donc les triangles ${m(S+M+N)} et ${m(S+B+C)} ont l'angle ${A1(S)} en commun.`,`De plus, ${A3(S+M+N)} = ${A3(S+B+C)} = 90°.`]});
+    corrIntro:[`Les points ${m(M)} et ${m(N)} sont sur ${SEG(S+B)} et ${SEG(S+C)}, donc les triangles ${m(S+M+N)} et ${m(S+B+C)} ont l’angle ${A1(S)} en commun.`,`De plus, ${A3(S+M+N)} = ${A3(S+B+C)} = 90°.`]});
 }
 function nicePair(){let OA,OB,AB,phi;do{OA=R(3,7);OB=R(3,8);AB=R(3,10);const c=(OA*OA+OB*OB-AB*AB)/(2*OA*OB);phi=Math.acos(Math.max(-1,Math.min(1,c)))*180/Math.PI;}while(OA===OB||phi<45||phi>115||AB<=Math.abs(OA-OB)||AB>=OA+OB);return {OA,OB,AB,phi};}
 // Niveau 1 : opposés par le sommet + angles codés
@@ -737,10 +744,10 @@ function cfgA2(){
   const svg=fig({points:asPoints([O,A,B,C,D],[[0,0],Ap,Bp,Cp,Dp]),polys:[[O,A,B],[O,C,D]],
     angles:[{v:A,p:O,q:B,color:COLS[0],arcs:1},{v:C,p:O,q:D,color:COLS[0],arcs:1}],labelDir:{[O]:dir(th+rad(phi)/2+Math.PI/2)},aria:"Deux triangles opposés par un sommet"});
   return buildM4({T1:[O,A,B],T2:[O,C,D],vals,unknown:unk,svg,
-    enonce:`Sur la figure ci-dessous, qui n'est pas à l'échelle, les points ${m(A)}, ${m(O)} et ${m(D)} sont alignés, ainsi que les points ${m(B)}, ${m(O)} et ${m(C)}. Les angles codés de la même façon ont la même mesure. ${donnees(gl,"cm")}`,
+    enonce:`Sur la figure ci-dessous, qui n’est pas à l’échelle, les points ${m(A)}, ${m(O)} et ${m(D)} sont alignés, ainsi que les points ${m(B)}, ${m(O)} et ${m(C)}. Les angles codés de la même façon ont la même mesure. ${donnees(gl,"cm")}`,
     eqs:[{html:`${A3(A+O+B)} = ${A3(C+O+D)}`,key:"opp",explain:`Les droites (${A}${D}) et (${B}${C}) se coupent en ${m(O)} : ces angles sont opposés par le sommet, donc ils ont la même mesure.`},
          {html:`${A3(O+A+B)} = ${A3(O+C+D)}`,key:"code",explain:"Ces deux angles sont codés de la même façon sur la figure."}],
-    corrIntro:[`Les points ${m(A)}, ${m(O)}, ${m(D)} sont alignés, ainsi que ${m(B)}, ${m(O)}, ${m(C)} : les angles ${A3(A+O+B)} et ${A3(C+O+D)} sont opposés par le sommet, donc ${A3(A+O+B)} = ${A3(C+O+D)}.`,`De plus, ${A3(O+A+B)} = ${A3(O+C+D)} d'après le codage de la figure.`]});
+    corrIntro:[`Les points ${m(A)}, ${m(O)}, ${m(D)} sont alignés, ainsi que ${m(B)}, ${m(O)}, ${m(C)} : les angles ${A3(A+O+B)} et ${A3(C+O+D)} sont opposés par le sommet, donc ${A3(A+O+B)} = ${A3(C+O+D)}.`,`De plus, ${A3(O+A+B)} = ${A3(O+C+D)} d’après le codage de la figure.`]});
 }
 // Niveau 2 : somme des angles
 function cfgC2(){
@@ -766,14 +773,14 @@ function cfgC2(){
   const points={};T1.forEach((n,x)=>points[n]=p1[x]);T2.forEach((n,x)=>points[n]=p2[x]);
   const angles=[],rights=[];
   [[T1,[i,j]],[T2,[i,mi]]].forEach(([T,sh])=>sh.forEach(t=>{const o=[0,1,2].filter(x=>x!==t);if(A[t]===90)rights.push([T[t],T[o[0]],T[o[1]]]);else angles.push({v:T[t],p:T[o[0]],q:T[o[1]],color:"#2c4fb5",label:A[t]+"°",r:20});}));
-  const svg=fig({points,polys:[T1,T2],angles,rights,sides:sl,aria:"Deux triangles avec des mesures d'angles et de longueurs"});
-  const e1={html:`${A3(angName(T1,i))} = ${A3(angName(T2,i))} = ${A[i]}°`,key:A[i]===90?"droit":"mesure",explain:A[i]===90?"Les deux angles sont codés comme des angles droits.":`Ces deux angles mesurent ${A[i]}° d'après la figure.`};
+  const svg=fig({points,polys:[T1,T2],angles,rights,sides:sl,aria:"Deux triangles avec des mesures d’angles et de longueurs"});
+  const e1={html:`${A3(angName(T1,i))} = ${A3(angName(T2,i))} = ${A[i]}°`,key:A[i]===90?"droit":"mesure",explain:A[i]===90?"Les deux angles sont codés comme des angles droits.":`Ces deux angles mesurent ${A[i]}° d’après la figure.`};
   const e2={html:`${A3(angName(T1,mi))} = ${A3(angName(T2,mi))} = ${A[mi]}°`,key:"somme",explain:`On a calculé ${A3(angName(T1,mi))} = ${A[mi]}°, et la figure indique ${A3(angName(T2,mi))} = ${A[mi]}°.`};
   return buildM4({T1,T2,vals,unknown:unk,svg,
     enonce:`Les deux triangles ci-dessous ne sont pas en vraie grandeur. Les longueurs sont en centimètres.`,
-    gridPre:["J'ai calculé l'angle manquant en écrivant le calcul et la propriété (somme des angles d'un triangle)."],
-    pre:[{type:"num",unit:"°",tol:.01,prompt:`Calcule la mesure de l'angle ${A3(angName(T1,mi))}.`,answer:A[mi],answerHtml:`${A[mi]}°`,hint:"La somme des angles d'un triangle est égale à 180°.",
-      explain:`La somme des angles d'un triangle est égale à 180° : 180° − (${A[i]}° + ${A[j]}°) = ${A[mi]}°.`}],
+    gridPre:["J’ai calculé l’angle manquant en écrivant le calcul et la propriété (somme des angles d’un triangle)."],
+    pre:[{type:"num",unit:"°",tol:.01,prompt:`Calcule la mesure de l’angle ${A3(angName(T1,mi))}.`,answer:A[mi],answerHtml:`${A[mi]}°`,hint:"La somme des angles d’un triangle est égale à 180°.",
+      explain:`La somme des angles d’un triangle est égale à 180° : 180° − (${A[i]}° + ${A[j]}°) = ${A[mi]}°.`}],
     eqs:[e1,e2],
     corrIntro:[`Dans le triangle ${m(n1)}, la somme des angles est égale à 180°, donc ${A3(angName(T1,mi))} = 180° − (${A[i]}° + ${A[j]}°) = ${A[mi]}°.`,`On a donc ${e1.html} et ${e2.html}.`]});
 }
@@ -791,10 +798,10 @@ function cfgB1(){
   const Bp=base[1],Cp=base[2];
   const svg=fig({points:asPoints([S,B,C,M,N],[[0,0],Bp,Cp,mul(Bp,k),mul(Cp,k)]),polys:[[S,B,C]],segs:[[M,N]],aria:"Triangle coupé par une parallèle à un côté"});
   return buildM4({T1:[S,M,N],T2:[S,B,C],vals,unknown:unk,svg,
-    enonce:`Sur la figure ci-dessous, qui n'est pas à l'échelle, le point ${m(M)} est sur le segment ${SEG(S+B)} et le point ${m(N)} est sur le segment ${SEG(S+C)}. Les droites (${M}${N}) et (${B}${C}) sont parallèles. ${donnees(gl,"cm")}`,
-    eqs:[{html:`${A3(M+S+N)} = ${A3(B+S+C)}`,key:"commun",explain:`Les points ${m(M)} et ${m(N)} sont sur ${SEG(S+B)} et ${SEG(S+C)} : c'est le même angle, de sommet ${m(S)}.`},
+    enonce:`Sur la figure ci-dessous, qui n’est pas à l’échelle, le point ${m(M)} est sur le segment ${SEG(S+B)} et le point ${m(N)} est sur le segment ${SEG(S+C)}. Les droites (${M}${N}) et (${B}${C}) sont parallèles. ${donnees(gl,"cm")}`,
+    eqs:[{html:`${A3(M+S+N)} = ${A3(B+S+C)}`,key:"commun",explain:`Les points ${m(M)} et ${m(N)} sont sur ${SEG(S+B)} et ${SEG(S+C)} : c’est le même angle, de sommet ${m(S)}.`},
          {html:`${A3(S+M+N)} = ${A3(S+B+C)}`,key:"corr",explain:`Les droites (${M}${N}) et (${B}${C}) sont parallèles et la droite (${S}${B}) les coupe : ces angles sont correspondants, donc ils ont la même mesure.`}],
-    corrIntro:[`Les points ${m(M)} et ${m(N)} sont sur ${SEG(S+B)} et ${SEG(S+C)}, donc les triangles ${m(S+M+N)} et ${m(S+B+C)} ont l'angle ${A1(S)} en commun.`,`Les droites (${M}${N}) et (${B}${C}) sont parallèles et coupées par la sécante (${S}${B}) : les angles ${A3(S+M+N)} et ${A3(S+B+C)} sont correspondants, donc ${A3(S+M+N)} = ${A3(S+B+C)}.`]});
+    corrIntro:[`Les points ${m(M)} et ${m(N)} sont sur ${SEG(S+B)} et ${SEG(S+C)}, donc les triangles ${m(S+M+N)} et ${m(S+B+C)} ont l’angle ${A1(S)} en commun.`,`Les droites (${M}${N}) et (${B}${C}) sont parallèles et coupées par la sécante (${S}${B}) : les angles ${A3(S+M+N)} et ${A3(S+B+C)} sont correspondants, donc ${A3(S+M+N)} = ${A3(S+B+C)}.`]});
 }
 // Niveau 3 : papillon avec parallèles
 function cfgB2(){
@@ -807,7 +814,7 @@ function cfgB2(){
   const unk=u==="CD"?C+D:u==="OD"?O+D:A+B;
   const svg=fig({points:asPoints([O,A,B,C,D],[[0,0],Ap,Bp,mul(Ap,-k),mul(Bp,-k)]),polys:[[O,A,B],[O,C,D]],labelDir:{[O]:dir(th+rad(phi)/2+Math.PI/2)},aria:"Deux triangles opposés par un sommet avec des côtés parallèles"});
   return buildM4({T1:[O,A,B],T2:[O,C,D],vals,unknown:unk,svg,
-    enonce:`Sur la figure ci-dessous, qui n'est pas à l'échelle, les segments ${SEG(A+C)} et ${SEG(B+D)} se coupent au point ${m(O)}. Les droites (${A}${B}) et (${C}${D}) sont parallèles. ${donnees(gl,"cm")}`,
+    enonce:`Sur la figure ci-dessous, qui n’est pas à l’échelle, les segments ${SEG(A+C)} et ${SEG(B+D)} se coupent au point ${m(O)}. Les droites (${A}${B}) et (${C}${D}) sont parallèles. ${donnees(gl,"cm")}`,
     eqs:[{html:`${A3(A+O+B)} = ${A3(C+O+D)}`,key:"opp",explain:`Les droites (${A}${C}) et (${B}${D}) se coupent en ${m(O)} : ces angles sont opposés par le sommet, donc ils ont la même mesure.`},
          {html:`${A3(O+A+B)} = ${A3(O+C+D)}`,key:"alt",explain:`Les droites (${A}${B}) et (${C}${D}) sont parallèles et la droite (${A}${C}) les coupe : ces angles sont alternes-internes, donc ils ont la même mesure.`}],
     corrIntro:[`Les points ${m(A)}, ${m(O)}, ${m(C)} sont alignés, ainsi que ${m(B)}, ${m(O)}, ${m(D)} : les angles ${A3(A+O+B)} et ${A3(C+O+D)} sont opposés par le sommet, donc ${A3(A+O+B)} = ${A3(C+O+D)}.`,`Les droites (${A}${B}) et (${C}${D}) sont parallèles et coupées par la sécante (${A}${C}) : les angles ${A3(O+A+B)} et ${A3(O+C+D)} sont alternes-internes, donc ${A3(O+A+B)} = ${A3(O+C+D)}.`]});
@@ -818,7 +825,7 @@ function cfgB3(){
   do{QT=pick([1,1.2,1.5,1.6,1.8]);QU=pick([.8,1.2,1.5,2,2.4]);k=pick([2.5,3,4,5,6]);PO=round(k*QU,2);PS=round(k*QT,2);}while(PS>12||PS<3);
   return buildM4({T1:[T,Q,U],T2:[S,P,O],vals:{[norm(Q+T)]:QT,[norm(Q+U)]:QU,[norm(P+O)]:PO},unknown:P+S,unit:"m",svg:svgB3(S,P,O,T,Q,U,PS,PO,QT,QU),
     question:n=>`Calcule la hauteur ${m(n)} du lampadaire.`,
-    enonce:`À la même heure, un lampadaire ${SEG(S+P)} et un bâton ${SEG(T+Q)} sont plantés verticalement dans un sol horizontal. Les rayons du soleil (${S}${O}) et (${T}${U}) sont parallèles. Le bâton mesure ${fr(QT)} m et son ombre ${SEG(Q+U)} mesure ${fr(QU)} m. L'ombre ${SEG(P+O)} du lampadaire mesure ${fr(PO)} m. La figure n'est pas à l'échelle.`,
+    enonce:`À la même heure, un lampadaire ${SEG(S+P)} et un bâton ${SEG(T+Q)} sont plantés verticalement dans un sol horizontal. Les rayons du soleil (${S}${O}) et (${T}${U}) sont parallèles. Le bâton mesure ${fr(QT)} m et son ombre ${SEG(Q+U)} mesure ${fr(QU)} m. L’ombre ${SEG(P+O)} du lampadaire mesure ${fr(PO)} m. La figure n’est pas à l’échelle.`,
     eqs:[{html:`${A3(T+Q+U)} = ${A3(S+P+O)} = 90°`,key:"droit",explain:"Le bâton et le lampadaire sont verticaux et le sol est horizontal."},
          {html:`${A3(T+U+Q)} = ${A3(S+O+P)}`,key:"corr",explain:`Les rayons (${T}${U}) et (${S}${O}) sont parallèles et la droite du sol les coupe : ces angles sont correspondants, donc ils ont la même mesure.`}],
     corrIntro:[`Le bâton et le lampadaire sont verticaux et le sol est horizontal, donc ${A3(T+Q+U)} = ${A3(S+P+O)} = 90°.`,`Les rayons (${T}${U}) et (${S}${O}) sont parallèles et coupés par la droite du sol : les angles ${A3(T+U+Q)} et ${A3(S+O+P)} sont correspondants, donc ${A3(T+U+Q)} = ${A3(S+O+P)}.`]});
@@ -842,22 +849,22 @@ function cfgC1(){
   const pts=mirror([[0,0],[AB,0],Cp,Hp],Math.random()<.5);
   const svg=fig({points:asPoints([A,B,C,H],pts),polys:[[A,B,C]],segs:[[C,H]],rights:[[H,A,C]],aria:"Triangle avec une hauteur"});
   const sq=x=>round(x*x,4);
-  const opts=[`Le triangle ${m(A+B+C)} est rectangle en ${m(C)}.`,`Le triangle ${m(A+B+C)} est rectangle en ${m(A)}.`,`Le triangle ${m(A+B+C)} est rectangle en ${m(B)}.`,`Le triangle ${m(A+B+C)} n'est pas rectangle.`];
+  const opts=[`Le triangle ${m(A+B+C)} est rectangle en ${m(C)}.`,`Le triangle ${m(A+B+C)} est rectangle en ${m(A)}.`,`Le triangle ${m(A+B+C)} est rectangle en ${m(B)}.`,`Le triangle ${m(A+B+C)} n’est pas rectangle.`];
   const ord=shuffle([0,1,2,3]);
   return buildM4({T1:[A,H,C],T2:[A,C,B],vals,unknown:u==="CH"?C+H:A+H,svg,
     question:n=>`a. Démontre que le triangle ${m(A+B+C)} est rectangle. b. Calcule la longueur ${m(n)}.`,
-    gridPre:["J'ai calculé le carré du plus grand côté et la somme des carrés des deux autres côtés.","J'ai cité la réciproque du théorème de Pythagore et j'ai conclu que le triangle est rectangle."],
-    enonce:`Sur la figure ci-dessous, qui n'est pas à l'échelle, le point ${m(H)} est sur le segment ${SEG(A+B)} et la droite (${C}${H}) est perpendiculaire à la droite (${A}${B}). ${donnees([[A+C,AC],[B+C,BC],[A+B,AB]],"cm")}`,
+    gridPre:["J’ai calculé le carré du plus grand côté et la somme des carrés des deux autres côtés.","J’ai cité la réciproque du théorème de Pythagore et j’ai conclu que le triangle est rectangle."],
+    enonce:`Sur la figure ci-dessous, qui n’est pas à l’échelle, le point ${m(H)} est sur le segment ${SEG(A+B)} et la droite (${C}${H}) est perpendiculaire à la droite (${A}${B}). ${donnees([[A+C,AC],[B+C,BC],[A+B,AB]],"cm")}`,
     pre:[
       {type:"num",prompt:`Le plus grand côté est ${SEG(A+B)}. Calcule ${m(A+B)}².`,answer:sq(AB),tol:.011,answerHtml:`${m(A+B)}² = ${fr(AB)}² = ${fr(sq(AB),4)}`,hint:`Multiplie ${fr(AB)} par lui-même.`,explain:`${fr(AB)}² = ${fr(sq(AB),4)}.`},
       {type:"num",prompt:`Calcule ${m(A+C)}² + ${m(B+C)}².`,answer:sq(AC)+sq(BC),tol:.011,answerHtml:`${fr(sq(AC),4)} + ${fr(sq(BC),4)} = ${fr(sq(AC)+sq(BC),4)}`,hint:"Calcule chaque carré, puis additionne.",explain:`${fr(AC)}² + ${fr(BC)}² = ${fr(sq(AC),4)} + ${fr(sq(BC),4)} = ${fr(sq(AC)+sq(BC),4)}.`},
-      {type:"choice",column:true,prompt:"Que peux-tu en conclure ?",options:ord.map(i=>opts[i]),correct:ord.indexOf(0),answerHtml:opts[0],hint:"Pense à la réciproque du théorème de Pythagore. L'angle droit est en face du plus grand côté.",
-        explain:`On a ${m(A+B)}² = ${m(A+C)}² + ${m(B+C)}². D'après la réciproque du théorème de Pythagore, le triangle est rectangle en ${m(C)}, le sommet opposé au plus grand côté.`}],
-    eqs:[{html:`${A3(H+A+C)} = ${A3(C+A+B)}`,key:"commun",explain:`Le point ${m(H)} est sur ${SEG(A+B)} : c'est le même angle, de sommet ${m(A)}.`},
-         {html:`${A3(A+H+C)} = ${A3(A+C+B)} = 90°`,key:"droit",explain:`L'angle en ${m(H)} est droit car (${C}${H}) est perpendiculaire à (${A}${B}), et on vient de démontrer que le triangle est rectangle en ${m(C)}.`}],
+      {type:"choice",column:true,prompt:"Que peux-tu en conclure ?",options:ord.map(i=>opts[i]),correct:ord.indexOf(0),answerHtml:opts[0],hint:"Pense à la réciproque du théorème de Pythagore. L’angle droit est en face du plus grand côté.",
+        explain:`On a ${m(A+B)}² = ${m(A+C)}² + ${m(B+C)}². D’après la réciproque du théorème de Pythagore, le triangle est rectangle en ${m(C)}, le sommet opposé au plus grand côté.`}],
+    eqs:[{html:`${A3(H+A+C)} = ${A3(C+A+B)}`,key:"commun",explain:`Le point ${m(H)} est sur ${SEG(A+B)} : c’est le même angle, de sommet ${m(A)}.`},
+         {html:`${A3(A+H+C)} = ${A3(A+C+B)} = 90°`,key:"droit",explain:`L’angle en ${m(H)} est droit car (${C}${H}) est perpendiculaire à (${A}${B}), et on vient de démontrer que le triangle est rectangle en ${m(C)}.`}],
     corrIntro:[`a. ${m(A+B)}² = ${fr(AB)}² = ${fr(sq(AB),4)} et ${m(A+C)}² + ${m(B+C)}² = ${fr(sq(AC),4)} + ${fr(sq(BC),4)} = ${fr(sq(AC)+sq(BC),4)}.`,
-      `Donc ${m(A+B)}² = ${m(A+C)}² + ${m(B+C)}². D'après la réciproque du théorème de Pythagore, <b>le triangle ${m(A+B+C)} est rectangle en ${m(C)}</b>.`,
-      `b. Le point ${m(H)} est sur ${SEG(A+B)}, donc les triangles ${m(A+H+C)} et ${m(A+C+B)} ont l'angle ${A1(A)} en commun.`,`De plus, ${A3(A+H+C)} = ${A3(A+C+B)} = 90°.`]});
+      `Donc ${m(A+B)}² = ${m(A+C)}² + ${m(B+C)}². D’après la réciproque du théorème de Pythagore, <b>le triangle ${m(A+B+C)} est rectangle en ${m(C)}</b>.`,
+      `b. Le point ${m(H)} est sur ${SEG(A+B)}, donc les triangles ${m(A+H+C)} et ${m(A+C+B)} ont l’angle ${A1(A)} en commun.`,`De plus, ${A3(A+H+C)} = ${A3(A+C+B)} = 90°.`]});
 }
 // Niveau 1, contexte : rampe soutenue par un poteau vertical
 function cfgRampe(){
@@ -867,20 +874,20 @@ function cfgRampe(){
   const pts=mirror([[0,0],[SB,0],[SB,BC],[SM,0],[SM,MN]],Math.random()<.5);
   const svg=fig({H:230,points:asPoints([S,B,C,M,N],pts),polys:[[S,B,C]],segs:[[M,N,{w:3}]],rights:[[M,S,N],[B,S,C]],aria:"Une rampe soutenue par un poteau vertical"});
   return buildM4({T1:[S,M,N],T2:[S,B,C],vals,unknown:M+N,unit:"m",svg,question:n=>`Calcule la hauteur ${m(n)} du poteau.`,
-    enonce:`Une rampe d'accès ${SEG(S+C)} permet de monter sur une estrade. Elle est soutenue par un poteau vertical ${SEG(M+N)}. Le sol est horizontal et le bord ${SEG(B+C)} de l'estrade est vertical. Le point ${m(M)} est sur ${SEG(S+B)} et le point ${m(N)} est sur ${SEG(S+C)}. On donne : ${m(S+M)} = ${fr(SM)} m, ${m(S+B)} = ${fr(SB)} m et ${m(B+C)} = ${fr(BC)} m. La figure n'est pas à l'échelle.`,
-    eqs:[{html:`${A3(M+S+N)} = ${A3(B+S+C)}`,key:"commun",explain:`Les points ${m(M)} et ${m(N)} sont sur ${SEG(S+B)} et ${SEG(S+C)} : c'est le même angle, de sommet ${m(S)}.`},
-         {html:`${A3(S+M+N)} = ${A3(S+B+C)} = 90°`,key:"droit",explain:"Le poteau et le bord de l'estrade sont verticaux, et le sol est horizontal."}],
-    corrIntro:[`Les points ${m(M)} et ${m(N)} sont sur ${SEG(S+B)} et ${SEG(S+C)}, donc les triangles ${m(S+M+N)} et ${m(S+B+C)} ont l'angle ${A1(S)} en commun.`,`Le poteau et le bord de l'estrade sont verticaux et le sol est horizontal, donc ${A3(S+M+N)} = ${A3(S+B+C)} = 90°.`]});
+    enonce:`Une rampe d’accès ${SEG(S+C)} permet de monter sur une estrade. Elle est soutenue par un poteau vertical ${SEG(M+N)}. Le sol est horizontal et le bord ${SEG(B+C)} de l’estrade est vertical. Le point ${m(M)} est sur ${SEG(S+B)} et le point ${m(N)} est sur ${SEG(S+C)}. On donne : ${m(S+M)} = ${fr(SM)} m, ${m(S+B)} = ${fr(SB)} m et ${m(B+C)} = ${fr(BC)} m. La figure n’est pas à l’échelle.`,
+    eqs:[{html:`${A3(M+S+N)} = ${A3(B+S+C)}`,key:"commun",explain:`Les points ${m(M)} et ${m(N)} sont sur ${SEG(S+B)} et ${SEG(S+C)} : c’est le même angle, de sommet ${m(S)}.`},
+         {html:`${A3(S+M+N)} = ${A3(S+B+C)} = 90°`,key:"droit",explain:"Le poteau et le bord de l’estrade sont verticaux, et le sol est horizontal."}],
+    corrIntro:[`Les points ${m(M)} et ${m(N)} sont sur ${SEG(S+B)} et ${SEG(S+C)}, donc les triangles ${m(S+M+N)} et ${m(S+B+C)} ont l’angle ${A1(S)} en commun.`,`Le poteau et le bord de l’estrade sont verticaux et le sol est horizontal, donc ${A3(S+M+N)} = ${A3(S+B+C)} = 90°.`]});
 }
-// Niveau 1, contexte : largeur d'une rivière
+// Niveau 1, contexte : largeur d’une rivière
 function cfgRiviere(){
   const [A,B,O,C,D]=letters(5);let AB,BO,k,OC,CD;
   do{AB=R(12,40);BO=pick([10,12,15,16,18,20,24,25]);k=pick([.2,.25,.4,.5]);OC=round(k*BO,2);CD=round(k*AB,2);}while(!isDec(OC,2)||!isDec(CD,2));
   const w=BO+OC,pts=[[0,AB],[0,0],[BO,0],[w,0],[w,-CD],[-.35*w,0],[1.35*w,0],[1.35*w,AB],[-.35*w,AB]];
   const svg=fig({H:280,points:asPoints([A,B,O,C,D,"_r1","_r2","_r3","_r4"],pts),hidden:["_r1","_r2","_r3","_r4"],fills:[{pts:["_r1","_r2","_r3","_r4"],fill:"#d7e8f7"}],
-    polys:[[A,B,O],[D,C,O]],rights:[[B,A,O],[C,O,D]],labelDir:{[O]:[-.25,-1],[B]:[-1,-.6],[C]:[1,.6],[A]:[-.6,1],[D]:[1,-.4]},aria:"Mesure de la largeur d'une rivière"});
+    polys:[[A,B,O],[D,C,O]],rights:[[B,A,O],[C,O,D]],labelDir:{[O]:[-.25,-1],[B]:[-1,-.6],[C]:[1,.6],[A]:[-.6,1],[D]:[1,-.4]},aria:"Mesure de la largeur d’une rivière"});
   return buildM4({T1:[A,B,O],T2:[D,C,O],vals:{[norm(B+O)]:BO,[norm(O+C)]:OC,[norm(C+D)]:CD},unknown:A+B,unit:"m",svg,question:n=>`Calcule la largeur ${m(n)} de la rivière.`,
-    enonce:`Pour mesurer la largeur d'une rivière sans la traverser, on repère un arbre ${m(A)} sur la rive d'en face et un point ${m(B)} juste en face de lui. On marche le long de la rive jusqu'à un piquet ${m(O)}, puis jusqu'au point ${m(C)}. On s'éloigne ensuite de la rive, perpendiculairement, jusqu'au point ${m(D)}, d'où l'on voit l'arbre ${m(A)} aligné avec le piquet ${m(O)}. On donne : ${m(B+O)} = ${fr(BO)} m, ${m(O+C)} = ${fr(OC)} m et ${m(C+D)} = ${fr(CD)} m. La figure n'est pas à l'échelle.`,
+    enonce:`Pour mesurer la largeur d’une rivière sans la traverser, on repère un arbre ${m(A)} sur la rive d’en face et un point ${m(B)} juste en face de lui. On marche le long de la rive jusqu’à un piquet ${m(O)}, puis jusqu’au point ${m(C)}. On s’éloigne ensuite de la rive, perpendiculairement, jusqu’au point ${m(D)}, d’où l’on voit l’arbre ${m(A)} aligné avec le piquet ${m(O)}. On donne : ${m(B+O)} = ${fr(BO)} m, ${m(O+C)} = ${fr(OC)} m et ${m(C+D)} = ${fr(CD)} m. La figure n’est pas à l’échelle.`,
     eqs:[{html:`${A3(A+O+B)} = ${A3(D+O+C)}`,key:"opp",explain:`Les points ${m(A)}, ${m(O)}, ${m(D)} sont alignés, ainsi que ${m(B)}, ${m(O)}, ${m(C)} : ces angles sont opposés par le sommet.`},
          {html:`${A3(A+B+O)} = ${A3(D+C+O)} = 90°`,key:"droit",explain:`Les droites (${A}${B}) et (${C}${D}) sont perpendiculaires à la rive.`}],
     corrIntro:[`Les points ${m(A)}, ${m(O)}, ${m(D)} sont alignés, ainsi que ${m(B)}, ${m(O)}, ${m(C)} : les angles ${A3(A+O+B)} et ${A3(D+O+C)} sont opposés par le sommet, donc ${A3(A+O+B)} = ${A3(D+O+C)}.`,`Les droites (${A}${B}) et (${C}${D}) sont perpendiculaires à la rive, donc ${A3(A+B+O)} = ${A3(D+C+O)} = 90°.`]});
@@ -901,18 +908,18 @@ function cfgC3(){
   const points={};T1.forEach((n,x)=>points[n]=p1[x]);T2.forEach((n,x)=>points[n]=p2[x]);
   const ang=(T,t)=>{const o=[0,1,2].filter(x=>x!==t);return {v:T[t],p:T[o[0]],q:T[o[1]],color:"#2c4fb5",label:A[t]+"°",r:20};};
   const svg=fig({points,polys:[T1,T2],angles:[ang(T1,0),ang(T2,0),ang(T2,1)],ticks:[[T1[0],T1[1],1],[T1[0],T1[2],1]],sides:sl,aria:"Un triangle isocèle et un autre triangle"});
-  const e1={html:`${A3(angName(T1,0))} = ${A3(angName(T2,0))} = ${p}°`,key:"mesure",explain:`Ces deux angles mesurent ${p}° d'après la figure.`};
+  const e1={html:`${A3(angName(T1,0))} = ${A3(angName(T2,0))} = ${p}°`,key:"mesure",explain:`Ces deux angles mesurent ${p}° d’après la figure.`};
   const e2={html:`${A3(angName(T1,1))} = ${A3(angName(T2,1))} = ${q}°`,key:"iso",explain:`On a calculé ${A3(angName(T1,1))} = ${q}° grâce au triangle isocèle, et la figure indique ${A3(angName(T2,1))} = ${q}°.`};
   return buildM4({T1,T2,vals,unknown:unk,svg,
     enonce:`Les deux triangles ci-dessous ne sont pas en vraie grandeur. Le triangle ${m(n1)} est isocèle en ${m(T1[0])}. Les longueurs sont en centimètres.`,
-    gridPre:["J'ai calculé l'angle à la base en écrivant le calcul et la propriété du triangle isocèle."],
-    pre:[{type:"num",unit:"°",tol:.01,prompt:`Calcule la mesure de l'angle ${A3(angName(T1,1))}.`,answer:q,answerHtml:`${q}°`,hint:"Dans un triangle isocèle, les deux angles à la base ont la même mesure. La somme des angles est égale à 180°.",
+    gridPre:["J’ai calculé l’angle à la base en écrivant le calcul et la propriété du triangle isocèle."],
+    pre:[{type:"num",unit:"°",tol:.01,prompt:`Calcule la mesure de l’angle ${A3(angName(T1,1))}.`,answer:q,answerHtml:`${q}°`,hint:"Dans un triangle isocèle, les deux angles à la base ont la même mesure. La somme des angles est égale à 180°.",
       explain:`Le triangle ${m(n1)} est isocèle en ${m(T1[0])}, donc ses deux angles à la base ont la même mesure : (180° − ${p}°) : 2 = ${q}°.`}],
     eqs:[e1,e2],
     corrIntro:[`Le triangle ${m(n1)} est isocèle en ${m(T1[0])}, donc ses angles à la base ont la même mesure : ${A3(angName(T1,1))} = ${A3(angName(T1,2))} = (180° − ${p}°) : 2 = ${q}°.`,`On a donc ${e1.html} et ${e2.html}.`]});
 }
 const LEVELS={1:[cfgA1,cfgA2,cfgRampe,cfgRiviere],2:[cfgC2,cfgC3],3:[cfgB1,cfgB2,cfgB3,cfgC1]};
-const LEVELTXT={1:"Niveau 1 : angle commun, angle droit, angles opposés par le sommet, avec ou sans contexte.",2:"Niveau 2 : il faut d'abord calculer un angle, avec la somme des angles ou un triangle isocèle.",3:"Niveau 3 (comme au brevet) : angles et parallèles (5e), réciproque du théorème de Pythagore (4e)."};
+const LEVELTXT={1:"Niveau 1 : angle commun, angle droit, angles opposés par le sommet, avec ou sans contexte.",2:"Niveau 2 : il faut d’abord calculer un angle, avec la somme des angles ou un triangle isocèle.",3:"Niveau 3 (comme au brevet) : angles et parallèles (5e), réciproque du théorème de Pythagore (4e)."};
 function exM4(sub,level){
   const g=pick(LEVELS[level])();
   if(sub==="aide")return {head:g.head,steps:[...g.pre,g.clozeStep],corrige:g.corrige,seyes:true};
@@ -921,30 +928,70 @@ function exM4(sub,level){
   return {head:g.head,steps:g.steps,corrige:g.corrige,seyes:true};
 }
 
+/* ================= Cours (une partie par onglet) ================= */
+const v=s=>`<i class="m">${s}</i>`;
+const COURS={
+  m1:`<h3>1. Triangles semblables et éléments homologues</h3>
+<div class="retenir"><b>Définition</b>Deux triangles sont <strong>semblables</strong> lorsque leurs angles sont deux à deux de même mesure.</div>
+<p>Deux triangles semblables ont la même forme. L’un est un agrandissement ou une réduction de l’autre, parfois tourné ou retourné.</p>
+<div class="retenir"><b>Vocabulaire</b>Dans deux triangles semblables, les sommets des angles de même mesure sont <strong>homologues</strong>. Les côtés qui relient des sommets homologues sont homologues, et les angles qui ont des sommets homologues sont homologues.</div>
+<p>Pour trouver les sommets homologues, je cherche les angles codés de la même façon. Si je connais seulement les longueurs, je range les côtés de chaque triangle du plus petit au plus grand : les côtés de même rang sont homologues.</p>
+<div class="seyes"><h4>Exemple</h4><p>Les triangles ${m("ABC")} et ${m("DEF")} sont semblables, avec ${A1("A")} = ${A1("D")}, ${A1("B")} = ${A1("E")} et ${A1("C")} = ${A1("F")}.</p><p>Les sommets homologues sont ${m("A")} et ${m("D")}, ${m("B")} et ${m("E")}, ${m("C")} et ${m("F")}.</p><p>Le côté ${SEG("AB")} relie ${m("A")} et ${m("B")}. Leurs homologues sont ${m("D")} et ${m("E")}, donc le côté homologue de ${SEG("AB")} est ${SEG("DE")}.</p><p>Le sommet de l’angle ${A3("ACB")} est ${m("C")}. Son homologue est ${m("F")}, donc l’angle homologue de ${A3("ACB")} est ${A3("DFE")}.</p></div>`,
+  m2:`<h3>2. Prouver la similitude avec les angles</h3>
+<div class="retenir"><b>Propriété</b>Si deux triangles ont <strong>deux paires d’angles</strong> de même mesure, alors ils sont semblables.</div>
+<p>Deux paires suffisent. Comme la somme des angles d’un triangle est égale à 180°, la troisième paire a alors aussi la même mesure.</p>
+<p>Pour obtenir une égalité d’angles, j’utilise un angle commun aux deux triangles, deux angles droits, des angles opposés par le sommet, des angles alternes-internes ou correspondants avec des droites parallèles, ou un calcul avec la somme des angles d’un triangle.</p>
+<div class="seyes"><h4>Exemple</h4><p>Dans le triangle ${m("ABC")}, ${A1("A")} = 50° et ${A1("B")} = 72°. Dans le triangle ${m("DEF")}, ${A1("D")} = 50° et ${A1("F")} = 58°.</p><p>Dans le triangle ${m("ABC")}, la somme des angles est égale à 180°.</p><p>Donc ${A1("C")} = 180° − (50° + 72°) = 58°.</p><p>On a ${A1("A")} = ${A1("D")} = 50° et ${A1("C")} = ${A1("F")} = 58°.</p><p>Les triangles ${m("ABC")} et ${m("DEF")} ont deux paires d’angles de même mesure : ils sont donc semblables.</p></div>`,
+  m3:`<h3>3. Prouver la similitude avec les longueurs</h3>
+<div class="retenir"><b>Propriété</b>Si les longueurs des côtés de deux triangles sont <strong>proportionnelles</strong>, alors ces triangles sont semblables.</div>
+<p><strong>Méthode.</strong></p>
+<ol><li>Je range les côtés de chaque triangle du plus petit au plus grand.</li><li>Je divise chaque longueur du grand triangle par la longueur de même rang du petit triangle.</li><li>Si les trois quotients sont égaux, les triangles sont semblables. Sinon, ils ne sont pas semblables.</li></ol>
+<div class="seyes"><h4>Exemple</h4><p>Triangle ${m("KLM")} : ${m("KM")} = 3 cm, ${m("KL")} = 5 cm et ${m("LM")} = 6 cm.</p><p>Triangle ${m("NPQ")} : ${m("NQ")} = 4,2 cm, ${m("NP")} = 7 cm et ${m("PQ")} = 8,4 cm.</p><p>Les côtés sont déjà rangés du plus petit au plus grand.</p><p>On calcule les quotients : ${F("4,2","3")} = 1,4 ; ${F("7","5")} = 1,4 ; ${F("8,4","6")} = 1,4.</p><p>Les quotients sont égaux : les longueurs des côtés sont proportionnelles.</p><p>Donc les triangles ${m("KLM")} et ${m("NPQ")} sont semblables.</p></div>
+<p>Le quotient commun est le rapport d’agrandissement : ici, le triangle ${m("NPQ")} est un agrandissement du triangle ${m("KLM")} de rapport 1,4.</p>`,
+  m4:`<h3>4. Calculer une longueur</h3>
+<div class="retenir"><b>Propriété</b>Si deux triangles sont semblables, alors les longueurs de leurs côtés homologues sont <strong>proportionnelles</strong>.</div>
+<p>J’écris l’égalité des trois quotients, en gardant toujours le même triangle en haut. Puis je garde l’égalité qui contient la longueur cherchée et deux longueurs connues.</p>
+<div class="retenir"><b>Calcul</b>Si deux quotients ${F(v("a"),v("b"))} et ${F(v("c"),v("d"))} sont égaux, alors ${v("a")} × ${v("d")} = ${v("b")} × ${v("c")}.</div>
+<div class="seyes"><h4>Exemple</h4><p>Les triangles ${m("RST")} et ${m("UVW")} sont semblables. Les sommets homologues sont ${m("R")} et ${m("U")}, ${m("S")} et ${m("V")}, ${m("T")} et ${m("W")}.</p><p>On donne ${m("RS")} = 4 cm, ${m("ST")} = 6 cm et ${m("UV")} = 7 cm. On cherche ${m("VW")}.</p><p>Les longueurs des côtés homologues sont proportionnelles : ${F(m("RS"),m("UV"))} = ${F(m("ST"),m("VW"))} = ${F(m("RT"),m("UW"))}.</p><p>On utilise : ${F("4","7")} = ${F("6",m("VW"))}.</p><p>Donc 4 × ${m("VW")} = 7 × 6.</p><p>${m("VW")} = ${F("7 × 6","4")} = 10,5</p><p><span class="box">${m("VW")} = 10,5 cm</span></p></div>
+<p>Dans un problème, il faut d’abord démontrer que les triangles sont semblables (parties 2 et 3), puis écrire les sommets homologues.</p>`
+};
+function coursPart(k){return el("div","cours-part",COURS[k]);}
+function renderCours(){
+  const c=el("section","card");
+  c.innerHTML=`<h2 class="ttl"><span>Cours · Triangles semblables</span></h2>`;
+  ["m1","m2","m3","m4"].forEach(k=>c.append(coursPart(k)));
+  app.append(c);
+}
+
 /* ================= Pages ================= */
 const MODS={
   m1:{title:"1. Reconnaître les homologues",card:"Retrouver les sommets, les côtés et les angles qui se correspondent dans deux triangles semblables.",
     retenir:"<ul><li>Deux angles codés de la même façon ont la même mesure : leurs sommets sont <b style='display:inline;color:inherit'>homologues</b>. Deux angles codés différemment ne sont pas homologues.</li><li>Avec les longueurs, on range les côtés de chaque triangle (petit, moyen, grand) : les côtés de même rang sont homologues.</li><li>Le côté homologue de " + SEG("XY") + " relie les homologues de " + m("X") + " et de " + m("Y") + ".</li></ul>",ex:exM1},
-  m2:{title:"2. Prouver la similitude par les angles",card:"Calculer des angles et montrer que deux triangles ont deux paires d'angles de même mesure.",
-    retenir:"Pour prouver que deux triangles sont semblables, il suffit de montrer qu'ils ont <b style='display:inline;color:inherit'>deux paires d'angles</b> de même mesure. La somme des angles d'un triangle est égale à 180°.",ex:exM2},
+  m2:{title:"2. Prouver la similitude par les angles",card:"Calculer des angles et montrer que deux triangles ont deux paires d’angles de même mesure.",
+    retenir:"Pour prouver que deux triangles sont semblables, il suffit de montrer qu’ils ont <b style='display:inline;color:inherit'>deux paires d’angles</b> de même mesure. La somme des angles d’un triangle est égale à 180°.",ex:exM2},
   m3:{title:"3. Prouver la similitude par les longueurs",card:"Ranger les côtés, calculer les quotients et conclure.",
-    retenir:"On range les côtés de chaque triangle du plus petit au plus grand, puis on calcule les trois quotients. S'ils sont égaux, les longueurs sont proportionnelles : les triangles sont semblables.",ex:exM3},
+    retenir:"On range les côtés de chaque triangle du plus petit au plus grand, puis on calcule les trois quotients. S’ils sont égaux, les longueurs sont proportionnelles : les triangles sont semblables.",ex:exM3},
   m4:{title:"4. Problèmes type brevet",card:"Montrer la similitude par les angles, puis calculer une longueur inconnue. Trois niveaux.",
-    retenir:"<ol><li>Je montre que deux paires d'angles ont la même mesure, en justifiant chaque égalité.</li><li>J'en déduis que les triangles sont semblables.</li><li>J'écris les sommets homologues.</li><li>J'écris l'égalité des quotients.</li><li>Je calcule la longueur : si deux quotients "+F("a","b")+" et "+F("c","d")+" sont égaux, alors a × d = b × c.</li></ol>",ex:null},
-  m5:{title:"5. D.S. blanc",card:"Un sujet complet en quatre exercices, à faire sur ta feuille, puis la correction.",ex:null}
+    retenir:"<ol><li>Je montre que deux paires d’angles ont la même mesure, en justifiant chaque égalité.</li><li>J’en déduis que les triangles sont semblables.</li><li>J’écris les sommets homologues.</li><li>J’écris l’égalité des quotients.</li><li>Je calcule la longueur : si deux quotients "+F("a","b")+" et "+F("c","d")+" sont égaux, alors a × d = b × c.</li></ol>",ex:null},
+  m5:{title:"5. D.S. blanc",card:"Deux sujets différents ou un sujet tiré au hasard : tu rédiges sur ta feuille, puis tu vérifies tes résultats et tu lis la correction.",ex:null}
 };
-const SUBS=[["exemple","Je regarde un exemple"],["aide","Je m'entraîne avec de l'aide"],["seul","Je m'entraîne seul"]];
+const SUBS=[["exemple","Je regarde un exemple"],["aide","Je m’entraîne avec de l’aide"],["seul","Je m’entraîne seul"]];
 let VIEW={page:"home",sub:"exemple",level:1};
 const app=document.getElementById("app"),tabs=document.getElementById("tabs");
 function go(page,o={}){Object.assign(VIEW,{page},o);render();try{window.scrollTo({top:0});}catch(e){}}
+const PAGES=[["home","Sommaire","Sommaire"],["cours","Cours","Cours"],["m1","1. Homologues","1. Reconnaître les homologues"],["m2","2. Par les angles","2. Prouver par les angles"],["m3","3. Par les longueurs","3. Prouver par les longueurs"],["m4","4. Type brevet","4. Problèmes type brevet"],["m5","5. D.S. blanc","5. D.S. blanc"]];
 function renderTabs(){
   tabs.innerHTML="";
-  [["home","Sommaire"],["m1","1. Homologues"],["m2","2. Par les angles"],["m3","3. Par les longueurs"],["m4","4. Type brevet"],["m5","5. D.S. blanc"]].forEach(([p,l])=>{
-    const b=mkBtn(l,()=>go(p),VIEW.page===p?"on":"");tabs.append(b);});
+  const sel=el("select","navsel");sel.setAttribute("aria-label","Aller à une partie du chapitre");
+  sel.innerHTML=PAGES.map(([p,,l])=>`<option value="${p}"${VIEW.page===p?" selected":""}>${l}</option>`).join("");
+  sel.onchange=()=>go(sel.value);tabs.append(sel);
+  PAGES.forEach(([p,l])=>{
+    const b=mkBtn(l,()=>go(p),VIEW.page===p?"on":"");b.setAttribute("aria-current",VIEW.page===p?"page":"false");tabs.append(b);});
 }
 function render(){
   renderTabs();app.innerHTML="";
   if(VIEW.page==="home")return renderHome();
+  if(VIEW.page==="cours")return renderCours();
   if(VIEW.page==="m5")return renderDS();
   renderModule(VIEW.page);
 }
@@ -955,14 +1002,20 @@ function renderHome(){
 }
 function renderModule(k){
   const mo=MODS[k];const c=el("section","card");
-  c.innerHTML=`<h2 class="ttl"><span>${mo.title}</span></h2><div class="retenir"><b>À retenir</b>${mo.retenir}</div>`;
+  c.innerHTML=`<h2 class="ttl"><span>${mo.title}</span></h2>`;
   if(k==="m4"){
     const lv=el("div","levels",`<span class="lab">Niveau :</span>`);
     [1,2,3].forEach(n=>lv.append(mkBtn(n===3?"3 (brevet)":String(n),()=>{VIEW.level=n;render();},VIEW.level===n?"on":"")));
     c.append(lv,el("p","small",LEVELTXT[VIEW.level]));
   }
   const st=el("div","subtabs");SUBS.forEach(([s,l])=>st.append(mkBtn(l,()=>{VIEW.sub=s;render();},VIEW.sub===s?"on":"")));
-  const panel=el("div","panel");c.append(st,panel);app.append(c);
+  c.append(st);
+  // En pratique autonome, le cours et l’encadré « À retenir » sont masqués.
+  if(VIEW.sub!=="seul"){
+    const d=el("details","relire","<summary>Relire le cours de cette partie</summary>");d.append(coursPart(k));
+    c.append(d,el("div","retenir",`<b>À retenir</b>${mo.retenir}`));
+  }
+  const panel=el("div","panel");c.append(panel);app.append(c);
   startExercise(k,panel);
 }
 function startExercise(k,panel){
@@ -970,7 +1023,7 @@ function startExercise(k,panel){
   const sub=VIEW.sub,ex=k==="m4"?exM4(sub,VIEW.level):MODS[k].ex(sub);
   panel.append(el("div","exo-head",ex.head));
   const box=el("div","steps");panel.append(box);
-  runSteps(box,ex.steps,sub==="exemple"?"model":"play",sub==="seul"?1:2,errors=>{
+  runSteps(box,ex.steps,sub==="exemple"?"model":"play",2,errors=>{
     if(ex.corrige)panel.append(ex.seyes?el("div","seyes",`<h4>Correction</h4>${ex.corrige}`):el("div","corrige",`<h4>${sub==="exemple"?"La rédaction complète":"La rédaction attendue"}</h4>${ex.corrige}`));
     if(ex.grid&&sub==="seul")panel.append(gridEl(ex.grid));
     if(sub!=="exemple")panel.append(el("p","endmsg",errors===0?"Exercice réussi sans erreur.":"Exercice terminé. Relis bien la correction avant de passer au suivant."));
@@ -986,15 +1039,15 @@ function seyesBox(html){return `<div class="seyes"><h4>Correction</h4>${html}</d
 const P=s=>`<p>${s}</p>`;
 // --- Partie 1 : automatismes ---
 const FORMULES={
-  cercle:["Le périmètre d'un cercle","P = 2 × π × r, où r est le rayon du cercle (ou P = π × d, où d est le diamètre)."],
-  disque:["L'aire d'un disque","A = π × r², où r est le rayon du disque."],
-  triangle:["L'aire d'un triangle","A = (b × h) : 2, où b est la longueur d'un côté et h la hauteur relative à ce côté."],
-  rectP:["Le périmètre d'un rectangle","P = 2 × (L + l), où L est la longueur et l la largeur."],
-  rectA:["L'aire d'un rectangle","A = L × l, où L est la longueur et l la largeur."],
-  cylindre:["Le volume d'un cylindre de révolution","V = π × r² × h, où r est le rayon de la base et h la hauteur."],
-  cone:["Le volume d'un cône de révolution","V = (π × r² × h) : 3, où r est le rayon de la base et h la hauteur."],
-  pave:["Le volume d'un pavé droit","V = L × l × h, où L est la longueur, l la largeur et h la hauteur."],
-  pyramide:["Le volume d'une pyramide","V = (B × h) : 3, où B est l'aire de la base et h la hauteur."]
+  cercle:["Le périmètre d’un cercle","P = 2 × π × r, où r est le rayon du cercle (ou P = π × d, où d est le diamètre)."],
+  disque:["L’aire d’un disque","A = π × r², où r est le rayon du disque."],
+  triangle:["L’aire d’un triangle","A = (b × h) : 2, où b est la longueur d’un côté et h la hauteur relative à ce côté."],
+  rectP:["Le périmètre d’un rectangle","P = 2 × (L + l), où L est la longueur et l la largeur."],
+  rectA:["L’aire d’un rectangle","A = L × l, où L est la longueur et l la largeur."],
+  cylindre:["Le volume d’un cylindre de révolution","V = π × r² × h, où r est le rayon de la base et h la hauteur."],
+  cone:["Le volume d’un cône de révolution","V = (π × r² × h) : 3, où r est le rayon de la base et h la hauteur."],
+  pave:["Le volume d’un pavé droit","V = L × l × h, où L est la longueur, l la largeur et h la hauteur."],
+  pyramide:["Le volume d’une pyramide","V = (B × h) : 3, où B est l’aire de la base et h la hauteur."]
 };
 function exoFormules(keys){
   return {title:"Exercice 2 (Formules)",pts:3,
@@ -1011,19 +1064,19 @@ function eqAffine(a,b,c,d){ // a x + b = c x + d
   if(c!==0)lines.push(`${sx(a-c)}${sgn(b)} = ${neg(d)}`);
   lines.push(`${sx(a-c)} = ${neg(d-b)}`);
   if(a-c!==1){lines.push(`x = ${neg(d-b)} : ${a-c<0?"("+neg(a-c)+")":a-c}`);lines.push(`x = ${neg(sol)}`);}
-  return {txt:lines[0],sol,corr:lines.join("<br>")+`<br>La solution de l'équation est ${neg(sol)}.`};
+  return {txt:lines[0],sol,corr:lines.join("<br>")+`<br>La solution de l’équation est ${neg(sol)}.`};
 }
 function exoEquations(e1,e2){
-  return {title:"Exercice 1 (Équations)",pts:2,grid:["J'ai écrit chaque étape de la résolution, ligne par ligne.","J'ai donné la solution de chaque équation."],
+  return {title:"Exercice 1 (Équations)",pts:2,grid:["J’ai écrit chaque étape de la résolution, ligne par ligne.","J’ai donné la solution de chaque équation."],
     head:P("Résoudre les équations suivantes.")+P(`1. ${m(e1.txt)} (1 point)`)+P(`2. ${m(e2.txt)} (1 point)`),
     answers:[{label:"1. x =",kind:"num",unit:"",correct:e1.sol},{label:"2. x =",kind:"num",unit:"",correct:e2.sol}],
     corr:P(`1. ${e1.corr}`)+P(`2. ${e2.corr}`)};
 }
 function randEq1(){let a,c,s,b,d;do{a=R(3,7);c=R(1,a-1);s=pick([2,3,4,5,6,-2,-3]);b=-R(1,9);d=(a-c)*s+b;}while(d===0);return eqAffine(a,b,c,d);}
 function randEq2(){const a=-R(2,6),s=pick([-9,-8,-7,-6,-5,-4,-3,3,4,5,6]),b=R(1,9);return eqAffine(a,b,0,a*s+b);}
-// --- Exercice : homologues donnés dans l'énoncé ---
+// --- Exercice : homologues donnés dans l’énoncé ---
 function exoHomoTexte(o){
-  // o.T1, o.T2 : lettres ; o.corr[i] = indice dans T2 de l'homologue de T1[i] ; o.A : angles de T1
+  // o.T1, o.T2 : lettres ; o.corr[i] = indice dans T2 de l’homologue de T1[i] ; o.A : angles de T1
   const {T1,T2,corr,A}=o;
   const p1=transform(triAngles(A),{t:rad(o.t1||0)});
   let q=transform(triAngles(A),{t:rad(o.t2||0),flip:!!o.flip,k:o.k||1.35});
@@ -1045,14 +1098,14 @@ function exoHomoTexte(o){
   return {title:o.title||"Exercice 3",pts:3,
     head:P(`Les triangles ${m(T1.join(""))} et ${m(T2.join(""))} ci-dessous sont semblables. Les couples de sommets homologues sont ${pairs}.`)+svg+
       P("1. Compléter le tableau des sommets homologues. (1,5 point)")+tab+
-      P(`2. Quel côté est homologue du côté ${SEG(sa+sb)} ? (0,5 point)`)+P(`3. Quel angle est homologue de l'angle ${A3(o.angle.join(""))} ? (1 point)`),
+      P(`2. Quel côté est homologue du côté ${SEG(sa+sb)} ? (0,5 point)`)+P(`3. Quel angle est homologue de l’angle ${A3(o.angle.join(""))} ? (1 point)`),
     answers:[{label:"1.",kind:"selects",from:Fr,choices:To.slice().sort(),correct:Fr.map(h)},
       {label:"2.",kind:"radio",opts:sideOpts,correct:sideOk},{label:"3.",kind:"radio",opts:angOpts.map(A3),correct:angOk}],
-    corr:P("1. On recopie les couples donnés dans l'énoncé :")+tabC+
+    corr:P("1. On recopie les couples donnés dans l’énoncé :")+tabC+
       P(`2. Le côté ${SEG(sa+sb)} relie les sommets ${m(sa)} et ${m(sb)}. Leurs homologues sont ${m(h(sa))} et ${m(h(sb))}, donc le côté homologue est <b>${SEG(h(sa)+h(sb))}</b>.`)+
-      P(`3. Le sommet de l'angle ${A3(o.angle.join(""))} est ${m(av)}. Son homologue est ${m(h(av))}, donc l'angle homologue est <b>${A3(angHom)}</b>.`)};
+      P(`3. Le sommet de l’angle ${A3(o.angle.join(""))} est ${m(av)}. Son homologue est ${m(h(av))}, donc l’angle homologue est <b>${A3(angHom)}</b>.`)};
 }
-// --- Exercice : papillon (angles opposés par le sommet + une égalité d'angles donnée) ---
+// --- Exercice : papillon (angles opposés par le sommet + une égalité d’angles donnée) ---
 function exoPapillon(o){
   // triangle ABC (A,B,C), droites (AE) et (DC) sécantes en B ; angle BAC = angle BDE ; D homologue de A, E homologue de C
   const {AB,AC,BC,BD}=o,k=BD/AB,DE=k*AC,BE=k*BC;
@@ -1066,12 +1119,12 @@ function exoPapillon(o){
     ?{eq:`${F(fr(AB),fr(BD))} = ${F(m("AC"),fr(DE))}`,prod:`${fr(BD)} × AC = ${fr(AB)} × ${fr(DE)}`,calc:`AC = ${F(`${fr(AB)} × ${fr(DE)}`,fr(BD))}`}
     :{eq:`${F(fr(AB),fr(BD))} = ${F(fr(AC),m("DE"))}`,prod:`${fr(AB)} × DE = ${fr(BD)} × ${fr(AC)}`,calc:`DE = ${F(`${fr(BD)} × ${fr(AC)}`,fr(AB))}`};
   return {title:"Exercice 4",pts:4,grid:GRID_ANG,
-    head:P(`Sur la figure ci-dessous, qui n'est pas en vraie grandeur, les droites (AE) et (DC) se coupent au point B. ${o.donnees}`)+P(`On sait que les angles ${A3("BAC")} et ${A3("BDE")} ont la même mesure.`)+svg+
+    head:P(`Sur la figure ci-dessous, qui n’est pas en vraie grandeur, les droites (AE) et (DC) se coupent au point B. ${o.donnees}`)+P(`On sait que les angles ${A3("BAC")} et ${A3("BDE")} ont la même mesure.`)+svg+
       P("1. Démontrer que les triangles ABC et DBE sont semblables. (2 points)")+P(`2. ${o.ask==="AC"?`Sachant que DE = ${fr(DE)} cm, calculer la longueur AC.`:"Calculer la longueur DE."} (2 points)`),
     answers:[{label:`2. ${m(o.ask)} =`,kind:"num",unit:"cm",correct:round(ans,2)}],
     corr:P(`1. Les droites (AE) et (DC) se coupent en B, donc les angles ${A3("ABC")} et ${A3("DBE")} sont opposés par le sommet : ${A3("ABC")} = ${A3("DBE")}.`)+
-      P(`De plus, ${A3("BAC")} = ${A3("BDE")} d'après l'énoncé.`)+
-      P(`Les triangles ABC et DBE ont deux paires d'angles de même mesure : <b>ils sont semblables</b>.`)+
+      P(`De plus, ${A3("BAC")} = ${A3("BDE")} d’après l’énoncé.`)+
+      P(`Les triangles ABC et DBE ont deux paires d’angles de même mesure : <b>ils sont semblables</b>.`)+
       P(`2. Les sommets homologues sont : A et D, B et B, C et E.`)+
       P(`Les longueurs des côtés homologues sont proportionnelles : ${F("AB","DB")} = ${F("BC","BE")} = ${F("AC","DE")}.`)+
       P(`On utilise : ${known.eq}.`)+P(`Donc ${known.prod}.`)+P(`${known.calc} = ${fr(ans)}`)+P(`<span class="box">${o.ask} = ${fr(ans)} cm</span>`)};
@@ -1088,7 +1141,7 @@ function exoListe(o){
   return {title:"Exercice 5",pts:3,grid:GRID_LEN,
     head:P(`On considère deux triangles ${m(o.T1)} et ${m(o.T2)} tels que :`)+`<ul><li>${li(o.L1)} ;</li><li>${li(o.L2)}.</li></ul>`+P("Ces deux triangles sont-ils semblables ? Justifier la réponse."),
     answers:[{label:"Réponse :",kind:"radio",opts:YESNO,correct:sim?0:1}],
-    corr:P("On range les longueurs des côtés de chaque triangle dans l'ordre croissant :")+tab+
+    corr:P("On range les longueurs des côtés de chaque triangle dans l’ordre croissant :")+tab+
       P(`On calcule les quotients (triangle ${m(Gn)} divisé par triangle ${m(Pn)}) : ${ql}.`)+
       (sim?P(`Les quotients sont égaux : les longueurs des côtés sont proportionnelles. <b>Les triangles ${m(o.T1)} et ${m(o.T2)} sont semblables.</b>`)
           :P(`Les quotients ne sont pas tous égaux : les longueurs des côtés ne sont pas proportionnelles. <b>Les triangles ${m(o.T1)} et ${m(o.T2)} ne sont pas semblables.</b>`))};
@@ -1100,21 +1153,21 @@ function exoDNB18(o){
   const t=triSides(BE,BF,FE).map(p=>[-p[0],-p[1]]);
   const points={B:[0,0],C:[BC,0],D:[0,BD],E:t[1],F:t[2]};
   const sides=[{a:"C",b:"D",t:CD},{a:"B",b:"C",t:BC},{a:"E",b:"B",t:BE},{a:"B",b:"F",t:BF},{a:"E",b:"F",t:FE}].map(s=>({a:s.a,b:s.b,text:fr(s.t)+" cm",color:INK,ref:s.a==="C"&&s.b==="D"||s.a==="B"&&s.b==="C"?["B","C","D"]:["B","E","F"]}));
-  const svg=fig({H:270,points,polys:[["B","C","D"],["B","F","E"]],rights:[["B","C","D"]],sides,labelDir:{B:[.25,-1]},aria:"Deux triangles de part et d'autre du point B"});
+  const svg=fig({H:270,points,polys:[["B","C","D"],["B","F","E"]],rights:[["B","C","D"]],sides,labelDir:{B:[.25,-1]},aria:"Deux triangles de part et d’autre du point B"});
   const sq=x=>round(x*x,4);
-  return {title:"Exercice 6 (d'après le brevet, Métropole 2018)",pts:5,
-    grid:["Question 1 : j'ai cité le théorème de Pythagore et j'ai écrit l'égalité.","Question 1 : j'ai calculé BD² puis BD, avec l'unité.","Question 2 : j'ai rangé les côtés et calculé les trois quotients.","Question 2 : j'ai conclu que les triangles sont semblables.","Question 3 : j'ai trouvé l'angle homologue de l'angle droit.","Question 3 : j'ai conclu par une phrase sur l'affirmation de Sophie."],
-    head:P("La figure ci-dessous n'est pas représentée en vraie grandeur. Les points C, B et E sont alignés. Le triangle BCD est rectangle en B.")+svg+
+  return {title:"Exercice 6 (d’après le brevet, Métropole 2018)",pts:5,
+    grid:["Question 1 : j’ai cité le théorème de Pythagore et j’ai écrit l’égalité.","Question 1 : j’ai calculé BD² puis BD, avec l’unité.","Question 2 : j’ai rangé les côtés et calculé les trois quotients.","Question 2 : j’ai conclu que les triangles sont semblables.","Question 3 : j’ai trouvé l’angle homologue de l’angle droit.","Question 3 : j’ai conclu par une phrase sur l’affirmation de Sophie."],
+    head:P("La figure ci-dessous n’est pas représentée en vraie grandeur. Les points C, B et E sont alignés. Le triangle BCD est rectangle en B.")+svg+
       P(`On donne les longueurs suivantes : BC = ${fr(BC)} cm ; CD = ${fr(CD)} cm ; BF = ${fr(BF)} cm ; BE = ${fr(BE)} cm ; FE = ${fr(FE)} cm.`)+
       P(`1. Dans le triangle BCD rectangle en B, montrer par le calcul que la longueur BD est égale à ${fr(BD)} cm. (1 point)`)+
       P("2. Démontrer que les triangles CBD et BFE sont semblables. (2 points)")+
-      P(`3. Sophie affirme que l'angle ${A3("BFE")} est un angle droit. A-t-elle raison ? Justifier la réponse. (2 points)`),
+      P(`3. Sophie affirme que l’angle ${A3("BFE")} est un angle droit. A-t-elle raison ? Justifier la réponse. (2 points)`),
     answers:[{label:"3.",kind:"radio",opts:["Oui, Sophie a raison.","Non, Sophie a tort."],correct:0}],
     note:"Les questions 1 et 2 sont des démonstrations : compare ta rédaction avec la correction.",
-    corr:P(`1. Le triangle BCD est rectangle en B. D'après le théorème de Pythagore : CD² = BC² + BD².`)+
+    corr:P(`1. Le triangle BCD est rectangle en B. D’après le théorème de Pythagore : CD² = BC² + BD².`)+
       P(`Donc BD² = CD² − BC² = ${fr(CD)}² − ${fr(BC)}² = ${fr(sq(CD),4)} − ${fr(sq(BC),4)} = ${fr(sq(BD),4)}.`)+
       P(`BD = √${fr(sq(BD),4)} = ${fr(BD)}, donc <b>BD = ${fr(BD)} cm</b>.`)+
-      P(`2. On range les longueurs des côtés dans l'ordre croissant : BD = ${fr(BD)}, BC = ${fr(BC)}, CD = ${fr(CD)} pour CBD et FE = ${fr(FE)}, BF = ${fr(BF)}, BE = ${fr(BE)} pour BFE.`)+
+      P(`2. On range les longueurs des côtés dans l’ordre croissant : BD = ${fr(BD)}, BC = ${fr(BC)}, CD = ${fr(CD)} pour CBD et FE = ${fr(FE)}, BF = ${fr(BF)}, BE = ${fr(BE)} pour BFE.`)+
       P(`${F(fr(FE),fr(BD))} = ${fr(k)} ; ${F(fr(BF),fr(BC))} = ${fr(k)} ; ${F(fr(BE),fr(CD))} = ${fr(k)}.`)+
       P(`Les quotients sont égaux : les longueurs des côtés sont proportionnelles, donc <b>les triangles CBD et BFE sont semblables</b>.`)+
       P(`3. Les côtés homologues sont [CD] et [BE], [BC] et [BF], [BD] et [FE]. Donc les sommets homologues sont B et F (opposés à [CD] et [BE]), C et B, D et E.`)+
@@ -1123,16 +1176,16 @@ function exoDNB18(o){
 // --- Sujets ---
 function sujet2025(v){
   if(v==="A")return {title:"D.S. 303 – Triangles semblables – Sujet A",parts:[
-    {title:"Partie 1 : Automatismes (10 minutes)",info:"L'usage de la calculatrice est interdit pour cette partie.",total:5,exos:[exoEquations(eqAffine(5,-3,2,6),eqAffine(-3,7,0,28)),exoFormules(["cercle","triangle","cylindre"])]},
-    {title:"Partie 2 : Triangles semblables (45 minutes)",info:"L'usage de la calculatrice est autorisé pour cette partie.",total:15,exos:[
+    {title:"Partie 1 : Automatismes (10 minutes)",info:"L’usage de la calculatrice est interdit pour cette partie.",total:5,exos:[exoEquations(eqAffine(5,-3,2,6),eqAffine(-3,7,0,28)),exoFormules(["cercle","triangle","cylindre"])]},
+    {title:"Partie 2 : Triangles semblables (45 minutes)",info:"L’usage de la calculatrice est autorisé pour cette partie.",total:15,exos:[
       exoHomoTexte({T1:["A","B","C"],T2:["R","S","T"],corr:[2,1,0],A:[65,45,70],t2:150,flip:true,side:["A","C"],angle:["B","C","A"]}),
       exoPapillon({AB:2.5,AC:3,BC:3,BD:2,ask:"AC",donnees:"On donne AB = 2,5 cm, BC = 3 cm et BD = 2 cm.",labels:[["A","B","2,5 cm"],["B","C","3 cm"],["B","D","2 cm"]]}),
       exoListe({T1:"GHI",T2:"JKL",L1:{GH:8,GI:11,HI:6},L2:{JK:10,JL:13.5,KL:7.5}}),
       exoDNB18({BC:7.5,CD:8.5,k:.8})]}]};
   return {title:"D.S. 303 – Triangles semblables – Sujet B",parts:[
-    {title:"Partie 1 : Automatismes (10 minutes)",info:"L'usage de la calculatrice est interdit pour cette partie.",total:5,exos:[exoEquations(eqAffine(4,-2,1,7),eqAffine(-2,5,0,21)),exoFormules(["disque","rectP","cone"])]},
-    {title:"Partie 2 : Triangles semblables (45 minutes)",info:"L'usage de la calculatrice est autorisé pour cette partie.",total:15,exos:[
-      exoHomoTexte({T1:["A","B","C"],T2:["R","S","T"],corr:[2,1,0],A:[65,45,70],t2:150,flip:true,tableFrom:"T2",side:["A","B"],angle:["B","A","C"]}),
+    {title:"Partie 1 : Automatismes (10 minutes)",info:"L’usage de la calculatrice est interdit pour cette partie.",total:5,exos:[exoEquations(eqAffine(4,-2,1,7),eqAffine(-2,5,0,21)),exoFormules(["disque","rectP","cone"])]},
+    {title:"Partie 2 : Triangles semblables (45 minutes)",info:"L’usage de la calculatrice est autorisé pour cette partie.",total:15,exos:[
+      exoHomoTexte({T1:["D","E","F"],T2:["K","L","M"],corr:[1,2,0],A:[55,80,45],t2:-110,flip:false,tableFrom:"T2",side:["D","E"],angle:["E","F","D"]}),
       exoPapillon({AB:3,AC:4.5,BC:4,BD:2,ask:"DE",donnees:"On donne AB = 3 cm, AC = 4,5 cm et BD = 2 cm.",labels:[["A","B","3 cm"],["A","C","4,5 cm"],["B","D","2 cm"]]}),
       exoListe({T1:"MNO",T2:"PQR",L1:{MN:10,MO:12,NO:15},L2:{PQ:8,PR:9.6,QR:12}}),
       exoDNB18({BC:8,CD:10,k:1.5})]}]};
@@ -1163,8 +1216,8 @@ function sujetAleatoire(){
   while(tr[1]*mm>13||tr[1]*mm<5||tr[1]*mm*k6>16||!isDec(k6*tr[0]*mm,2)||!isDec(k6*tr[1]*mm,2));
   const ex6=exoDNB18({BC:round(tr[0]*mm,2),CD:round(tr[1]*mm,2),k:k6});
   return {title:"D.S. blanc – Triangles semblables – Sujet tiré au hasard",parts:[
-    {title:"Partie 1 : Automatismes (10 minutes)",info:"L'usage de la calculatrice est interdit pour cette partie.",total:5,exos:[exoEquations(randEq1(),randEq2()),exoFormules(shuffle(Object.keys(FORMULES)).slice(0,3))]},
-    {title:"Partie 2 : Triangles semblables (45 minutes)",info:"L'usage de la calculatrice est autorisé pour cette partie.",total:15,exos:[ex3,ex4,ex5,ex6]}]};
+    {title:"Partie 1 : Automatismes (10 minutes)",info:"L’usage de la calculatrice est interdit pour cette partie.",total:5,exos:[exoEquations(randEq1(),randEq2()),exoFormules(shuffle(Object.keys(FORMULES)).slice(0,3))]},
+    {title:"Partie 2 : Triangles semblables (45 minutes)",info:"L’usage de la calculatrice est autorisé pour cette partie.",total:15,exos:[ex3,ex4,ex5,ex6]}]};
 }
 function renderDS(){
   DSN++;const ds=DSCHOICE==="A"||DSCHOICE==="B"?sujet2025(DSCHOICE):sujetAleatoire();
@@ -1192,7 +1245,7 @@ function renderDS(){
       b.append(ans);const cz=el("div","ds-corr");b.append(cz);c.append(b);blocks.push({ex,cz});
     });
   });
-  const fin=mkBtn("J'ai fini : afficher la correction",()=>{
+  const fin=mkBtn("J’ai fini : afficher la correction",()=>{
     blocks.forEach(({ex,cz})=>{
       ex.answers.forEach(a=>{let ok;
         if(a.kind==="radio"){const r=a.row.querySelector("input:checked");ok=!!r&&Number(r.value)===a.correct;a.row.querySelectorAll("label").forEach((l,i)=>{if(i===a.correct)l.classList.add("good");});}
@@ -1212,7 +1265,7 @@ render();
 </script>
 <script>
 /* Charte : dans le texte courant, la lettre x (seule ou après un chiffre : 3x, x²),
-   la lettre f seule et g, h, p suivies d'une parenthèse sont des lettres mathématiques.
+   la lettre f seule et g, h, p suivies d’une parenthèse sont des lettres mathématiques.
    On les affiche en italique STIX pour ne pas confondre x avec le signe ×.
    Le texte déjà en italique (<i>), le SVG et les champs de saisie ne sont pas touchés. */
 (() => {
