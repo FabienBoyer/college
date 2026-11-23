@@ -117,7 +117,7 @@ table.tab th{font-weight:400;color:var(--ink)}
 .seyes b{font-weight:600}
 .seyes .m,.seyes .ang{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-size:1.38em}
 .seyes .frac{font-size:1.3em}
-.seyes .frac .m{font-size:1em}
+.seyes .frac .m{font-size:1em}.seyes p i.m{font-size:1em}
 .seyes .box{border-color:#1d3a8a;font-weight:400;line-height:26px;margin:3px 0}
 .ds-tools{margin:0 0 6px}
 .ds-exo{border-top:2px solid var(--line);margin-top:18px;padding-top:4px}
@@ -179,7 +179,7 @@ table.ladder{border-collapse:collapse;margin:0 0 .2em}table.ladder td{border:non
 <h3>2. Critères de divisibilité</h3>
 <p>Ces critères permettent de savoir si une division tombe juste, sans la poser.</p>
 <div class="table-scroll"><table class="tab"><tr><th>Un nombre est divisible par</th><th>quand</th></tr><tr><td>2</td><td>son chiffre des unités est 0, 2, 4, 6 ou 8.</td></tr><tr><td>5</td><td>son chiffre des unités est 0 ou 5.</td></tr><tr><td>10</td><td>son chiffre des unités est 0.</td></tr><tr><td>3</td><td>la somme de ses chiffres est divisible par 3.</td></tr><tr><td>9</td><td>la somme de ses chiffres est divisible par 9.</td></tr></table></div>
-<div class="seyes"><h4>Exemple · 135</h4><p>Son chiffre des unités est 5 : 135 est divisible par 5, mais pas par 2 ni par 10.</p><p>1 + 3 + 5 = 9 : 135 est divisible par 3 et par 9.</p></div>
+<div class="seyes"><h4>Exemple · 135</h4><p>Son chiffre des unités est 5, donc 135 est divisible par 5, mais pas par 2 ni par 10.</p><p>1 + 3 + 5 = 9, donc 135 est divisible par 3 et par 9.</p></div>
 <h3>3. Trouver tous les diviseurs d’un nombre</h3>
 <ol><li>On essaie de diviser le nombre par 1, puis par 2, puis par 3, et ainsi de suite.</li><li>Chaque division qui tombe juste donne deux diviseurs, qu’on écrit sous la forme d’un produit.</li><li>On s’arrête quand le nombre essayé, multiplié par lui-même, dépasse le nombre de départ.</li></ol>
 <div class="seyes"><h4>Exemple · Diviseurs de 45</h4><p>45 = 1 × 45 = 3 × 15 = 5 × 9.</p><p>45 n’est divisible ni par 2, ni par 4, ni par 6.</p><p>On s’arrête là, car 7 × 7 = 49 dépasse 45.</p><p>Les diviseurs de 45 sont 1 ; 3 ; 5 ; 9 ; 15 ; 45.</p></div></section>
@@ -293,7 +293,7 @@ function critExercise(level,ex){
   :{guide:true,q:`Quel est le chiffre des unités de ${N} ?`,a:last,hint:'Le chiffre des unités est le dernier chiffre, à droite.',corr:`Le chiffre des unités de ${N} est ${last}.`};
  const tasks=[first,{q:`${N} est-il divisible par ${d} ?`,a:good,options:opts,keep:true,hint:crit,corr:`${good} ${crit}`,alone:{options:['Oui','Non'],a:yes?'Oui':'Non',corr:`${good}`}}];
  if(yes)tasks.push({q:`Complète l’égalité : ${N} = ${d} × …`,a:n/d,hint:`Pose la division de ${N} par ${d}.`,corr:`${N} ÷ ${d} = ${fmt(n/d)}, donc ${N} = ${d} × ${fmt(n/d)}. ${N} est un multiple de ${d}, et ${d} est un diviseur de ${N}.`});
- return {head:`<p>Le nombre ${N} est-il divisible par ${d} ?</p>`,tasks,correction:`<p>${first.corr}</p><p>${crit}</p><p>${good}</p><p>${yes?`${N} = ${d} × ${fmt(n/d)} : ${N} est un multiple de ${d}.`:`${N} n’est pas un multiple de ${d}.`}</p>`};
+ return {head:`<p>Le nombre ${N} est-il divisible par ${d} ?</p>`,tasks,correction:`<p>${first.corr}</p><p>${crit}</p><p>${good}</p><p>${yes?`${N} = ${d} × ${fmt(n/d)}, donc ${N} est un multiple de ${d}.`:`${N} n’est pas un multiple de ${d}.`}</p>`};
 }
 function listExercise(level,ex){
  const n=ex?40:pick([28,32,44,50,63,68,70,76,88,92,99,117].filter(x=>!AVOID.has(x))),N=fmt(n);
@@ -317,7 +317,7 @@ function trials(n){
   else if(p===3)why=`${ds.join(' + ')} = ${sum}, ${ok?'qui est divisible par 3':'qui n’est pas divisible par 3'}`;
   else if(p===5)why=`son chiffre des unités est ${last}`;
   else why=ok?`${N} = ${p} × ${fmt(n/p)}`:`${N} = ${p} × ${Math.floor(n/p)} + ${n%p}`;
-  lines.push(`${N} ${ok?'est divisible':'n’est pas divisible'} par ${p} : ${why}.`);
+  lines.push(`${N} ${ok?'est divisible':'n’est pas divisible'} par ${p}, car ${why}.`);
   if(ok)return {d:p,lines,stop:''};
  }
  return {d:0,lines,stop:''};
@@ -369,7 +369,7 @@ function fracExercise(level,ex){
  let n,d;
  if(ex){n=56;d=98;}else{[n,d]=pairGen(12,300);if(Math.random()<.3)[n,d]=[d,n];}
  const g=gcd(n,d),c=common(n,d);
- const div=`On divise le numérateur et le dénominateur par ${fmt(g)} : ${fmt(n)} ÷ ${fmt(g)} = ${fmt(n/g)} et ${fmt(d)} ÷ ${fmt(g)} = ${fmt(d/g)}.`;
+ const div=`On divise le numérateur et le dénominateur par ${fmt(g)}. On calcule ${fmt(n)} ÷ ${fmt(g)} = ${fmt(n/g)} et ${fmt(d)} ÷ ${fmt(g)} = ${fmt(d/g)}.`;
  return {head:`<p>Rends la fraction ${frac(n,d)} irréductible.</p>`,tasks:[...decompSteps([n,d]),
   {guide:true,q:`Quel est le PGCD de ${fmt(n)} et de ${fmt(d)} ?`,a:g,hint:'Multiplie les facteurs communs aux deux décompositions.',corr:`${communs(c)} PGCD = ${c.length>1?prod(c)+' = ':''}${fmt(g)}.`},
   {q:`Écris la fraction ${frac(n,d)} sous forme irréductible.`,a:Q(n,d),hint:`Divise le numérateur et le dénominateur par le PGCD. Écris ta réponse avec une barre oblique, par exemple 2/3.`,corr:`${div} Donc ${frac(n,d)} = ${frac(n/g,d/g)}, et cette fraction est irréductible.`}],
@@ -501,7 +501,7 @@ function dsData(variant){
  {title:'Nombres premiers et décomposition',pts:4,head:'',items:[
   {q:'Parmi les nombres 121, 127, 129 et 143, un seul est un nombre premier. Lequel ? Justifie.',options:['121','127','129','143'],a:'127',corr:'<p>121 = 11 × 11, 129 = 3 × 43 (car 1 + 2 + 9 = 12 est divisible par 3) et 143 = 11 × 13 : ces trois nombres ne sont pas premiers.</p><p>127 n’est divisible ni par 2, ni par 3, ni par 5, ni par 7, ni par 11, et 13 × 13 = 169 dépasse 127. Donc 127 est un nombre premier.</p>'},
   D(588),
-  {q:'Le nombre 588 est-il divisible par 49 ? Justifie à l’aide de sa décomposition.',options:YN,a:'Oui',corr:'<p>La décomposition de 588 contient le facteur 7 × 7 = 49 : 588 = 2 × 2 × 3 × 49 = 12 × 49.</p><p>Donc 588 est divisible par 49.</p>'}]},
+  {q:'Le nombre 588 est-il divisible par 49 ? Justifie à l’aide de sa décomposition.',options:YN,a:'Oui',corr:'<p>La décomposition de 588 contient le facteur 7 × 7 = 49. On peut donc écrire 588 = 2 × 2 × 3 × 49 = 12 × 49.</p><p>Donc 588 est divisible par 49.</p>'}]},
  {title:'PGCD et PPCM',pts:4,head:'<p>On considère les nombres 300 et 405.</p>',items:[
   D(300),D(405),
   {q:'Calcule le PGCD de 300 et de 405.',a:15,corr:'<p>Les facteurs communs aux deux décompositions sont 3 et 5.</p><p>PGCD = 3 × 5 = 15.</p>'},
@@ -526,7 +526,7 @@ function dsData(variant){
   D(1050)]},
  {title:'Fraction irréductible',pts:4,head:`<p>On considère la fraction ${frac(154,198)}.</p>`,items:[
   D(154),D(198),
-  {q:`Déduis-en la fraction irréductible égale à ${frac(154,198)}.`,a:Q(154,198),corr:`<p>Les facteurs communs sont 2 et 11, donc le PGCD de 154 et de 198 vaut 2 × 11 = 22.</p><p>On divise le numérateur et le dénominateur par 22 : ${frac(154,198)} = ${frac(7,9)}.</p><p>7 et 9 n’ont pas d’autre diviseur commun que 1 : la fraction est irréductible.</p>`}]},
+  {q:`Déduis-en la fraction irréductible égale à ${frac(154,198)}.`,a:Q(154,198),corr:`<p>Les facteurs communs sont 2 et 11, donc le PGCD de 154 et de 198 vaut 2 × 11 = 22.</p><p>On divise le numérateur et le dénominateur par 22. On obtient ${frac(154,198)} = ${frac(7,9)}.</p><p>7 et 9 n’ont pas d’autre diviseur commun que 1 : la fraction est irréductible.</p>`}]},
  {title:'Colis',pts:5,head:'<p>Une association a reçu 252 cahiers et 189 stylos. Elle veut préparer des colis tous identiques, en utilisant tous les cahiers et tous les stylos.</p>',items:[
   {q:'Peut-elle préparer 21 colis ? Justifie.',options:YN,a:'Oui',corr:'<p>252 ÷ 21 = 12 et 189 ÷ 21 = 9 : les deux divisions tombent juste. Elle peut préparer 21 colis, avec 12 cahiers et 9 stylos dans chacun.</p>'},
   {q:'Quel est le nombre maximal de colis qu’elle peut préparer ? Justifie.',a:63,corr:'<p>Le nombre de colis doit diviser 252 et 189, et être le plus grand possible : on cherche le PGCD de 252 et de 189.</p><p>252 = 2 × 2 × 3 × 3 × 7 et 189 = 3 × 3 × 3 × 7.</p><p>Les facteurs communs sont 3, 3 et 7 : PGCD = 3 × 3 × 7 = 63.</p><p>Elle peut préparer au maximum 63 colis.</p>'},

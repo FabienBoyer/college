@@ -250,7 +250,7 @@ table.tab th{font-weight:400;color:var(--ink)}
 .seyes b{font-weight:600}
 .seyes .m,.seyes .ang{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-size:1.38em}
 .seyes .frac{font-size:1.3em}
-.seyes .frac .m{font-size:1em}
+.seyes .frac .m{font-size:1em}.seyes p i.m{font-size:1em}.seyes .op{color:#b8322a}.seyes p.verif{text-decoration:underline;text-underline-offset:4px}
 .seyes .box{border-color:#1d3a8a;font-weight:400;line-height:26px;margin:3px 0}
 .ds-tools{margin:0 0 6px}
 .ds-exo{border-top:2px solid var(--line);margin-top:18px;padding-top:4px}
@@ -340,9 +340,9 @@ details.cours-part{background:var(--card);border:1px solid #e2e6ef;border-radius
 <p><strong>Calculer une image.</strong> On remplace x par le nombre donné. Un nombre négatif s’écrit entre parenthèses. On respecte les priorités opératoires.</p>
 <div class="seyes"><h4>Exemple · f(x) = 3x − 5</h4><p>f(4) = 3 × 4 − 5 = 12 − 5 = 7.</p><p>f(−2) = 3 × (−2) − 5 = −6 − 5 = −11.</p></div>
 <p><strong>Chercher un antécédent.</strong> Chercher un antécédent de 10, c’est chercher le nombre x tel que f(x) = 10. On résout une équation.</p>
-<div class="seyes"><h4>Exemple · antécédent de 10</h4><p>3x − 5 = 10.</p><p>J’ajoute 5 aux deux membres : 3x = 15.</p><p>Je divise les deux membres par 3 : x = 5.</p><p>Je vérifie : f(5) = 3 × 5 − 5 = 10. L’antécédent de 10 par f est 5.</p></div>
+<div class="seyes"><h4>Exemple · antécédent de 10</h4><p>3x − 5 = 10</p><p>3x − 5 <span class="op">+ 5</span> = 10 <span class="op">+ 5</span></p><p>3x = 15</p><p><span class="frac"><span>3x</span><span><span class="op">3</span></span></span> = <span class="frac"><span>15</span><span><span class="op">3</span></span></span></p><p>x = 5</p><p class="verif">Vérification</p><p>f(5) = 3 × 5 − 5 = 10</p><p>L’antécédent de 10 par f est 5.</p></div>
 <p><strong>Traduire un programme de calcul.</strong> On note x le nombre choisi, puis on écrit chaque étape du programme.</p>
-<div class="seyes"><h4>Exemple</h4><p>Choisir un nombre. Ajouter 3. Multiplier le résultat par le nombre choisi.</p><p>Avec le nombre x, on obtient p(x) = (x + 3) × x.</p><p>Avec 5 : (5 + 3) × 5 = 8 × 5 = 40.</p></div></div>
+<div class="seyes"><h4>Exemple</h4><p>Choisir un nombre. Ajouter 3. Multiplier le résultat par le nombre choisi.</p><p>Avec le nombre x, on obtient p(x) = (x + 3) × x.</p><p>Avec 5, on obtient (5 + 3) × 5 = 8 × 5 = 40.</p></div></div>
 </div></section>
 
 <!-- ================= 1. Quatre représentations ================= -->
@@ -722,8 +722,8 @@ function renderExplorer() {
   $('#m1Nota').innerHTML = `<i>f</i>(${A(fmt(x))}) = ${B(fmt(y))}`;
   const ants = F.ant(y).sort((p, q) => p - q);
   const antTxt = ants.length === 2
-    ? `${B(fmt(y))} a <b>deux antécédents</b> par <i>f</i> : ${A(fmt(ants[0]))} et ${A(fmt(ants[1]))}.`
-    : `${B(fmt(y))} a <b>un seul antécédent</b> par <i>f</i> : ${A(fmt(ants[0]))}.`;
+    ? `${B(fmt(y))} a <b>deux antécédents</b> par <i>f</i>, qui sont ${A(fmt(ants[0]))} et ${A(fmt(ants[1]))}.`
+    : `${B(fmt(y))} a <b>un seul antécédent</b> par <i>f</i>, qui est ${A(fmt(ants[0]))}.`;
   $('#m1Vocab').innerHTML =
     `<li>${B(fmt(y))} est <b>l’image</b> de ${A(fmt(x))} par la fonction <i>f</i>.</li>` +
     `<li>${A(fmt(x))} est <b>un antécédent</b> de ${B(fmt(y))} par la fonction <i>f</i>.</li>` +
@@ -825,7 +825,7 @@ $('#m2Valid').addEventListener('click', () => {
   });
   m2.tot++; if (all) m2.ok++;
   if (learnModes.m2 === 'seul') SUIVI.done('m2', all);
-  const expl = `Ici, on part de ${A(m2.a)} et on obtient ${B(m2.b)} : ${A(m2.a)} est un antécédent de ${B(m2.b)}, et ${B(m2.b)} est l’image de ${A(m2.a)}. Une phrase où les deux nombres sont échangés ne dit pas la même chose.`;
+  const expl = `Ici, on part de ${A(m2.a)} et on obtient ${B(m2.b)}, donc ${A(m2.a)} est un antécédent de ${B(m2.b)}, et ${B(m2.b)} est l’image de ${A(m2.a)}. Une phrase où les deux nombres sont échangés ne dit pas la même chose.`;
   $('#m2Fb').className = 'fb ' + (all ? 'good' : 'bad');
   $('#m2Fb').innerHTML = (all ? '<b>C’est juste.</b> ' : '<b>Ce n’est pas juste.</b> ') + expl;
   $('#m2Score').textContent = `Score : ${m2.ok} / ${m2.tot}`;
@@ -1012,7 +1012,7 @@ function renderM3Answer() {
     $('#m3A').innerHTML = `<span class="nw">${n}(${A(fmt(q.a))}) = ${v === undefined ? '…' : B(fmt(v))}</span>`;
   } else {
     const l = [...m3.sel].sort((p, r) => p - r);
-    $('#m3A').innerHTML = m3.none ? 'aucun antécédent' : l.length ? `Antécédents de ${B(fmt(q.k))} : <span class="nw">${l.map(v => A(fmt(v))).join(' ; ')}</span>` : '…';
+    $('#m3A').innerHTML = m3.none ? 'aucun antécédent' : l.length ? `${l.length > 1 ? 'Les antécédents' : 'L’antécédent'} de ${B(fmt(q.k))} ${l.length > 1 ? 'sont' : 'est'} <span class="nw">${l.map(v => A(fmt(v))).join(' ; ')}</span>` : '…';
   }
 }
 function m3Explain() {
@@ -1171,10 +1171,10 @@ function makeCalc(kind) {
     do { a = pick([2, 3, 4, 5, -2, -3]); b = nz(-9, 9); } while ((a === 3 && b === -5) || (a === 4 && b === -7) || (a === 2 && (b === 3 || b === 1)));
     const sol = nz(-5, 6), t = a * sol + b, expr = `${nf(a)}x ${sg(b)} ${Math.abs(b)}`, c = Math.abs(b);
     return { head: `<p>On définit la fonction f par f(x) = ${expr}. On cherche l’antécédent de ${nf(t)} par f.</p>`, tasks: [
-      { guide: true, q: 'Quelle équation faut-il résoudre ?', options: shuffle([`${expr} = ${nf(t)}`, `x = ${nf(t)}`, `${nf(a)} × ${par(t)} ${sg(b)} ${c}`]), a: `${expr} = ${nf(t)}`, hint: `Chercher un antécédent de ${nf(t)}, c’est chercher x tel que f(x) = ${nf(t)}.`, corr: `On cherche x tel que f(x) = ${nf(t)} : on résout ${expr} = ${nf(t)}.` },
+      { guide: true, q: 'Quelle équation faut-il résoudre ?', options: shuffle([`${expr} = ${nf(t)}`, `x = ${nf(t)}`, `${nf(a)} × ${par(t)} ${sg(b)} ${c}`]), a: `${expr} = ${nf(t)}`, hint: `Chercher un antécédent de ${nf(t)}, c’est chercher x tel que f(x) = ${nf(t)}.`, corr: `On cherche x tel que f(x) = ${nf(t)}. On résout ${expr} = ${nf(t)}.` },
       { guide: true, q: `${b > 0 ? 'Soustrais' : 'Ajoute'} ${c} aux deux membres. Complète : ${nf(a)}x = …`, a: t - b, hint: `Calcule ${nf(t)} ${b > 0 ? '−' : '+'} ${c}.`, corr: `${nf(a)}x = ${nf(t)} ${b > 0 ? '−' : '+'} ${c}, donc ${nf(a)}x = ${nf(t - b)}.` },
       { q: `Quel est l’antécédent de ${nf(t)} par f ?`, a: sol, hint: `Divise les deux membres par ${nf(a)}.`, corr: `x = ${nf(t - b)} ÷ ${par(a)} = ${nf(sol)}. Je vérifie : f(${nf(sol)}) = ${nf(a)} × ${par(sol)} ${sg(b)} ${c} = ${nf(t)}. L’antécédent de ${nf(t)} par f est ${nf(sol)}.` },
-    ], correction: `<p>${expr} = ${nf(t)}</p><p>${nf(a)}x = ${nf(t)} ${b > 0 ? '−' : '+'} ${c}</p><p>${nf(a)}x = ${nf(t - b)}</p><p>x = ${nf(t - b)} ÷ ${par(a)}</p><p>x = ${nf(sol)}</p><p>Vérification : f(${nf(sol)}) = ${nf(a)} × ${par(sol)} ${sg(b)} ${c} = ${nf(t)}. L’antécédent de ${nf(t)} par f est ${nf(sol)}.</p>` };
+    ], correction: `<p>${expr} = ${nf(t)}</p><p>${expr} <span class="op">${b > 0 ? '−' : '+'} ${c}</span> = ${nf(t)} <span class="op">${b > 0 ? '−' : '+'} ${c}</span></p><p>${nf(a)}x = ${nf(t - b)}</p><p><span class="frac"><span>${nf(a)}x</span><span><span class="op">${nf(a)}</span></span></span> = <span class="frac"><span>${nf(t - b)}</span><span><span class="op">${nf(a)}</span></span></span></p><p>x = ${nf(sol)}</p><p class="verif">Vérification</p><p>f(${nf(sol)}) = ${nf(a)} × ${par(sol)} ${sg(b)} ${c} = ${nf(t)}</p><p>L’antécédent de ${nf(t)} par f est ${nf(sol)}.</p>` };
   }
   /* Programme de calcul : trois modèles, différents de celui du cours. */
   const type = pick(['plus', 'moins', 'affine']), x = pick([-4, -3, -2, -1, 2, 4, 6, 7]);
@@ -1186,7 +1186,7 @@ function makeCalc(kind) {
       { q: `Quel résultat obtient-on en choisissant ${nf(x)} ?`, a: r, hint: `Ajoute ${k} au résultat précédent.`, corr: `${par(x)} × ${m} = ${nf(r1)}, puis ${nf(r1)} + ${k} = ${nf(r)}.` },
       { q: 'On note x le nombre choisi. Quelle expression donne le résultat du programme ?', options: shuffle([`${m}x + ${k}`, `${m}(x + ${k})`, `x + ${m} + ${k}`, `${m} + ${k}x`]), a: `${m}x + ${k}`, hint: 'Écris les étapes dans l’ordre : on multiplie d’abord x, puis on ajoute.', corr: `On multiplie x par ${m}, puis on ajoute ${k} : le résultat est ${m}x + ${k}.` },
       { q: `Quel nombre faut-il choisir pour obtenir ${target} ?`, a: (target - k) / m, hint: `Résous l’équation ${m}x + ${k} = ${target}.`, corr: `${m}x + ${k} = ${target}, donc ${m}x = ${target - k}, puis x = ${(target - k) / m}.` },
-    ], correction: `<p>Avec ${nf(x)} : ${par(x)} × ${m} + ${k} = ${nf(r1)} + ${k} = ${nf(r)}.</p><p>Avec le nombre x, le programme donne ${m}x + ${k}.</p>` };
+    ], correction: `<p>Avec ${nf(x)}, on obtient ${par(x)} × ${m} + ${k} = ${nf(r1)} + ${k} = ${nf(r)}.</p><p>Avec le nombre x, le programme donne ${m}x + ${k}.</p>` };
   }
   const k = type === 'plus' ? pick([1, 2, 4, 5, 6]) : pick([1, 2, 3, 5, 6]), s = type === 'plus' ? '+' : '−', d = type === 'plus' ? k : -k;
   const r1 = x + d, r = r1 * x, zero = -d;
@@ -1196,9 +1196,9 @@ function makeCalc(kind) {
   return { head: progHtml(lines), tasks: [
     { guide: true, q: `Avec ${nf(x)}, quel résultat obtient-on après la deuxième ligne du programme ?`, a: r1, hint: `Calcule ${nf(x)} ${s} ${k}.`, corr: `${nf(x)} ${s} ${k} = ${nf(r1)}.` },
     { q: `Quel résultat obtient-on en choisissant ${nf(x)} ?`, a: r, hint: `Multiplie le résultat précédent par ${par(x)}, le nombre choisi au départ.`, corr: `${nf(x)} ${s} ${k} = ${nf(r1)}, puis ${par(r1)} × ${par(x)} = ${nf(r)}.` },
-    { q: 'On note x le nombre choisi. Quelle expression donne le résultat du programme ?', options: shuffle([`(x ${s} ${k}) × x`, `x ${s} ${k} × x`, `(x ${s} ${k}) × ${k}`, `x² ${s} ${k}`]), a: `(x ${s} ${k}) × x`, hint: 'Le résultat de la deuxième ligne doit être entre parenthèses, car on le multiplie ensuite en entier.', corr: `On calcule x ${s} ${k}, puis on multiplie ce résultat par x : (x ${s} ${k}) × x.` },
+    { q: 'On note x le nombre choisi. Quelle expression donne le résultat du programme ?', options: shuffle([`(x ${s} ${k}) × x`, `x ${s} ${k} × x`, `(x ${s} ${k}) × ${k}`, `x² ${s} ${k}`]), a: `(x ${s} ${k}) × x`, hint: 'Le résultat de la deuxième ligne doit être entre parenthèses, car on le multiplie ensuite en entier.', corr: `On calcule x ${s} ${k}, puis on multiplie ce résultat par x. On obtient (x ${s} ${k}) × x.` },
     { q: `Obtient-on 0 en choisissant ${nf(c)} ?`, options: ['Oui', 'Non'], a: yes ? 'Oui' : 'Non', hint: `Remplace x par ${par(c)} dans (x ${s} ${k}) × x.`, corr: `(${nf(c)} ${s} ${k}) × ${par(c)} = ${par(c + d)} × ${par(c)} = ${nf(rc)}. ${yes ? 'On obtient bien 0.' : 'On n’obtient pas 0.'}` },
-  ], correction: `<p>Avec ${nf(x)} : (${nf(x)} ${s} ${k}) × ${par(x)} = ${par(r1)} × ${par(x)} = ${nf(r)}.</p><p>Avec le nombre x, le programme donne (x ${s} ${k}) × x.</p><p>Avec ${nf(c)} : (${nf(c)} ${s} ${k}) × ${par(c)} = ${nf(rc)}.</p>` };
+  ], correction: `<p>Avec ${nf(x)}, on obtient (${nf(x)} ${s} ${k}) × ${par(x)} = ${par(r1)} × ${par(x)} = ${nf(r)}.</p><p>Avec le nombre x, le programme donne (x ${s} ${k}) × x.</p><p>Avec ${nf(c)}, on obtient (${nf(c)} ${s} ${k}) × ${par(c)} = ${nf(rc)}.</p>` };
 }
 function progHtml(lines) { return `<p><strong>Programme de calcul</strong></p><ol><li>Choisir un nombre.</li>${lines.map(l => `<li>${l}</li>`).join('')}</ol>`; }
 function renderCalc() { runSteps($('#calcPanel'), makeCalc(calcKind), learnModes.m4, renderCalc); }
@@ -1227,12 +1227,12 @@ function dsData(variant) {
     { title: 'Formule et tableau de valeurs', pts: 5, head: '<p>On définit la fonction m par m(x) = x² − 2x.</p>', items: [
       { q: 'Calcule m(−3).', a: 15, corr: '<p>m(−3) = (−3)² − 2 × (−3) = 9 + 6 = 15.</p>' },
       { q: 'Calcule m(5).', a: 15, corr: '<p>m(5) = 5² − 2 × 5 = 25 − 10 = 15.</p>' },
-      { q: 'Déduis-en deux antécédents de 15 par la fonction m.', a: [-3, 5], corr: '<p>m(−3) = 15 et m(5) = 15 : −3 et 5 sont deux antécédents de 15.</p>' },
+      { q: 'Déduis-en deux antécédents de 15 par la fonction m.', a: [-3, 5], corr: '<p>m(−3) = 15 et m(5) = 15, donc −3 et 5 sont deux antécédents de 15.</p>' },
       { q: `On a complété ce tableau avec la formule de m.${tableHtml([-1, 0, 1, 2, 3], [3, 0, -1, 0, 3], 'm')}Donne tous les antécédents de 3 que l’on peut lire dans ce tableau.`, a: [-1, 3], corr: '<p>Dans la ligne des images, on trouve 3 sous −1 et sous 3. Les antécédents de 3 lus dans le tableau sont −1 et 3.</p>' },
       { q: 'Dans ce tableau, quelle image n’a qu’un seul antécédent ?', a: -1, corr: '<p>Le nombre −1 n’apparaît qu’une fois dans la ligne des images, sous 1 : c’est l’image −1, dont le seul antécédent lu est 1.</p>' }] },
     { title: 'Lecture graphique', pts: 4, head: '<p>La courbe de la fonction f est représentée ci-dessous pour x compris entre −5 et 5. Les graduations valent une unité.</p><svg class="ds-graph"></svg>', graph: { name: 'f', points: [[-5, -4], [-4, -1], [-3, 1], [-2, 2], [-1, 1], [0, -1], [1, -2], [2, -1], [3, 1], [4, 3], [5, 4]] }, items: [
       { q: 'Quelle est l’ordonnée du point de la courbe d’abscisse −2 ?', a: 2, corr: '<p>Je pars de −2 sur l’axe horizontal, je rejoins la courbe et je lis 2 sur l’axe vertical.</p>' },
-      { q: 'Lis f(4).', a: 3, corr: '<p>Le point de la courbe d’abscisse 4 a pour ordonnée 3 : f(4) = 3.</p>' },
+      { q: 'Lis f(4).', a: 3, corr: '<p>Le point de la courbe d’abscisse 4 a pour ordonnée 3, donc f(4) = 3.</p>' },
       { q: 'Quels nombres ont pour image −1 par la fonction f ?', a: [-4, 0, 2], corr: '<p>La droite horizontale d’ordonnée −1 coupe la courbe en trois points, d’abscisses −4, 0 et 2.</p>' },
       { q: 'Combien d’antécédents le nombre 1 a-t-il par la fonction f ?', a: 3, corr: '<p>La droite horizontale d’ordonnée 1 coupe la courbe en trois points, d’abscisses −3, −1 et 3. Le nombre 1 a donc 3 antécédents.</p>' }] },
     { title: 'Le taxi', pts: 4, head: '<p>Un taxi fait payer 3 € de prise en charge, puis 2 € par kilomètre parcouru. Pour un trajet de x kilomètres, le prix payé, en euros, est donné par la fonction t définie par t(x) = 2x + 3.</p>', items: [
@@ -1242,7 +1242,7 @@ function dsData(variant) {
       { q: 'Quel est l’antécédent de 3 par la fonction t ?', a: 0, corr: '<p>2x + 3 = 3, donc 2x = 0 et x = 0. Pour 0 km, on paie 3 € : c’est la prise en charge.</p>' }] },
     { title: 'Programme de calcul', pts: 4, head: progHtml(['Ajouter 5.', 'Multiplier le résultat par 3.']), items: [
       { q: 'Quel résultat obtient-on en choisissant −7 ?', a: -6, corr: '<p>−7 + 5 = −2, puis −2 × 3 = −6.</p>' },
-      { q: 'On note x le nombre choisi. Quelle expression donne le résultat du programme ?', options: ['(x + 5) × 3', 'x + 5 × 3', '3x + 5', '(x + 3) × 5'], a: '(x + 5) × 3', corr: '<p>On calcule x + 5, puis on multiplie ce résultat en entier par 3 : (x + 5) × 3.</p>' },
+      { q: 'On note x le nombre choisi. Quelle expression donne le résultat du programme ?', options: ['(x + 5) × 3', 'x + 5 × 3', '3x + 5', '(x + 3) × 5'], a: '(x + 5) × 3', corr: '<p>On calcule x + 5, puis on multiplie ce résultat en entier par 3. On obtient (x + 5) × 3.</p>' },
       { q: 'Quel nombre faut-il choisir pour obtenir 0 ?', a: -5, corr: '<p>(x + 5) × 3 = 0 quand x + 5 = 0, c’est-à-dire x = −5.</p>' },
       { q: 'Quel nombre faut-il choisir pour obtenir 27 ? Justifie.', a: 4, corr: '<p>(x + 5) × 3 = 27, donc x + 5 = 27 ÷ 3 = 9, puis x = 9 − 5 = 4.</p><p>Vérification : (4 + 5) × 3 = 27.</p>' }] },
   ];
@@ -1270,7 +1270,7 @@ function dsData(variant) {
     { title: 'Programme de calcul', pts: 4, head: progHtml(['Multiplier ce nombre par 2.', 'Soustraire 10.', 'Multiplier le résultat par le nombre choisi au départ.']), items: [
       { q: 'Quel résultat obtient-on en choisissant 4 ?', a: -8, corr: '<p>4 × 2 = 8, puis 8 − 10 = −2, puis −2 × 4 = −8.</p>' },
       { q: 'Quel résultat obtient-on en choisissant −3 ?', a: 48, corr: '<p>−3 × 2 = −6, puis −6 − 10 = −16, puis −16 × (−3) = 48.</p>' },
-      { q: 'On note x le nombre choisi. Quelle expression donne le résultat du programme ?', options: ['(2x − 10) × x', '2x − 10 × x', '2(x − 10) × x', '2x − 10x'], a: '(2x − 10) × x', corr: '<p>On calcule 2x − 10, puis on multiplie ce résultat en entier par x : (2x − 10) × x.</p>' },
+      { q: 'On note x le nombre choisi. Quelle expression donne le résultat du programme ?', options: ['(2x − 10) × x', '2x − 10 × x', '2(x − 10) × x', '2x − 10x'], a: '(2x − 10) × x', corr: '<p>On calcule 2x − 10, puis on multiplie ce résultat en entier par x. On obtient (2x − 10) × x.</p>' },
       { q: 'Lucas affirme : « Si je choisis 5, j’obtiens 0. » A-t-il raison ? Justifie par un calcul.', options: YN, a: 'Oui', corr: '<p>5 × 2 = 10, puis 10 − 10 = 0, puis 0 × 5 = 0.</p><p>On obtient bien 0 : Lucas a raison.</p>' }] },
   ];
 }

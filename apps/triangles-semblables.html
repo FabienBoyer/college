@@ -125,7 +125,7 @@ table.tab th{font-weight:400;color:var(--ink)}
 .seyes b{font-weight:600}
 .seyes .m,.seyes .ang{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-size:1.38em}
 .seyes .frac{font-size:1.3em}
-.seyes .frac .m{font-size:1em}
+.seyes .frac .m{font-size:1em}.seyes p i.m{font-size:1em}
 .seyes .box{border-color:#1d3a8a;font-weight:400;line-height:26px;margin:3px 0}
 .ds-tools{margin:0 0 6px}
 .ds-exo{border-top:2px solid var(--line);margin-top:18px;padding-top:4px}
@@ -521,20 +521,20 @@ function genM2(force){
     A1=[a,b,c];show1=[0,1];
     if(sim)A2=[a,b,c];else{let d;do{d=pick([-1,1])*R(6,14);}while(a-d<20||c+d<20||d===a-c||Math.abs(c+d-a)<3||Math.abs(a-d-b)<3);A2=[a-d,b,c+d];}
     show2=[1,2];
-    ex1=`La somme des angles d’un triangle est égale à 180° : 180° − (${a}° + ${b}°) = ${c}°.`;
-    ex2=`La somme des angles d’un triangle est égale à 180° : 180° − (${A2[1]}° + ${A2[2]}°) = ${A2[0]}°.`;
+    ex1=`La somme des angles d’un triangle est égale à 180°, donc on calcule 180° − (${a}° + ${b}°) = ${c}°.`;
+    ex2=`La somme des angles d’un triangle est égale à 180°, donc on calcule 180° − (${A2[1]}° + ${A2[2]}°) = ${A2[0]}°.`;
   }else if(type==="iso"){
     iso=true;do{p=2*R(15,55);}while(p===60);q=(180-p)/2;A1=[p,q,q];show1=[0];
     q2=q;if(!sim){do{q2=q+pick([-1,1])*R(4,10);}while(q2<20||q2>80||q2===p);}
     A2=[180-2*q2,q2,q2];show2=[1];
-    ex1=`Le triangle ${m(n1)} est isocèle en ${m(T1[0])}, donc ses deux angles à la base ont la même mesure : (180° − ${p}°) : 2 = ${q}°.`;
+    ex1=`Le triangle ${m(n1)} est isocèle en ${m(T1[0])}, donc ses deux angles à la base ont la même mesure, donc chacun mesure (180° − ${p}°) : 2 = ${q}°.`;
     ex2=`Le triangle ${m(n2)} est isocèle en ${m(T2[0])}, donc ${A3(angName(T2,2))} = ${A3(angName(T2,1))} = ${q2}°. Alors 180° − 2 × ${q2}° = ${A2[0]}°.`;
   }else{
     do{x=R(22,68);}while(x>=40&&x<=50);A1=[90,x,90-x];show1=[0,1];
     y=90-x;if(!sim){do{y=90-x+pick([-1,1])*R(5,12);}while(y<15||y>75||y===x);}
     A2=[90,90-y,y];show2=[0,2];
-    ex1=`La somme des angles d’un triangle est égale à 180° : 180° − (90° + ${x}°) = ${90-x}°.`;
-    ex2=`La somme des angles d’un triangle est égale à 180° : 180° − (90° + ${y}°) = ${90-y}°.`;
+    ex1=`La somme des angles d’un triangle est égale à 180°, donc on calcule 180° − (90° + ${x}°) = ${90-x}°.`;
+    ex2=`La somme des angles d’un triangle est égale à 180°, donc on calcule 180° − (90° + ${y}°) = ${90-y}°.`;
   }
   const i1=[0,1,2].find(i=>!show1.includes(i)),i2=[0,1,2].find(i=>!show2.includes(i));
   // figure
@@ -781,7 +781,7 @@ function cfgC2(){
     enonce:`Les deux triangles ci-dessous ne sont pas en vraie grandeur. Les longueurs sont en centimètres.`,
     gridPre:["J’ai calculé l’angle manquant en écrivant le calcul et la propriété (somme des angles d’un triangle)."],
     pre:[{type:"num",unit:"°",tol:.01,prompt:`Calcule la mesure de l’angle ${A3(angName(T1,mi))}.`,answer:A[mi],answerHtml:`${A[mi]}°`,hint:"La somme des angles d’un triangle est égale à 180°.",
-      explain:`La somme des angles d’un triangle est égale à 180° : 180° − (${A[i]}° + ${A[j]}°) = ${A[mi]}°.`}],
+      explain:`La somme des angles d’un triangle est égale à 180°, donc on calcule 180° − (${A[i]}° + ${A[j]}°) = ${A[mi]}°.`}],
     eqs:[e1,e2],
     corrIntro:[`Dans le triangle ${m(n1)}, la somme des angles est égale à 180°, donc ${A3(angName(T1,mi))} = 180° − (${A[i]}° + ${A[j]}°) = ${A[mi]}°.`,`On a donc ${e1.html} et ${e2.html}.`]});
 }
@@ -915,7 +915,7 @@ function cfgC3(){
     enonce:`Les deux triangles ci-dessous ne sont pas en vraie grandeur. Le triangle ${m(n1)} est isocèle en ${m(T1[0])}. Les longueurs sont en centimètres.`,
     gridPre:["J’ai calculé l’angle à la base en écrivant le calcul et la propriété du triangle isocèle."],
     pre:[{type:"num",unit:"°",tol:.01,prompt:`Calcule la mesure de l’angle ${A3(angName(T1,1))}.`,answer:q,answerHtml:`${q}°`,hint:"Dans un triangle isocèle, les deux angles à la base ont la même mesure. La somme des angles est égale à 180°.",
-      explain:`Le triangle ${m(n1)} est isocèle en ${m(T1[0])}, donc ses deux angles à la base ont la même mesure : (180° − ${p}°) : 2 = ${q}°.`}],
+      explain:`Le triangle ${m(n1)} est isocèle en ${m(T1[0])}, donc ses deux angles à la base ont la même mesure, donc chacun mesure (180° − ${p}°) : 2 = ${q}°.`}],
     eqs:[e1,e2],
     corrIntro:[`Le triangle ${m(n1)} est isocèle en ${m(T1[0])}, donc ses angles à la base ont la même mesure : ${A3(angName(T1,1))} = ${A3(angName(T1,2))} = (180° − ${p}°) : 2 = ${q}°.`,`On a donc ${e1.html} et ${e2.html}.`]});
 }

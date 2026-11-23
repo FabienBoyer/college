@@ -639,7 +639,7 @@ function genReduce(level) {
   if (ts.some(t => Math.abs(t.c) === 1 && t.d > 0)) errors.push(err(ts.filter(t => !(Math.abs(t.c) === 1 && t.d > 0)), 'N’oublie pas les termes x et −x : x = 1x et −x = −1x.'));
   // x² et x mélangés
   if (ts.some(t => t.d === 2)) errors.push(err([p[0] || 0, (p[1] || 0) + (p[2] || 0)], 'Les termes en x² et les termes en x ne sont pas de la même famille.'));
-  const guided = groups.map(d => ({ label: `Je réduis ${gName[d]} : ${fmt(TS.list(ts.filter(t => t.d === d)))} =`, poly: TS.poly(ts.filter(t => t.d === d)), show: W.poly(TS.poly(ts.filter(t => t.d === d))) }));
+  const guided = groups.map(d => ({ label: `Je réduis ${gName[d]}. ${fmt(TS.list(ts.filter(t => t.d === d)))} =`, poly: TS.poly(ts.filter(t => t.d === d)), show: W.poly(TS.poly(ts.filter(t => t.d === d))) }));
   guided.push({ label: 'J’écris le résultat :', final: true });
   return mkQ({ kind: 'red', palier: 1, level, consigne: 'Réduire l’expression.', src, expr: src, answer: W.poly(p), steps, errors, guided });
 }
@@ -1036,7 +1036,7 @@ function genTrad(level) {
   return mkQ0({
     kind: 'trad', palier: 0, level, letter: 'x',
     consigne: 'Écrire une expression qui traduit la phrase.', head: `<p class="phrase">« ${phrase}. »</p>`, src: ans, answer: ans,
-    resHtml: `<div class="resbox">${phrase} : ${m(ans)}</div>`,
+    resHtml: `<div class="resbox">${phrase} s’écrit ${m(ans)}.</div>`,
     steps: [{ m: ans, c: why }],
     errors: wrongs.map(w => ({ poly: Alg.poly(w), msg: 'Relis la phrase : quel est le mot qui vient en premier ? Il donne la dernière opération.' })),
     guided: [{ choice: true, label: 'Quelle expression traduit la phrase ?', options: order.map(i => m(opts[i])), a: order.indexOf(0), show: m(ans), hint: 'Le premier mot de la phrase (somme, produit, double, carré…) donne la dernière opération. Il porte sur tout ce qui suit.' }],
@@ -1327,7 +1327,7 @@ const COURSE = {
   2: () => `
     ${box('def', 'Définition 2', `<ul><li><b>Développer</b> un produit, c’est l’écrire sous la forme d’une somme.</li><li><b>Factoriser</b> une somme, c’est l’écrire sous la forme d’un produit.</li></ul>`)}
     <p>Forme factorisée : ${m('3(x + 2)')} <span class="blue">→ on développe →</span> Forme développée : ${m('3x + 6')}</p>
-    ${box('prop', 'Propriété 1 : simple distributivité', `<p>Pour tous nombres ${m('k')}, ${m('a')} et ${m('b')} : ${m('k(a + b) = ka + kb')}</p>`)}
+    ${box('prop', 'Propriété 1 : simple distributivité', `<p>Pour tous nombres ${m('k')}, ${m('a')} et ${m('b')}, on a ${m('k(a + b) = ka + kb')}.</p>`)}
     ${box('meth', 'Méthode 2 : développer avec la simple distributivité, avec les flèches', ol([
       'Je trace une flèche du facteur placé devant la parenthèse vers chaque terme de la parenthèse.',
       'J’écris les produits, en gardant le signe de chaque terme.',
@@ -1338,12 +1338,12 @@ const COURSE = {
     </div>
     <div><b>Exemple 3 :</b><div class="line">${arrowHTML({ type: 'simple', f: '-2', terms: ['3x', ' - 5'] }, '', ' = -2 * 3x + (-2) * (-5)')}</div>${res('-2(3x - 5) = -6x + 10')}</div>
     <h3>Supprimer des parenthèses</h3>
-    <p>Une parenthèse précédée du signe − peut se développer en distribuant le facteur ${m('(-1)')} : ${m('-(x - 4) = -1 * (x - 4)')}.</p>
+    <p>Une parenthèse précédée du signe − peut se développer en distribuant le facteur ${m('(-1)')}. On écrit ${m('-(x - 4) = -1 * (x - 4)')}.</p>
     <div class="calc">${['7 - (x - 4) = 7 + (-1) * (x - 4)', '7 - (x - 4) = 7 + (-1) * x + (-1) * (-4)', '7 - (x - 4) = 7 - x + 4'].map(s => `<div>${m(s)}</div>`).join('')}${res('7 - (x - 4) = 11 - x')}</div>
     ${box('meth', 'Conséquences', `<ul><li><u>Parenthèse précédée du signe + :</u> on supprime la parenthèse et on garde les signes.<br>${m('5 + (2x - 3) = 5 + 2x - 3 = 2x + 2')}</li>
       <li><u>Parenthèse précédée du signe − :</u> on supprime la parenthèse et on change tous les signes à l’intérieur.<br>${m('7 - (x - 4) = 7 - x + 4 = 11 - x')}</li></ul>`)}`,
   3: () => `
-    ${box('prop', 'Propriété 2 : double distributivité', `<p>Pour tous nombres ${m('a')}, ${m('b')}, ${m('c')} et ${m('d')} : ${m('(a + b)(c + d) = ac + ad + bc + bd')}</p>`)}
+    ${box('prop', 'Propriété 2 : double distributivité', `<p>Pour tous nombres ${m('a')}, ${m('b')}, ${m('c')} et ${m('d')}, on a ${m('(a + b)(c + d) = ac + ad + bc + bd')}.</p>`)}
     ${box('meth', 'Méthode 3 : développer avec la double distributivité, avec les flèches', ol([
       'Je trace les flèches : chaque terme de la première parenthèse vers chaque terme de la deuxième parenthèse. J’obtiens 4 flèches.',
       'J’écris les 4 produits, en gardant le signe de chaque terme.',
@@ -1693,8 +1693,8 @@ function tableSteps(q) {
   let k = 0;
   t.cells.forEach((row, r) => row.forEach((cell, c) => {
     k++;
-    const txt = `Ligne ${t.rows[r]}, colonne ${t.cols[c]} : ${cell.ps} = ${cell.show}.`;
-    out.push({ kind: 'tab', fill: k, cur: [r, c], text: `Ligne ${fmt(t.rows[r])}, colonne ${fmt(t.cols[c])} : ${fmt(cell.ps)} = ${fmt(cell.show)}.`, say: mathSay(cell.ps) + ' égale ' + mathSay(cell.show) + '.' });
+    const txt = `Ligne ${t.rows[r]}, colonne ${t.cols[c]}. On calcule ${cell.ps} = ${cell.show}.`;
+    out.push({ kind: 'tab', fill: k, cur: [r, c], text: `Ligne ${fmt(t.rows[r])}, colonne ${fmt(t.cols[c])}. On calcule ${fmt(cell.ps)} = ${fmt(cell.show)}.`, say: mathSay(cell.ps) + ' égale ' + mathSay(cell.show) + '.' });
   }));
   const terms = t.cells.flat().map(c => c.t);
   const list = TS.list(terms);
