@@ -29,8 +29,8 @@ window.APPLICATIONS_ELEVES = [
     titre: "Automatismes",
     niveau: "3e",
     theme: "Automatismes du brevet",
-    description: "Les exercices du livre d’automatismes, notion par notion, sur trois niveaux : Je m’échauffe, J’approfondis et Défi Brevet. Chaque réponse est vérifiée et suivie de la correction du livre.",
-    parties: ["1. Nombres et calculs"],
+    description: "Les exercices du livre d’automatismes, notion par notion, sur trois niveaux : Je m’échauffe, J’approfondis et Défi Brevet, puis 30 tests de la semaine. La plupart des réponses sont vérifiées automatiquement, et chaque exercice se termine par la correction du livre.",
+    parties: ["1. Nombres et calculs", "2. Géométrie", "3. Données et probabilités", "4. Fonctions et Scratch", "5. Tests de la semaine"],
     url: "apps/automatismes.html"
   },
   {
