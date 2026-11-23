@@ -22,9 +22,17 @@
  *
  * Une adresse complète https://… fonctionne aussi.
  */
-window.MISE_A_JOUR = "2026-11-22";
+window.MISE_A_JOUR = "2026-11-23";
 
 window.APPLICATIONS_ELEVES = [
+  {
+    titre: "Automatismes",
+    niveau: "3e",
+    theme: "Automatismes du brevet",
+    description: "Les exercices du livre d’automatismes, notion par notion, sur trois niveaux : Je m’échauffe, J’approfondis et Défi Brevet. Chaque réponse est vérifiée et suivie de la correction du livre.",
+    parties: ["1. Nombres et calculs"],
+    url: "apps/automatismes.html"
+  },
   {
     numero: 1,
     titre: "Arithmétique",
@@ -69,6 +77,16 @@ window.APPLICATIONS_ELEVES = [
     description: "Le sens de la lettre, réduire, développer avec la simple et la double distributivité, factoriser avec un facteur commun et prouver. Le chapitre se termine par deux D.S. blancs.",
     parties: ["0. Le sens de la lettre", "1. Réduire", "2. Simple distributivité", "3. Double distributivité", "4. Factoriser", "5. Prouver", "Bilan", "D.S. blanc"],
     url: "apps/calcul-litteral-1.html"
+  },
+  {
+    titre: "Devoir commun de mathématiques 2025-2026",
+    niveau: "4e",
+    theme: "Devoir commun",
+    description: "Le sujet compte 3 pages et 8 exercices. Il dure 1 h 30 et il est noté sur 50 points.",
+    liens: [
+      { texte: "Ouvrir le sujet (PDF)", url: "devoirs-communs-4e/devoir-commun-4e-2025-2026.pdf" },
+      { texte: "Ouvrir le corrigé (PDF)", url: "devoirs-communs-4e/corrige-devoir-commun-4e-2025-2026.pdf" }
+    ]
   },
   {
     titre: "Devoir commun de mathématiques 2024-2025",
