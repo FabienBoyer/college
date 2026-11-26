@@ -1,0 +1,719 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Chapitre 4 : Angles et rapporteur – Je prépare mon D.S.</title><link rel="stylesheet" href="../fonts/polices.css"><style>
+:root{
+  --paper:#fbf8f1; --card:#fffefa; --ink:#1d3a8a; --ink2:#2c4fb5; --red:#2f7a45; --margin:#a9d3b5;
+  --line:#dbe3f3; --text:#1b2333; --muted:#5b6478;
+  --ok:#1f7a4d; --okbg:#e7f5ed; --ko:#b8322a; --kobg:#fcecea; --warn:#7a5200; --warnbg:#fff4d6;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; color:var(--text); background:var(--paper);
+  background-image:repeating-linear-gradient(to bottom, transparent 0 31px, #e6ecf7 31px 32px);
+  font:17px/1.55 "Atkinson Hyperlegible", "STIX Two Text", "Segoe UI", system-ui, sans-serif;
+}
+.m,.frac,.ang,svg text{font-family:"STIX Two Text","Cambria Math",Cambria,"Times New Roman",serif}
+.m{font-size:1.08em}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+header{padding:26px 0 10px}
+header h1{margin:0;color:var(--red);font-size:1.9rem;font-weight:700;letter-spacing:.2px}
+header h1 span{border-bottom:2px solid var(--red)}
+header p{margin:.35em 0 0;color:var(--muted)}
+nav{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 0;border-bottom:2px solid var(--ink)}
+nav button{font:inherit;font-size:.95rem;border:2px solid var(--ink);border-bottom:none;background:#eef2fb;color:var(--ink);
+  padding:.45em .9em;border-radius:10px 10px 0 0;cursor:pointer;margin-bottom:-2px}
+nav button.on{background:var(--card);font-weight:700}
+nav button:hover{background:#fff}
+main{padding:18px 0 40px}
+.card{background:var(--card);border:1px solid #e2e6ef;border-radius:4px 14px 14px 4px;padding:22px 24px 26px 34px;position:relative;
+  box-shadow:0 1px 0 rgba(0,0,0,.03),0 6px 18px -12px rgba(29,58,138,.35)}
+.card::before{content:"";position:absolute;left:18px;top:0;bottom:0;width:2px;background:var(--margin)}
+h2.ttl{margin:0 0 .6em;color:var(--red);font-size:1.45rem}
+h2.ttl span{border-bottom:2px solid var(--red)}
+h3{color:var(--ink);margin:1.2em 0 .4em}
+.retenir{border:2px solid var(--ink);border-radius:6px;padding:.6em .9em;margin:0 0 16px;color:var(--ink);background:#f6f8fe}
+.retenir b{display:block;color:var(--red);margin-bottom:.15em}
+.retenir ol,.retenir ul{margin:.2em 0 0;padding-left:1.3em}
+.subtabs{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px}
+.subtabs button,.levels button{font:inherit;font-size:.95rem;padding:.45em .9em;border-radius:999px;border:2px solid var(--ink2);background:#fff;color:var(--ink2);cursor:pointer}
+.subtabs button.on,.levels button.on{background:var(--ink2);color:#fff}
+.levels{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px}
+.levels .lab{color:var(--muted);margin-right:4px}
+.home{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.home .card h2{font-size:1.2rem;margin:0 0 .3em;color:var(--red)}
+.home .card p{margin:.2em 0 1em;color:var(--text)}
+.home .card{display:flex;flex-direction:column}.home .card>button,.home .card>.btn{margin-top:auto;align-self:flex-start}.home .card p.suivi-st{margin:auto 0 .7em;font-size:.88rem;color:var(--muted,#5b6478)}.home .card p.suivi-st+button,.home .card p.suivi-st+.btn{margin-top:0}
+.btn{font:inherit;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:.5em 1.05em;cursor:pointer;margin:.3em .4em .2em 0}
+.btn:hover{background:var(--ink2)}
+.btn.light{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.btn:disabled{opacity:.45;cursor:default}
+.consigne{margin:.2em 0 .6em}
+.question{margin:.6em 0;font-weight:700;color:var(--ink)}
+svg.fig{display:block;width:100%;max-width:600px;height:auto;margin:6px auto 4px}
+.step{background:#fff;border:1px solid #e3e8f2;border-left:5px solid var(--line);border-radius:4px 10px 10px 4px;padding:.65em 1em .75em;margin:.8em 0}
+.step.done{border-left-color:var(--ok)}
+.step.missed{border-left-color:#e0a63a}
+.step-n{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.step-q{margin:.15em 0 .45em}
+.step-a{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.opt{font:inherit;text-align:left;background:#fff;color:var(--text);border:2px solid #cfd8ea;border-radius:8px;padding:.45em .8em;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--ink2)}
+.opt.good{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--ko);background:var(--kobg)}
+.opt:disabled{cursor:default}
+.col{flex-direction:column;align-items:stretch}
+.col>.btn{align-self:flex-start}
+.numf{display:inline-flex;align-items:center;gap:6px;margin-right:10px}
+.numf input{font:inherit;font-family:"STIX Two Text",Cambria,serif;font-size:1.1em;width:6.2em;padding:.3em .45em;border:2px solid #cfd8ea;border-radius:6px;background:#fff}
+.numf input:focus{outline:none;border-color:var(--ink2)}
+.numf input.bad{border-color:var(--ko)}
+.unit{color:var(--muted)}
+select{font:inherit;font-family:"STIX Two Text",Cambria,serif;padding:.25em .35em;border:2px solid #cfd8ea;border-radius:6px;background:#fff}
+select.bad{border-color:var(--ko)}
+.fb{margin-top:.5em;border-radius:6px}
+.fb:empty{display:none}
+.fb.ok{background:var(--okbg);color:#123d28;padding:.45em .7em}
+.fb.ko{background:var(--kobg);color:#5c1712;padding:.45em .7em}
+.fb.warn{background:var(--warnbg);color:#4a3300;padding:.45em .7em}
+.fb .btn{margin-top:.5em}
+.model-a{color:var(--ink);font-weight:700;margin:.2em 0}
+.model-e{color:var(--text);background:#f4f6fb;border-radius:6px;padding:.35em .6em;margin:.3em 0 .4em}
+.corrige{margin:1em 0;border:2px solid var(--ink);border-radius:8px;padding:.7em 1em;background:#fff;color:var(--ink)}
+.corrige h4{margin:0 0 .4em;color:var(--red)}
+.corrige p{margin:.3em 0}
+.box{display:inline-block;border:2px solid var(--ink);border-radius:6px;padding:.1em .5em;margin-top:.2em;font-weight:700}
+.endmsg{margin:.8em 0 .2em;font-weight:700;color:var(--ink)}
+table.tab{border-collapse:collapse;margin:.4em 0;font-size:.97em}
+table.tab th,table.tab td{border:1.5px solid var(--ink2);padding:.3em .6em;text-align:center}
+table.tab th{font-weight:400;color:var(--ink)}
+.rankrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:.2em 0}
+.rankrow .rn{min-width:8.5em}
+.rankrow label{display:inline-flex;gap:4px;align-items:center;color:var(--muted)}
+.homorow{display:inline-flex;align-items:center;gap:6px;margin-right:16px}
+.pool,.answer{display:flex;flex-direction:column;gap:6px;width:100%}
+.answer:empty{display:none}
+.answer .opt{border-color:var(--ok);background:var(--okbg)}
+.shake{animation:sh .35s}
+@keyframes sh{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 .12em;font-size:1.02em;line-height:1.2}
+.frac>span:first-child{border-bottom:1.4px solid currentColor;padding:0 .2em}
+.frac>span:last-child{padding:0 .2em}
+.codebox{font-family:"STIX Two Text",Cambria,serif;font-size:1.6rem;letter-spacing:.08em;color:var(--ink);background:#fff;border:2px dashed var(--ink);border-radius:8px;padding:.3em .7em;display:inline-block;margin:.3em 0}
+.stats td,.stats th{text-align:left}
+.small{font-size:.9rem;color:var(--muted)}
+/* Correction sur papier Seyès (grands carreaux : interligne 8 px, ligne principale tous les 32 px) */
+.seyes{margin:1em 0;position:relative;color:#1d3a8a;background-color:#fff;border:1px solid #d6ddec;border-radius:4px;
+  padding:32px 18px 32px 64px;font-family:"Playwrite FR Moderne","Segoe Script","Comic Sans MS",cursive;font-size:15px;line-height:32px;
+  background-image:linear-gradient(90deg,transparent 0 50px,#e46d6d 50px 52px,transparent 52px),
+    repeating-linear-gradient(to bottom,transparent 0 31px,#8ea6d6 31px 32px),
+    repeating-linear-gradient(to bottom,transparent 0 7px,#dfe5f2 7px 8px);
+  background-position:0 var(--sy,6px)}
+.seyes h4{margin:0 0 32px;color:var(--red);font-weight:400;font-size:17px;line-height:32px;display:inline-block;border-bottom:1.5px solid var(--red);line-height:30px}
+.seyes p{margin:0;line-height:32px}
+.seyes p:has(.frac){line-height:64px;padding:16px 0}
+.seyes .frac{line-height:1.15;vertical-align:middle}
+.seyes b{font-weight:600}
+.seyes .m,.seyes .ang{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-size:1.38em}
+.seyes .frac{font-size:1.3em}
+.seyes .frac .m{font-size:1em}.seyes .op{color:#b8322a}.seyes p.verif{text-decoration:underline;text-underline-offset:4px}.seyes p i.m{font-size:1em}
+.seyes .box{border-color:#1d3a8a;font-weight:400;line-height:26px;margin:3px 0}
+.ds-tools{margin:0 0 6px}
+.ds-exo{border-top:2px solid var(--line);margin-top:18px;padding-top:4px}
+.ds-exo h3{color:var(--red);margin:.6em 0 .3em}
+.ds-title{color:var(--ink);font-size:1.25rem;margin:.8em 0 .2em}
+.ds-part h3{margin:1.2em 0 .1em;color:var(--ink);font-size:1.15rem;border-bottom:2px solid var(--ink);padding-bottom:.15em}
+.ds-info{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin:.2em 0;color:var(--muted)}
+.ds-info span{font-weight:700;color:var(--ink)}
+.ds-ans{background:#f6f8fe;border:2px solid var(--ink2);border-radius:8px;padding:.5em .8em;margin:.8em 0}
+.ds-ans b{color:var(--ink)}
+.ds-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:.35em 0}
+.ds-lab{min-width:2.5em}
+.ds-radios{display:inline-flex;flex-wrap:wrap;gap:8px}
+.ds-radios label{border:2px solid #cfd8ea;border-radius:8px;padding:.15em .6em;background:#fff;cursor:pointer}
+.ds-radios label.good{border-color:var(--ok);background:var(--okbg)}
+.okm{color:var(--ok);font-weight:700}.kom{color:var(--ko);font-weight:700}
+@media print{
+  body{background:#fff;font-size:12pt}
+  nav,footer,.btn,.ds-tools,.ds-ans,.ds-corr,header,.levels,.ds>.consigne,.ds>h2{display:none!important}
+  .ds-title{margin-top:0}
+  .card{box-shadow:none;border:none;padding:0}.card::before{display:none}
+  .ds-exo{break-inside:avoid;border-top:1px solid #999}
+  .ds-part{break-after:avoid}
+  svg.fig{max-width:430px}
+}
+.cl-line{margin:.35em 0;line-height:2.3}
+.blankw{position:relative;display:inline-block}
+.blank{font:inherit;min-width:3.2em;padding:.05em .5em;border:2px dashed var(--ink2);border-radius:6px;background:#f6f8fe;color:var(--ink);cursor:pointer}
+.blank.good,.cl-num.good{border-style:solid;border-color:var(--ok);background:var(--okbg)}
+.blank.bad,.cl-num.bad{border-style:solid;border-color:var(--ko);background:var(--kobg)}
+.blank.fixed,.cl-num.fixed{border-style:solid;border-color:#e0a63a;background:#fff4d6}
+.cl-num{width:4.5em!important}
+.blank-menu{position:absolute;left:0;top:calc(100% + 4px);z-index:20;display:flex;flex-direction:column;gap:4px;background:#fff;border:1px solid #cfd8ea;border-radius:8px;padding:6px;box-shadow:0 8px 24px -8px rgba(29,58,138,.45);min-width:max-content;max-width:min(560px,86vw);line-height:1.4}
+.blank-menu .opt{white-space:normal}
+.grille{margin:.8em 0;border:2px solid var(--ok);border-radius:8px;padding:.6em .9em;background:#f3faf6}
+.grille h4{margin:0 0 .2em;color:var(--ok)}
+.grille-item{display:flex;gap:.6em;align-items:flex-start;margin:.3em 0;cursor:pointer}
+.grille-item input{margin-top:.35em;width:1.1em;height:1.1em}
+.grille-msg{font-weight:700;color:var(--ok);margin:.3em 0 0}
+footer{padding:10px 0 30px;color:var(--muted);font-size:.9rem}
+footer button{font:inherit;background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;padding:0}
+@media (max-width:600px){.card{padding:18px 14px 20px 26px}.card::before{left:12px}header h1{font-size:1.5rem}}
+[hidden]{display:none!important}.eq-input{font:inherit;font-family:"STIX Two Text",Cambria,serif;padding:.35rem .5rem;border:2px solid #cfd8ea;border-radius:6px;max-width:100%;width:11em}.step-a select{max-width:100%;white-space:normal}.step-q{display:block}.home{margin-bottom:1rem}.step select{min-height:44px}.step .btn{min-height:44px}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--red);outline-offset:3px}.seyes{overflow-x:auto}.seyes p{font-family:"STIX Two Text",Cambria,serif;font-size:1.08rem}footer a{color:var(--ink)}@media print{.subtabs,.eq-input,.step button,.fb{display:none!important}.step-q:after{content:' …………………………………………………………';display:block}.ds-exo{break-inside:avoid}.step{border:0;padding:.15rem 0}.card{padding:0}.seyes{background:white;padding:1rem}}
+.back-home{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:0 0 16px;padding:8px 14px;border:2px solid var(--ink);border-radius:7px;background:var(--card);color:var(--ink);font:inherit;font-size:1rem;font-weight:700;text-decoration:none}.back-home:hover{background:#eef2fb}.back-home:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+i.m{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-style:italic;text-transform:none;letter-spacing:0}
+.ds-item{margin:.8em 0}.ds-q{margin:.1em 0 .35em}.ds-ans{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:.3em 0 .6em;padding:.4em .7em}.ds-ans .eq-input{width:9em}.ds-corr{margin-top:.8em}.aide{background:#f6f8fe;border-left:3px solid var(--ink2);padding:.3em .6em;color:var(--text);margin:.2em 0 .5em}.exo-head p{margin-top:0}
+details.cours-part{background:var(--card);border:1px solid #e2e6ef;border-radius:8px;padding:.5em 1em;margin:0 0 14px}details.cours-part>summary{cursor:pointer;color:var(--ink);font-weight:700;min-height:32px}details.cours-part[open]>summary{margin-bottom:.4em}details.cours-part h3:first-child{margin-top:.4em}
+@media print{.ds-q{break-after:avoid}.ds-item{margin:.5em 0}}
+table.num{border-collapse:collapse;margin:.5em 0 .8em;font-size:.95em;max-width:100%}
+table.num th,table.num td{border:1.5px solid var(--ink2);padding:.25em .45em;text-align:center;min-width:2.1em}
+table.num th{font-weight:400;color:var(--ink);font-size:.82em;line-height:1.2}
+table.num th.cl{font-weight:700;background:#f6f8fe}
+table.num td{font-family:"STIX Two Text",Cambria,serif;font-size:1.25em;color:var(--ink)}
+table.num .vg{border-left:4px solid var(--red)}
+table.num td.hl{background:#fff4d6;font-weight:700}
+.tabwrap{overflow-x:auto;max-width:100%}
+.big{font-family:"STIX Two Text",Cambria,serif;font-size:1.45rem;color:var(--ink);margin:.2em 0 .4em}
+.mots{font-style:italic;color:var(--ink)}
+.ds-fill{display:inline-flex;flex-wrap:wrap;align-items:center;gap:4px;font-family:"STIX Two Text",Cambria,serif;font-size:1.1em}
+.ds-fill .eq-input{width:5.2em}
+.ds-fill .frac .eq-input{width:4.4em;margin:2px 0}
+.defi{border:2px dashed var(--ink2);border-radius:8px;padding:.3em .9em;margin-top:18px}
+@media (max-width:600px){table.num th,table.num td{padding:.2em .25em;min-width:1.6em}table.num th{font-size:.7em}}
+.seyes span.m{font-size:1em}.seyes h4 .m{font-size:1.05em}
+table.tab.not td{text-align:left;vertical-align:middle}table.tab.not td:first-child{font-size:1.3em;text-align:center;white-space:nowrap}table.tab.not svg.fig{margin:0;min-width:150px}
+.step-a select{min-width:min(100%,22em)}.ds-radios label{line-height:1.4}
+.ang{position:relative;display:inline-block;padding:0 .04em;font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-size:1.08em;line-height:1.15}
+.ang::before{content:"";position:absolute;left:4%;right:4%;top:-.2em;height:.3em;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40' preserveAspectRatio='none'%3E%3Cpath d='M1 39 L50 2 L99 39' fill='none' stroke='%23000' stroke-width='1.3' vector-effect='non-scaling-stroke' stroke-linejoin='miter'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40' preserveAspectRatio='none'%3E%3Cpath d='M1 39 L50 2 L99 39' fill='none' stroke='%23000' stroke-width='1.3' vector-effect='non-scaling-stroke' stroke-linejoin='miter'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat}
+.seyes .ang{font-size:1.2em}.seyes .frac .ang{font-size:1em}
+.choices{display:flex;flex-wrap:wrap;gap:8px}.choices .opt{min-height:44px}
+.opt.sel{border-color:var(--ink2);background:#eef2fb;font-weight:700}
+.choices.bad .opt.sel{border-color:var(--ko);background:var(--kobg)}
+table.tab.nat td{vertical-align:middle}table.tab.nat td:last-child{text-align:left}table.tab.nat svg.fig{margin:0;min-width:110px;max-width:150px}
+.figrow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:.4em 0}.figrow figure{margin:0;flex:1 1 220px;max-width:400px;text-align:center}.figrow figcaption{color:var(--muted);font-size:.92rem}
+.ds-radios label .ang{font-size:1.05em}
+</style></head><body><div class="wrap"><header><a class="back-home" href="../6e/">← Toutes les applications</a><h1><span>Chapitre 4 : Angles et rapporteur</span></h1><p>Je prépare mon D.S. de fin de chapitre.</p><nav aria-label="Parcours du chapitre"><button type="button" data-page="home" class="on">Sommaire</button><button type="button" data-page="cours">Cours</button><button type="button" data-page="nommer">1. Nommer</button><button type="button" data-page="nature">2. Nature</button><button type="button" data-page="rapporteur">3. Rapporteur</button><button type="button" data-page="particuliers">4. Angles particuliers</button><button type="button" data-page="calculer">5. Calculer</button><button type="button" data-page="bissectrice">6. Bissectrice</button><button type="button" data-page="ds">7. D.S. blanc</button></nav></header><main id="app"></main><footer>Collège La Rochefoucauld · Mathématiques 6<sup>e</sup></footer></div><script>
+(() => {
+"use strict";
+const $=s=>document.querySelector(s),R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),pick=a=>a[R(0,a.length-1)];
+const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=R(0,i);[b[i],b[j]]=[b[j],b[i]];}return b;};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* Nombres : on calcule en dixièmes ou en centièmes entiers, puis on écrit à la française. */
+const fr=x=>String(Math.round(x*100)/100).replace('.',',');
+const norm=v=>String(v).replace(/[\s  ]/g,'').replace(/(°|degrés?)$/i,'').replace(/\./g,',').replace(/^\+/,'');
+function canon(v){const s=norm(v);if(!/^\d+(,\d+)?$/.test(s))return null;let [i,d='']=s.split(',');i=i.replace(/^0+(?=\d)/,'');d=d.replace(/0+$/,'');return d?i+','+d:i;}
+const fracH=(n,d)=>`<span class="frac"><span>${n}</span><span>${d}</span></span>`;
+function dom(tag,cls,html){const n=document.createElement(tag);if(cls)n.className=cls;if(html!==undefined)n.innerHTML=html;return n;}
+function button(label,fn,cls='btn'){const b=dom('button',cls,esc(label));b.type='button';b.addEventListener('click',fn);return b;}
+const box=s=>`<span class="box">${s}</span>`;
+const op=s=>`<span class="op">${s}</span>`;
+/* Lettres des points : sans I ni O, sans J, Q, W, X, Y. */
+const LET='ABCDEFGHKLMNPRSTUVZ'.split('');
+const letters=(n,excl=[])=>shuffle(LET.filter(l=>!excl.includes(l))).slice(0,n);
+const setOf=v=>{const m=String(v).toUpperCase().match(/[A-Z]/g);return m?[...new Set(m)].sort().join(''):'';};
+const listFr=a=>a.length<2?a.join(''):a.slice(0,-1).join(', ')+' et '+a[a.length-1];
+function correct(v,t){const k=t.kind||(t.options?'opt':'num');
+ if(k==='opt')return v===t.a;
+ if(k==='set'){const m=String(v).toUpperCase().match(/[A-Z]/g)||[];return m.length===setOf(v).length&&setOf(v)===setOf(t.a);}
+ const c=canon(v);return c!==null&&c===canon(t.a);}
+const answer=t=>String(answer0(t)).replace(/\.$/,'');
+const answer0=t=>t.answerHtml||((t.kind||(t.options?'opt':'num'))==='num'?t.a+(t.unit==='°'?'°':t.unit?' '+t.unit:''):(t.kind==='set'?listFr(setOf(t.a).split('')):t.a));
+/* Les mesures des D.S. blancs et du cours ne sont jamais tirées dans les exercices. */
+const AV=new Set([91,34,57,63,117,74,106,138,69,52,56,47,152,65,145,115,61,29,76,104,53,37,160,20,39,51,148,59,89,81,99,46,92,13,77,70,110,35,60,38,142,64,32,75,105]);
+const rnd=(a,b,step=1)=>{for(let i=0;i<200;i++){const v=R(Math.ceil(a/step),Math.floor(b/step))*step;if(!AV.has(v))return v;}return R(a,b);};
+const an=s=>`<span class="ang">${s}</span>`;
+const L=(...a)=>a.map(s=>`<p>${s}</p>`).join('');
+
+/* =================== Figures (SVG) =================== */
+const INK='#1d3a8a',C={bleu:'#2c4fb5',rouge:'#b8322a',vert:'#2f7a45',orange:'#b35f00',violet:'#7a3f98',gris:'#8a93a6'};
+const r1=v=>Math.round(v*10)/10,deg=Math.PI/180;
+const pt=(x,y,name,ang=90)=>({x,y,name,ang});
+const unit=(p,q)=>{const D=Math.hypot(q.x-p.x,q.y-p.y)||1;return {x:(q.x-p.x)/D,y:(q.y-p.y)/D};};
+const pol=(S,a,r)=>({x:S.x+r*Math.cos(a*deg),y:S.y-r*Math.sin(a*deg)});
+const dirU=a=>({x:Math.cos(a*deg),y:-Math.sin(a*deg)});
+const angOf=(S,P)=>((Math.atan2(S.y-P.y,P.x-S.x)/deg)%360+360)%360;
+function line(p,q,c=INK,w=2,dash){return `<line x1="${r1(p.x)}" y1="${r1(p.y)}" x2="${r1(q.x)}" y2="${r1(q.y)}" stroke="${c}" stroke-width="${w}" stroke-linecap="round"${dash?' stroke-dasharray="6 5"':''}/>`;}
+function droite(p,q,c,w,dash){const u=unit(p,q);return line({x:p.x-1500*u.x,y:p.y-1500*u.y},{x:q.x+1500*u.x,y:q.y+1500*u.y},c,w,dash);}
+function txt(x,y,s,c=INK,size=18,anchor='middle'){return `<text x="${r1(x)}" y="${r1(y)}" fill="${c}" font-size="${size}" text-anchor="${anchor}" dominant-baseline="central">${s}</text>`;}
+/* Un point : une croix et son nom, placé dans la direction ang (en degrés, 90 = au-dessus). */
+function cross(p,c=INK){const s=5,a=p.ang*Math.PI/180;return `<path d="M${r1(p.x-s)} ${r1(p.y-s)}L${r1(p.x+s)} ${r1(p.y+s)}M${r1(p.x-s)} ${r1(p.y+s)}L${r1(p.x+s)} ${r1(p.y-s)}" stroke="${c}" stroke-width="2"/>`+(p.name?txt(p.x+17*Math.cos(a),p.y-17*Math.sin(a),p.name,c):'');}
+/* Angle droit en at, entre les directions u et v. */
+function droit(at,u,v,c=INK,s=13){const a={x:at.x+u.x*s,y:at.y+u.y*s},b={x:a.x+v.x*s,y:a.y+v.y*s},d={x:at.x+v.x*s,y:at.y+v.y*s};return `<path d="M${r1(a.x)} ${r1(a.y)}L${r1(b.x)} ${r1(b.y)}L${r1(d.x)} ${r1(d.y)}" fill="none" stroke="${c}" stroke-width="1.8"/>`;}
+function fig(w,h,inner,maxw){return `<svg class="fig" viewBox="0 0 ${w} ${h}" style="max-width:${maxw||w*1.25}px" role="img" aria-label="Figure de l’exercice">${inner}</svg>`;}
+/* Secteur coloré de sommet S, de la direction a1 à la direction a2 (sens inverse des aiguilles d'une montre). */
+function sector(S,a1,a2,r,col,op=.3){if(a2<a1)a2+=360;const A=pol(S,a1,r),B=pol(S,a2,r),lg=a2-a1>180?1:0,d=`A${r} ${r} 0 ${lg} 0 ${r1(B.x)} ${r1(B.y)}`;
+ return (op?`<path d="M${r1(S.x)} ${r1(S.y)}L${r1(A.x)} ${r1(A.y)}${d}Z" fill="${col}" fill-opacity="${op}"/>`:'')+`<path d="M${r1(A.x)} ${r1(A.y)}${d}" fill="none" stroke="${col}" stroke-width="2"/>`;}
+function mlab(S,a1,a2,r,s,col){if(a2<a1)a2+=360;const p=pol(S,(a1+a2)/2,r);return txt(p.x,p.y,s,col,16);}
+function fitLen(S,a,W,H,max=175){for(let l=max;l>=50;l-=5){const p=pol(S,a,l);if(p.x>=30&&p.x<=W-30&&p.y>=26&&p.y<=H-26)return l;}return 50;}
+/* Angle(s) de sommet S. rays : demi-droites {a, n}. marks : secteurs {a1, a2, r, col, lab}, {right:true, a1} ou {tick:true}. */
+function figRays(o){const W=o.W||400,H=o.H||240,S=o.S;let g='';
+ (o.marks||[]).forEach(m=>{const r=m.r||34;
+  if(m.right)g+=droit(S,dirU(m.a1),dirU(m.a1+90),m.col||INK,15);else g+=sector(S,m.a1,m.a2,r,m.col||C.orange,m.op??.3);
+  if(m.tick){const a=(m.a1+m.a2)/2;g+=line(pol(S,a,r-7),pol(S,a,r+7),m.col,2);}
+  if(m.lab)g+=mlab(S,m.a1,m.a2,r+(m.lr||20),m.lab,m.lc||m.col||INK);});
+ o.rays.forEach(r=>{g+=line(S,pol(S,r.a,900),r.c||INK,2,r.dash);});
+ o.rays.forEach(r=>{if(r.n){const l=r.L||fitLen(S,r.a,W,H);g+=cross({...pol(S,r.a,l),name:r.n,ang:r.na??r.a+90});}});
+ g+=cross({...S,ang:S.ang??270});
+ return fig(W,H,g+(o.extra||''),o.maxw);}
+/* Polygone : sommets V (avec leurs noms), angles marqués {i, col}. */
+function wedgeAt(V,P,Q){const a=angOf(V,P),b=angOf(V,Q),d=((b-a)%360+360)%360;return d<=180?[a,a+d]:[b,b+360-d];}
+function polyFig(V,marks,W=400,H=240){const n=V.length,G={x:V.reduce((s,v)=>s+v.x,0)/n,y:V.reduce((s,v)=>s+v.y,0)/n};
+ V.forEach(v=>{v.ang=angOf(G,v);});let g='';
+ marks.forEach(m=>{const [a1,a2]=wedgeAt(V[m.i],V[(m.i+n-1)%n],V[(m.i+1)%n]);g+=sector(V[m.i],a1,a2,30,m.col);});
+ V.forEach((v,i)=>{g+=line(v,V[(i+1)%n]);});g+=V.map(v=>cross(v)).join('');
+ return fig(W,H,g);}
+/* Rapporteur : sommet au centre, côtés posés sur la ligne du zéro (right, left) et autres côtés rays {a, n}. */
+function protractor(o){const O={x:220,y:218},Rr=172,W=440,H=250;
+ let g=`<path d="M${O.x-Rr} ${O.y}A${Rr} ${Rr} 0 0 1 ${O.x+Rr} ${O.y}Z" fill="#fdf6df" stroke="${INK}" stroke-width="1.5"/>`;
+ g+=`<path d="M${O.x-Rr+34} ${O.y}A${Rr-34} ${Rr-34} 0 0 1 ${O.x+Rr-34} ${O.y}" fill="none" stroke="${INK}" stroke-width=".6"/>`;
+ for(let a=0;a<=180;a++){const l=a%10===0?13:a%5===0?9:5;g+=line(pol(O,a,Rr),pol(O,a,Rr-l),INK,a%5===0?1.1:.6);}
+ for(let a=0;a<=180;a+=10){const p=pol(O,a,Rr-25),q=pol(O,a,Rr-48);g+=txt(p.x,p.y,String(a),INK,14)+txt(q.x,q.y,String(180-a),C.bleu,13);}
+ if(o.mark)g+=sector(O,o.mark[0],o.mark[1],24,C.orange,.4);
+ if(o.right){g+=line(O,{x:O.x+205,y:O.y},C.rouge,2.5)+cross({x:O.x+197,y:O.y,name:o.right,ang:-90},C.rouge);}
+ if(o.left){g+=line(O,{x:O.x-205,y:O.y},C.rouge,2.5)+cross({x:O.x-197,y:O.y,name:o.left,ang:-90},C.rouge);}
+ (o.rays||[]).forEach(r=>{g+=line(O,pol(O,r.a,205),C.rouge,2.5)+cross({...pol(O,r.a,195),name:r.n,ang:r.a+(r.a>90?-90:90)},C.rouge);});
+ g+=cross({...O,name:o.S,ang:-90});
+ return fig(W,H,g,560);}
+/* Deux droites coupées par une sécante. marks : {v (0 en haut, 1 en bas), k (1 à 4), col}. nums : numéros 1 à 8. */
+function figPara(th,marks,nums){const W=400,H=250,y1=75,y2=180,mid={x:200,y:127.5},t=52.5/Math.sin(th*deg),c=Math.cos(th*deg)*t,V=[{x:mid.x+c,y:y1},{x:mid.x-c,y:y2}],d=[0,th,180,th+180,360];
+ let g='';marks.forEach(m=>{g+=sector(V[m.v],d[m.k-1],d[m.k],28,m.col);});
+ g+=droite({x:0,y:y1},{x:1,y:y1})+droite({x:0,y:y2},{x:1,y:y2})+droite(V[0],V[1],C.vert);
+ if(nums)for(const v of [0,1])for(let k=1;k<=4;k++){const p=pol(V[v],(d[k-1]+d[k])/2,44);g+=txt(p.x,p.y,String(v*4+k),INK,16);}
+ return fig(W,H,g);}
+/* Petit angle sans noms (cours, D.S.). */
+function miniAngle(kind,b=0,m=0,W=200,H=130){const S={x:W/2,y:H/2+18};let g='';
+ const ray=a=>line(S,pol(S,a,kind==='plat'?80:70),INK,2);
+ if(kind==='nul')g=line(S,pol(S,b,80),INK,2)+cross({...pol(S,b,40),name:'',ang:0})+cross({...pol(S,b,72),name:'',ang:0});
+ else if(kind==='plein')g=sector(S,b+1,b+359,22,C.orange)+ray(b);
+ else if(kind==='droit')g=droit(S,dirU(b),dirU(b+90),C.orange,16)+ray(b)+ray(b+90);
+ else g=sector(S,b,b+m,24,C.orange)+ray(b)+ray(b+m);
+ return fig(W,H,g+cross({...S,name:'',ang:0}),W);}
+
+/* =================== Cours =================== */
+const F=fracH;
+const NATS=[['un angle nul','0°','Ses deux côtés sont confondus.','nul',0],['un angle aigu','entre 0° et 90°','Un angle droit le recouvre.','aigu',40],['un angle droit','90°','On le code avec un petit carré.','droit',90],['un angle obtus','entre 90° et 180°','Il recouvre un angle droit.','obtus',130],['un angle plat','180°','Ses côtés forment une droite : le sommet est entre les deux autres points.','plat',180],['un angle plein','360°','Il fait le tour complet.','plein',360]];
+const COURS={
+nommer:`<h3>1. Vocabulaire et notation</h3>
+<div class="retenir"><b>Définition</b>Un angle est une portion du plan délimitée par deux demi-droites de même origine.</div>
+${figRays({S:pt(70,190,'O',250),W:400,H:220,rays:[{a:12,n:'A'},{a:48,n:'B'}],marks:[{a1:12,a2:48,r:60,col:C.orange}]})}
+<ul><li>[OA) et [OB) sont les <strong>côtés</strong> de l’angle. On peut les prolonger autant qu’on veut.</li><li>O est le <strong>sommet</strong> de l’angle.</li></ul>
+<div class="retenir"><b>Notation</b>L’angle de sommet O et de côtés [OA) et [OB) se note ${an('AOB')} ou ${an('BOA')}.<br>Le sommet s’écrit toujours au milieu, sous la pointe du chapeau.</div>
+<p>Au collège, un angle se mesure en <strong>degrés</strong> : on écrit par exemple ${an('AOB')} = 30°.</p>`,
+nature:`<h3>2. Nature d’un angle</h3>
+<div class="tabwrap"><table class="tab nat"><tr><th>Nom</th><th>Mesure</th><th>Figure</th><th>À savoir</th></tr>${NATS.map(n=>`<tr><td>${n[0]}</td><td>${n[1]}</td><td>${miniAngle(n[3],0,n[4],150,80)}</td><td>${n[2]}</td></tr>`).join('')}</table></div>
+<div class="retenir"><b>À retenir</b>Je compare l’angle avec le coin de mon équerre (un angle droit) : plus petit, il est aigu ; plus grand, il est obtus.</div>`,
+rapporteur:`<h3>3. Mesurer un angle avec le rapporteur</h3>
+<ol><li>Je place le centre du rapporteur sur le sommet de l’angle.</li><li>Je fais passer la ligne du zéro par un côté de l’angle.</li><li>Je pars de ce zéro et je suis la même graduation jusqu’à l’autre côté. Je lis la mesure.</li></ol>
+${protractor({S:'O',right:'A',rays:[{a:75,n:'B'}],mark:[0,75]})}
+<div class="seyes"><h4>Exemple</h4><p>Le côté [OA) passe par le 0 de la graduation extérieure.</p><p>${an('AOB')} = 75°</p></div>
+<div class="retenir"><b>Attention</b>Le rapporteur a deux graduations. Sur l’autre, on lirait 105°. Je vérifie avec la nature de l’angle : ${an('AOB')} est aigu, donc sa mesure est plus petite que 90°.</div>`,
+particuliers:`<h3>4. Des angles à connaître</h3>
+<h3>Angles opposés par le sommet</h3>
+${figRays({S:pt(200,115,'',0),W:400,H:230,rays:[{a:20},{a:75},{a:200},{a:255}],marks:[{a1:20,a2:75,col:C.orange,r:40},{a1:200,a2:255,col:C.orange,r:40},{a1:75,a2:200,col:C.bleu,r:28},{a1:255,a2:380,col:C.bleu,r:28}]})}
+<p>Deux droites sécantes forment des angles opposés par le sommet : ils ont le même sommet et leurs côtés se prolongent.</p>
+<div class="retenir"><b>Propriété</b>Deux angles opposés par le sommet ont toujours la même mesure.</div>
+<h3>Angles adjacents</h3>
+${figRays({S:pt(90,195,'O',250),W:400,H:225,rays:[{a:8,n:'C'},{a:45,n:'B'},{a:100,n:'A'}],marks:[{a1:45,a2:100,col:C.orange,r:46},{a1:8,a2:45,col:C.bleu,r:46},{a1:8,a2:100,col:INK,op:0,r:80}]})}
+<div class="retenir"><b>Définition</b>Deux angles sont adjacents quand :<ul><li>ils ont le même sommet ;</li><li>ils ont un côté commun ;</li><li>ils ne se superposent pas.</li></ul></div>
+<p>${an('AOB')} et ${an('BOC')} sont adjacents. Ensemble, ils forment l’angle ${an('AOC')} :</p>
+<p>${an('AOC')} = ${an('AOB')} + ${an('BOC')} ; ${an('AOB')} = ${an('AOC')} − ${an('BOC')} ; ${an('BOC')} = ${an('AOC')} − ${an('AOB')}.</p>
+<h3>Angles correspondants et alternes-internes</h3>
+<p>Une droite, la <strong>sécante</strong> (en vert), coupe deux droites. Elle forme huit angles.</p>
+${figPara(60,[],true)}
+<ul><li>Les angles 1 et 5 sont <strong>correspondants</strong> : ils sont du même côté de la sécante, et à la même place sur chaque droite. De même 2 et 6, 3 et 7, 4 et 8.</li><li>Les angles 4 et 6 sont <strong>alternes-internes</strong> : ils sont de part et d’autre de la sécante, et entre les deux droites. De même 3 et 5.</li></ul>
+<h3>Angles complémentaires et supplémentaires</h3>
+<div class="retenir"><b>Définitions</b><ul><li>Deux angles sont <strong>complémentaires</strong> quand la somme de leurs mesures est égale à 90°.</li><li>Deux angles sont <strong>supplémentaires</strong> quand la somme de leurs mesures est égale à 180°.</li></ul></div>
+<p class="mots">COMplémentaires → « Ke » → quatre-vingt-dix. SUpplémentaires → « Se » → cent-quatre-vingts.</p>`,
+calculer:`<h3>5. Calculer la mesure d’un angle</h3>
+<p>On écrit l’égalité qui relie les angles, on remplace par les mesures connues, puis on calcule.</p>
+${figRays({S:pt(200,190,'O',270),W:400,H:220,rays:[{a:0,n:'C',na:-90},{a:38,n:'B'},{a:180,n:'A',na:-90}],marks:[{a1:0,a2:38,col:C.bleu,r:46,lab:'?'},{a1:38,a2:180,col:C.orange,r:46,lab:'142°',lr:22}]})}
+<div class="seyes"><h4>Exemple · A, O et C sont alignés et ${an('AOB')} = 142°</h4><p>${an('AOB')} + ${an('BOC')} = 180°</p><p>142° + ${an('BOC')} = 180°</p><p>${an('BOC')} = 180° − 142°</p><p>${box(an('BOC')+' = 38°')}</p></div>
+<div class="retenir"><b>À retenir</b>Un angle plat mesure 180°, un angle droit mesure 90°. Deux angles opposés par le sommet ont la même mesure.</div>`,
+bissectrice:`<h3>6. Bissectrice d’un angle</h3>
+<div class="retenir"><b>Définition</b>La bissectrice d’un angle est la droite qui partage cet angle en deux angles adjacents de même mesure.</div>
+${figRays({S:pt(80,190,'O',250),W:400,H:220,rays:[{a:6,n:'A'},{a:38,n:'M',c:C.rouge},{a:70,n:'B'},{a:218,c:C.rouge,dash:true}],marks:[{a1:6,a2:38,col:C.orange,r:60,tick:true},{a1:38,a2:70,col:C.orange,r:60,tick:true}]})}
+<p>(OM) est la bissectrice de ${an('AOB')} : ${an('AOM')} = ${an('MOB')}. Le même petit trait sur les deux arcs code deux angles de même mesure.</p>
+<p>La bissectrice est l’axe de symétrie de l’angle. C’est aussi l’ensemble des points situés à la même distance des deux côtés de l’angle.</p>
+<div class="seyes"><h4>Exemple · (OM) est la bissectrice de ${an('AOB')} et ${an('AOB')} = 64°</h4><p>${an('AOM')} = ${F(an('AOB'),2)}</p><p>${an('AOM')} = ${F('64°',2)}</p><p>${box(an('AOM')+' = 32°')}</p></div>`};
+
+/* =================== 1. Nommer un angle =================== */
+function nommer(ex){const [S,P,Q,T]=ex?['O','E','R','N']:letters(4);
+ const a1=ex?15:R(0,25),a2=ex?70:a1+R(40,60),a3=ex?140:Math.min(a2+R(40,60),172),A=[a1,a2,a3],N=[P,Q,T];
+ const pair=ex?[0,1]:pick([[0,1],[1,2],[0,2]]),[i,j]=pair,k=[0,1,2].find(z=>!pair.includes(z)),X=N[i],Y=N[j],Z=N[k];
+ const f=figRays({S:pt(200,200,S,270),W:400,H:235,rays:A.map((a,z)=>({a,n:N[z]})),marks:[{a1:A[i],a2:A[j],r:j-i===2?32:44,col:C.orange}]});
+ const nm=an(X+S+Y),alt=an(Y+S+X);
+ const tasks=[{guide:true,q:'Quel est le sommet de l’angle marqué en orange ?',a:S,options:shuffle([S,X,Y,Z]),hint:'Le sommet est le point d’où partent les deux côtés de l’angle.',corr:`Les deux côtés partent du point ${S} : c’est le sommet.`},
+  {guide:true,q:'Quels sont les côtés de cet angle ?',a:`[${S}${X}) et [${S}${Y})`,options:[`[${S}${X}) et [${S}${Y})`,`[${S}${X}) et [${S}${Z})`,`[${X}${S}) et [${Y}${S})`,`[${S}${Y}) et [${S}${Z})`],hint:'Les côtés sont deux demi-droites qui ont pour origine le sommet.',corr:`Les côtés sont les demi-droites [${S}${X}) et [${S}${Y}), d’origine ${S}.`},
+  {q:'Quel est le nom de l’angle marqué en orange ?',a:nm,options:[nm,an(S+X+Y),an(X+Y+S),an(X+S+Z)],hint:'Le sommet s’écrit au milieu, sous la pointe du chapeau. Les deux autres lettres sont des points des côtés.',corr:`Le sommet ${S} s’écrit au milieu : ${nm}. On peut aussi écrire ${alt}.`}];
+ return {head:`<p>Observe la figure.</p>${f}`,tasks,correction:L(`L’angle marqué se nomme ${nm} ou ${alt}.`)};}
+function polygone(ex){const quad=ex?true:Math.random()<.5,n=quad?4:3,Nm=ex?['K','L','M','N']:letters(n);
+ let V=quad?[pt(R(50,90),R(180,200)),pt(R(290,330),R(190,210)),pt(R(310,350),R(40,70)),pt(R(90,140),R(35,70))]:[pt(R(50,80),R(185,200)),pt(R(310,350),R(175,200)),pt(R(150,250),R(35,60))];
+ if(ex)V=[pt(70,190),pt(320,200),pt(330,55),pt(110,60)];
+ V.forEach((v,z)=>{v.name=Nm[z];});
+ const vi=ex?1:R(0,n-1),U=V[(vi+n-1)%n].name,S=V[vi].name,W=V[(vi+1)%n].name,X=quad?V[(vi+2)%n].name:null;
+ const nm=an(U+S+W),alt=an(W+S+U);
+ const tasks=[{guide:true,q:'Quel est le sommet de l’angle marqué en orange ?',a:S,options:Nm,keep:true,hint:'Le sommet est le point où se rejoignent les deux côtés marqués.',corr:`L’angle marqué est au point ${S} : c’est son sommet.`},
+  {q:'Quel est le nom de l’angle marqué en orange ?',a:nm,options:[nm,an(S+U+W),an(U+W+S),quad?an(U+S+X):an(S+W+U)],hint:'Le sommet s’écrit au milieu. Les deux autres lettres sont les sommets voisins, reliés à lui par un côté.',corr:`Le sommet ${S} est au milieu, entre ${U} et ${W} : ${nm}.`},
+  {q:'Quelle autre écriture désigne le même angle ?',a:alt,options:[alt,an(W+U+S),an(S+W+U)],hint:'On peut échanger les deux lettres des côtés, mais le sommet reste au milieu.',corr:`On échange ${U} et ${W}, le sommet reste au milieu : ${alt}.`}];
+ return {head:`<p>Observe la figure.</p>${polyFig(V,[{i:vi,col:C.orange}])}`,tasks,correction:L(`L’angle marqué se nomme ${nm} ou ${alt}.`)};}
+
+/* =================== 2. Nature d'un angle =================== */
+const NATO=['un angle nul','un angle aigu','un angle droit','un angle obtus','un angle plat','un angle plein'];
+const CMP=['exactement 0°','entre 0° et 90°','exactement 90°','entre 90° et 180°','exactement 180°','exactement 360°'];
+const KIND=['nul','aigu','droit','obtus','plat','plein'];
+function natureMesure(ex){const kind=ex?'obtus':pick(['aigu','aigu','aigu','obtus','obtus','obtus','droit','plat','nul','plein']),z=KIND.indexOf(kind);
+ const m=ex?124:{nul:0,aigu:rnd(4,86),droit:90,obtus:rnd(94,176),plat:180,plein:360}[kind];
+ const [X,S,Y]=ex?['T','U','V']:letters(3),nm=an(X+S+Y);
+ const tasks=[{guide:true,q:`Compare ${m}° avec 0°, 90° et 180°. La mesure est…`,a:CMP[z],options:CMP,keep:true,hint:'Un angle droit mesure 90°. Un angle plat mesure 180°.',corr:`${m}° est ${CMP[z]}.`},
+  {q:`Quelle est la nature de l’angle ${nm} ?`,a:NATO[z],options:NATO,keep:true,hint:'Un angle aigu mesure entre 0° et 90°. Un angle obtus mesure entre 90° et 180°.',corr:`${nm} = ${m}° : c’est ${NATO[z]}.`}];
+ return {head:`<p>On sait que ${nm} = ${m}°.</p>`,tasks,correction:L(`${nm} = ${m}°`,`${nm} est ${NATO[z]}.`)};}
+function natureFigure(ex){const kind=ex?'obtus':pick(['aigu','aigu','obtus','obtus','droit','plat']),z=KIND.indexOf(kind);
+ const m=ex?140:{aigu:R(20,70),obtus:R(110,165),droit:90,plat:180}[kind],b=ex?20:R(0,359);
+ const [X,S,Y]=ex?['E','F','G']:letters(3),nm=an(X+S+Y);
+ const f=figRays({S:pt(200,120,S,b+m/2+180),W:400,H:240,rays:[{a:b,n:X,L:88},{a:b+m,n:Y,L:88}],marks:[kind==='droit'?{right:true,a1:b,col:C.orange}:{a1:b,a2:b+m,r:30,col:C.orange}]});
+ const cmp=['plus petit qu’un angle droit','égal à un angle droit','plus grand qu’un angle droit'],ci=kind==='aigu'?0:kind==='droit'?1:2;
+ const why={aigu:'Le coin de l’équerre recouvre l’angle : il est plus petit qu’un angle droit.',droit:'Le petit carré code un angle droit.',obtus:'L’angle recouvre le coin de l’équerre : il est plus grand qu’un angle droit, mais ses côtés ne forment pas une droite.',plat:`Les côtés forment une droite : ${X}, ${S} et ${Y} sont alignés et ${S} est entre ${X} et ${Y}.`}[kind];
+ const tasks=[{guide:true,q:'Compare l’angle orange avec le coin de ton équerre. Il est…',a:cmp[ci],options:cmp,keep:true,hint:'Un petit carré code un angle droit. Sinon, imagine le coin de l’équerre posé sur le sommet, le long d’un côté.',corr:why},
+  {q:`Quelle est la nature de l’angle ${nm} ?`,a:NATO[z],options:NATO.slice(1,5),keep:true,hint:'Plus petit qu’un angle droit : aigu. Plus grand : obtus. Si les côtés forment une droite : plat.',corr:`${nm} est ${NATO[z]}.`}];
+ return {head:`<p>Observe l’angle ${nm}.</p>${f}`,tasks,correction:L(`${nm} est ${NATO[z]}.`)};}
+
+/* =================== 3. Rapporteur =================== */
+const GRAD=['la graduation extérieure','la graduation intérieure'];
+function rapp1(ex){const right=ex?false:Math.random()<.5,m=ex?50:rnd(15,170,5);if(m===90)return rapp1(ex);
+ const [S,A,B]=ex?['O','A','B']:letters(3),nm=an(A+S+B),g=right?0:1,sens=right?'à droite':'à gauche';
+ const f=protractor({S,right:right?A:null,left:right?null:A,rays:[{a:right?m:180-m,n:B}],mark:right?[0,m]:[180-m,180]});
+ const tasks=[{guide:true,q:`Le centre du rapporteur est sur le sommet ${S}. Le côté [${S}${A}) passe par le 0 de quelle graduation ?`,a:GRAD[g],options:GRAD,keep:true,hint:`Suis le côté [${S}${A}) jusqu’au bord du rapporteur : quel 0 rencontre-t-il ?`,corr:`Le côté [${S}${A}) est ${sens} : il passe par le 0 de ${GRAD[g]}. C’est elle que je lis.`},
+  {guide:true,q:`L’angle ${nm} est-il aigu ou obtus ?`,a:m<90?'aigu':'obtus',options:['aigu','obtus'],keep:true,hint:'Compare l’angle orange avec le coin de ton équerre.',corr:`${nm} est ${m<90?'plus petit':'plus grand'} qu’un angle droit : il est ${m<90?'aigu':'obtus'}.`},
+  {q:`Quelle est la mesure de l’angle ${nm} ?`,a:String(m),unit:'°',hint:`Pars du 0 de ${GRAD[g]} et suis cette graduation jusqu’au côté [${S}${B}).`,corr:`Sur ${GRAD[g]}, le côté [${S}${B}) passe par ${m}. L’angle est ${m<90?'aigu':'obtus'} et ${m}° est ${m<90?'plus petit':'plus grand'} que 90° : c’est cohérent.`}];
+ return {head:`<p>On mesure l’angle ${nm} avec le rapporteur.</p>${f}`,tasks,correction:L(`Le côté [${S}${A}) passe par le 0 de ${GRAD[g]}.`,`${nm} = ${m}°`)};}
+function rapp2(ex){const [S,X,Y,B,Cc,D]=ex?['O','E','F','G','H','K']:letters(6);
+ let a;if(ex)a=[25,80,135];else for(;;){a=[rnd(15,60,5),rnd(65,115,5),rnd(120,165,5)];if(a[1]-a[0]>=25&&a[2]-a[1]>=25&&a[1]!==90)break;}
+ const N=[B,Cc,D],i=ex?1:R(0,2),j=ex?2:pick([0,1,2].filter(z=>z!==i)),m1=a[i],m2=180-a[j];
+ const f=protractor({S,right:X,left:Y,rays:a.map((v,z)=>({a:v,n:N[z]}))});
+ const n1=an(X+S+N[i]),n2=an(Y+S+N[j]);
+ const tasks=[{guide:true,q:`Pour mesurer ${n1}, quelle graduation faut-il lire ?`,a:GRAD[0],options:GRAD,keep:true,hint:`Le côté [${S}${X}) part vers la droite. Quel 0 est de ce côté ?`,corr:`[${S}${X}) passe par le 0 de la graduation extérieure.`},
+  {q:`Quelle est la mesure de l’angle ${n1} ?`,a:String(m1),unit:'°',hint:`Pars du 0 de la graduation extérieure et va jusqu’au côté [${S}${N[i]}).`,corr:`${n1} = ${m1}°`},
+  {guide:true,q:`Pour mesurer ${n2}, quelle graduation faut-il lire ?`,a:GRAD[1],options:GRAD,keep:true,hint:`Le côté [${S}${Y}) part vers la gauche. Quel 0 est de ce côté ?`,corr:`[${S}${Y}) passe par le 0 de la graduation intérieure.`},
+  {q:`Quelle est la mesure de l’angle ${n2} ?`,a:String(m2),unit:'°',hint:`Pars du 0 de la graduation intérieure et va jusqu’au côté [${S}${N[j]}).`,corr:`${n2} = ${m2}°. L’angle est ${m2<90?'aigu':'obtus'} : c’est cohérent.`}];
+ return {head:`<p>Le centre du rapporteur est sur le point ${S}. Lis les mesures demandées.</p>${f}`,tasks,correction:L(`${n1} = ${m1}°`,`${n2} = ${m2}°`)};}
+
+/* =================== 4. Angles particuliers =================== */
+const PAIRES=['opposés par le sommet','adjacents','correspondants','alternes-internes'];
+function paires(ex){const th=ex?60:pick([R(50,70),R(110,130)]),kind=ex?'alternes-internes':pick(PAIRES);let p;
+ const v=R(0,1),k=R(1,4);
+ if(kind==='opposés par le sommet')p=[[v,k],[v,(k+1)%4+1]];
+ else if(kind==='adjacents')p=[[v,k],[v,k%4+1]];
+ else if(kind==='correspondants')p=[[0,k],[1,k]];
+ else p=ex?[[0,4],[1,2]]:pick([[[0,3],[1,1]],[[0,4],[1,2]]]);
+ const same=p[0][0]===p[1][0];
+ const f=figPara(th,[{v:p[0][0],k:p[0][1],col:C.orange},{v:p[1][0],k:p[1][1],col:C.bleu}]);
+ const why={'opposés par le sommet':'Ils ont le même sommet et leurs côtés se prolongent : ils sont opposés par le sommet. Ils ont donc la même mesure.',adjacents:'Ils ont le même sommet, un côté commun, et ils ne se superposent pas : ils sont adjacents.',correspondants:'Ils sont du même côté de la sécante, et à la même place sur chaque droite : ils sont correspondants.','alternes-internes':'Ils sont de part et d’autre de la sécante, et entre les deux droites : ils sont alternes-internes.'}[kind];
+ const tasks=[{guide:true,q:'Les angles orange et bleu ont-ils le même sommet ?',a:same?'Oui':'Non',options:['Oui','Non'],keep:true,hint:'Le sommet est le point d’où partent les côtés de l’angle coloré.',corr:same?'Oui : ils sont au même point d’intersection.':'Non : ils sont sur deux points d’intersection différents.'},
+  {q:'Les angles orange et bleu sont…',a:kind,options:PAIRES,keep:true,hint:same?'Même sommet : ils sont opposés par le sommet si leurs côtés se prolongent, adjacents s’ils ont un côté commun.':'Deux sommets différents : correspondants s’ils sont à la même place, alternes-internes s’ils sont entre les deux droites, de part et d’autre de la sécante.',corr:why}];
+ return {head:`<p>Une sécante (en vert) coupe deux droites. Observe les angles orange et bleu.</p>${f}`,tasks,correction:L(`Les angles orange et bleu sont ${kind}.`)};}
+const CS=['complémentaires','supplémentaires','ni complémentaires ni supplémentaires'];
+function compReco(ex){const kind=ex?0:pick([0,0,1,1,2]);let a,s;
+ if(ex){a=58;s=90;}else if(kind<2){s=kind?180:90;a=rnd(kind?25:10,kind?155:80);}else{s=pick([90,180])+pick([-1,1])*R(4,15);a=rnd(10,s-10);}
+ const b=s-a;if(!ex&&AV.has(b))return compReco(ex);
+ const tasks=[{guide:true,q:'Calcule la somme de leurs mesures.',a:String(s),unit:'°',hint:'Additionne les deux mesures.',corr:`${a}° + ${b}° = ${s}°`},
+  {q:'Ces deux angles sont…',a:CS[kind],options:CS,keep:true,hint:'Complémentaires : la somme fait 90°. Supplémentaires : la somme fait 180°.',corr:kind===0?'La somme est égale à 90° : ils sont complémentaires.':kind===1?'La somme est égale à 180° : ils sont supplémentaires.':`La somme n’est égale ni à 90° ni à 180° : ils ne sont ni complémentaires ni supplémentaires.`}];
+ return {head:`<p>Deux angles mesurent ${a}° et ${b}°.</p>`,tasks,correction:L(`${a}° + ${b}° = ${s}°`,`Les deux angles sont ${CS[kind]}.`)};}
+function compCalc(ex){const sup=ex?true:Math.random()<.5,T=sup?180:90,a=ex?72:rnd(sup?20:8,sup?160:82),b=T-a;
+ const [P,Q,S,U,V,W]=ex?['A','B','C','D','E','F']:letters(6),n1=an(P+Q+S),n2=an(U+V+W),typ=sup?'supplémentaires':'complémentaires';
+ const tasks=[{guide:true,q:`La somme des mesures de deux angles ${typ} est égale à…`,a:T+'°',options:['90°','180°','360°'],keep:true,hint:'COMplémentaires → « Ke » → quatre-vingt-dix. SUpplémentaires → « Se » → cent-quatre-vingts.',corr:`Deux angles ${typ} : ${n1} + ${n2} = ${T}°.`},
+  {q:`Calcule la mesure de l’angle ${n2}.`,a:String(b),unit:'°',hint:`${a}° + ${n2} = ${T}° : quel nombre faut-il ajouter à ${a} pour obtenir ${T} ?`,corr:`${n2} = ${T}° − ${a}° = ${b}°`}];
+ return {head:`<p>Les angles ${n1} et ${n2} sont ${typ}, et ${n1} = ${a}°.</p>`,tasks,correction:L(`${n1} + ${n2} = ${T}°`,`${a}° + ${n2} = ${T}°`,`${n2} = ${T}° − ${a}°`,box(`${n2} = ${b}°`))};}
+
+/* =================== 5. Calculer une mesure =================== */
+function adjFig(S,N,a0,a,b,labs,W=400,H=235){return figRays({S:pt(S.x,S.y,N[0],a0+(a+b)/2+180),W,H,rays:[{a:a0,n:N[1]},{a:a0+a,n:N[2]},{a:a0+a+b,n:N[3]}],
+ marks:[{a1:a0,a2:a0+a,r:52,col:C.orange,lab:labs[0]},{a1:a0+a,a2:a0+a+b,r:52,col:C.bleu,lab:labs[1]},{a1:a0,a2:a0+a+b,r:104,col:INK,op:0,lab:labs[2],lr:18}]});}
+function adjSomme(ex){const a=ex?27:rnd(18,60),b=ex?44:rnd(18,60),a0=ex?8:R(0,20),s=a+b;if(!ex&&AV.has(s))return adjSomme(ex);
+ const [S,A,B,Cc]=ex?['O','A','B','C']:letters(4),x=an(A+S+B),y=an(B+S+Cc),z=an(A+S+Cc);
+ const f=adjFig({x:150,y:205},[S,A,B,Cc],a0,a,b,[a+'°',b+'°','?']);
+ const tasks=[{guide:true,q:`Les angles ${x} et ${y} sont adjacents. Pour obtenir ${z}, on…`,a:'additionne leurs mesures',options:['additionne leurs mesures','soustrait leurs mesures'],keep:true,hint:`Ensemble, ${x} et ${y} forment l’angle ${z}.`,corr:`${z} = ${x} + ${y}`},
+  {q:`Calcule la mesure de l’angle ${z}.`,a:String(s),unit:'°',hint:`Remplace ${x} et ${y} par leurs mesures.`,corr:`${z} = ${a}° + ${b}° = ${s}°`}];
+ return {head:`<p>Calcule la mesure de l’angle ${z}.</p>${f}`,tasks,correction:L(`${z} = ${x} + ${y}`,`${z} = ${a}° + ${b}°`,box(`${z} = ${s}°`))};}
+function adjDiff(ex){const c=ex?96:rnd(60,150),a=ex?31:rnd(15,c-18),b=c-a,a0=ex?6:R(0,20);if(!ex&&AV.has(b))return adjDiff(ex);
+ const [S,A,B,Cc]=ex?['O','A','B','C']:letters(4),x=an(A+S+B),y=an(B+S+Cc),z=an(A+S+Cc);
+ const f=adjFig({x:150,y:205},[S,A,B,Cc],a0,a,b,[a+'°','?',c+'°']);
+ const tasks=[{guide:true,q:'Quelle égalité est juste ?',a:`${x} + ${y} = ${z}`,options:[`${x} + ${y} = ${z}`,`${x} + ${z} = ${y}`,`${y} + ${z} = ${x}`],keep:true,hint:`Les angles ${x} et ${y} sont adjacents : ensemble, ils forment ${z}.`,corr:`${x} et ${y} sont adjacents, donc ${x} + ${y} = ${z}.`},
+  {q:`Calcule la mesure de l’angle ${y}.`,a:String(b),unit:'°',hint:`${a}° + ${y} = ${c}° : quel nombre faut-il ajouter à ${a} pour obtenir ${c} ?`,corr:`${y} = ${c}° − ${a}° = ${b}°`}];
+ return {head:`<p>On sait que ${z} = ${c}° et ${x} = ${a}°. Calcule ${y}.</p>${f}`,tasks,correction:L(`${x} + ${y} = ${z}`,`${a}° + ${y} = ${c}°`,`${y} = ${c}° − ${a}°`,box(`${y} = ${b}°`))};}
+function platDroit(ex){const plat=ex?false:Math.random()<.5,T=plat?180:90,a=ex?23:rnd(plat?25:12,plat?155:78),b=T-a;if(!ex&&AV.has(b))return platDroit(ex);
+ const [S,A,B,Cc]=ex?['O','A','B','C']:letters(4),x=an(A+S+B),y=an(B+S+Cc),z=an(A+S+Cc);
+ let f;
+ if(plat)f=figRays({S:pt(200,185,S,270),W:400,H:215,rays:[{a:180,n:A,na:-90},{a:180-a,n:B},{a:0,n:Cc,na:-90}],marks:[{a1:180-a,a2:180,r:44,col:C.orange,lab:a+'°',lr:22},{a1:0,a2:180-a,r:44,col:C.bleu,lab:'?',lr:22}]});
+ else{const a0=ex?4:R(0,15);f=figRays({S:pt(150,205,S,a0+225),W:400,H:235,rays:[{a:a0+90,n:A},{a:a0+90-a,n:B},{a:a0,n:Cc}],marks:[{right:true,a1:a0,col:INK},{a1:a0+90-a,a2:a0+90,r:60,col:C.orange,lab:a+'°',lr:22},{a1:a0,a2:a0+90-a,r:60,col:C.bleu,lab:'?',lr:22}]});}
+ const opts=['C’est un angle droit : il mesure 90°.','C’est un angle plat : il mesure 180°.'];
+ const tasks=[{guide:true,q:`Que sait-on de l’angle ${z} ?`,a:opts[plat?1:0],options:opts,keep:true,hint:'Un petit carré code un angle droit. Si les côtés forment une droite, l’angle est plat.',corr:plat?`${A}, ${S} et ${Cc} sont alignés et ${S} est entre ${A} et ${Cc} : ${z} est un angle plat, ${z} = 180°.`:`Le petit carré code un angle droit : ${z} = 90°.`},
+  {q:`Calcule la mesure de l’angle ${y}.`,a:String(b),unit:'°',hint:`${x} et ${y} sont adjacents : ${x} + ${y} = ${T}°.`,corr:`${y} = ${T}° − ${a}° = ${b}°`}];
+ return {head:`<p>On sait que ${x} = ${a}°. Calcule ${y}.</p>${f}`,tasks,correction:L(`${x} + ${y} = ${T}°`,`${a}° + ${y} = ${T}°`,`${y} = ${T}° − ${a}°`,box(`${y} = ${b}°`))};}
+function crossFig(S,N,rot,a,labs,W=400,H=240){const d=[rot,rot+a,rot+180,rot+a+180];
+ return figRays({S:pt(S.x,S.y,N[0],rot+270+a/2),W,H,rays:d.map((v,z)=>({a:v,n:N[z+1],L:95})),marks:[{a1:d[0],a2:d[1],r:34,col:C.orange,lab:labs[0]},{a1:d[2],a2:d[3],r:34,col:C.bleu,lab:labs[1]},{a1:d[1],a2:d[2],r:26,col:C.vert,lab:labs[2]}]});}
+function opposes(ex){const a=ex?55:rnd(30,80),rot=ex?10:R(0,30),b=180-a;if(!ex&&AV.has(b))return opposes(ex);
+ const [S,A,B,Cc,D]=ex?['O','A','B','C','D']:letters(5),x=an(A+S+B),y=an(Cc+S+D),z=an(B+S+Cc);
+ const f=crossFig({x:200,y:120},[S,A,B,Cc,D],rot,a,[a+'°','?','?']);
+ const tasks=[{guide:true,q:`Les angles ${x} et ${y} sont…`,a:'opposés par le sommet',options:['opposés par le sommet','adjacents','complémentaires'],keep:true,hint:'Regarde leurs côtés : se prolongent-ils ?',corr:`Ils ont le même sommet ${S} et leurs côtés se prolongent : ils sont opposés par le sommet.`},
+  {q:`Quelle est la mesure de l’angle ${y} ?`,a:String(a),unit:'°',hint:'Deux angles opposés par le sommet ont la même mesure.',corr:`${y} = ${x} = ${a}°`},
+  {q:`Calcule la mesure de l’angle ${z}.`,a:String(b),unit:'°',hint:`${A}, ${S} et ${Cc} sont alignés : ${x} + ${z} = 180°.`,corr:`${z} = 180° − ${a}° = ${b}°`}];
+ return {head:`<p>Les droites (${A}${Cc}) et (${B}${D}) se coupent en ${S}, et ${x} = ${a}°.</p>${f}`,tasks,correction:L(`${x} et ${y} sont opposés par le sommet, donc ${y} = ${x}.`,box(`${y} = ${a}°`),`${A}, ${S} et ${Cc} sont alignés, donc ${x} + ${z} = 180°.`,`${a}° + ${z} = 180°`,`${z} = 180° − ${a}°`,box(`${z} = ${b}°`))};}
+
+/* =================== 6. Bissectrice =================== */
+function bissFig(S,N,a0,p,q,labs,codage,W=400,H=230){const aM=a0+p;
+ return figRays({S:pt(S.x,S.y,N[0],a0+(p+q)/2+180),W,H,rays:[{a:a0,n:N[1]},{a:aM,n:N[2],c:C.rouge},{a:a0+p+q,n:N[3]},{a:aM+180,c:C.rouge,dash:true}],
+  marks:[{a1:a0,a2:aM,r:64,col:C.orange,lab:labs[0],tick:codage},{a1:aM,a2:a0+p+q,r:64,col:codage?C.orange:C.bleu,lab:labs[1],tick:codage}].concat(labs[2]?[{a1:a0,a2:a0+p+q,r:112,col:INK,op:0,lab:labs[2],lr:18}]:[])});}
+function bissReco(ex){const yes=ex?true:Math.random()<.55,p=ex?36:rnd(18,55),q=yes?p:p+pick([-1,1])*R(3,8),a0=ex?10:R(0,25),codage=!ex&&yes&&Math.random()<.4;
+ const [S,A,M,B]=ex?['O','A','M','B']:letters(4),x=an(A+S+M),y=an(M+S+B),z=an(A+S+B);
+ const f=bissFig({x:110,y:200},[S,A,M,B],a0,p,q,codage?['','']:[p+'°',q+'°'],codage);
+ const tasks=[{guide:true,q:`Les angles ${x} et ${y} sont-ils adjacents ?`,a:'Oui',options:['Oui','Non'],keep:true,hint:'Même sommet, un côté commun, ils ne se superposent pas ?',corr:`Ils ont le même sommet ${S}, le côté [${S}${M}) commun, et ils ne se superposent pas : ils sont adjacents.`},
+  {guide:true,q:`Les angles ${x} et ${y} ont-ils la même mesure ?`,a:yes?'Oui':'Non',options:['Oui','Non'],keep:true,hint:codage?'Le même petit trait sur deux arcs code deux angles de même mesure.':'Compare les deux mesures écrites sur la figure.',corr:codage?'Oui : le codage indique deux angles de même mesure.':yes?`Oui : ${x} = ${y} = ${p}°.`:`Non : ${p}° ≠ ${q}°.`},
+  {q:`La droite (${S}${M}) est-elle la bissectrice de l’angle ${z} ?`,a:yes?'Oui':'Non',options:['Oui','Non'],keep:true,hint:'La bissectrice partage l’angle en deux angles adjacents de même mesure.',corr:yes?`(${S}${M}) partage ${z} en deux angles adjacents de même mesure : c’est la bissectrice de ${z}.`:`Les deux angles n’ont pas la même mesure : (${S}${M}) n’est pas la bissectrice de ${z}.`}];
+ return {head:`<p>Observe la figure.</p>${f}`,tasks,correction:L(yes?`${x} = ${y}`:`${x} ≠ ${y}`,`(${S}${M}) ${yes?'est':'n’est pas'} la bissectrice de ${z}.`)};}
+function bissCalc(ex){const half=ex?true:Math.random()<.5,k=ex?43:rnd(16,72),t=2*k,a0=ex?6:R(0,15);if(!ex&&AV.has(t))return bissCalc(ex);
+ const [S,A,M,B]=ex?['O','A','M','B']:letters(4),x=an(A+S+M),z=an(A+S+B);
+ const f=bissFig({x:110,y:200},[S,A,M,B],a0,k,k,half?['?','',t+'°']:[k+'°','','?'],true);
+ const tasks=[{guide:true,q:`La bissectrice (${S}${M}) partage l’angle ${z} en deux angles…`,a:'de même mesure',options:['de même mesure','complémentaires','opposés par le sommet'],keep:true,hint:'Relis la définition de la bissectrice.',corr:`${x} = ${an(M+S+B)} : ${half?`${x} est la moitié de ${z}`:`${z} est le double de ${x}`}.`},
+  half?{q:`Calcule la mesure de l’angle ${x}.`,a:String(k),unit:'°',hint:`${x} est la moitié de ${z}.`,corr:`${x} = ${t}° ÷ 2 = ${k}°`}:{q:`Calcule la mesure de l’angle ${z}.`,a:String(t),unit:'°',hint:`${z} est le double de ${x}.`,corr:`${z} = 2 × ${k}° = ${t}°`}];
+ return {head:`<p>La droite (${S}${M}) est la bissectrice de l’angle ${z}, et ${half?`${z} = ${t}°`:`${x} = ${k}°`}.</p>${f}`,tasks,
+  correction:half?L(`${x} = ${F(z,2)}`,`${x} = ${F(t+'°',2)}`,box(`${x} = ${k}°`)):L(`${z} = 2 × ${x}`,`${z} = 2 × ${k}°`,box(`${z} = ${t}°`))};}
+
+const MODULES={
+ nommer:{title:'1. Nommer un angle',desc:'Reconnaître le sommet et les côtés d’un angle, puis le nommer avec trois lettres, le sommet au milieu.',retain:'Un angle se nomme avec trois lettres et un chapeau : le sommet est au milieu. '+an('AOB')+' et '+an('BOA')+' désignent le même angle.',types:[['Sommet, côtés et nom',nommer],['Dans un polygone',polygone]]},
+ nature:{title:'2. Nature d’un angle',desc:'Dire si un angle est nul, aigu, droit, obtus, plat ou plein, d’après sa mesure ou d’après la figure.',retain:'Aigu : entre 0° et 90°. Droit : 90°. Obtus : entre 90° et 180°. Plat : 180°.',types:[['D’après la mesure',natureMesure],['D’après la figure',natureFigure]]},
+ rapporteur:{title:'3. Mesurer avec le rapporteur',desc:'Lire la mesure d’un angle sur le rapporteur, en choisissant la bonne graduation.',retain:'Le centre du rapporteur est sur le sommet, un côté passe par un 0, et je lis la graduation qui part de ce 0. Je vérifie avec la nature de l’angle.',types:[['Mesurer un angle',rapp1],['Plusieurs angles',rapp2]]},
+ particuliers:{title:'4. Angles particuliers',desc:'Reconnaître des angles opposés par le sommet, adjacents, correspondants ou alternes-internes, et des angles complémentaires ou supplémentaires.',retain:'Opposés par le sommet : même mesure. Complémentaires : somme de 90°. Supplémentaires : somme de 180°.',types:[['Reconnaître deux angles',paires],['Complémentaires ou supplémentaires ?',compReco],['Calculer la mesure manquante',compCalc]]},
+ calculer:{title:'5. Calculer une mesure',desc:'Calculer la mesure d’un angle avec des angles adjacents, un angle plat, un angle droit ou des angles opposés par le sommet.',retain:'J’écris l’égalité entre les angles, je remplace par les mesures connues, puis je calcule.',types:[['Adjacents : la somme',adjSomme],['Adjacents : la différence',adjDiff],['Angle plat, angle droit',platDroit],['Opposés par le sommet',opposes]]},
+ bissectrice:{title:'6. Bissectrice',desc:'Reconnaître la bissectrice d’un angle et calculer la moitié ou le double d’une mesure.',retain:'La bissectrice partage l’angle en deux angles adjacents de même mesure : chacun mesure la moitié de l’angle.',types:[['Reconnaître',bissReco],['Calculer',bissCalc]]}};
+
+/* Mon travail : suivi léger, enregistré dans le navigateur (clé propre à l'app). */
+function makeSuivi(app,prefix,modules){
+ const KEY=app+'-suivi',B36=n=>Math.max(0,Math.min(1295,n|0)).toString(36).toUpperCase().padStart(2,'0');
+ let st={};try{st=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){}
+ st.m=st.m||{};st.ds=st.ds||{};
+ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}};
+ const sum=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))%1296;return h;};
+ const nf=x=>String(x).replace('.',',');
+ const fait=(f,r)=>f?`${f} exercice${f>1?'s':''} fait${f>1?'s':''} seul, dont ${r} sans erreur`:'pas commencé';
+ function code(){const day=Math.floor((Date.now()-Date.UTC(2026,0,1))/864e5);let b=B36(day);
+  modules.forEach(([k],i)=>{const r=st.m[k];if(r&&r[0])b+=String(i)+'M'+B36(r[0])+B36(r[1]);});
+  Object.keys(st.ds).sort().forEach(s=>{const d=st.ds[s];b+='D'+s+B36(Math.round(d.n*2))+B36(Math.round(d.max*2));});
+  return (prefix+b+B36(sum(b))).match(/.{1,6}/g).join('-');}
+ function decode(str){const s=String(str).toUpperCase().replace(/[^0-9A-Z]/g,'');if(!s.startsWith(prefix)||s.length<prefix.length+4)return null;
+  const b=s.slice(prefix.length,-2);if(sum(b)!==parseInt(s.slice(-2),36))return null;
+  const out={date:new Date(Date.UTC(2026,0,1)+parseInt(b.slice(0,2),36)*864e5),m:{},ds:{}};
+  for(let i=2;i+6<=b.length;i+=6){const e=b.slice(i,i+6);
+   if(e[0]==='D')out.ds[e[1]]={n:parseInt(e.slice(2,4),36)/2,max:parseInt(e.slice(4,6),36)/2};
+   else{const mod=modules[+e[0]];if(!mod||e[1]!=='M')return null;out.m[mod[0]]=[parseInt(e.slice(2,4),36),parseInt(e.slice(4,6),36)];}}
+  return out;}
+ function table(d){const rows=modules.map(([k,l])=>{const r=d.m[k]||[0,0];return `<tr><td>${l}</td><td>${r[0]?r[0]:'—'}</td><td>${r[0]?r[1]:'—'}</td></tr>`;}).join('');
+  const ds=Object.keys(d.ds).sort().map(s=>`Sujet ${s === 'R' ? 'tiré au hasard' : s} : ${nf(d.ds[s].n)} / ${nf(d.ds[s].max)}`).join(' ; ');
+  return `<table class="suivi-t"><tr><th>Partie</th><th>Exercices faits seul</th><th>Sans erreur</th></tr>${rows}</table><p>Dernière note provisoire au D.S. blanc : ${ds||'pas encore de D.S. vérifié'}.</p>`;}
+ if(!document.getElementById('suivi-css')){const c=document.createElement('style');c.id='suivi-css';c.textContent='.suivi{margin-top:18px}.suivi h2{color:#2f7a45;font-size:1.2rem;line-height:1.3;margin:0 0 .5em}.suivi-st{margin:.2em 0 .6em;font-size:.88rem;color:#5b6478}.suivi-t{border-collapse:collapse;width:100%;margin:.4em 0;font-size:.95rem}.suivi-t th,.suivi-t td{border:1px solid #c9d3ee;padding:.35em .5em;text-align:left}.suivi-t th{background:#f4f6fb;font-weight:700}.suivi-code{display:inline-block;font-family:"STIX Two Text",Cambria,serif;font-size:1.2rem;letter-spacing:.06em;padding:.2em .6em;border:2px dashed #1d3a8a;border-radius:8px;background:#fff;margin:.3em .5em .3em 0}.suivi details{margin-top:.8em}.suivi summary{cursor:pointer;font-weight:700;color:#1d3a8a}.suivi input[type=text]{font:inherit;padding:.4em .6em;border:2px solid #c9d3ee;border-radius:8px;min-width:0;width:16em;max-width:100%}.suivi .suivi-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:.5em 0}.suivi .suivi-bad{color:#b8322a}';document.head.append(c);}
+ return {
+  done(mod,first){const r=st.m[mod]||[0,0];r[0]++;if(first)r[1]++;st.m[mod]=r;save();},
+  ds(s,n,max){st.ds[s]={n:Math.round(n*2)/2,max};save();},
+  status(mod){const r=st.m[mod]||[0,0];return fait(r[0],r[1]);},
+  box(){const sec=document.createElement('section');sec.className='card suivi';const c=code();
+   sec.innerHTML=`<h2>Mon travail</h2><p>Ce que j’ai fait dans « Je m’entraîne seul », partie par partie, et ma dernière note provisoire au D.S. blanc.</p>${table(st)}
+    <p><b>Mon code pour le professeur.</b> Copie-le et envoie-le à ton professeur s’il te le demande.</p>
+    <div class="suivi-row"><span class="suivi-code">${c}</span><button type="button" class="btn light" data-s="copy">Copier le code</button></div>
+    <details><summary>Espace professeur : lire un code</summary><div class="suivi-row"><input type="text" data-s="in" placeholder="${prefix}…" autocomplete="off" aria-label="Code d’un élève"><button type="button" class="btn" data-s="read">Lire le code</button></div><div data-s="out"></div>
+    <p class="suivi-st">Effacer le suivi enregistré sur cet appareil :</p><button type="button" class="btn light" data-s="reset">Tout effacer</button></details>`;
+   const $s=k=>sec.querySelector(`[data-s="${k}"]`);
+   $s('copy').addEventListener('click',()=>{(navigator.clipboard?navigator.clipboard.writeText(c):Promise.reject()).then(()=>{$s('copy').textContent='Code copié';}).catch(()=>{const r=document.createRange();r.selectNode(sec.querySelector('.suivi-code'));getSelection().removeAllRanges();getSelection().addRange(r);});});
+   $s('read').addEventListener('click',()=>{const d=decode($s('in').value);$s('out').innerHTML=d?`<p>Code créé le ${d.date.toLocaleDateString('fr-FR')}.</p>`+table(d):'<p class="suivi-bad">Ce code n’est pas valide. Vérifiez qu’il a été copié en entier.</p>';});
+   let armed=false;$s('reset').addEventListener('click',()=>{if(!armed){armed=true;$s('reset').textContent='Cliquer encore pour tout effacer';return;}st={m:{},ds:{}};save();sec.replaceWith(this.box());});
+   return sec;}
+ };
+}
+function dsKeep(paper,key){const els=()=>[...paper.querySelectorAll('input,select,textarea')].filter(e=>!['button','hidden','submit'].includes(e.type));
+ try{const v=JSON.parse(localStorage.getItem(key)||'null');if(Array.isArray(v))els().forEach((e,i)=>{if(i>=v.length)return;if(e.type==='radio'||e.type==='checkbox')e.checked=!!v[i];else e.value=v[i]==null?'':v[i];});}catch(e){}
+ let dead=false;const save=()=>setTimeout(()=>{if(dead)return;try{localStorage.setItem(key,JSON.stringify(els().map(e=>e.type==='radio'||e.type==='checkbox'?e.checked:e.value)));}catch(e){}},0);
+ ['input','change','click'].forEach(ev=>paper.addEventListener(ev,save));
+ return ()=>{dead=true;try{localStorage.removeItem(key);}catch(e){}};}
+/* =================== D.S. blancs ===================
+   Mesures absentes du cours et des exemples. Le sujet B ne reprend pas les exercices du sujet A.
+   L'élève rédige sur une feuille et ne saisit que le résultat de chaque question. */
+const Q=(q,a,corr)=>({q,a,unit:'°',corr});
+const W=(q,a,opts,corr)=>({q,a,options:opts,corr:corr||`<p>${q.replace('…',a)}</p>`});
+const NAT6=['nul','aigu','droit','obtus','plat','plein'],NAT4=['aigu','droit','obtus','plat'];
+const figRow=a=>`<div class="figrow">${a.map(([t,f])=>`<figure>${f}<figcaption>${t}</figcaption></figure>`).join('')}</div>`;
+const DS={
+A:[
+ {title:'Question de cours',pts:2,head:'<p>Choisis la bonne réponse, puis recopie la phrase complète sur ta feuille.</p>',items:[
+  W('a) Un angle est une portion du plan délimitée par…','deux demi-droites de même origine',['deux droites sécantes','deux demi-droites de même origine','deux segments de même longueur'],'<p>a) Un angle est une portion du plan délimitée par deux demi-droites de même origine.</p>'),
+  W('b) Deux angles supplémentaires ont des mesures dont la somme est égale à…','180°',['90°','180°','360°'],'<p>b) Deux angles supplémentaires ont des mesures dont la somme est égale à 180°.</p>')]},
+ {title:'Nommer un angle',pts:2,head:`<p>Observe le quadrilatère RSTU.</p>${polyFig([pt(60,180,'R'),pt(300,205,'S'),pt(345,60,'T'),pt(140,40,'U')],[{i:1,col:C.orange},{i:3,col:C.bleu}])}`,items:[
+  W('a) L’angle marqué en orange se nomme…',an('RST'),[an('SRT'),an('RST'),an('RTS')],`<p>a) Le sommet S est au milieu : ${an('RST')} (ou ${an('TSR')}).</p>`),
+  W('b) L’angle marqué en bleu se nomme…',an('TUR'),[an('UTR'),an('TRU'),an('TUR')],`<p>b) Le sommet U est au milieu : ${an('TUR')} (ou ${an('RUT')}).</p>`)]},
+ {title:'Nature d’un angle',pts:3,head:'<p>Donne la nature de chaque angle.</p>',items:[
+  W(`a) ${an('ABC')} = 47°`,'aigu',NAT6),W(`b) ${an('DEF')} = 152°`,'obtus',NAT6),W(`c) ${an('GHK')} = 90°`,'droit',NAT6),
+  W(`d) ${an('LMN')} = 180°`,'plat',NAT6),W(`e) ${an('PRS')} = 0°`,'nul',NAT6),W(`f) ${an('TUV')} = 360°`,'plein',NAT6)],
+  corrs:[L(`a) 47° est entre 0° et 90° : ${an('ABC')} est aigu.`,`b) 152° est entre 90° et 180° : ${an('DEF')} est obtus.`,`c) ${an('GHK')} est droit.`,`d) ${an('LMN')} est plat.`,`e) ${an('PRS')} est nul.`,`f) ${an('TUV')} est plein.`)]},
+ {title:'Mesurer avec le rapporteur',pts:3,head:`<p>Le centre du rapporteur est sur le point O. Lis la mesure de chaque angle.</p>${protractor({S:'O',right:'E',left:'F',rays:[{a:65,n:'G'},{a:145,n:'H'}]})}`,items:[
+  Q(`a) ${an('EOG')} =`,'65',L(`a) [OE) passe par le 0 de la graduation extérieure : ${an('EOG')} = 65°.`)),
+  Q(`b) ${an('EOH')} =`,'145',L(`b) Sur la même graduation : ${an('EOH')} = 145°. L’angle est obtus.`)),
+  Q(`c) ${an('FOG')} =`,'115',L(`c) [OF) passe par le 0 de la graduation intérieure : ${an('FOG')} = 115°. L’angle est obtus.`))]},
+ {title:'Angles particuliers',pts:3,head:`<p>Une sécante (en vert) coupe deux droites. Donne le nom de chaque paire d’angles.</p>${figPara(62,[],true)}`,items:[
+  W('a) Les angles 1 et 3 sont…','opposés par le sommet',PAIRES),W('b) Les angles 2 et 6 sont…','correspondants',PAIRES),W('c) Les angles 4 et 6 sont…','alternes-internes',PAIRES),W('d) Les angles 5 et 6 sont…','adjacents',PAIRES)],
+  corrs:[L('a) 1 et 3 ont le même sommet et leurs côtés se prolongent : ils sont opposés par le sommet.','b) 2 et 6 sont du même côté de la sécante, à la même place : ils sont correspondants.','c) 4 et 6 sont de part et d’autre de la sécante, entre les deux droites : ils sont alternes-internes.','d) 5 et 6 ont le même sommet et un côté commun, sans se superposer : ils sont adjacents.')]},
+ {title:'Calculer une mesure',pts:5,head:`<p>Les figures ne sont pas en vraie grandeur. Calcule les mesures demandées en écrivant les égalités.</p>${figRow([['Figure 1',adjFig({x:150,y:205},['E','F','G','H'],10,34,57,['34°','57°','?'])],['Figure 2 : K, L et M sont alignés',figRays({S:pt(200,185,'L',270),W:400,H:215,rays:[{a:180,n:'K',na:-90},{a:63,n:'N'},{a:0,n:'M',na:-90}],marks:[{a1:63,a2:180,r:44,col:C.orange,lab:'117°',lr:24},{a1:0,a2:63,r:44,col:C.bleu,lab:'?',lr:22}]})],['Figure 3 : (UW) et (VZ) se coupent en T',crossFig({x:200,y:120},['T','U','V','W','Z'],15,74,['74°','?','?'])]])}`,items:[
+  Q(`1. ${an('FEH')} =`,'91',L(`1. ${an('FEH')} = ${an('FEG')} + ${an('GEH')}`,`${an('FEH')} = 34° + 57°`,box(`${an('FEH')} = 91°`))),
+  Q(`2. ${an('NLM')} =`,'63',L(`2. ${an('KLN')} + ${an('NLM')} = 180°`,`117° + ${an('NLM')} = 180°`,`${an('NLM')} = 180° − 117°`,box(`${an('NLM')} = 63°`))),
+  Q(`3. a) ${an('WTZ')} =`,'74',L(`3. a) ${an('UTV')} et ${an('WTZ')} sont opposés par le sommet, donc ${an('WTZ')} = ${an('UTV')}.`,box(`${an('WTZ')} = 74°`))),
+  Q(`3. b) ${an('VTW')} =`,'106',L(`3. b) U, T et W sont alignés : ${an('UTV')} + ${an('VTW')} = 180°`,`74° + ${an('VTW')} = 180°`,`${an('VTW')} = 180° − 74°`,box(`${an('VTW')} = 106°`)))]},
+ {title:'Bissectrice',pts:2,head:`<p>1. La droite (OM) est la bissectrice de l’angle ${an('AOB')}, et ${an('AOB')} = 138°.</p><p>2. Les angles adjacents ${an('GOH')} et ${an('HOK')} mesurent 52° et 56°.</p>`,items:[
+  Q(`1. ${an('AOM')} =`,'69',L(`1. ${an('AOM')} = ${F(an('AOB'),2)}`,`${an('AOM')} = ${F('138°',2)}`,box(`${an('AOM')} = 69°`))),
+  W(`2. La droite (OH) est-elle la bissectrice de ${an('GOK')} ?`,'Non',['Oui','Non'],L(`2. 52° ≠ 56° : les deux angles n’ont pas la même mesure, donc (OH) n’est pas la bissectrice de ${an('GOK')}.`))]},
+ {title:'Défi',pts:0,defi:true,head:`<p>À faire seulement si tu as terminé et vérifié tout le reste. Les points A, O et C sont alignés, et O est entre A et C. Le point B est placé de sorte que ${an('BOC')} mesure le double de ${an('AOB')}.</p>`,items:[
+  Q(`${an('AOB')} =`,'60',L(`${an('AOB')} + ${an('BOC')} = 180°`,`${an('AOB')} + 2 × ${an('AOB')} = 180°`,`3 × ${an('AOB')} = 180°`,`${an('AOB')} = 180° ÷ 3`,box(`${an('AOB')} = 60°`)))]}],
+B:[
+ {title:'Vrai ou faux',pts:4,head:'<p>Pour chaque affirmation, réponds par vrai ou faux. Sur ta feuille, corrige les affirmations fausses.</p>',items:[
+  W('a) Dans le nom d’un angle, le sommet s’écrit au milieu.','Vrai',['Vrai','Faux']),W('b) Un angle obtus mesure plus de 180°.','Faux',['Vrai','Faux']),
+  W('c) Deux angles opposés par le sommet ont la même mesure.','Vrai',['Vrai','Faux']),W('d) Deux angles complémentaires ont des mesures dont la somme est égale à 180°.','Faux',['Vrai','Faux']),
+  W('e) Un angle plat mesure 180°.','Vrai',['Vrai','Faux']),W('f) Deux angles adjacents ont le même sommet.','Vrai',['Vrai','Faux']),
+  W('g) Un angle de 91° est aigu.','Faux',['Vrai','Faux']),W('h) La bissectrice d’un angle le partage en deux angles de même mesure.','Vrai',['Vrai','Faux'])],
+  corrs:[L('a) Vrai.','b) Faux : un angle obtus mesure entre 90° et 180°.','c) Vrai.','d) Faux : la somme est égale à 90°.','e) Vrai.','f) Vrai : ils ont aussi un côté commun.','g) Faux : 91° est plus grand que 90°, l’angle est obtus.','h) Vrai.')]},
+ {title:'Nature d’un angle',pts:3,head:`<p>Donne la nature de chaque angle orange.</p>${figRow([['Figure a',miniAngle('aigu',15,55)],['Figure b',miniAngle('droit',30)],['Figure c',miniAngle('obtus',5,125)]])}`,items:[
+  W('Figure a','aigu',NAT4),W('Figure b','droit',NAT4),W('Figure c','obtus',NAT4)],
+  corrs:[L('Figure a : l’angle est plus petit qu’un angle droit, il est aigu.','Figure b : le petit carré code un angle droit.','Figure c : l’angle est plus grand qu’un angle droit, il est obtus.')]},
+ {title:'Mesurer avec le rapporteur',pts:2,head:`<p>Le centre du rapporteur est sur le point S.</p>${protractor({S:'S',left:'K',rays:[{a:20,n:'J'}],mark:[20,180]})}`,items:[
+  W('a) Pour mesurer cet angle, je lis…','la graduation intérieure',GRAD,L('a) Le côté [SK) passe par le 0 de la graduation intérieure.')),
+  Q(`b) ${an('KSJ')} =`,'160',L(`b) ${an('KSJ')} = 160°. L’angle est obtus : c’est cohérent.`))]},
+ {title:'Complémentaires et supplémentaires',pts:3,head:'',items:[
+  W('a) Deux angles qui mesurent 61° et 29° sont…','complémentaires',CS,L('a) 61° + 29° = 90° : ils sont complémentaires.')),
+  Q(`b) ${an('ABC')} et ${an('DEF')} sont supplémentaires et ${an('ABC')} = 76°. ${an('DEF')} =`,'104',L(`b) ${an('ABC')} + ${an('DEF')} = 180°`,`76° + ${an('DEF')} = 180°`,`${an('DEF')} = 180° − 76°`,box(`${an('DEF')} = 104°`))),
+  Q(`c) ${an('GHK')} et ${an('LMN')} sont complémentaires et ${an('GHK')} = 53°. ${an('LMN')} =`,'37',L(`c) ${an('GHK')} + ${an('LMN')} = 90°`,`53° + ${an('LMN')} = 90°`,`${an('LMN')} = 90° − 53°`,box(`${an('LMN')} = 37°`)))]},
+ {title:'Calculer une mesure',pts:4,head:`<p>Les figures ne sont pas en vraie grandeur. Calcule les mesures demandées en écrivant les égalités.</p>${figRow([['Figure 1 : '+an('XVZ')+' est un angle droit',figRays({S:pt(150,205,'V',230),W:400,H:235,rays:[{a:95,n:'X'},{a:56,n:'Y'},{a:5,n:'Z'}],marks:[{right:true,a1:5,col:INK},{a1:56,a2:95,r:60,col:C.orange,lab:'39°',lr:22},{a1:5,a2:56,r:60,col:C.bleu,lab:'?',lr:22}]})],['Figure 2',adjFig({x:150,y:205},['G','H','I','J'],8,59,89,['59°','?','148°'])]])}`,items:[
+  Q(`1. ${an('YVZ')} =`,'51',L(`1. ${an('XVY')} + ${an('YVZ')} = 90°`,`39° + ${an('YVZ')} = 90°`,`${an('YVZ')} = 90° − 39°`,box(`${an('YVZ')} = 51°`))),
+  Q(`2. ${an('IGJ')} =`,'89',L(`2. ${an('HGI')} + ${an('IGJ')} = ${an('HGJ')}`,`59° + ${an('IGJ')} = 148°`,`${an('IGJ')} = 148° − 59°`,box(`${an('IGJ')} = 89°`)))]},
+ {title:'Deux droites sécantes',pts:2,head:`<p>Les droites (AC) et (BD) se coupent en O. La figure n’est pas en vraie grandeur.</p>${crossFig({x:200,y:120},['O','A','B','C','D'],5,81,['81°','?','?'])}`,items:[
+  Q(`a) ${an('COD')} =`,'81',L(`a) ${an('AOB')} et ${an('COD')} sont opposés par le sommet, donc ${an('COD')} = ${an('AOB')}.`,box(`${an('COD')} = 81°`))),
+  Q(`b) ${an('BOC')} =`,'99',L(`b) A, O et C sont alignés : ${an('AOB')} + ${an('BOC')} = 180°`,`81° + ${an('BOC')} = 180°`,`${an('BOC')} = 180° − 81°`,box(`${an('BOC')} = 99°`)))]},
+ {title:'Bissectrice',pts:2,head:`<p>La droite (OT) est la bissectrice de l’angle ${an('ROS')}, et ${an('ROT')} = 46°.</p>`,items:[
+  Q(`a) ${an('TOS')} =`,'46',L(`a) La bissectrice partage ${an('ROS')} en deux angles de même mesure : ${an('TOS')} = ${an('ROT')} = 46°.`)),
+  Q(`b) ${an('ROS')} =`,'92',L(`b) ${an('ROS')} = 2 × ${an('ROT')}`,`${an('ROS')} = 2 × 46°`,box(`${an('ROS')} = 92°`)))]},
+ {title:'Défi',pts:0,defi:true,head:`<p>À faire seulement si tu as terminé et vérifié tout le reste. La droite (OM) est la bissectrice de ${an('AOB')} et ${an('AOM')} = 35°. Les points A, O et C sont alignés, et O est entre A et C.</p>`,items:[
+  Q(`${an('BOC')} =`,'110',L(`${an('AOB')} = 2 × 35° = 70°`,`${an('AOB')} + ${an('BOC')} = 180°`,`70° + ${an('BOC')} = 180°`,`${an('BOC')} = 180° − 70°`,box(`${an('BOC')} = 110°`)))]}]};
+
+function dsNote(n,total){return String(Math.round(n*2)/2).replace('.',',')+' / '+String(total).replace('.',',');}
+const PH={num:'Nombre',set:'Exemple : A, B'};
+/* Choix de réponse : des boutons (les noms d'angles ont un chapeau, impossible dans une liste déroulante). */
+function makeChoice(t,label){const g=dom('div','choices');g.setAttribute('role','group');g.setAttribute('aria-label',label);let val='';
+ const bs=(t.options.length>2&&!t.keep?shuffle(t.options):t.options).map(o=>{const b=dom('button','opt',o);b.type='button';b.dataset.v=o;b.addEventListener('click',()=>{val=o;g.classList.remove('bad');bs.forEach(x=>x.classList.toggle('sel',x===b));});g.append(b);return b;});
+ Object.defineProperty(g,'value',{get:()=>val});Object.defineProperty(g,'disabled',{get:()=>bs[0].disabled,set:v=>bs.forEach(b=>b.disabled=v)});
+ g.mark=a=>bs.forEach(b=>{if(b.dataset.v===a)b.classList.add('good');else if(b.dataset.v===val)b.classList.add('bad');});return g;}
+function makeInput(t,label){let input;
+ if(t.options)return makeChoice(t,label);
+ else{input=dom('input');input.type='text';input.className='eq-input';input.autocomplete='off';input.spellcheck=false;const k=t.kind||'num';input.placeholder=PH[k];if(k==='num')input.inputMode='decimal';}
+ input.setAttribute('aria-label',label);return input;}
+function withUnit(t,input){if(!t.unit)return [input];return [input,dom('span','unit',t.unit)];}
+function renderDS(){
+ const main=$('#app');main.append(dom('h2','ttl','<span>7. D.S. blanc</span>'));const bar=dom('div','subtabs');const variant=VIEW.variant||'A';for(const v of ['A','B'])bar.append(button('Sujet '+v,()=>{VIEW.variant=v;render();},variant===v?'on':''));bar.append(button('Imprimer le sujet',()=>window.print(),'btn light'));main.append(bar);
+ const exos=DS[variant],total=exos.reduce((s,e)=>s+e.pts,0);
+ const paper=dom('div','card ds');paper.append(dom('h3','ds-title','D.S. blanc · Angles et rapporteur · Sujet '+variant),dom('p','','Durée : 45 minutes. Matériel : règle et rapporteur. Rédige toutes tes réponses sur une feuille. Le D.S. est noté sur '+total+' points.'),dom('p','consigne','Quand tu as fini, recopie tes résultats dans les cases, puis vérifie. Les mesures sont en degrés.'));main.append(paper);const controls=[],corrs=[];
+ exos.forEach((ex,ei)=>{
+  const block=dom('section','ds-exo'+(ex.defi?' defi':''),`<h3>${ex.defi?'Défi':'Exercice '+(ei+1)+' · '+ex.title} <span class="small">(${ex.defi?'non noté':String(ex.pts).replace('.',',')+' points'})</span></h3>${ex.head}`);paper.append(block);
+  ex.items.forEach((t,qi)=>{
+   const id=`ds-${ei}-${qi}`,row=dom('div','ds-item'),ans=dom('div','ds-ans');row.append(dom('div','ds-q',t.q),ans);block.append(row);let fields,check;
+   if(t.options){const g=dom('div','ds-radios');g.setAttribute('role','radiogroup');g.setAttribute('aria-label','Réponse '+(ei+1)+'.'+(qi+1));for(const o of t.options){const l=dom('label'),r=dom('input');r.type='radio';r.name=id;r.value=o;l.append(r);l.insertAdjacentHTML('beforeend',' '+o);g.append(l);}ans.append(g);const get=()=>{const c=g.querySelector('input:checked');return c?c.value:'';};fields=[...g.querySelectorAll('input')];check=()=>correct(get(),t);}
+   else{const lab=dom('label','ds-lab','Résultat :'),input=makeInput(t,'Résultat');input.id=id;lab.htmlFor=id;ans.append(lab,...withUnit(t,input));fields=[input];check=()=>correct(input.value,t);}
+   controls.push({t,ans,fields,check,w:ex.pts/ex.items.length});
+  });
+  const corr=dom('div','seyes ds-corr');corr.hidden=true;corr.innerHTML=`<h4>Correction ${ex.defi?'du défi':'de l’exercice '+(ei+1)}</h4>`+(ex.corrs||ex.items.map(t=>t.corr)).join('');block.append(corr);corrs.push(corr);
+ });
+ const clear=dsKeep(paper,'angles-rapporteur-ds-'+variant);
+ const end=button('Vérifier mes résultats et afficher la correction',()=>{let score=0,note=0,n=0;for(const{t,ans,fields,check,w}of controls){const ok=check();if(w){n++;if(ok){score++;note+=w;}}fields.forEach(f=>f.disabled=true);if(t.options)ans.querySelectorAll('label').forEach(l=>{if(l.querySelector('input').value===t.a)l.classList.add('good');});ans.append(dom('span',ok?'okm':'kom',ok?' Juste.':' Bonne réponse : '+answer(t)+'.'));}corrs.forEach(c=>c.hidden=false);setTimeout(()=>SUIVI.ds(variant,note,total));
+  const sum=dom('div','corrige',`<b>Note provisoire : ${dsNote(note,total)}</b> (${score} résultat${score>1?'s':''} juste${score>1?'s':''} sur ${n}).<p>Cette note ne compte que tes résultats. Ta vraie note dépend aussi de ce que tu as écrit sur ta feuille, en particulier les définitions et les justifications. Compare ta feuille avec la correction de chaque exercice.</p>`);sum.append(button('Effacer mes réponses et recommencer',()=>{clear();render();window.scrollTo({top:0});},'btn light'));end.replaceWith(sum);paper.prepend(dom('div','corrige',`<b>Note provisoire : ${dsNote(note,total)}</b> (${score} sur ${n} résultats justes). La correction est sous chaque exercice, et le détail en bas de la page.`));});
+ paper.append(end);
+}
+/* Modelage : toutes les étapes, réponse et explication. Pratique guidée : les mêmes étapes, avec l'aide.
+   Pratique autonome : les étapes intermédiaires (guide) disparaissent. Dans les deux pratiques : deux essais, puis la correction. */
+function renderExercise(parent,ex){
+ const alone=VIEW.mode==='seul';
+ if(alone)parent.append(dom('p','small','Fais le travail sur ton cahier, puis saisis seulement ta réponse.'));
+ parent.append(dom('div','exo-head',ex.head));const box=dom('div','steps');parent.append(box);
+ const tasks=alone?ex.tasks.filter(t=>!t.guide):ex.tasks;
+ let step=0,allFirst=true;
+ function next(){
+  if(step>=tasks.length){if(alone)SUIVI.done(VIEW.page,allFirst);parent.append(dom('div','seyes','<h4>Correction rédigée</h4>'+ex.correction));parent.append(button('Nouvel exercice',render));return;}
+  const t=tasks[step++],q=t.q;const single=tasks.length===1;const row=dom('div','step',(single?'':`<div class="step-n">Étape ${step} sur ${tasks.length}</div>`)+`<div class="step-q">${q}</div>`);box.append(row);
+  if(VIEW.mode==='exemple'){row.classList.add('done');row.append(dom('div','model-a',answer(t)),dom('div','model-e',t.corr));row.append(button(step<tasks.length?'Étape suivante':'Voir la rédaction',()=>{row.querySelector('button').remove();next();}));return;}
+  if(VIEW.mode==='aide'&&t.hint)row.append(dom('p','small aide','<b>Aide :</b> '+t.hint));
+  const area=dom('div','step-a'),feedback=dom('div','fb');feedback.setAttribute('aria-live','polite');row.append(area,feedback);
+  const input=makeInput(t,'Réponse à l’étape '+step);let tries=0;
+  const valid=button('Valider',()=>{
+   if(!input.value.trim()){feedback.className='fb warn';feedback.textContent='Donne une réponse avant de valider.';return;}
+   const ok=correct(input.value,t);tries++;if(!ok)allFirst=false;
+   if(!ok&&tries<2){feedback.className='fb warn';feedback.textContent=VIEW.mode==='aide'&&t.hint?'Ce n’est pas encore juste. Relis l’aide, puis fais un deuxième essai.':'Ce n’est pas encore juste. Vérifie ton travail, puis fais un deuxième essai.';input.classList.add('bad');return;}
+   if(input.mark)input.mark(t.a);
+   input.classList.remove('bad');input.disabled=true;valid.disabled=true;row.classList.add(ok?'done':'missed');feedback.className='fb '+(ok?'ok':'ko');feedback.innerHTML=`<b>${ok?'C’est juste.':'La bonne réponse est '+answer(t)+'.'}</b> ${t.corr}`;row.append(button('Continuer',()=>{row.querySelectorAll('button').forEach(b=>b.remove());next();}));
+  });input.addEventListener('keydown',e=>{if(e.key==='Enter')valid.click();});area.append(...withUnit(t,input),valid);
+ }
+ next();
+}
+const SUIVI=makeSuivi('angles-rapporteur','AR',Object.entries(MODULES).map(([k,m])=>[k,m.title]));
+const VIEW={page:'home',mode:'exemple',lv:{nommer:0,nature:0,rapporteur:0,particuliers:0,calculer:0,bissectrice:0}};
+function go(id){VIEW.page=id;render();window.scrollTo({top:0});}
+function modeBar(parent){const bar=dom('div','subtabs');for(const[key,label]of[['exemple','Je regarde un exemple'],['aide','Je m’entraîne avec de l’aide'],['seul','Je m’entraîne seul']])bar.append(button(label,()=>{VIEW.mode=key;render();},VIEW.mode===key?'on':''));parent.append(bar);}
+function render(){
+ const main=$('#app');main.innerHTML='';document.querySelectorAll('nav [data-page]').forEach(b=>b.classList.toggle('on',b.dataset.page===VIEW.page));
+ if(VIEW.page==='cours'){main.append(dom('h2','ttl','<span>Cours · Angles et rapporteur</span>'),dom('div','card',Object.values(COURS).join('')));return;}
+ if(VIEW.page==='ds'){renderDS();return;}
+ if(VIEW.page==='home'){main.append(dom('div','retenir','<b>À retenir</b>Un angle se nomme avec trois lettres, le sommet au milieu. Il se mesure en degrés avec le rapporteur.'));const grid=dom('div','home');for(const[k,m]of Object.entries(MODULES)){const card=dom('section','card',`<h2>${m.title}</h2><p>${m.desc}</p>`);card.append(dom('p','suivi-st',SUIVI.status(k)),button('Commencer',()=>go(k)));grid.append(card);}const ds=dom('section','card','<h2>7. D.S. blanc</h2><p>Deux sujets différents : tu rédiges sur une feuille, puis tu vérifies tes résultats et tu lis la correction.</p>');ds.append(button('Commencer',()=>go('ds')));grid.append(ds);main.append(grid,SUIVI.box());return;}
+ const mod=MODULES[VIEW.page];main.append(dom('h2','ttl','<span>'+mod.title+'</span>'));modeBar(main);
+ if(VIEW.mode!=='seul'){const det=dom('details','cours-part','<summary>Relire le cours de cette partie</summary>'+COURS[VIEW.page]);main.append(det);main.append(dom('div','retenir','<b>À retenir</b>'+mod.retain));}
+ const levels=dom('div','levels');mod.types.forEach(([label],n)=>levels.append(button((n+1)+'. '+label,()=>{VIEW.lv[VIEW.page]=n;render();},VIEW.lv[VIEW.page]===n?'on':'')));main.append(levels);
+ const panel=dom('div','card');main.append(panel);renderExercise(panel,mod.types[VIEW.lv[VIEW.page]][1](VIEW.mode==='exemple'));
+}
+document.querySelectorAll('nav [data-page]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));render();
+})();
+</script><script>
+/* Charte : les noms de points et les notations de géométrie ([AB], (AB), [AB), AB, (d), (d₁)…)
+   sont écrits en STIX, comme les nombres. La lettre x et la lettre f seule restent en italique STIX.
+   Le SVG, les champs de saisie et les zones .no-math ne sont pas touchés. */
+(() => {
+  "use strict";
+  const XF = /(^|[^\p{L}\p{M}])(x|f)(?![\p{L}\p{M}]|\))/gu;
+  const GEO = /(^|[^\p{L}\p{M}\p{N}.’'])((?:[\[\]()]?[A-Z]{1,3}[\[\]()]?)|\(d[₁₂₃']?\))(?![\p{L}\p{M}\p{N}]|\.\p{L}|[’']\p{L})/gu;
+  const SKIP = "i, em, svg, code, pre, script, style, textarea, select, option, title, input, [contenteditable], .no-math, .m, .ang";
+  function fix(text) {
+    const parent = text.parentElement;
+    if (!parent || parent.closest(SKIP)) return;
+    const value = text.data, marks = [];
+    let m;
+    GEO.lastIndex = 0;
+    while ((m = GEO.exec(value))) marks.push({ s: m.index + m[1].length, e: m.index + m[0].length, it: false });
+    XF.lastIndex = 0;
+    while ((m = XF.exec(value))) { const s = m.index + m[1].length; if (!marks.some(k => s >= k.s && s < k.e)) marks.push({ s, e: s + 1, it: true }); }
+    if (!marks.length) return;
+    marks.sort((a, b) => a.s - b.s);
+    const frag = document.createDocumentFragment();
+    let last = 0;
+    for (const k of marks) {
+      if (k.s < last) continue;
+      if (k.s > last) frag.append(value.slice(last, k.s));
+      const n = document.createElement(k.it ? "i" : "span");
+      n.className = "m";
+      n.textContent = value.slice(k.s, k.e);
+      frag.append(n);
+      last = k.e;
+    }
+    if (last < value.length) frag.append(value.slice(last));
+    text.replaceWith(frag);
+  }
+  function scan(root) {
+    if (root.nodeType === Node.TEXT_NODE) { fix(root); return; }
+    if (root.nodeType !== Node.ELEMENT_NODE || root.closest(SKIP)) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const texts = [];
+    while (walker.nextNode()) texts.push(walker.currentNode);
+    texts.forEach(fix);
+  }
+  scan(document.body);
+  new MutationObserver((records) => {
+    for (const r of records) {
+      if (r.type === "characterData") fix(r.target);
+      else r.addedNodes.forEach(scan);
+    }
+  }).observe(document.body, { childList: true, subtree: true, characterData: true });
+})();
+</script>

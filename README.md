@@ -15,7 +15,7 @@ et la balise ne s’applique pas aux PDF.
 - `style.css`, `page.js` : communs à l’accueil et aux pages de classe.
 - `applications.js` : la liste des fiches de l’accueil et la date de mise à jour.
 - `apps/` : une application par fichier HTML autonome :
-  Arithmétique, Équations, Fonctions (1), Triangles semblables, Calcul littéral (1) (3e) ; Nombres relatifs, Pyramides et cônes (4e) ; Nombres entiers et décimaux, Éléments de géométrie (6e).
+  Arithmétique, Équations, Fonctions (1), Triangles semblables, Calcul littéral (1) (3e) ; Nombres relatifs, Pyramides et cônes, Arithmétique, Pythagore et racine carrée (4e) ; Nombres entiers et décimaux, Éléments de géométrie, Comparer des nombres décimaux, Angles et rapporteur (6e).
 - `devoirs-communs-4e/` : sujet et corrigé du devoir commun de 4e (PDF).
 - `fonts/` : les polices, hébergées dans le dépôt (aucun appel à Google Fonts).
 

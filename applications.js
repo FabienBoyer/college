@@ -58,6 +58,15 @@ window.APPLICATIONS_ELEVES = [
     url: "apps/comparer-decimaux.html"
   },
   {
+    numero: 4,
+    titre: "Angles et rapporteur",
+    niveau: "6e",
+    theme: "Espace et géométrie",
+    description: "Nommer un angle, trouver sa nature, le mesurer avec le rapporteur, reconnaître des angles particuliers, calculer une mesure et utiliser la bissectrice. Le chapitre se termine par deux D.S. blancs.",
+    parties: ["Cours", "1. Nommer", "2. Nature", "3. Rapporteur", "4. Angles particuliers", "5. Calculer", "6. Bissectrice", "7. D.S. blanc"],
+    url: "apps/angles-rapporteur.html"
+  },
+  {
     titre: "Automatismes",
     niveau: "3e",
     theme: "Automatismes du brevet",
@@ -127,6 +136,24 @@ window.APPLICATIONS_ELEVES = [
     description: "Le vocabulaire de la pyramide et du cône, les patrons, les formules d’aire et de volume, le volume d’une pyramide et d’un cône, puis les conversions d’unités de volume et de contenance. Le chapitre se termine par deux D.S. blancs.",
     parties: ["Cours", "1. Vocabulaire", "2. Patrons", "3. Formules", "4. Volume d’une pyramide", "5. Volume d’un cône", "6. Conversions", "7. D.S. blanc"],
     url: "apps/pyramides-cones.html"
+  },
+  {
+    numero: 3,
+    titre: "Arithmétique",
+    niveau: "4e",
+    theme: "Nombres et calculs",
+    description: "Le vocabulaire des multiples et des diviseurs, les critères de divisibilité, la méthode du U pour les diviseurs communs, les tableaux de multiples, les problèmes de partage et de rendez-vous, les nombres premiers et la décomposition en facteurs premiers. Le chapitre se termine par deux D.S. blancs.",
+    parties: ["Cours", "1. Vocabulaire", "2. Critères", "3. Méthode du U", "4. Multiples communs", "5. Problèmes", "6. Nombres premiers", "7. Décomposition", "8. D.S. blanc"],
+    url: "apps/arithmetique-4e.html"
+  },
+  {
+    numero: 4,
+    titre: "Pythagore et racine carrée",
+    niveau: "4e",
+    theme: "Géométrie",
+    description: "Les carrés et les racines carrées, l’hypoténuse, puis le théorème de Pythagore pour calculer une longueur dans un triangle rectangle, avec la rédaction du cahier.",
+    parties: ["Cours", "1. Carrés et racines", "2. Hypoténuse", "3. Calculer l’hypoténuse", "4. Calculer un côté", "5. D.S. blanc"],
+    url: "apps/pythagore.html"
   },
   {
     titre: "Devoir commun de mathématiques 2025-2026",
