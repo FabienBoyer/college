@@ -1,0 +1,661 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Chapitre 3 : Comparer des nombres décimaux – Je prépare mon D.S.</title><link rel="stylesheet" href="../fonts/polices.css"><style>
+:root{
+  --paper:#fbf8f1; --card:#fffefa; --ink:#1d3a8a; --ink2:#2c4fb5; --red:#2f7a45; --margin:#a9d3b5;
+  --line:#dbe3f3; --text:#1b2333; --muted:#5b6478;
+  --ok:#1f7a4d; --okbg:#e7f5ed; --ko:#b8322a; --kobg:#fcecea; --warn:#7a5200; --warnbg:#fff4d6;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; color:var(--text); background:var(--paper);
+  background-image:repeating-linear-gradient(to bottom, transparent 0 31px, #e6ecf7 31px 32px);
+  font:17px/1.55 "Atkinson Hyperlegible", "STIX Two Text", "Segoe UI", system-ui, sans-serif;
+}
+.m,.frac,.ang,svg text{font-family:"STIX Two Text","Cambria Math",Cambria,"Times New Roman",serif}
+.m{font-size:1.08em}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+header{padding:26px 0 10px}
+header h1{margin:0;color:var(--red);font-size:1.9rem;font-weight:700;letter-spacing:.2px}
+header h1 span{border-bottom:2px solid var(--red)}
+header p{margin:.35em 0 0;color:var(--muted)}
+nav{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 0;border-bottom:2px solid var(--ink)}
+nav button{font:inherit;font-size:.95rem;border:2px solid var(--ink);border-bottom:none;background:#eef2fb;color:var(--ink);
+  padding:.45em .9em;border-radius:10px 10px 0 0;cursor:pointer;margin-bottom:-2px}
+nav button.on{background:var(--card);font-weight:700}
+nav button:hover{background:#fff}
+main{padding:18px 0 40px}
+.card{background:var(--card);border:1px solid #e2e6ef;border-radius:4px 14px 14px 4px;padding:22px 24px 26px 34px;position:relative;
+  box-shadow:0 1px 0 rgba(0,0,0,.03),0 6px 18px -12px rgba(29,58,138,.35)}
+.card::before{content:"";position:absolute;left:18px;top:0;bottom:0;width:2px;background:var(--margin)}
+h2.ttl{margin:0 0 .6em;color:var(--red);font-size:1.45rem}
+h2.ttl span{border-bottom:2px solid var(--red)}
+h3{color:var(--ink);margin:1.2em 0 .4em}
+.retenir{border:2px solid var(--ink);border-radius:6px;padding:.6em .9em;margin:0 0 16px;color:var(--ink);background:#f6f8fe}
+.retenir b{display:block;color:var(--red);margin-bottom:.15em}
+.retenir ol,.retenir ul{margin:.2em 0 0;padding-left:1.3em}
+.subtabs{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px}
+.subtabs button,.levels button{font:inherit;font-size:.95rem;padding:.45em .9em;border-radius:999px;border:2px solid var(--ink2);background:#fff;color:var(--ink2);cursor:pointer}
+.subtabs button.on,.levels button.on{background:var(--ink2);color:#fff}
+.levels{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px}
+.levels .lab{color:var(--muted);margin-right:4px}
+.home{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.home .card h2{font-size:1.2rem;margin:0 0 .3em;color:var(--red)}
+.home .card p{margin:.2em 0 1em;color:var(--text)}
+.home .card{display:flex;flex-direction:column}.home .card>button,.home .card>.btn{margin-top:auto;align-self:flex-start}.home .card p.suivi-st{margin:auto 0 .7em;font-size:.88rem;color:var(--muted,#5b6478)}.home .card p.suivi-st+button,.home .card p.suivi-st+.btn{margin-top:0}
+.btn{font:inherit;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:.5em 1.05em;cursor:pointer;margin:.3em .4em .2em 0}
+.btn:hover{background:var(--ink2)}
+.btn.light{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.btn:disabled{opacity:.45;cursor:default}
+.consigne{margin:.2em 0 .6em}
+.question{margin:.6em 0;font-weight:700;color:var(--ink)}
+svg.fig{display:block;width:100%;max-width:600px;height:auto;margin:6px auto 4px}
+.step{background:#fff;border:1px solid #e3e8f2;border-left:5px solid var(--line);border-radius:4px 10px 10px 4px;padding:.65em 1em .75em;margin:.8em 0}
+.step.done{border-left-color:var(--ok)}
+.step.missed{border-left-color:#e0a63a}
+.step-n{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.step-q{margin:.15em 0 .45em}
+.step-a{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.opt{font:inherit;text-align:left;background:#fff;color:var(--text);border:2px solid #cfd8ea;border-radius:8px;padding:.45em .8em;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--ink2)}
+.opt.good{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--ko);background:var(--kobg)}
+.opt:disabled{cursor:default}
+.col{flex-direction:column;align-items:stretch}
+.col>.btn{align-self:flex-start}
+.numf{display:inline-flex;align-items:center;gap:6px;margin-right:10px}
+.numf input{font:inherit;font-family:"STIX Two Text",Cambria,serif;font-size:1.1em;width:6.2em;padding:.3em .45em;border:2px solid #cfd8ea;border-radius:6px;background:#fff}
+.numf input:focus{outline:none;border-color:var(--ink2)}
+.numf input.bad{border-color:var(--ko)}
+.unit{color:var(--muted)}
+select{font:inherit;font-family:"STIX Two Text",Cambria,serif;padding:.25em .35em;border:2px solid #cfd8ea;border-radius:6px;background:#fff}
+select.bad{border-color:var(--ko)}
+.fb{margin-top:.5em;border-radius:6px}
+.fb:empty{display:none}
+.fb.ok{background:var(--okbg);color:#123d28;padding:.45em .7em}
+.fb.ko{background:var(--kobg);color:#5c1712;padding:.45em .7em}
+.fb.warn{background:var(--warnbg);color:#4a3300;padding:.45em .7em}
+.fb .btn{margin-top:.5em}
+.model-a{color:var(--ink);font-weight:700;margin:.2em 0}
+.model-e{color:var(--text);background:#f4f6fb;border-radius:6px;padding:.35em .6em;margin:.3em 0 .4em}
+.corrige{margin:1em 0;border:2px solid var(--ink);border-radius:8px;padding:.7em 1em;background:#fff;color:var(--ink)}
+.corrige h4{margin:0 0 .4em;color:var(--red)}
+.corrige p{margin:.3em 0}
+.box{display:inline-block;border:2px solid var(--ink);border-radius:6px;padding:.1em .5em;margin-top:.2em;font-weight:700}
+.endmsg{margin:.8em 0 .2em;font-weight:700;color:var(--ink)}
+table.tab{border-collapse:collapse;margin:.4em 0;font-size:.97em}
+table.tab th,table.tab td{border:1.5px solid var(--ink2);padding:.3em .6em;text-align:center}
+table.tab th{font-weight:400;color:var(--ink)}
+.rankrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:.2em 0}
+.rankrow .rn{min-width:8.5em}
+.rankrow label{display:inline-flex;gap:4px;align-items:center;color:var(--muted)}
+.homorow{display:inline-flex;align-items:center;gap:6px;margin-right:16px}
+.pool,.answer{display:flex;flex-direction:column;gap:6px;width:100%}
+.answer:empty{display:none}
+.answer .opt{border-color:var(--ok);background:var(--okbg)}
+.shake{animation:sh .35s}
+@keyframes sh{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 .12em;font-size:1.02em;line-height:1.2}
+.frac>span:first-child{border-bottom:1.4px solid currentColor;padding:0 .2em}
+.frac>span:last-child{padding:0 .2em}
+.codebox{font-family:"STIX Two Text",Cambria,serif;font-size:1.6rem;letter-spacing:.08em;color:var(--ink);background:#fff;border:2px dashed var(--ink);border-radius:8px;padding:.3em .7em;display:inline-block;margin:.3em 0}
+.stats td,.stats th{text-align:left}
+.small{font-size:.9rem;color:var(--muted)}
+/* Correction sur papier Seyès (grands carreaux : interligne 8 px, ligne principale tous les 32 px) */
+.seyes{margin:1em 0;position:relative;color:#1d3a8a;background-color:#fff;border:1px solid #d6ddec;border-radius:4px;
+  padding:32px 18px 32px 64px;font-family:"Playwrite FR Moderne","Segoe Script","Comic Sans MS",cursive;font-size:15px;line-height:32px;
+  background-image:linear-gradient(90deg,transparent 0 50px,#e46d6d 50px 52px,transparent 52px),
+    repeating-linear-gradient(to bottom,transparent 0 31px,#8ea6d6 31px 32px),
+    repeating-linear-gradient(to bottom,transparent 0 7px,#dfe5f2 7px 8px);
+  background-position:0 var(--sy,6px)}
+.seyes h4{margin:0 0 32px;color:var(--red);font-weight:400;font-size:17px;line-height:32px;display:inline-block;border-bottom:1.5px solid var(--red);line-height:30px}
+.seyes p{margin:0;line-height:32px}
+.seyes p:has(.frac){line-height:64px;padding:16px 0}
+.seyes .frac{line-height:1.15;vertical-align:middle}
+.seyes b{font-weight:600}
+.seyes .m,.seyes .ang{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-size:1.38em}
+.seyes .frac{font-size:1.3em}
+.seyes .frac .m{font-size:1em}.seyes .op{color:#b8322a}.seyes p.verif{text-decoration:underline;text-underline-offset:4px}.seyes p i.m{font-size:1em}
+.seyes .box{border-color:#1d3a8a;font-weight:400;line-height:26px;margin:3px 0}
+.ds-tools{margin:0 0 6px}
+.ds-exo{border-top:2px solid var(--line);margin-top:18px;padding-top:4px}
+.ds-exo h3{color:var(--red);margin:.6em 0 .3em}
+.ds-title{color:var(--ink);font-size:1.25rem;margin:.8em 0 .2em}
+.ds-part h3{margin:1.2em 0 .1em;color:var(--ink);font-size:1.15rem;border-bottom:2px solid var(--ink);padding-bottom:.15em}
+.ds-info{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin:.2em 0;color:var(--muted)}
+.ds-info span{font-weight:700;color:var(--ink)}
+.ds-ans{background:#f6f8fe;border:2px solid var(--ink2);border-radius:8px;padding:.5em .8em;margin:.8em 0}
+.ds-ans b{color:var(--ink)}
+.ds-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:.35em 0}
+.ds-lab{min-width:2.5em}
+.ds-radios{display:inline-flex;flex-wrap:wrap;gap:8px}
+.ds-radios label{border:2px solid #cfd8ea;border-radius:8px;padding:.15em .6em;background:#fff;cursor:pointer}
+.ds-radios label.good{border-color:var(--ok);background:var(--okbg)}
+.okm{color:var(--ok);font-weight:700}.kom{color:var(--ko);font-weight:700}
+@media print{
+  body{background:#fff;font-size:12pt}
+  nav,footer,.btn,.ds-tools,.ds-ans,.ds-corr,header,.levels,.ds>.consigne,.ds>h2{display:none!important}
+  .ds-title{margin-top:0}
+  .card{box-shadow:none;border:none;padding:0}.card::before{display:none}
+  .ds-exo{break-inside:avoid;border-top:1px solid #999}
+  .ds-part{break-after:avoid}
+  svg.fig{max-width:430px}
+}
+.cl-line{margin:.35em 0;line-height:2.3}
+.blankw{position:relative;display:inline-block}
+.blank{font:inherit;min-width:3.2em;padding:.05em .5em;border:2px dashed var(--ink2);border-radius:6px;background:#f6f8fe;color:var(--ink);cursor:pointer}
+.blank.good,.cl-num.good{border-style:solid;border-color:var(--ok);background:var(--okbg)}
+.blank.bad,.cl-num.bad{border-style:solid;border-color:var(--ko);background:var(--kobg)}
+.blank.fixed,.cl-num.fixed{border-style:solid;border-color:#e0a63a;background:#fff4d6}
+.cl-num{width:4.5em!important}
+.blank-menu{position:absolute;left:0;top:calc(100% + 4px);z-index:20;display:flex;flex-direction:column;gap:4px;background:#fff;border:1px solid #cfd8ea;border-radius:8px;padding:6px;box-shadow:0 8px 24px -8px rgba(29,58,138,.45);min-width:max-content;max-width:min(560px,86vw);line-height:1.4}
+.blank-menu .opt{white-space:normal}
+.grille{margin:.8em 0;border:2px solid var(--ok);border-radius:8px;padding:.6em .9em;background:#f3faf6}
+.grille h4{margin:0 0 .2em;color:var(--ok)}
+.grille-item{display:flex;gap:.6em;align-items:flex-start;margin:.3em 0;cursor:pointer}
+.grille-item input{margin-top:.35em;width:1.1em;height:1.1em}
+.grille-msg{font-weight:700;color:var(--ok);margin:.3em 0 0}
+footer{padding:10px 0 30px;color:var(--muted);font-size:.9rem}
+footer button{font:inherit;background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;padding:0}
+@media (max-width:600px){.card{padding:18px 14px 20px 26px}.card::before{left:12px}header h1{font-size:1.5rem}}
+[hidden]{display:none!important}.eq-input{font:inherit;font-family:"STIX Two Text",Cambria,serif;padding:.35rem .5rem;border:2px solid #cfd8ea;border-radius:6px;max-width:100%;width:11em}.step-a select{max-width:100%;white-space:normal}.step-q{display:block}.home{margin-bottom:1rem}.step select{min-height:44px}.step .btn{min-height:44px}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--red);outline-offset:3px}.seyes{overflow-x:auto}.seyes p{font-family:"STIX Two Text",Cambria,serif;font-size:1.08rem}footer a{color:var(--ink)}@media print{.subtabs,.eq-input,.step button,.fb{display:none!important}.step-q:after{content:' …………………………………………………………';display:block}.ds-exo{break-inside:avoid}.step{border:0;padding:.15rem 0}.card{padding:0}.seyes{background:white;padding:1rem}}
+.back-home{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:0 0 16px;padding:8px 14px;border:2px solid var(--ink);border-radius:7px;background:var(--card);color:var(--ink);font:inherit;font-size:1rem;font-weight:700;text-decoration:none}.back-home:hover{background:#eef2fb}.back-home:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+i.m{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-style:italic;text-transform:none;letter-spacing:0}
+.ds-item{margin:.8em 0}.ds-q{margin:.1em 0 .35em}.ds-ans{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:.3em 0 .6em;padding:.4em .7em}.ds-ans .eq-input{width:9em}.ds-corr{margin-top:.8em}.aide{background:#f6f8fe;border-left:3px solid var(--ink2);padding:.3em .6em;color:var(--text);margin:.2em 0 .5em}.exo-head p{margin-top:0}
+details.cours-part{background:var(--card);border:1px solid #e2e6ef;border-radius:8px;padding:.5em 1em;margin:0 0 14px}details.cours-part>summary{cursor:pointer;color:var(--ink);font-weight:700;min-height:32px}details.cours-part[open]>summary{margin-bottom:.4em}details.cours-part h3:first-child{margin-top:.4em}
+@media print{.ds-q{break-after:avoid}.ds-item{margin:.5em 0}}
+table.num{border-collapse:collapse;margin:.5em 0 .8em;font-size:.95em;max-width:100%}
+table.num th,table.num td{border:1.5px solid var(--ink2);padding:.25em .45em;text-align:center;min-width:2.1em}
+table.num th{font-weight:400;color:var(--ink);font-size:.82em;line-height:1.2}
+table.num th.cl{font-weight:700;background:#f6f8fe}
+table.num td{font-family:"STIX Two Text",Cambria,serif;font-size:1.25em;color:var(--ink)}
+table.num .vg{border-left:4px solid var(--red)}
+table.num td.hl{background:#fff4d6;font-weight:700}
+.tabwrap{overflow-x:auto;max-width:100%}
+.big{font-family:"STIX Two Text",Cambria,serif;font-size:1.45rem;color:var(--ink);margin:.2em 0 .4em}
+.mots{font-style:italic;color:var(--ink)}
+.ds-fill{display:inline-flex;flex-wrap:wrap;align-items:center;gap:4px;font-family:"STIX Two Text",Cambria,serif;font-size:1.1em}
+.ds-fill .eq-input{width:5.2em}
+.ds-fill .frac .eq-input{width:4.4em;margin:2px 0}
+.defi{border:2px dashed var(--ink2);border-radius:8px;padding:.3em .9em;margin-top:18px}
+@media (max-width:600px){table.num th,table.num td{padding:.2em .25em;min-width:1.6em}table.num th{font-size:.7em}}
+.order{display:flex;flex-direction:column;gap:8px;width:100%}
+.order-ans{min-height:2.4em;font-family:"STIX Two Text",Cambria,serif;font-size:1.2em;color:var(--ink);border:2px dashed #cfd8ea;border-radius:8px;padding:.3em .6em;background:#f6f8fe}
+.order-ans .small{font-family:"Atkinson Hyperlegible","STIX Two Text",sans-serif;font-size:.8rem}
+.order.bad .order-ans{border-color:var(--ko)}
+.order-pool{display:flex;flex-wrap:wrap;gap:8px}
+.order-pool .opt{font-family:"STIX Two Text",Cambria,serif;font-size:1.1em;min-width:4em;min-height:44px;text-align:center}
+.order>.btn{align-self:flex-start}
+.cols3{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:.4em 0}
+.cols3 p{margin:.2em 0}
+table.tab td.nm{text-align:left}
+</style></head><body><div class="wrap"><header><a class="back-home" href="../6e/">← Toutes les applications</a><h1><span>Chapitre 3 : Comparer des nombres décimaux</span></h1><p>Je prépare mon D.S. de fin de chapitre.</p><nav aria-label="Parcours du chapitre"><button type="button" data-page="home" class="on">Sommaire</button><button type="button" data-page="cours">Cours</button><button type="button" data-page="comparer">1. Comparer</button><button type="button" data-page="ranger">2. Ranger</button><button type="button" data-page="encadrer">3. Encadrer</button><button type="button" data-page="arrondir">4. Arrondir</button><button type="button" data-page="droite">5. Demi-droite graduée</button><button type="button" data-page="ds">6. D.S. blanc</button></nav></header><main id="app"></main><footer>Collège La Rochefoucauld · Mathématiques 6<sup>e</sup></footer></div><template id="course-source"><section data-mod="comparer"><h3>1. Comparer deux nombres</h3>
+<div class="retenir"><b>À retenir</b>Comparer deux nombres, c’est dire s’ils sont égaux, ou lequel des deux est le plus grand.</div>
+<p>On utilise les symboles suivants :</p><ul><li><span class="m">&lt;</span> se lit « strictement inférieur à » ;</li><li><span class="m">≤</span> se lit « inférieur ou égal à » ;</li><li><span class="m">&gt;</span> se lit « strictement supérieur à ».</li></ul>
+<div class="seyes"><h4>Exemples</h4><p>5 &lt; 7, et aussi 5 ≤ 7, car 5 est plus petit que 7.</p><p>7 ≤ 7, car 7 est égal à 7.</p><p>Par contre, on n’a pas 7 &lt; 7.</p></div>
+<h3>2. La méthode</h3>
+<div class="retenir"><b>À retenir</b>On compare d’abord les parties entières. Si elles sont égales, on compare les chiffres des dixièmes, puis ceux des centièmes, et ainsi de suite, jusqu’à trouver deux chiffres différents.</div>
+<div class="seyes"><h4>Exemple · Comparer 20,32 et 20,311</h4><p>On a 20 = 20 donc on passe aux dixièmes.</p><p>On a 3 = 3 donc on passe aux centièmes.</p><p>On a 2 &gt; 1 donc on peut conclure.</p><p><span class="box">20,32 &gt; 20,311</span></p></div>
+<p>Le nombre de chiffres après la virgule ne compte pas : 20,311 a plus de chiffres que 20,32, mais il est plus petit. Quand un chiffre manque, on peut ajouter un zéro inutile : 16,3 = 16,30, donc 16,3 &gt; 16,03.</p>
+<h3>3. Exemple d’application : disques et cercles</h3>
+<div class="cols3"><p>Le disque « avec le bord » est l’ensemble des points <span class="m">M</span> tels que <span class="m">OM ≤ <i class="m">r</i></span>.</p><p>Le disque « sans le bord » est l’ensemble des points <span class="m">M</span> tels que <span class="m">OM &lt; <i class="m">r</i></span>.</p><p>Le cercle est l’ensemble des points <span class="m">M</span> tels que <span class="m">OM = <i class="m">r</i></span>.</p></div>
+<svg class="fig" viewBox="0 0 600 150" role="img" aria-label="Un disque avec le bord, un disque sans le bord et un cercle"><g fill="none" stroke="#1d3a8a" stroke-width="2.5"><circle cx="100" cy="75" r="55" fill="#c9d6f5"/><circle cx="300" cy="75" r="55" fill="#c9d6f5" stroke-dasharray="9 6"/><circle cx="500" cy="75" r="55"/></g><g stroke="#1d3a8a" stroke-width="1.5" stroke-dasharray="3 3"><line x1="100" y1="75" x2="142" y2="40"/><line x1="300" y1="75" x2="342" y2="40"/><line x1="500" y1="75" x2="542" y2="40"/></g><g stroke="#b8322a" stroke-width="2.2"><path d="M124 49l10 10M134 49l-10 10"/><path d="M324 49l10 10M334 49l-10 10"/><path d="M537 35l10 10M547 35l-10 10"/></g><g font-size="20" fill="#1d3a8a"><text x="90" y="98">O</text><text x="290" y="98">O</text><text x="490" y="98">O</text><text x="104" y="55" font-style="italic">r</text><text x="304" y="55" font-style="italic">r</text><text x="504" y="55" font-style="italic">r</text></g><g font-size="20" fill="#b8322a"><text x="138" y="44">M</text><text x="338" y="44">M</text><text x="552" y="34">M</text></g><g fill="#1d3a8a"><circle cx="100" cy="75" r="3"/><circle cx="300" cy="75" r="3"/><circle cx="500" cy="75" r="3"/></g></svg></section>
+<section data-mod="ranger"><h3>4. Ranger des nombres</h3>
+<div class="retenir"><b>À retenir</b><ul><li>Ranger dans l’<strong>ordre croissant</strong>, c’est écrire les nombres du plus petit au plus grand, avec le symbole &lt;.</li><li>Ranger dans l’<strong>ordre décroissant</strong>, c’est écrire les nombres du plus grand au plus petit, avec le symbole &gt;.</li></ul></div>
+<p>On regroupe d’abord les nombres qui ont la même partie entière. Dans chaque groupe, on compare les dixièmes, puis les centièmes.</p>
+<div class="seyes"><h4>Exemple · ordre croissant</h4><p>34,2 ; 33,8 ; 35,1 ; 34 ; 33,68 ; 34,15</p><p>33,68 &lt; 33,8 &lt; 34 &lt; 34,15 &lt; 34,2 &lt; 35,1</p></div></section>
+<section data-mod="encadrer"><h3>5. Encadrer un nombre</h3>
+<div class="retenir"><b>À savoir</b><ul><li><strong>Encadrer</strong> un nombre, c’est trouver un nombre plus petit et un nombre plus grand que lui.</li><li>Deux nombres <strong>consécutifs</strong> sont deux nombres qui se suivent, comme 903 et 904.</li></ul></div>
+<div class="seyes"><h4>Exemples</h4><p>Entre deux entiers consécutifs : 903 &lt; 903,216 &lt; 904</p><p>Au dixième : 5 870,4 &lt; 5 870,42 &lt; 5 870,5</p></div>
+<p>Pour trouver un nombre compris entre 3,1 et 3,2, on ajoute un zéro inutile : 3,1 = 3,10 et 3,2 = 3,20. Les nombres 3,11 ; 3,12 ; … ; 3,19 conviennent, par exemple 3,1 &lt; 3,15 &lt; 3,2.</p></section>
+<section data-mod="arrondir"><h3>6. Valeurs approchées et arrondi</h3>
+<div class="retenir"><b>À retenir</b>Quand on encadre un nombre au dixième (ou à l’unité, au centième…) :<ul><li>la valeur plus petite que le nombre est la <strong>valeur approchée par défaut</strong> ;</li><li>la valeur plus grande est la <strong>valeur approchée par excès</strong> ;</li><li>l’<strong>arrondi</strong> est celle des deux valeurs approchées qui est la plus proche du nombre.</li></ul></div>
+<div class="seyes"><h4>Exemple · 4,284</h4><p>À l’unité : 4 &lt; 4,284 &lt; 5, l’arrondi est 4.</p><p>Au dixième : 4,2 &lt; 4,284 &lt; 4,3, l’arrondi est 4,3.</p><p>Au centième : 4,28 &lt; 4,284 &lt; 4,29, l’arrondi est 4,28.</p></div>
+<div class="retenir"><b>Méthode</b>Pour arrondir, on regarde le chiffre juste après le rang demandé.<ul><li>S’il vaut 0, 1, 2, 3 ou 4, l’arrondi est la valeur approchée par défaut.</li><li>S’il vaut 5, 6, 7, 8 ou 9, l’arrondi est la valeur approchée par excès.</li></ul></div>
+<p>Exemple : l’arrondi à l’unité de 704,524 est 705, car le chiffre des dixièmes, 5, est supérieur ou égal à 5.</p></section>
+<section data-mod="droite"><h3>7. Demi-droite graduée</h3>
+<div class="retenir"><b>À retenir</b>Sur une demi-droite graduée, les graduations sont régulières : l’écart entre deux graduations voisines est toujours le même. On l’appelle le <strong>pas</strong>. Chaque point est repéré par un nombre, son <strong>abscisse</strong>.</div>
+<p>On écrit <span class="m">A(1,3)</span> pour dire que l’abscisse du point <span class="m">A</span> est 1,3.</p>
+<div id="cours-axe"></div>
+<div class="retenir"><b>Méthode pour trouver le pas</b><ol><li>On calcule la différence entre deux nombres écrits sous la demi-droite.</li><li>On la partage par le nombre d’intervalles qui les séparent.</li></ol></div>
+<div class="seyes"><h4>Exemple · 5,1 et 11,9 séparés par 4 intervalles</h4><p>11,9 − 5,1 = 6,8</p><p>6,8 ÷ 4 = 1,7</p><p>Le pas est 1,7. Les graduations sont 5,1 ; 6,8 ; 8,5 ; 10,2 ; 11,9.</p></div></section>
+</template><script>(() => {
+'use strict';
+const $=s=>document.querySelector(s),R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),pick=a=>a[R(0,a.length-1)];
+const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=R(0,i);[b[i],b[j]]=[b[j],b[i]];}return b;};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const NB=' ';
+/* Les nombres sont manipulés comme des chaînes « 63417,529 » (pas de calcul en virgule flottante). */
+const grp=i=>i.replace(/\B(?=(\d{3})+(?!\d))/g,NB);
+function fmt(s){const [i,d]=String(s).split(',');return d!==undefined?grp(i)+','+d:grp(i);}
+/* Écriture brute avec ses zéros inutiles (053,600) : on ne groupe que les longues parties entières. */
+function raw(s){const [i,d]=String(s).split(',');const I=i.length>4?grp(i):i;return d!==undefined?I+','+d:I;}
+const norm=v=>String(v).replace(/[\s  ]/g,'').replace(/\./g,',').replace(/^\+/,'');
+function canon(v){const s=norm(v);if(!/^\d+(,\d+)?$/.test(s))return null;let [i,d='']=s.split(',');i=i.replace(/^0+(?=\d)/,'');d=d.replace(/0+$/,'');return d?i+','+d:i;}
+const pow10=k=>'1'+'0'.repeat(k);
+const fracH=(n,d)=>`<span class="frac"><span>${n}</span><span>${d}</span></span>`;
+function fromFrac(N,k){N=String(N).padStart(k+1,'0');return canon(k?N.slice(0,-k)+','+N.slice(-k):N);}
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+/* ---------- Rangs ---------- */
+const RANG={6:'millions',5:'centaines de mille',4:'dizaines de mille',3:'milliers',2:'centaines',1:'dizaines',0:'unités','-1':'dixièmes','-2':'centièmes','-3':'millièmes'};
+const unitVal=p=>p>=0?pow10(p):'0,'+'0'.repeat(-p-1)+'1';
+function digitAt(s,p){const [i,d='']=s.split(',');return p>=0?(i[i.length-1-p]||'0'):(d[-p-1]||'0');}
+function nombreDe(s,p){const [i,d='']=s.split(',');const r=p>=0?(i.slice(0,i.length-p)||'0'):i+d.padEnd(-p,'0').slice(0,-p);return r.replace(/^0+(?=\d)/,'');}
+/* ---------- Comparer deux nombres (chaînes, sans calcul en virgule flottante) ---------- */
+function cmp(a,b){const [ai,ad='']=canon(a).split(','),[bi,bd='']=canon(b).split(',');if(ai.length!==bi.length)return ai.length<bi.length?-1:1;if(ai!==bi)return ai<bi?-1:1;const L=Math.max(ad.length,bd.length),x=ad.padEnd(L,'0'),y=bd.padEnd(L,'0');return x<y?-1:x>y?1:0;}
+const SYM=c=>c<0?'<':c>0?'>':'=';
+const H=s=>String(s).replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const OPT3=['<','=','>'];
+const NEXT=['dixièmes','centièmes','millièmes','dix-millièmes','cent-millièmes'];
+const rd=()=>String(R(0,9)),rnz=()=>String(R(1,9));
+/* Nombre à k chiffres après la virgule : entier n (en unités de ce rang) -> chaîne avec exactement k décimales. */
+function fixK(n,k){const s=String(n).padStart(k+1,'0');return k?s.slice(0,-k)+','+s.slice(-k):s;}
+function toUnits(s,k){const [i,d='']=canon(s).split(',');return Number(i+(d+'0000000').slice(0,k));}
+const ARR=['à l’unité','au dixième','au centième','au millième'];
+const RKS=['unités','dixièmes','centièmes','millièmes'];
+/* ---------- Saisie et vérification ---------- */
+function correct(v,t){const k=t.kind||(t.options?'opt':'num');
+ if(k==='opt')return v===t.a;
+ if(k==='exact')return norm(v)===norm(t.a);
+ if(k==='order')return v===t.a;
+ if(k==='chain'){const p=norm(v).split(/[<>;≤≥]+/).filter(Boolean).map(canon);return p.length===t.list.length&&p.every((x,i)=>x===canon(t.list[i]));}
+ if(k==='between'){const c=canon(v);return c!==null&&cmp(c,t.lo)>0&&cmp(c,t.hi)<0;}
+ const c=canon(v);return c!==null&&c===canon(t.a);}
+const answer=t=>t.answerHtml||((t.kind||'num')==='num'||t.kind==='exact'?fmt(t.a):esc(t.a));
+const AVOID=new Set();
+const fresh=f=>{for(let i=0;i<60;i++){const v=f();if(!AVOID.has(canon(v.n||v)))return v;}return f();};
+function dom(tag,cls,html){const n=document.createElement(tag);if(cls)n.className=cls;if(html!==undefined)n.innerHTML=html;return n;}
+function button(label,fn,cls='btn'){const b=dom('button',cls,esc(label));b.type='button';b.addEventListener('click',fn);return b;}
+const box=s=>`<span class="box">${s}</span>`;
+/* ---------- Demi-droite graduée (valeurs en millièmes) ---------- */
+const V3=m=>fromFrac(m,3);
+function axis(o){const W=620,Ht=100,x0=20,x1=W-34,dx=(x1-x0-14)/o.N,X=i=>(x0+12+i*dx).toFixed(1),y=48;
+ let s=`<svg class="fig" viewBox="0 0 ${W} ${Ht}" role="img" aria-label="Demi-droite graduée">`;
+ s+=`<line x1="${o.s0===0?X(0):x0}" y1="${y}" x2="${x1+18}" y2="${y}" stroke="#1d3a8a" stroke-width="2"/><path d="M${x1+20} ${y}l-11 -5.5v11z" fill="#1d3a8a"/>`;
+ for(let i=0;i<=o.N;i++){const L=o.labels.includes(i);s+=`<line x1="${X(i)}" y1="${y-(L?10:7)}" x2="${X(i)}" y2="${y+(L?10:7)}" stroke="#1d3a8a" stroke-width="${L?2.2:1.4}"/>`;
+  if(L)s+=`<text x="${X(i)}" y="${y+38}" text-anchor="middle" font-size="24" fill="#1d3a8a">${fmt(V3(o.s0+i*o.p))}</text>`;
+  else if(o.marks&&o.marks[i])s+=`<text x="${X(i)}" y="${y+38}" text-anchor="middle" font-size="24" fill="#b8322a">${o.marks[i]}</text>`;}
+ for(const[k,i]of Object.entries(o.pts||{}))s+=`<path d="M${(+X(i)-6).toFixed(1)} ${y-6}l12 12M${(+X(i)+6).toFixed(1)} ${y-6}l-12 12" stroke="#b8322a" stroke-width="2.4"/><text x="${X(i)}" y="${y-17}" text-anchor="middle" font-size="24" fill="#b8322a">${k}</text>`;
+ return s+'</svg>';}
+const ptVal=(o,i)=>V3(o.s0+i*o.p);
+
+/* =================== 1. Comparer =================== */
+function pairCompare(){const t=R(0,8),I=pick([R(0,9),R(1,9),R(10,99),R(100,999)]);let A,B;
+ if(t<=2){const p=Array.from({length:R(0,1)},rd).join(''),x=R(0,8),y=R(x+1,9),tail=Array.from({length:R(1,2)},rd).join('').replace(/0$/,rnz());A=`${I},${p}${x}${tail}`;B=`${I},${p}${y}`;}
+ else if(t===3){const a=rnz();A=`${I},${a}`;B=`${I},0${a}`;}
+ else if(t===4){let u,v;do{u=R(11,99);v=R(11,99);}while(u===v||!(u%10)||!(v%10));A=`${u},${v}`;B=`${v},${u}`;}
+ else if(t===5){const J=I+R(1,3);A=`${I},${rd()}${rd()}${rnz()}`;B=`${J},${rnz()}`;}
+ else if(t===6){const u=R(11,99),c=rnz();A=`${u},${c}${rd()}${rnz()}`;B=`${u}${c},${rnz()}`;}
+ else if(t===7){const a=rd(),b=rnz();A=`${I},${a}${b}`;B=`${I},${a}${b}0`;}
+ else{const a=rnz(),b=rnz();A=`${I},${a}${b}`;B=`${I},${a}0${b}`;}
+ if(Math.random()<.5)[A,B]=[B,A];return {n:A,A,B};}
+function compareSteps(A,B){const [ai,ad='']=A.split(','),[bi,bd='']=B.split(','),tasks=[],lines=[];const ci=cmp(ai,bi);let res=ci;
+ tasks.push({guide:true,q:`Compare les parties entières : ${fmt(ai)} … ${fmt(bi)}`,a:SYM(ci),options:OPT3,kind:'opt',keep:true,hint:'Commence toujours par les parties entières, c’est-à-dire les nombres écrits avant la virgule.',corr:ci?`Les parties entières sont différentes : on peut conclure.`:`Les parties entières sont égales : on passe aux dixièmes.`});
+ lines.push(ci?`On a ${fmt(ai)} ${H(SYM(ci))} ${fmt(bi)} donc on peut conclure.`:`On a ${fmt(ai)} = ${fmt(bi)} donc on passe aux dixièmes.`);
+ if(!ci){const L=Math.max(ad.length,bd.length);for(let r=0;r<L;r++){const x=ad[r]||'0',y=bd[r]||'0',c=x<y?-1:x>y?1:0,miss=!ad[r]||!bd[r];
+  tasks.push({guide:true,q:`Compare les chiffres des ${NEXT[r]} : ${x} … ${y}`,a:SYM(c),options:OPT3,kind:'opt',keep:true,hint:miss?`Un des deux nombres n’a pas de chiffre des ${NEXT[r]}. On peut ajouter un zéro inutile : son chiffre des ${NEXT[r]} est 0.`:`Le chiffre des ${NEXT[r]} est le ${r?(r+1)+'e':'premier'} chiffre après la virgule.`,corr:c?'Les chiffres sont différents : on peut conclure.':(r<L-1?`Les chiffres sont égaux : on passe aux ${NEXT[r+1]}.`:'Les chiffres sont égaux, et il n’y a plus d’autre chiffre.')});
+  lines.push(c?`On a ${x} ${H(SYM(c))} ${y} donc on peut conclure.`:(r<L-1?`On a ${x} = ${y} donc on passe aux ${NEXT[r+1]}.`:`On a ${x} = ${y} et il n’y a plus d’autre chiffre.`));
+  if(c){res=c;break;}}}
+ const s=SYM(res);
+ tasks.push({q:`Complète avec &lt;, &gt; ou = : ${raw(A)} … ${raw(B)}`,a:s,options:OPT3,kind:'opt',keep:true,hint:'Le premier rang où les chiffres sont différents décide. Le nombre de chiffres après la virgule ne compte pas.',corr:`${raw(A)} ${H(s)} ${raw(B)}.`});
+ return {tasks,lines,s};}
+function comparer(example){const v=example?{A:'81,357',B:'81,36'}:fresh(pairCompare),st=compareSteps(v.A,v.B);
+ return {n:v.A,head:`<p>Compare ces deux nombres avec le symbole &lt;, &gt; ou =.</p><p class="big">${raw(v.A)} … ${raw(v.B)}</p>`,tasks:st.tasks,correction:st.lines.map(l=>`<p>${l}</p>`).join('')+`<p>${box(raw(v.A)+' '+H(st.s)+' '+raw(v.B))}</p>`};}
+const MEAN={'<':'strictement inférieur à','≤':'inférieur ou égal à','>':'strictement supérieur à'};
+function vraiFaux(example){let A,B,s;
+ if(example){A='7';B='7';s='<';}
+ else{const t=R(0,4),I=R(2,60),a=rnz(),b=rnz();
+  [A,B]=[[`${I},${a}`,`${I},${a}0`],[`${I},${a}`,`${I},0${a}`],[`${I}`,`${I}`],[`${I},${a}${b}`,`${I},${a}`],[`${I},${a}`,`${I+1}`]][t];
+  if(Math.random()<.5)[A,B]=[B,A];s=t===2||t===0?pick(['<','≤']):pick(['<','≤','>']);}
+ const c=cmp(A,B),ok=s==='<'?c<0:s==='≤'?c<=0:c>0,V=ok?'Vrai':'Faux',st=`${raw(A)} ${H(s)} ${raw(B)}`;
+ const extra=!c&&s==='<'?` Par contre, ${raw(A)} ≤ ${raw(B)} est vraie.`:'';
+ const tasks=[{guide:true,q:`Compare les deux nombres : ${raw(A)} … ${raw(B)}`,a:SYM(c),options:OPT3,kind:'opt',keep:true,hint:'Supprime les zéros inutiles, puis compare les parties entières, les dixièmes, les centièmes…',corr:`${raw(A)} ${H(SYM(c))} ${raw(B)}.`},
+  {q:`L’affirmation « ${st} » est-elle vraie ?`,a:V,options:['Vrai','Faux'],kind:'opt',keep:true,hint:`Le symbole ${H(s)} se lit « ${MEAN[s]} ».${s==='≤'?' Il est juste aussi quand les deux nombres sont égaux.':s==='<'?' Il est faux quand les deux nombres sont égaux.':''}`,corr:`${raw(A)} ${H(SYM(c))} ${raw(B)}, donc l’affirmation « ${st} » est ${ok?'vraie':'fausse'}.${extra}`}];
+ return {n:A,head:`<p>Cette affirmation est-elle vraie ou fausse ?</p><p class="big">${st}</p>`,tasks,correction:`<p>${raw(A)} ${H(SYM(c))} ${raw(B)}</p><p>${box('« '+st+' » est '+(ok?'vraie':'fausse'))}</p>`+(extra?`<p>${extra.trim()}</p>`:'')};}
+const POS=['M est à l’intérieur du disque','M est sur le cercle','M est à l’extérieur du disque'];
+function disque(example){let r,d;
+ if(example){r='3,5';d='3,48';}
+ else{const a=Math.random()<.5?'':','+rnz();r=R(2,8)+a;const u=toUnits(r,2),t=R(0,2);
+  d=t===0?canon(fixK(u-R(1,9)*pick([1,10]),2)):t===1?pick([r,fixK(u,2)]):canon(fixK(u+R(1,9)*pick([1,10]),2));}
+ const c=cmp(d,r),pos=POS[c+1];
+ const tasks=[{guide:true,q:`Compare la distance <span class="m">OM</span> et le rayon : ${raw(d)} … ${raw(r)}`,a:SYM(c),options:OPT3,kind:'opt',keep:true,hint:'Compare les parties entières, puis les dixièmes, puis les centièmes.',corr:`${raw(d)} ${H(SYM(c))} ${raw(r)}.`},
+  {q:'Où est le point <span class="m">M</span> ?',a:pos,options:POS,kind:'opt',keep:true,hint:'Si <span class="m">OM</span> est plus petit que le rayon, le point est dans le disque. S’il est égal au rayon, il est sur le cercle.',corr:`<span class="m">OM</span> ${H(SYM(c))} <i class="m">r</i>, donc ${pos.replace('M est','le point M est')}.`}];
+ return {n:d,head:`<p>Un disque a pour centre <span class="m">O</span> et pour rayon <span class="m"><i class="m">r</i> = ${fmt(r)} cm</span>. Un point <span class="m">M</span> est tel que <span class="m">OM = ${raw(d)} cm</span>.</p><p>Le point <span class="m">M</span> est-il à l’intérieur du disque, sur le cercle, ou à l’extérieur du disque ?</p>`,tasks,correction:`<p>OM = ${raw(d)} cm et <i class="m">r</i> = ${fmt(r)} cm</p><p>${raw(d)} ${H(SYM(c))} ${fmt(r)}</p><p>${box(pos)}</p>`};}
+
+/* =================== 2. Ranger =================== */
+function rangSet(I0,n=5){const I=I0??R(2,60),a=R(1,8),b=rnz(),c=rnz(),e=rnz(),f=R(1,8);
+ const cand=[`${I},${a}${b}`,`${I},${a+1}`,`${I+1}`,`${I+1},${c}${e}`,`${I},0${e}`,`${I+1},${f}`,`${I},${a}`,`${I},${a}0${c}`,`${I+1},0${f}`,`${I},${a}${b}${c}`];
+ const seen=new Set(),out=[];for(const x of shuffle(cand)){const k=canon(x);if(!seen.has(k)){seen.add(k);out.push(k);}if(out.length===n)break;}return out;}
+function orderTask(list,dir){const s=[...list].sort(cmp);if(dir==='décroissant')s.reverse();const sym=dir==='décroissant'?'>':'<';
+ return {s,sym,chain:s.map(fmt).join(` ${H(sym)} `),task:{q:`Range les nombres dans l’ordre ${dir} : clique sur chaque nombre, dans l’ordre.`,qAlone:`Range les nombres dans l’ordre ${dir} : clique sur chaque nombre, dans l’ordre.`,kind:'order',items:list,a:s.join('|'),sym,answerHtml:s.map(fmt).join(` ${H(sym)} `),hint:'Commence par les parties entières. Pour les nombres qui ont la même partie entière, compare les dixièmes, puis les centièmes.',corr:`Dans l’ordre ${dir} : ${s.map(fmt).join(` ${H(sym)} `)}.`}};}
+function ranger(dir){return example=>{const list=example?(dir==='croissant'?['5,09','4,9','5','4,19','5,1']:['8,3','8,03','7,95','8','8,31']):fresh(()=>{const l=rangSet();return {n:l[0],l};}).l;
+ const o=orderTask(list,dir),small=dir==='croissant';
+ const tasks=[{guide:true,q:`Quel est le plus ${small?'petit':'grand'} de ces nombres ?`,a:fmt(o.s[0]),options:list.map(fmt),kind:'opt',hint:'Cherche d’abord la plus '+(small?'petite':'grande')+' partie entière. S’il y a plusieurs nombres avec cette partie entière, compare leurs dixièmes.',corr:`Le plus ${small?'petit':'grand'} est ${fmt(o.s[0])}.`},
+  {guide:true,q:`Quel est le plus ${small?'grand':'petit'} de ces nombres ?`,a:fmt(o.s.at(-1)),options:list.map(fmt),kind:'opt',hint:'Même méthode, de l’autre côté.',corr:`Le plus ${small?'grand':'petit'} est ${fmt(o.s.at(-1))}. Il sera écrit en dernier.`},o.task];
+ return {n:list[0],head:`<p>Range ces nombres dans l’ordre ${dir}, c’est-à-dire ${small?'du plus petit au plus grand':'du plus grand au plus petit'}.</p><p class="big">${list.map(fmt).join(' ; ')}</p>`,tasks,correction:`<p>${list.map(fmt).join(' ; ')}</p><p>Ordre ${dir} :</p><p>${box(o.chain)}</p>`};};}
+const NOMS=['Léa','Noah','Inès','Hugo','Jade','Malo','Lina','Sacha','Zoé','Nolan'];
+function course(example){const list=example?['13,4','12,95','13','12,09','13,15']:fresh(()=>{const l=rangSet(R(11,14));return {n:l[0],l};}).l;
+ const names=example?['Jade','Malo','Inès','Noah','Léa']:shuffle(NOMS).slice(0,5),o=orderTask(list,'croissant'),win=names[list.indexOf(o.s[0])];
+ const tasks=[{guide:true,q:'Quel est le plus petit temps ?',a:fmt(o.s[0]),options:list.map(fmt),kind:'opt',hint:'Compare d’abord les parties entières, puis les dixièmes, puis les centièmes.',corr:`Le plus petit temps est ${fmt(o.s[0])} s.`},
+  {q:'Qui a gagné la course ?',a:win,options:names,kind:'opt',keep:true,hint:'Le gagnant est celui qui a mis le moins de temps.',corr:`${win} a mis ${fmt(o.s[0])} s, c’est le plus petit temps : ${win} a gagné.`},
+  {...o.task,q:'Range les temps du plus rapide au plus lent, c’est-à-dire dans l’ordre croissant : clique sur chaque temps, dans l’ordre.',qAlone:null}];
+ const tab='<table class="tab"><tr><th>Élève</th><th>Temps (s)</th></tr>'+names.map((n,j)=>`<tr><td class="nm">${n}</td><td class="m">${fmt(list[j])}</td></tr>`).join('')+'</table>';
+ return {n:list[0],head:`<p>Cinq élèves ont couru le 80 mètres. Voici leurs temps, en secondes.</p><div class="tabwrap">${tab}</div><p>Le gagnant est celui qui a mis le moins de temps.</p>`,tasks,correction:`<p>${o.chain}</p><p>${box(win+' a gagné la course.')}</p>`};}
+
+/* =================== 3. Encadrer =================== */
+function entiers(example){let s,fr=null;
+ if(example){s='12,07';}
+ else{const v=fresh(()=>{const I=pick([R(0,9),R(10,99),R(100,999)]),k=R(1,3);let d;do{d=Array.from({length:k},rd).join('');}while(d.at(-1)==='0');return {n:I+','+d};});s=v.n;if(Math.random()<.35){const [i,d]=s.split(',');fr={N:Number(i+d),k:d.length};}}
+ const I=s.split(',')[0],J=String(Number(I)+1),tasks=[];
+ if(fr)tasks.push({guide:true,q:'Écris d’abord cette fraction sous forme décimale.',a:s,hint:'Le nombre de zéros du dénominateur est égal au nombre de chiffres après la virgule.',corr:`${fracH(fmt(String(fr.N)),fmt(pow10(fr.k)))} = ${fmt(s)}.`});
+ tasks.push({q:`Quel entier écris-tu à gauche ? … &lt; ${fmt(s)}`,a:I,hint:'C’est l’entier juste avant le nombre : sa partie entière.',corr:`L’entier juste avant ${fmt(s)} est sa partie entière, ${fmt(I)}.`},
+  {q:`Quel entier écris-tu à droite ? ${fmt(s)} &lt; …`,a:J,hint:'C’est l’entier qui suit la partie entière.',corr:`L’entier suivant est ${fmt(I)} + 1 = ${fmt(J)}.`});
+ const shown=fr?fracH(fmt(String(fr.N)),fmt(pow10(fr.k))):fmt(s);
+ return {n:s,head:`<p>Encadre ce nombre par deux entiers consécutifs.</p><p class="big">${shown}</p>`,tasks,correction:(fr?`<p>${shown} = ${fmt(s)}</p>`:'')+`<p>${box(fmt(I)+' &lt; '+fmt(s)+' &lt; '+fmt(J))}</p>`};}
+function auRang(example){let s,k;
+ if(example){s='1,953';k=1;}
+ else{k=R(1,2);s=fresh(()=>{const I=pick([R(0,9),R(10,99)]),n=R(k+1,3);let d;do{d=Array.from({length:n},rd).join('');}while(d.at(-1)==='0');if(Math.random()<.25)d=d.slice(0,k-1)+'9'+d.slice(k);return {n:I+','+d};}).n;}
+ const u=toUnits(s,k),lo=fixK(u,k),hi=fixK(u+1,k),c=s.split(',')[1][k-1];
+ const tasks=[{guide:true,q:`Quel est le chiffre des ${RKS[k]} de ${fmt(s)} ?`,a:c,hint:`Le chiffre des ${RKS[k]} est le ${k===1?'premier':'deuxième'} chiffre après la virgule.`,corr:`Le chiffre des ${RKS[k]} est ${c}.`},
+  {q:`Quel nombre écris-tu à gauche ? … &lt; ${fmt(s)}`,a:lo,hint:`Garde les chiffres jusqu’à celui des ${RKS[k]}, et supprime les autres.`,corr:`On garde les chiffres jusqu’aux ${RKS[k]} : ${fmt(lo)}.`},
+  {q:`Quel nombre écris-tu à droite ? ${fmt(s)} &lt; …`,a:hi,hint:`Ajoute 1 ${RKS[k].slice(0,-1)} au nombre de gauche.`,corr:`${fmt(lo)} + ${fixK(1,k)} = ${fmt(hi)}.`}];
+ return {n:s,head:`<p>Encadre ce nombre ${ARR[k]}, c’est-à-dire par deux nombres consécutifs ayant ${k} chiffre${k>1?'s':''} après la virgule.</p><p class="big">${fmt(s)}</p>`,tasks,correction:`<p>${box(fmt(lo)+' &lt; '+fmt(s)+' &lt; '+fmt(hi))}</p>`};}
+function intercaler(example){let lo,hi,k;
+ if(example){lo='6,4';hi='6,5';k=1;}
+ else{k=R(0,2);const I=R(1,40);if(k===0){lo=String(I);hi=String(I+1);}else{const u=Number(I+Array.from({length:k},rd).join(''));const x=k===2&&u%10===9?u-1:u;lo=canon(fixK(x,k));hi=canon(fixK(x+1,k));}}
+ const ex=canon(fixK(toUnits(lo,k+1)+5,k+1)),tasks=[];
+ if(k){const lo0=fixK(toUnits(lo,k+1),k+1),hi0=fixK(toUnits(hi,k+1),k+1);
+  tasks.push({guide:true,q:`Écris ${fmt(lo)} avec ${k+1} chiffres après la virgule.`,a:lo0,kind:'exact',hint:'Ajoute un zéro inutile à la fin.',corr:`${fmt(lo)} = ${lo0}.`},
+   {guide:true,q:`Écris ${fmt(hi)} avec ${k+1} chiffres après la virgule.`,a:hi0,kind:'exact',hint:'Ajoute un zéro inutile à la fin. Si le nombre est entier, écris une virgule puis des zéros.',corr:`${fmt(hi)} = ${hi0}.`});}
+ tasks.push({q:`Trouve un nombre compris entre ${fmt(lo)} et ${fmt(hi)}.`,a:ex,kind:'between',lo,hi,answerHtml:'par exemple '+fmt(ex),hint:k?`Entre ${fixK(toUnits(lo,k+1),k+1)} et ${fixK(toUnits(hi,k+1),k+1)}, il y a des nombres avec ${k+1} chiffres après la virgule.`:`Un nombre compris entre ${lo} et ${hi} s’écrit ${lo},…`,corr:`Tous les nombres de ${fmt(lo)} à ${fmt(hi)}, sans ces deux nombres, conviennent. Par exemple ${fmt(lo)} &lt; ${fmt(ex)} &lt; ${fmt(hi)}.`});
+ return {n:lo,head:`<p>Trouve un nombre compris entre ces deux nombres.</p><p class="big">${fmt(lo)} &lt; … &lt; ${fmt(hi)}</p>`,tasks,correction:(k?`<p>${fmt(lo)} = ${fixK(toUnits(lo,k+1),k+1)} et ${fmt(hi)} = ${fixK(toUnits(hi,k+1),k+1)}</p>`:'')+`<p>${box(fmt(lo)+' &lt; '+fmt(ex)+' &lt; '+fmt(hi))}</p><p>D’autres réponses sont justes.</p>`};}
+
+/* =================== 4. Arrondir =================== */
+function arrondi(k){return example=>{let s;
+ if(example)s=['8,627','3,145','12,368'][k];
+ else s=fresh(()=>{const I=pick([R(0,9),R(10,99),R(100,999)]),n=R(k+1,3);let d;do{d=Array.from({length:n},rd).join('');}while(d.at(-1)==='0');const r=Math.random();if(r<.2)d=d.slice(0,k)+'5'+d.slice(k+1);else if(r<.35&&k)d=d.slice(0,k-1)+'9'+d.slice(k);return {n:I+','+d};}).n;
+ const u=toUnits(s,k),lo=fixK(u,k),hi=fixK(u+1,k),c=s.split(',')[1][k],up=Number(c)>=5,res=up?hi:lo,nx=NEXT[k];
+ const tasks=[{guide:true,q:`Quelle est la valeur approchée par défaut de ${fmt(s)} ${ARR[k]} ?`,a:lo,hint:k?`Garde les chiffres jusqu’à celui des ${RKS[k]}, et supprime les autres.`:'C’est la partie entière du nombre.',corr:`La valeur approchée par défaut ${ARR[k]} est ${fmt(lo)}.`},
+  {guide:true,q:`Quelle est la valeur approchée par excès de ${fmt(s)} ${ARR[k]} ?`,a:hi,hint:`Ajoute 1 ${k?RKS[k].slice(0,-1):'unité'} à la valeur par défaut.`,corr:`La valeur approchée par excès ${ARR[k]} est ${fmt(hi)}. On a ${fmt(lo)} &lt; ${fmt(s)} &lt; ${fmt(hi)}.`},
+  {guide:true,q:`Quel est le chiffre des ${nx} de ${fmt(s)} ?`,a:c,hint:`C’est le chiffre juste après celui des ${RKS[k]}.`,corr:`Le chiffre des ${nx} est ${c}.`},
+  {q:`Quel est l’arrondi de ${fmt(s)} ${ARR[k]} ?`,a:res,hint:`Si le chiffre des ${nx} vaut 5 ou plus, on prend la valeur par excès. Sinon, on prend la valeur par défaut.`,corr:`Le chiffre des ${nx} est ${c}, ${up?'et '+c+' ≥ 5':'et '+c+' &lt; 5'} : l’arrondi est la valeur approchée par ${up?'excès':'défaut'}, ${fmt(res)}.`}];
+ return {n:s,head:`<p>Arrondis ce nombre ${ARR[k]}.</p><p class="big">${fmt(s)}</p>`,tasks,correction:`<p>${fmt(lo)} &lt; ${fmt(s)} &lt; ${fmt(hi)}</p><p>Le chiffre des ${nx} est ${c} ${up?'et '+c+' ≥ 5':'et '+c+' &lt; 5'}, donc l’arrondi est la valeur approchée par ${up?'excès':'défaut'}.</p><p>${box('Arrondi '+ARR[k]+' : '+fmt(res))}</p>`};};}
+
+/* =================== 5. Demi-droite graduée =================== */
+const AX=[{p:100,lab:10,u:1000},{p:500,lab:2,u:1000},{p:200,lab:5,u:1000},{p:2000,lab:5,u:10000},{p:5000,lab:2,u:10000},{p:10,lab:10,u:100},{p:1000,lab:5,u:5000},{p:50,lab:2,u:100}];
+function axisCfg(c,npts){const N=c.lab>=10?14:Math.max(10,c.lab*3);const i0=R(1,N-c.lab-1);const V0=(R(0,4)+Math.ceil(i0*c.p/c.u))*c.u;const o={N,p:c.p,s0:V0-i0*c.p,labels:[i0,i0+c.lab],pts:{}};
+ const free=shuffle([...Array(N+1).keys()].filter(i=>!o.labels.includes(i))).slice(0,npts).sort((a,b)=>a-b);'ABCD'.slice(0,npts).split('').forEach((L,j)=>o.pts[L]=free[j]);return o;}
+function pasSteps(o){const L0=V3(o.s0+o.labels[0]*o.p),L1=V3(o.s0+o.labels[1]*o.p),k=o.labels[1]-o.labels[0],diff=V3(k*o.p),p=V3(o.p);
+ return {L0,L1,k,diff,p,tasks:[{guide:true,q:`Combien d’intervalles y a-t-il entre la graduation ${fmt(L0)} et la graduation ${fmt(L1)} ?`,a:String(k),hint:'Compte les espaces entre deux traits, pas les traits.',corr:`Il y a ${k} intervalles.`},
+  {guide:true,q:`Calcule la différence ${fmt(L1)} − ${fmt(L0)}.`,a:diff,hint:'Soustrais le plus petit nombre au plus grand.',corr:`${fmt(L1)} − ${fmt(L0)} = ${fmt(diff)}.`},
+  {guide:true,q:'Quel est le pas, c’est-à-dire la valeur d’un intervalle ?',a:p,hint:`Partage la différence en ${k} intervalles égaux : ${fmt(diff)} ÷ ${k}.`,corr:`${fmt(diff)} ÷ ${k} = ${fmt(p)}. Le pas est ${fmt(p)}.`}],
+  lines:[`${fmt(L1)} − ${fmt(L0)} = ${fmt(diff)}`,`${fmt(diff)} ÷ ${k} = ${fmt(p)}, le pas est ${fmt(p)}.`]};}
+function lire(example){const o=example?{N:14,p:100,s0:1600,labels:[4,14],pts:{A:1,B:8}}:fresh(()=>{const o=axisCfg(pick(AX.slice(0,7)),2);return {n:V3(o.s0),o};}).o;
+ const P=pasSteps(o),tasks=[...P.tasks];for(const[L,i]of Object.entries(o.pts))tasks.push({q:`Quelle est l’abscisse du point ${L} ?`,a:ptVal(o,i),hint:'Pars d’une graduation où un nombre est écrit, et ajoute (ou enlève) le pas autant de fois qu’il y a d’intervalles jusqu’au point.',corr:`${L}(${fmt(ptVal(o,i))}).`});
+ return {n:V3(o.s0),head:'<p>Lis l’abscisse de chaque point.</p>'+axis(o),tasks,correction:P.lines.map(l=>`<p>${l}</p>`).join('')+`<p>${box(Object.entries(o.pts).map(([L,i])=>`${L}(${fmt(ptVal(o,i))})`).join(' ; '))}</p>`};}
+function trouverPas(example){let o;
+ if(example)o={N:6,p:1300,s0:3600,labels:[0,4],pts:{A:2,B:6}};
+ else{const k=pick([4,5]),p=pick([1700,1500,700,1200,2500,300,600,1100,1300,800,1400]),v0=R(1,20)*100;o={N:k+2,p,s0:v0,labels:[0,k],pts:{A:R(1,k-1),B:k+R(1,2)}};}
+ const P=pasSteps(o),tasks=[P.tasks[1],P.tasks[0],{...P.tasks[2],guide:false}];
+ for(const[L,i]of Object.entries(o.pts))tasks.push({q:`Quelle est l’abscisse du point ${L} ?`,a:ptVal(o,i),hint:'Ajoute le pas, graduation après graduation, depuis le premier nombre écrit.',corr:`${L}(${fmt(ptVal(o,i))}).`});
+ const grads=[...Array(o.N+1).keys()].map(i=>fmt(ptVal(o,i))).join(' ; ');
+ return {n:V3(o.s0),head:'<p>Les graduations de cette demi-droite sont régulières. Trouve le pas, puis l’abscisse de chaque point.</p>'+axis(o),tasks,correction:P.lines.map(l=>`<p>${l}</p>`).join('')+`<p>Graduations : ${grads}</p><p>${box(Object.entries(o.pts).map(([L,i])=>`${L}(${fmt(ptVal(o,i))})`).join(' ; '))}</p>`};}
+function placer(example){const o=example?{N:10,p:500,s0:1000,labels:[2,4],pts:{A:1,B:5,C:7,D:9}}:fresh(()=>{const o=axisCfg(pick(AX.slice(0,7)),4);return {n:V3(o.s0),o};}).o;
+ const P=pasSteps(o),Ls=Object.keys(o.pts),q1=example?'C':pick(Ls),q2=example?'A':pick(Ls.filter(x=>x!==q1)),tasks=[...P.tasks];
+ for(const L of [q1,q2])tasks.push({q:`Quel point a pour abscisse ${fmt(ptVal(o,o.pts[L]))} ?`,a:L,options:Ls,kind:'opt',keep:true,hint:'Pars d’une graduation où un nombre est écrit, et compte les intervalles en ajoutant le pas à chaque fois.',corr:`${L}(${fmt(ptVal(o,o.pts[L]))}).`});
+ return {n:V3(o.s0),head:'<p>Trouve le point qui correspond à chaque abscisse.</p>'+axis(o),tasks,correction:P.lines.map(l=>`<p>${l}</p>`).join('')+`<p>${box(Ls.map(L=>`${L}(${fmt(ptVal(o,o.pts[L]))})`).join(' ; '))}</p>`};}
+
+/* =================== Modules =================== */
+const MODULES={
+ comparer:{title:'1. Comparer deux nombres',desc:'Comparer deux nombres décimaux avec &lt;, &gt; ou =, utiliser ≤, et l’appliquer au disque et au cercle.',retain:'On compare d’abord les parties entières, puis les dixièmes, puis les centièmes… Le nombre de chiffres après la virgule ne compte pas : 9,45 &gt; 9,405.',types:[['Comparer',comparer],['< ou ≤ : vrai ou faux',vraiFaux],['Disque et cercle',disque]]},
+ ranger:{title:'2. Ranger des nombres',desc:'Ranger une liste de nombres dans l’ordre croissant ou décroissant.',retain:'Ordre croissant : du plus petit au plus grand, avec &lt;. Ordre décroissant : du plus grand au plus petit, avec &gt;.',types:[['Ordre croissant',ranger('croissant')],['Ordre décroissant',ranger('décroissant')],['Une course',course]]},
+ encadrer:{title:'3. Encadrer un nombre',desc:'Encadrer un nombre par deux entiers consécutifs, au dixième ou au centième, et trouver un nombre compris entre deux autres.',retain:'Encadrer un nombre, c’est trouver un nombre plus petit et un nombre plus grand que lui. Deux entiers consécutifs se suivent : 7 &lt; 7,956 &lt; 8.',types:[['Entiers consécutifs',entiers],['Au dixième, au centième',auRang],['Intercaler un nombre',intercaler]]},
+ arrondir:{title:'4. Arrondir un nombre',desc:'Trouver les valeurs approchées par défaut et par excès, puis l’arrondi.',retain:'L’arrondi est la valeur approchée la plus proche. On regarde le chiffre juste après le rang demandé : 5 ou plus, valeur par excès ; moins de 5, valeur par défaut.',types:[['À l’unité',arrondi(0)],['Au dixième',arrondi(1)],['Au centième',arrondi(2)]]},
+ droite:{title:'5. Demi-droite graduée',desc:'Trouver le pas d’une graduation, lire l’abscisse d’un point et retrouver un point.',retain:'Le pas est l’écart entre deux graduations voisines. On le trouve en partageant la différence entre deux nombres écrits par le nombre d’intervalles.',types:[['Lire une abscisse',lire],['Trouver le pas',trouverPas],['Retrouver un point',placer]]}};
+
+/* Mon travail : suivi léger, enregistré dans le navigateur (clé propre à l'app). */
+function makeSuivi(app,prefix,modules){
+ const KEY=app+'-suivi',B36=n=>Math.max(0,Math.min(1295,n|0)).toString(36).toUpperCase().padStart(2,'0');
+ let st={};try{st=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){}
+ st.m=st.m||{};st.ds=st.ds||{};
+ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}};
+ const sum=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))%1296;return h;};
+ const nf=x=>String(x).replace('.',',');
+ const fait=(f,r)=>f?`${f} exercice${f>1?'s':''} fait${f>1?'s':''} seul, dont ${r} sans erreur`:'pas commencé';
+ function code(){const day=Math.floor((Date.now()-Date.UTC(2026,0,1))/864e5);let b=B36(day);
+  modules.forEach(([k],i)=>{const r=st.m[k];if(r&&r[0])b+=String(i)+'M'+B36(r[0])+B36(r[1]);});
+  Object.keys(st.ds).sort().forEach(s=>{const d=st.ds[s];b+='D'+s+B36(Math.round(d.n*2))+B36(Math.round(d.max*2));});
+  return (prefix+b+B36(sum(b))).match(/.{1,6}/g).join('-');}
+ function decode(str){const s=String(str).toUpperCase().replace(/[^0-9A-Z]/g,'');if(!s.startsWith(prefix)||s.length<prefix.length+4)return null;
+  const b=s.slice(prefix.length,-2);if(sum(b)!==parseInt(s.slice(-2),36))return null;
+  const out={date:new Date(Date.UTC(2026,0,1)+parseInt(b.slice(0,2),36)*864e5),m:{},ds:{}};
+  for(let i=2;i+6<=b.length;i+=6){const e=b.slice(i,i+6);
+   if(e[0]==='D')out.ds[e[1]]={n:parseInt(e.slice(2,4),36)/2,max:parseInt(e.slice(4,6),36)/2};
+   else{const mod=modules[+e[0]];if(!mod||e[1]!=='M')return null;out.m[mod[0]]=[parseInt(e.slice(2,4),36),parseInt(e.slice(4,6),36)];}}
+  return out;}
+ function table(d){const rows=modules.map(([k,l])=>{const r=d.m[k]||[0,0];return `<tr><td>${l}</td><td>${r[0]?r[0]:'—'}</td><td>${r[0]?r[1]:'—'}</td></tr>`;}).join('');
+  const ds=Object.keys(d.ds).sort().map(s=>`Sujet ${s === 'R' ? 'tiré au hasard' : s} : ${nf(d.ds[s].n)} / ${nf(d.ds[s].max)}`).join(' ; ');
+  return `<table class="suivi-t"><tr><th>Partie</th><th>Exercices faits seul</th><th>Sans erreur</th></tr>${rows}</table><p>Dernière note provisoire au D.S. blanc : ${ds||'pas encore de D.S. vérifié'}.</p>`;}
+ if(!document.getElementById('suivi-css')){const c=document.createElement('style');c.id='suivi-css';c.textContent='.suivi{margin-top:18px}.suivi h2{color:#2f7a45;font-size:1.2rem;line-height:1.3;margin:0 0 .5em}.suivi-st{margin:.2em 0 .6em;font-size:.88rem;color:#5b6478}.suivi-t{border-collapse:collapse;width:100%;margin:.4em 0;font-size:.95rem}.suivi-t th,.suivi-t td{border:1px solid #c9d3ee;padding:.35em .5em;text-align:left}.suivi-t th{background:#f4f6fb;font-weight:700}.suivi-code{display:inline-block;font-family:"STIX Two Text",Cambria,serif;font-size:1.2rem;letter-spacing:.06em;padding:.2em .6em;border:2px dashed #1d3a8a;border-radius:8px;background:#fff;margin:.3em .5em .3em 0}.suivi details{margin-top:.8em}.suivi summary{cursor:pointer;font-weight:700;color:#1d3a8a}.suivi input[type=text]{font:inherit;padding:.4em .6em;border:2px solid #c9d3ee;border-radius:8px;min-width:0;width:16em;max-width:100%}.suivi .suivi-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:.5em 0}.suivi .suivi-bad{color:#b8322a}';document.head.append(c);}
+ return {
+  done(mod,first){const r=st.m[mod]||[0,0];r[0]++;if(first)r[1]++;st.m[mod]=r;save();},
+  ds(s,n,max){st.ds[s]={n:Math.round(n*2)/2,max};save();},
+  status(mod){const r=st.m[mod]||[0,0];return fait(r[0],r[1]);},
+  box(){const sec=document.createElement('section');sec.className='card suivi';const c=code();
+   sec.innerHTML=`<h2>Mon travail</h2><p>Ce que j’ai fait dans « Je m’entraîne seul », partie par partie, et ma dernière note provisoire au D.S. blanc.</p>${table(st)}
+    <p><b>Mon code pour le professeur.</b> Copie-le et envoie-le à ton professeur s’il te le demande.</p>
+    <div class="suivi-row"><span class="suivi-code">${c}</span><button type="button" class="btn light" data-s="copy">Copier le code</button></div>
+    <details><summary>Espace professeur : lire un code</summary><div class="suivi-row"><input type="text" data-s="in" placeholder="${prefix}…" autocomplete="off" aria-label="Code d’un élève"><button type="button" class="btn" data-s="read">Lire le code</button></div><div data-s="out"></div>
+    <p class="suivi-st">Effacer le suivi enregistré sur cet appareil :</p><button type="button" class="btn light" data-s="reset">Tout effacer</button></details>`;
+   const $s=k=>sec.querySelector(`[data-s="${k}"]`);
+   $s('copy').addEventListener('click',()=>{(navigator.clipboard?navigator.clipboard.writeText(c):Promise.reject()).then(()=>{$s('copy').textContent='Code copié';}).catch(()=>{const r=document.createRange();r.selectNode(sec.querySelector('.suivi-code'));getSelection().removeAllRanges();getSelection().addRange(r);});});
+   $s('read').addEventListener('click',()=>{const d=decode($s('in').value);$s('out').innerHTML=d?`<p>Code créé le ${d.date.toLocaleDateString('fr-FR')}.</p>`+table(d):'<p class="suivi-bad">Ce code n’est pas valide. Vérifiez qu’il a été copié en entier.</p>';});
+   let armed=false;$s('reset').addEventListener('click',()=>{if(!armed){armed=true;$s('reset').textContent='Cliquer encore pour tout effacer';return;}st={m:{},ds:{}};save();sec.replaceWith(this.box());});
+   return sec;}
+ };
+}
+function dsKeep(paper,key){const els=()=>[...paper.querySelectorAll('input,select,textarea')].filter(e=>!['button','hidden','submit'].includes(e.type));
+ try{const v=JSON.parse(localStorage.getItem(key)||'null');if(Array.isArray(v))els().forEach((e,i)=>{if(i>=v.length)return;if(e.type==='radio'||e.type==='checkbox')e.checked=!!v[i];else e.value=v[i]==null?'':v[i];});}catch(e){}
+ let dead=false;const save=()=>setTimeout(()=>{if(dead)return;try{localStorage.setItem(key,JSON.stringify(els().map(e=>e.type==='radio'||e.type==='checkbox'?e.checked:e.value)));}catch(e){}},0);
+ ['input','change','click'].forEach(ev=>paper.addEventListener(ev,save));
+ return ()=>{dead=true;try{localStorage.removeItem(key);}catch(e){}};}
+const SUIVI=makeSuivi('comparer-decimaux','CD',Object.entries(MODULES).map(([k,m])=>[k,m.title.replace(/&lt;/g,'<')]));
+const VIEW={page:'home',mode:'exemple',lv:{comparer:0,ranger:0,encadrer:0,arrondir:0,droite:0}};
+function go(id){VIEW.page=id;render();window.scrollTo({top:0});}
+function modeBar(parent){const bar=dom('div','subtabs');for(const[key,label]of[['exemple','Je regarde un exemple'],['aide','Je m’entraîne avec de l’aide'],['seul','Je m’entraîne seul']])bar.append(button(label,()=>{VIEW.mode=key;render();},VIEW.mode===key?'on':''));parent.append(bar);}
+const PH={num:'Nombre',exact:'Nombre',between:'Nombre',chain:'Exemple : 1,2 < 1,5 < 2'};
+/* Ranger : l'élève clique sur les nombres dans l'ordre (plus simple qu'une saisie sur téléphone). */
+function orderInput(t){const w=dom('div','order'),ans=dom('div','order-ans'),pool=dom('div','order-pool');let picked=[],off=false;
+ const draw=()=>{ans.innerHTML=picked.length?picked.map(fmt).join(` ${H(t.sym)} `):'<span class="small">Clique sur les nombres dans l’ordre.</span>';pool.querySelectorAll('button').forEach(b=>b.disabled=off||picked.includes(b.dataset.v));};
+ for(const x of t.items){const b=button(fmt(x),()=>{picked.push(x);w.classList.remove('bad');draw();},'opt');b.dataset.v=x;pool.append(b);}
+ const clr=button('Effacer',()=>{picked=[];draw();},'btn light');w.append(ans,pool,clr);
+ Object.defineProperty(w,'value',{get:()=>picked.length===t.items.length?picked.join('|'):''});
+ Object.defineProperty(w,'disabled',{get:()=>off,set:v=>{off=!!v;clr.disabled=off;draw();}});
+ draw();return w;}
+function makeInput(t,label){let input;
+ if(t.kind==='order')input=orderInput(t);
+ else if(t.options){input=dom('select');input.append(new Option('Choisir une réponse',''));for(const o of (t.options.length>2&&!t.keep?shuffle(t.options):t.options))input.append(new Option(o,o));}
+ else{input=dom('input');input.type='text';input.className='eq-input';input.autocomplete='off';input.spellcheck=false;const k=t.kind||'num';input.placeholder=PH[k]||'Nombre';if(k!=='chain')input.inputMode='decimal';else input.style.width='100%';}
+ input.setAttribute('aria-label',label);return input;}
+
+/* Modelage : toutes les étapes, réponse et explication. Pratique guidée : les mêmes étapes, avec l'aide et le tableau.
+   Pratique autonome : les étapes intermédiaires (guide) disparaissent. Dans les deux pratiques : deux essais, puis la correction. */
+function renderExercise(parent,ex){
+ const alone=VIEW.mode==='seul';
+ if(alone)parent.append(dom('p','small','Fais le travail sur ton cahier, puis saisis seulement ta réponse.'));
+ parent.append(dom('div','exo-head',ex.head));if(ex.table&&!alone)parent.append(dom('div','',ex.table));const box=dom('div','steps');parent.append(box);
+ const tasks=alone?ex.tasks.filter(t=>!t.guide):ex.tasks;
+ let step=0,allFirst=true;
+ function next(){
+  if(step>=tasks.length){if(alone)SUIVI.done(VIEW.page,allFirst);parent.append(dom('div','seyes','<h4>Correction rédigée</h4>'+ex.correction));parent.append(button('Nouvel exercice',render));return;}
+  const t=tasks[step++],q=alone&&t.qAlone?t.qAlone:t.q;const single=tasks.length===1;const row=dom('div','step',(single?'':`<div class="step-n">Étape ${step} sur ${tasks.length}</div>`)+`<div class="step-q">${q}</div>`);box.append(row);
+  if(VIEW.mode==='exemple'){row.classList.add('done');row.append(dom('div','model-a',answer(t)),dom('div','model-e',t.corr));row.append(button(step<tasks.length?'Étape suivante':'Voir la rédaction',()=>{row.querySelector('button').remove();next();}));return;}
+  if(VIEW.mode==='aide'&&t.hint)row.append(dom('p','small aide','<b>Aide :</b> '+t.hint));
+  const area=dom('div','step-a'),feedback=dom('div','fb');feedback.setAttribute('aria-live','polite');row.append(area,feedback);
+  const input=makeInput(t,'Réponse à l’étape '+step);let tries=0;
+  const valid=button('Valider',()=>{
+   if(!input.value.trim()){feedback.className='fb warn';feedback.textContent='Donne une réponse avant de valider.';return;}
+   const ok=correct(input.value,t);tries++;if(!ok)allFirst=false;
+   if(!ok&&tries<2){feedback.className='fb warn';feedback.textContent=VIEW.mode==='aide'&&t.hint?'Ce n’est pas encore juste. Relis l’aide, puis fais un deuxième essai.':'Ce n’est pas encore juste. Vérifie ton travail, puis fais un deuxième essai.';input.classList.add('bad');return;}
+   input.classList.remove('bad');input.disabled=true;valid.disabled=true;row.classList.add(ok?'done':'missed');feedback.className='fb '+(ok?'ok':'ko');feedback.innerHTML=`<b>${ok?'C’est juste.':'La bonne réponse est '+answer(t)+'.'}</b> ${t.corr}`;row.append(button('Continuer',()=>{row.querySelectorAll('button').forEach(b=>b.remove());next();}));
+  });input.addEventListener('keydown',e=>{if(e.key==='Enter')valid.click();});area.append(input,valid);
+ }
+ next();
+}
+/* =================== D.S. blancs ===================
+   Nombres absents du cours et des exemples. Le sujet B ne reprend pas les exercices du sujet A.
+   L'élève rédige sur une feuille et ne saisit que le résultat de chaque question. */
+const F=(n,d)=>fracH(n,d);
+const C=(q,a,corr,extra={})=>{const t=q.replace(/<[^>]+>/g,'').replace(/ :$/,'');return {q,a,corr:corr||`<p>${t}${/(=|est)$/.test(t)?' ':' : '}${fmt(a)}</p>`,...extra};};
+const W=(q,a,opts,corr)=>({q,a,options:opts,kind:'opt',corr:corr||`<p>${q} : ${a}</p>`});
+/* Comparer : q contient « … », la correction remplace « … » par le symbole et ajoute la justification. */
+const S3=(q,a,why)=>W(q,a,OPT3,`<p>${q.replace('…',H(a))} : ${why}</p>`);
+const VF=(q,a,why)=>W(q,a,['Vrai','Faux'],`<p>${q} : ${a}. ${why.charAt(0).toUpperCase()+why.slice(1)}</p>`);
+const CH=(q,list,sym)=>({q,kind:'chain',list,a:'',answerHtml:list.map(fmt).join(` ${H(sym)} `),corr:`<p>${q.split(' ')[0]} ${list.map(fmt).join(` ${H(sym)} `)}</p>`});
+const BT=(q,lo,hi,ex)=>({q,kind:'between',lo,hi,a:ex,answerHtml:'par exemple '+fmt(ex),corr:`<p>${q.split(' ').slice(0,2).join(' ')} Par exemple ${fmt(lo)} &lt; ${fmt(ex)} &lt; ${fmt(hi)}.</p>`});
+const AX_A1={N:20,p:100,s0:1800,labels:[2,12],pts:{E:5,F:10,G:17}},AX_A2={N:10,p:500,s0:5000,labels:[2,8],pts:{H:7,K:9}};
+const AX_B1={N:6,p:700,s0:2400,labels:[0,4],pts:{A:2,B:6}},AX_B2={N:9,p:2000,s0:8000,labels:[1,6],pts:{C:3,D:8}};
+const POSD=['à l’intérieur du disque','sur le cercle','à l’extérieur du disque'];
+const DS={
+A:[
+ {title:'Comparer',pts:4,head:'<p>Complète avec &lt;, &gt; ou =. Sur ta feuille, justifie comme dans le cours.</p>',items:[
+  S3('a) 58,4 … 58,39','>','58 = 58, puis 4 &gt; 3 aux dixièmes.'),S3('b) 7,06 … 7,6','<','7 = 7, puis 0 &lt; 6 aux dixièmes.'),
+  S3('c) 0,507 … 0,57','<','0 = 0, puis 5 = 5 aux dixièmes, puis 0 &lt; 7 aux centièmes.'),S3('d) 213 … 98,7','>','213 &gt; 98 pour les parties entières.'),
+  S3('e) 14,80 … 14,8','=','le zéro à la fin de 14,80 est inutile.'),S3('f) 3,291 … 3,29','>','3,29 = 3,290, et 1 &gt; 0 aux millièmes.'),
+  S3('g) 26,05 … 25,96','>','26 &gt; 25 pour les parties entières.'),S3('h) 0,09 … 0,1','<','0 = 0, puis 0 &lt; 1 aux dixièmes.')]},
+ {title:'Ranger',pts:3,head:'<p>Écris tes réponses avec les symboles &lt; ou &gt;.</p>',items:[
+  CH('1. Range dans l’ordre croissant : 6,4 ; 6,04 ; 6,44 ; 6 ; 6,404 ; 7,1 :',['6','6,04','6,4','6,404','6,44','7,1'],'<'),
+  CH('2. Range dans l’ordre décroissant : 12,5 ; 1,25 ; 12,05 ; 125 ; 12,55 :',['125','12,55','12,5','12,05','1,25'],'>')]},
+ {title:'Encadrer',pts:4,head:'<p>1. Encadre chaque nombre par deux entiers consécutifs. 2. Encadre 3,147 au dixième, puis au centième. 3. Trouve un nombre compris entre les deux nombres donnés.</p>',items:[
+  {q:'1. a)',fill:'{} &lt; 15,82 &lt; {}',a:['15','16'],corr:'<p>1. a) 15 &lt; 15,82 &lt; 16</p>'},
+  {q:'1. b)',fill:'{} &lt; 0,39 &lt; {}',a:['0','1'],corr:'<p>1. b) 0 &lt; 0,39 &lt; 1</p>'},
+  {q:'1. c) Écris d’abord la fraction sous forme décimale.',fill:`${F(806,100)} = {} donc {} &lt; ${F(806,100)} &lt; {}`,a:['8,06','8','9'],corr:`<p>1. c) ${F(806,100)} = 8,06 donc 8 &lt; ${F(806,100)} &lt; 9</p>`},
+  {q:'2. a) Au dixième :',fill:'{} &lt; 3,147 &lt; {}',a:['3,1','3,2'],corr:'<p>2. a) 3,1 &lt; 3,147 &lt; 3,2</p>'},
+  {q:'2. b) Au centième :',fill:'{} &lt; 3,147 &lt; {}',a:['3,14','3,15'],corr:'<p>2. b) 3,14 &lt; 3,147 &lt; 3,15</p>'},
+  BT('3. a) 4,6 &lt; … &lt; 4,7','4,6','4,7','4,65'),BT('3. b) 11 &lt; … &lt; 12','11','12','11,5'),BT('3. c) 0,25 &lt; … &lt; 0,26','0,25','0,26','0,255')]},
+ {title:'Valeurs approchées et arrondis',pts:4,head:'<p>On considère le nombre <span class="big">26,738</span>.</p>',items:[
+  C('a) La valeur approchée par défaut à l’unité est :','26'),C('b) La valeur approchée par excès à l’unité est :','27'),
+  C('c) L’arrondi à l’unité est :','27','<p>c) 26 &lt; 26,738 &lt; 27 et le chiffre des dixièmes est 7 ≥ 5 : l’arrondi à l’unité est 27.</p>'),
+  C('d) L’arrondi au dixième est :','26,7','<p>d) 26,7 &lt; 26,738 &lt; 26,8 et le chiffre des centièmes est 3 &lt; 5 : l’arrondi au dixième est 26,7.</p>'),
+  C('e) L’arrondi au centième est :','26,74','<p>e) 26,73 &lt; 26,738 &lt; 26,74 et le chiffre des millièmes est 8 ≥ 5 : l’arrondi au centième est 26,74.</p>'),
+  C('f) L’arrondi au dixième de 5,96 est :','6,0','<p>f) 5,9 &lt; 5,96 &lt; 6,0 et le chiffre des centièmes est 6 ≥ 5 : l’arrondi au dixième est 6,0.</p>')]},
+ {title:'Demi-droite graduée',pts:4,head:'<p>1. Lis l’abscisse des points <span class="m">E</span>, <span class="m">F</span> et <span class="m">G</span>.</p>'+axis(AX_A1)+'<p>2. Trouve le pas de cette demi-droite, puis l’abscisse des points <span class="m">H</span> et <span class="m">K</span>.</p>'+axis(AX_A2),items:[
+  C('1. a) L’abscisse du point E est :','2,3'),C('1. b) L’abscisse du point F est :','2,8'),C('1. c) L’abscisse du point G est :','3,5'),
+  C('2. a) Le pas est :','0,5','<p>2. a) 9 − 6 = 3 et 3 ÷ 6 = 0,5. Le pas est 0,5.</p>'),C('2. b) L’abscisse du point H est :','8,5'),C('2. c) L’abscisse du point K est :','9,5')]},
+ {title:'Saut en longueur',pts:1,head:'<p>Quatre élèves ont sauté en longueur. Léa : 3,4 m ; Tom : 3,38 m ; Inès : 3,405 m ; Hugo : 3,04 m.</p>',items:[
+  W('a) Qui a sauté le plus loin ?','Inès',['Léa','Tom','Inès','Hugo'],'<p>3,405 &gt; 3,4 &gt; 3,38 &gt; 3,04, donc Inès a sauté le plus loin.</p>'),
+  W('b) Qui a sauté le moins loin ?','Hugo',['Léa','Tom','Inès','Hugo'],'<p>Hugo a sauté le moins loin, avec 3,04 m.</p>')]}],
+B:[
+ {title:'Vrai ou faux',pts:4,head:'<p>Pour chaque affirmation, réponds par vrai ou faux. Sur ta feuille, corrige les affirmations fausses.</p>',items:[
+  VF('a) 4,7 &lt; 4,69','Faux','4 = 4, puis 7 &gt; 6 aux dixièmes, donc 4,7 &gt; 4,69.'),VF('b) 12,3 ≤ 12,30','Vrai','12,3 = 12,30, et ≤ est juste quand les nombres sont égaux.'),
+  VF('c) 0,8 &gt; 0,75','Vrai','8 &gt; 7 aux dixièmes.'),VF('d) 9,09 &lt; 9,1','Vrai','0 &lt; 1 aux dixièmes.'),
+  VF('e) 56 &lt; 56','Faux','56 = 56. On peut écrire 56 ≤ 56.'),VF('f) 2,405 &gt; 2,45','Faux','4 = 4 aux dixièmes, puis 0 &lt; 5 aux centièmes, donc 2,405 &lt; 2,45.'),
+  VF('g) 70,1 &gt; 7,01','Vrai','70 &gt; 7 pour les parties entières.'),VF('h) 0,6 ≤ 0,06','Faux','6 &gt; 0 aux dixièmes, donc 0,6 &gt; 0,06.')].map(t=>({...t,options:['Vrai','Faux']}))},
+ {title:'Ranger',pts:3,head:'<p>Écris tes réponses avec les symboles &lt; ou &gt;.</p>',items:[
+  CH('1. Voici les longueurs de six cordes, en mètres : 2,8 ; 2,75 ; 2,08 ; 2,805 ; 3 ; 2,5. Range-les dans l’ordre croissant :',['2,08','2,5','2,75','2,8','2,805','3'],'<'),
+  CH('2. Range dans l’ordre décroissant : 0,9 ; 0,19 ; 0,91 ; 0,099 ; 1 :',['1','0,91','0,9','0,19','0,099'],'>')]},
+ {title:'Intercaler et encadrer',pts:4,head:'<p>1. Encadre chaque nombre par deux entiers consécutifs. 2. Trouve un nombre compris entre les deux nombres donnés. 3. Encadre 15,284 au dixième, puis au centième.</p>',items:[
+  {q:'1. a)',fill:'{} &lt; 99,6 &lt; {}',a:['99','100'],corr:'<p>1. a) 99 &lt; 99,6 &lt; 100</p>'},
+  {q:'1. b)',fill:'{} &lt; 0,07 &lt; {}',a:['0','1'],corr:'<p>1. b) 0 &lt; 0,07 &lt; 1</p>'},
+  BT('2. a) 8 &lt; … &lt; 9','8','9','8,5'),BT('2. b) 2,3 &lt; … &lt; 2,4','2,3','2,4','2,35'),BT('2. c) 0,51 &lt; … &lt; 0,52','0,51','0,52','0,515'),
+  {q:'3. a) Au dixième :',fill:'{} &lt; 15,284 &lt; {}',a:['15,2','15,3'],corr:'<p>3. a) 15,2 &lt; 15,284 &lt; 15,3</p>'},
+  {q:'3. b) Au centième :',fill:'{} &lt; 15,284 &lt; {}',a:['15,28','15,29'],corr:'<p>3. b) 15,28 &lt; 15,284 &lt; 15,29</p>'}]},
+ {title:'Arrondis',pts:4,head:'<p>1. On considère le nombre <span class="big">9,675</span>. 2. On considère le nombre <span class="big">41,049</span>.</p>',items:[
+  C('1. a) L’arrondi à l’unité est :','10','<p>1. a) 9 &lt; 9,675 &lt; 10 et le chiffre des dixièmes est 6 ≥ 5 : l’arrondi à l’unité est 10.</p>'),
+  C('1. b) L’arrondi au dixième est :','9,7','<p>1. b) 9,6 &lt; 9,675 &lt; 9,7 et le chiffre des centièmes est 7 ≥ 5 : l’arrondi au dixième est 9,7.</p>'),
+  C('1. c) L’arrondi au centième est :','9,68','<p>1. c) 9,67 &lt; 9,675 &lt; 9,68 et le chiffre des millièmes est 5 ≥ 5 : l’arrondi au centième est 9,68.</p>'),
+  W('1. d) L’arrondi au dixième de 9,675 est la valeur approchée…','par excès',['par défaut','par excès'],'<p>1. d) 9,7 est la valeur approchée par excès, car 9,7 &gt; 9,675.</p>'),
+  C('2. a) L’arrondi au dixième est :','41,0','<p>2. a) 41,0 &lt; 41,049 &lt; 41,1 et le chiffre des centièmes est 4 &lt; 5 : l’arrondi au dixième est 41,0.</p>'),
+  C('2. b) L’arrondi au centième est :','41,05','<p>2. b) 41,04 &lt; 41,049 &lt; 41,05 et le chiffre des millièmes est 9 ≥ 5 : l’arrondi au centième est 41,05.</p>')]},
+ {title:'Demi-droite graduée',pts:4,head:'<p>1. Les graduations sont régulières. Trouve le pas, puis l’abscisse des points <span class="m">A</span> et <span class="m">B</span>.</p>'+axis(AX_B1)+'<p>2. Trouve le pas, puis l’abscisse des points <span class="m">C</span> et <span class="m">D</span>.</p>'+axis(AX_B2),items:[
+  C('1. a) La différence 5,2 − 2,4 est :','2,8','<p>1. a) 5,2 − 2,4 = 2,8</p>'),C('1. b) Le pas est :','0,7','<p>1. b) 2,8 ÷ 4 = 0,7. Le pas est 0,7.</p>'),
+  C('1. c) L’abscisse du point A est :','3,8','<p>1. c) 2,4 + 0,7 + 0,7 = 3,8</p>'),C('1. d) L’abscisse du point B est :','6,6','<p>1. d) 5,2 + 0,7 + 0,7 = 6,6</p>'),
+  C('2. a) Le pas est :','2','<p>2. a) 20 − 10 = 10 et 10 ÷ 5 = 2. Le pas est 2.</p>'),C('2. b) L’abscisse du point C est :','14'),C('2. c) L’abscisse du point D est :','24')]},
+ {title:'Disque et cercle',pts:1,head:'<p>Un disque a pour centre <span class="m">O</span> et pour rayon 4,5 cm. Où se trouve chaque point ?</p>',items:[
+  W('a) <span class="m">OM = 4,49 cm</span>','à l’intérieur du disque',POSD,'<p>a) 4,49 &lt; 4,5 : M est à l’intérieur du disque.</p>'),
+  W('b) <span class="m">ON = 4,50 cm</span>','sur le cercle',POSD,'<p>b) 4,50 = 4,5 : N est sur le cercle.</p>'),
+  W('c) <span class="m">OP = 4,6 cm</span>','à l’extérieur du disque',POSD,'<p>c) 4,6 &gt; 4,5 : P est à l’extérieur du disque.</p>')]}]};
+/* Les nombres des D.S. blancs et du cours ne sont jamais tirés dans les exercices. */
+['58,4','58,39','7,06','0,507','98,7','3,291','26,05','25,96','6,404','12,55','12,05','15,82','0,39','8,06','3,147','4,6','26,738','5,96','3,405','3,38','4,69','9,09','2,405','70,1','2,805','2,75','2,08','0,099','0,91','99,6','2,3','0,51','15,284','9,675','41,049','4,49','20,32','20,311','16,3','16,03','33,68','34,15','903,216','5870,42','4,284','704,524','39,570499','81,357','1,953','12,07','8,627','3,145','12,368','6,4'].forEach(x=>AVOID.add(canon(x)));
+$('#course-source').content.querySelector('#cours-axe').innerHTML=axis({N:32,p:100,s0:0,labels:[0,10,20,30],pts:{A:13,B:27,C:8}})+'<p>On lit <span class="m">A(1,3)</span>, <span class="m">B(2,7)</span> et <span class="m">C(0,8)</span>. Ici, le pas est 0,1.</p>';
+function dsNote(n,total){return String(Math.round(n*2)/2).replace('.',',')+' / '+String(total).replace('.',',');}
+
+function renderDS(){
+ const main=$('#app');main.append(dom('h2','ttl','<span>6. D.S. blanc</span>'));const bar=dom('div','subtabs');const variant=VIEW.variant||'A';for(const v of ['A','B'])bar.append(button('Sujet '+v,()=>{VIEW.variant=v;render();},variant===v?'on':''));bar.append(button('Imprimer le sujet',()=>window.print(),'btn light'));main.append(bar);
+ const exos=DS[variant],total=exos.reduce((s,e)=>s+e.pts,0);
+ const paper=dom('div','card ds');paper.append(dom('h3','ds-title','D.S. blanc · Comparer des nombres décimaux · Sujet '+variant),dom('p','','Durée : 45 minutes. Calculatrice interdite. Rédige toutes tes réponses sur une feuille. Le D.S. est noté sur '+total+' points.'),dom('p','consigne','Quand tu as fini, recopie tes résultats dans les cases, puis vérifie.'));main.append(paper);const controls=[],corrs=[];
+ exos.forEach((ex,ei)=>{
+  const block=dom('section','ds-exo'+(ex.defi?' defi':''),`<h3>${ex.defi?'Défi':'Exercice '+(ei+1)+' · '+ex.title} <span class="small">(${ex.defi?'non noté':String(ex.pts).replace('.',',')+' points'})</span></h3>${ex.head}`);paper.append(block);
+  ex.items.forEach((t,qi)=>{
+   const id=`ds-${ei}-${qi}`,row=dom('div','ds-item'),ans=dom('div','ds-ans');row.append(dom('div','ds-q',t.q),ans);block.append(row);let get,fields,check;
+   if(t.options){const g=dom('div','ds-radios');g.setAttribute('role','radiogroup');g.setAttribute('aria-label','Réponse '+(ei+1)+'.'+(qi+1));for(const o of t.options){const l=dom('label'),r=dom('input');r.type='radio';r.name=id;r.value=o;l.append(r,' '+o);g.append(l);}ans.append(g);get=()=>{const c=g.querySelector('input:checked');return c?c.value:'';};fields=[...g.querySelectorAll('input')];check=()=>correct(get(),t);}
+   else if(t.fill){const wrap=dom('span','ds-fill');let k=0;wrap.innerHTML=t.fill.replace(/\{\}/g,()=>`<input type="text" class="eq-input" inputmode="decimal" autocomplete="off" aria-label="Case ${++k}">`);ans.append(wrap);fields=[...wrap.querySelectorAll('input')];check=()=>fields.every((f,j)=>correct(f.value,{a:t.a[j]}));t.answerHtml=t.answerHtml||t.corr.replace(/<\/?p>/g,'');}
+   else{const lab=dom('label','ds-lab','Résultat :'),input=makeInput(t,'Résultat');input.id=id;lab.htmlFor=id;ans.append(lab,input);fields=[input];check=()=>correct(input.value,t);}
+   controls.push({t,ans,fields,check,w:ex.pts/ex.items.length});
+  });
+  const corr=dom('div','seyes ds-corr');corr.hidden=true;corr.innerHTML=`<h4>Correction ${ex.defi?'du défi':'de l’exercice '+(ei+1)}</h4>`+(ex.corrs||ex.items.map(t=>t.corr)).join('');block.append(corr);corrs.push(corr);
+ });
+ const clear=dsKeep(paper,'comparer-decimaux-ds-'+variant);
+ const end=button('Vérifier mes résultats et afficher la correction',()=>{let score=0,note=0,n=0;for(const{t,ans,fields,check,w}of controls){const ok=check();if(w){n++;if(ok){score++;note+=w;}}fields.forEach(f=>f.disabled=true);if(t.options)ans.querySelectorAll('label').forEach(l=>{if(l.querySelector('input').value===t.a)l.classList.add('good');});ans.append(dom('span',ok?'okm':'kom',ok?' Juste.':' La bonne réponse est '+answer(t)+'.'));}corrs.forEach(c=>c.hidden=false);setTimeout(()=>SUIVI.ds(variant,note,total));
+  const sum=dom('div','corrige',`<b>Note provisoire : ${dsNote(note,total)}</b> (${score} résultat${score>1?'s':''} juste${score>1?'s':''} sur ${n}).<p>Cette note ne compte que tes résultats. Ta vraie note dépend aussi de ce que tu as écrit sur ta feuille, en particulier tes justifications. Compare ta feuille avec la correction de chaque exercice.</p>`);sum.append(button('Effacer mes réponses et recommencer',()=>{clear();render();window.scrollTo({top:0});},'btn light'));end.replaceWith(sum);paper.prepend(dom('div','corrige',`<b>Note provisoire : ${dsNote(note,total)}</b> (${score} sur ${n} résultats justes). La correction est sous chaque exercice, et le détail en bas de la page.`));});
+ paper.append(end);
+}
+function render(){
+ const main=$('#app');main.innerHTML='';document.querySelectorAll('nav [data-page]').forEach(b=>b.classList.toggle('on',b.dataset.page===VIEW.page));
+ if(VIEW.page==='cours'){main.append(dom('h2','ttl','<span>Cours · Comparer des nombres décimaux</span>'),dom('div','card',$('#course-source').innerHTML));return;}
+ if(VIEW.page==='ds'){renderDS();return;}
+ if(VIEW.page==='home'){main.append(dom('div','retenir','<b>À retenir</b>Pour comparer deux nombres décimaux, on compare d’abord les parties entières, puis les chiffres des dixièmes, des centièmes… jusqu’à trouver deux chiffres différents.'));const grid=dom('div','home');for(const[k,m]of Object.entries(MODULES)){const card=dom('section','card',`<h2>${m.title}</h2><p>${m.desc}</p>`);card.append(dom('p','suivi-st',SUIVI.status(k)),button('Commencer',()=>go(k)));grid.append(card);}const ds=dom('section','card','<h2>6. D.S. blanc</h2><p>Deux sujets différents : tu rédiges sur une feuille, puis tu vérifies tes résultats et tu lis la correction.</p>');ds.append(button('Commencer',()=>go('ds')));grid.append(ds);main.append(grid,SUIVI.box());return;}
+ const mod=MODULES[VIEW.page];main.append(dom('h2','ttl','<span>'+mod.title+'</span>'));modeBar(main);
+ if(VIEW.mode!=='seul'){const part=$('#course-source').content.querySelector(`[data-mod="${VIEW.page}"]`);if(part){const det=dom('details','cours-part','<summary>Relire le cours de cette partie</summary>');det.append(part.cloneNode(true));main.append(det);}main.append(dom('div','retenir','<b>À retenir</b>'+mod.retain));}
+ const levels=dom('div','levels');mod.types.forEach(([label],n)=>levels.append(button((n+1)+'. '+label,()=>{VIEW.lv[VIEW.page]=n;render();},VIEW.lv[VIEW.page]===n?'on':'')));main.append(levels);
+ const panel=dom('div','card');main.append(panel);renderExercise(panel,mod.types[VIEW.lv[VIEW.page]][1](VIEW.mode==='exemple'));
+}
+document.querySelectorAll('nav [data-page]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));render();
+})();
+</script><script>
+/* Charte : dans le texte courant, la lettre x (seule ou après un chiffre : 3x, x²),
+   la lettre f seule et g, h, p suivies d'une parenthèse sont des lettres mathématiques.
+   On les affiche en italique STIX pour ne pas confondre x avec le signe ×.
+   Le texte déjà en italique (<i>), le SVG et les champs de saisie ne sont pas touchés. */
+(() => {
+  "use strict";
+  const RE = /(^|[^\p{L}\p{M}])(x|f(?!\))|[ghp](?=\())(?![\p{L}\p{M}])/gu;
+  const SKIP = "i, em, svg, code, pre, script, style, textarea, select, option, title, [contenteditable], .no-math";
+  function fix(text) {
+    const parent = text.parentElement;
+    if (!parent || parent.closest(SKIP)) return;
+    const value = text.data;
+    RE.lastIndex = 0;
+    if (!RE.test(value)) return;
+    const frag = document.createDocumentFragment();
+    let last = 0;
+    value.replace(RE, (all, before, letter, offset) => {
+      const start = offset + before.length;
+      if (start > last) frag.append(value.slice(last, start));
+      const i = document.createElement("i");
+      i.className = "m";
+      i.textContent = letter;
+      frag.append(i);
+      last = start + letter.length;
+      return all;
+    });
+    if (last < value.length) frag.append(value.slice(last));
+    text.replaceWith(frag);
+  }
+  function scan(root) {
+    if (root.nodeType === Node.TEXT_NODE) { fix(root); return; }
+    if (root.nodeType !== Node.ELEMENT_NODE || root.closest(SKIP)) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const texts = [];
+    while (walker.nextNode()) texts.push(walker.currentNode);
+    texts.forEach(fix);
+  }
+  scan(document.body);
+  new MutationObserver((records) => {
+    for (const r of records) {
+      if (r.type === "characterData") fix(r.target);
+      else r.addedNodes.forEach(scan);
+    }
+  }).observe(document.body, { childList: true, subtree: true, characterData: true });
+})();
+</script>
+</body></html>

@@ -1,0 +1,746 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Chapitre 2 : Pyramides et cônes – Je prépare mon D.S.</title><link rel="stylesheet" href="../fonts/polices.css"><style>
+:root{
+  --paper:#fbf8f1; --card:#fffefa; --ink:#1d3a8a; --ink2:#2c4fb5; --red:#7a3f98; --margin:#cfb5df;
+  --line:#dbe3f3; --text:#1b2333; --muted:#5b6478;
+  --ok:#1f7a4d; --okbg:#e7f5ed; --ko:#b8322a; --kobg:#fcecea; --warn:#7a5200; --warnbg:#fff4d6;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; color:var(--text); background:var(--paper);
+  background-image:repeating-linear-gradient(to bottom, transparent 0 31px, #e6ecf7 31px 32px);
+  font:17px/1.55 "Atkinson Hyperlegible", "STIX Two Text", "Segoe UI", system-ui, sans-serif;
+}
+.m,.frac,.ang,svg text{font-family:"STIX Two Text","Cambria Math",Cambria,"Times New Roman",serif}
+.m{font-size:1.08em}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+header{padding:26px 0 10px}
+header h1{margin:0;color:var(--red);font-size:1.9rem;font-weight:700;letter-spacing:.2px}
+header h1 span{border-bottom:2px solid var(--red)}
+header p{margin:.35em 0 0;color:var(--muted)}
+nav{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 0;border-bottom:2px solid var(--ink)}
+nav button{font:inherit;font-size:.95rem;border:2px solid var(--ink);border-bottom:none;background:#eef2fb;color:var(--ink);
+  padding:.45em .9em;border-radius:10px 10px 0 0;cursor:pointer;margin-bottom:-2px}
+nav button.on{background:var(--card);font-weight:700}
+nav button:hover{background:#fff}
+main{padding:18px 0 40px}
+.card{background:var(--card);border:1px solid #e2e6ef;border-radius:4px 14px 14px 4px;padding:22px 24px 26px 34px;position:relative;
+  box-shadow:0 1px 0 rgba(0,0,0,.03),0 6px 18px -12px rgba(29,58,138,.35)}
+.card::before{content:"";position:absolute;left:18px;top:0;bottom:0;width:2px;background:var(--margin)}
+h2.ttl{margin:0 0 .6em;color:var(--red);font-size:1.45rem}
+h2.ttl span{border-bottom:2px solid var(--red)}
+h3{color:var(--ink);margin:1.2em 0 .4em}
+.retenir{border:2px solid var(--ink);border-radius:6px;padding:.6em .9em;margin:0 0 16px;color:var(--ink);background:#f6f8fe}
+.retenir b{display:block;color:var(--red);margin-bottom:.15em}
+.retenir ol,.retenir ul{margin:.2em 0 0;padding-left:1.3em}
+.subtabs{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px}
+.subtabs button,.levels button{font:inherit;font-size:.95rem;padding:.45em .9em;border-radius:999px;border:2px solid var(--ink2);background:#fff;color:var(--ink2);cursor:pointer}
+.subtabs button.on,.levels button.on{background:var(--ink2);color:#fff}
+.levels{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px}
+.levels .lab{color:var(--muted);margin-right:4px}
+.home{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.home .card h2{font-size:1.2rem;margin:0 0 .3em;color:var(--red)}
+.home .card p{margin:.2em 0 1em;color:var(--text)}
+.home .card{display:flex;flex-direction:column}.home .card>button,.home .card>.btn{margin-top:auto;align-self:flex-start}.home .card p.suivi-st{margin:auto 0 .7em;font-size:.88rem;color:var(--muted,#5b6478)}.home .card p.suivi-st+button,.home .card p.suivi-st+.btn{margin-top:0}
+.btn{font:inherit;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:.5em 1.05em;cursor:pointer;margin:.3em .4em .2em 0}
+.btn:hover{background:var(--ink2)}
+.btn.light{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.btn:disabled{opacity:.45;cursor:default}
+.consigne{margin:.2em 0 .6em}
+.question{margin:.6em 0;font-weight:700;color:var(--ink)}
+svg.fig{display:block;width:100%;max-width:600px;height:auto;margin:6px auto 4px}
+.step{background:#fff;border:1px solid #e3e8f2;border-left:5px solid var(--line);border-radius:4px 10px 10px 4px;padding:.65em 1em .75em;margin:.8em 0}
+.step.done{border-left-color:var(--ok)}
+.step.missed{border-left-color:#e0a63a}
+.step-n{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.step-q{margin:.15em 0 .45em}
+.step-a{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.opt{font:inherit;text-align:left;background:#fff;color:var(--text);border:2px solid #cfd8ea;border-radius:8px;padding:.45em .8em;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--ink2)}
+.opt.good{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--ko);background:var(--kobg)}
+.opt:disabled{cursor:default}
+.col{flex-direction:column;align-items:stretch}
+.col>.btn{align-self:flex-start}
+.numf{display:inline-flex;align-items:center;gap:6px;margin-right:10px}
+.numf input{font:inherit;font-family:"STIX Two Text",Cambria,serif;font-size:1.1em;width:6.2em;padding:.3em .45em;border:2px solid #cfd8ea;border-radius:6px;background:#fff}
+.numf input:focus{outline:none;border-color:var(--ink2)}
+.numf input.bad{border-color:var(--ko)}
+.unit{color:var(--muted)}
+select{font:inherit;font-family:"STIX Two Text",Cambria,serif;padding:.25em .35em;border:2px solid #cfd8ea;border-radius:6px;background:#fff}
+select.bad{border-color:var(--ko)}
+.fb{margin-top:.5em;border-radius:6px}
+.fb:empty{display:none}
+.fb.ok{background:var(--okbg);color:#123d28;padding:.45em .7em}
+.fb.ko{background:var(--kobg);color:#5c1712;padding:.45em .7em}
+.fb.warn{background:var(--warnbg);color:#4a3300;padding:.45em .7em}
+.fb .btn{margin-top:.5em}
+.model-a{color:var(--ink);font-weight:700;margin:.2em 0}
+.model-e{color:var(--text);background:#f4f6fb;border-radius:6px;padding:.35em .6em;margin:.3em 0 .4em}
+.corrige{margin:1em 0;border:2px solid var(--ink);border-radius:8px;padding:.7em 1em;background:#fff;color:var(--ink)}
+.corrige h4{margin:0 0 .4em;color:var(--red)}
+.corrige p{margin:.3em 0}
+.box{display:inline-block;border:2px solid var(--ink);border-radius:6px;padding:.1em .5em;margin-top:.2em;font-weight:700}
+.endmsg{margin:.8em 0 .2em;font-weight:700;color:var(--ink)}
+table.tab{border-collapse:collapse;margin:.4em 0;font-size:.97em}
+table.tab th,table.tab td{border:1.5px solid var(--ink2);padding:.3em .6em;text-align:center}
+table.tab th{font-weight:400;color:var(--ink)}
+.rankrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:.2em 0}
+.rankrow .rn{min-width:8.5em}
+.rankrow label{display:inline-flex;gap:4px;align-items:center;color:var(--muted)}
+.homorow{display:inline-flex;align-items:center;gap:6px;margin-right:16px}
+.pool,.answer{display:flex;flex-direction:column;gap:6px;width:100%}
+.answer:empty{display:none}
+.answer .opt{border-color:var(--ok);background:var(--okbg)}
+.shake{animation:sh .35s}
+@keyframes sh{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 .12em;font-size:1.02em;line-height:1.2}
+.frac>span:first-child{border-bottom:1.4px solid currentColor;padding:0 .2em}
+.frac>span:last-child{padding:0 .2em}
+.ang{position:relative;display:inline-block;padding:0 .04em}
+.ang::before{content:"";position:absolute;left:6%;right:6%;top:-.12em;height:.42em;border:1.4px solid currentColor;border-bottom:none;border-radius:50% 50% 0 0/100% 100% 0 0}
+.ang.one::before{left:-4%;right:-4%}
+.codebox{font-family:"STIX Two Text",Cambria,serif;font-size:1.6rem;letter-spacing:.08em;color:var(--ink);background:#fff;border:2px dashed var(--ink);border-radius:8px;padding:.3em .7em;display:inline-block;margin:.3em 0}
+.stats td,.stats th{text-align:left}
+.small{font-size:.9rem;color:var(--muted)}
+/* Correction sur papier Seyès (grands carreaux : interligne 8 px, ligne principale tous les 32 px) */
+.seyes{margin:1em 0;position:relative;color:#1d3a8a;background-color:#fff;border:1px solid #d6ddec;border-radius:4px;
+  padding:32px 18px 32px 64px;font-family:"Playwrite FR Moderne","Segoe Script","Comic Sans MS",cursive;font-size:15px;line-height:32px;
+  background-image:linear-gradient(90deg,transparent 0 50px,#e46d6d 50px 52px,transparent 52px),
+    repeating-linear-gradient(to bottom,transparent 0 31px,#8ea6d6 31px 32px),
+    repeating-linear-gradient(to bottom,transparent 0 7px,#dfe5f2 7px 8px);
+  background-position:0 var(--sy,6px)}
+.seyes h4{margin:0 0 32px;color:var(--red);font-weight:400;font-size:17px;line-height:32px;display:inline-block;border-bottom:1.5px solid var(--red);line-height:30px}
+.seyes p{margin:0;line-height:32px}
+.seyes p:has(.frac){line-height:64px;padding:16px 0}
+.seyes .frac{line-height:1.15;vertical-align:middle}
+.seyes b{font-weight:600}
+.seyes .m,.seyes .ang{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-size:1.38em}
+.seyes .frac{font-size:1.3em}
+.seyes .frac .m{font-size:1em}.seyes .op{color:#b8322a}.seyes p.verif{text-decoration:underline;text-underline-offset:4px}.seyes p i.m{font-size:1em}
+.seyes .box{border-color:#1d3a8a;font-weight:400;line-height:26px;margin:3px 0}
+.ds-tools{margin:0 0 6px}
+.ds-exo{border-top:2px solid var(--line);margin-top:18px;padding-top:4px}
+.ds-exo h3{color:var(--red);margin:.6em 0 .3em}
+.ds-title{color:var(--ink);font-size:1.25rem;margin:.8em 0 .2em}
+.ds-part h3{margin:1.2em 0 .1em;color:var(--ink);font-size:1.15rem;border-bottom:2px solid var(--ink);padding-bottom:.15em}
+.ds-info{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin:.2em 0;color:var(--muted)}
+.ds-info span{font-weight:700;color:var(--ink)}
+.ds-ans{background:#f6f8fe;border:2px solid var(--ink2);border-radius:8px;padding:.5em .8em;margin:.8em 0}
+.ds-ans b{color:var(--ink)}
+.ds-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:.35em 0}
+.ds-lab{min-width:2.5em}
+.ds-radios{display:inline-flex;flex-wrap:wrap;gap:8px}
+.ds-radios label{border:2px solid #cfd8ea;border-radius:8px;padding:.15em .6em;background:#fff;cursor:pointer}
+.ds-radios label.good{border-color:var(--ok);background:var(--okbg)}
+.okm{color:var(--ok);font-weight:700}.kom{color:var(--ko);font-weight:700}
+@media print{
+  body{background:#fff;font-size:12pt}
+  nav,footer,.btn,.ds-tools,.ds-ans,.ds-corr,header,.levels,.ds>.consigne,.ds>h2{display:none!important}
+  .ds-title{margin-top:0}
+  .card{box-shadow:none;border:none;padding:0}.card::before{display:none}
+  .ds-exo{break-inside:avoid;border-top:1px solid #999}
+  .ds-part{break-after:avoid}
+  svg.fig{max-width:430px}
+}
+.cl-line{margin:.35em 0;line-height:2.3}
+.blankw{position:relative;display:inline-block}
+.blank{font:inherit;min-width:3.2em;padding:.05em .5em;border:2px dashed var(--ink2);border-radius:6px;background:#f6f8fe;color:var(--ink);cursor:pointer}
+.blank.good,.cl-num.good{border-style:solid;border-color:var(--ok);background:var(--okbg)}
+.blank.bad,.cl-num.bad{border-style:solid;border-color:var(--ko);background:var(--kobg)}
+.blank.fixed,.cl-num.fixed{border-style:solid;border-color:#e0a63a;background:#fff4d6}
+.cl-num{width:4.5em!important}
+.blank-menu{position:absolute;left:0;top:calc(100% + 4px);z-index:20;display:flex;flex-direction:column;gap:4px;background:#fff;border:1px solid #cfd8ea;border-radius:8px;padding:6px;box-shadow:0 8px 24px -8px rgba(29,58,138,.45);min-width:max-content;max-width:min(560px,86vw);line-height:1.4}
+.blank-menu .opt{white-space:normal}
+.grille{margin:.8em 0;border:2px solid var(--ok);border-radius:8px;padding:.6em .9em;background:#f3faf6}
+.grille h4{margin:0 0 .2em;color:var(--ok)}
+.grille-item{display:flex;gap:.6em;align-items:flex-start;margin:.3em 0;cursor:pointer}
+.grille-item input{margin-top:.35em;width:1.1em;height:1.1em}
+.grille-msg{font-weight:700;color:var(--ok);margin:.3em 0 0}
+footer{padding:10px 0 30px;color:var(--muted);font-size:.9rem}
+footer button{font:inherit;background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;padding:0}
+@media (max-width:600px){.card{padding:18px 14px 20px 26px}.card::before{left:12px}header h1{font-size:1.5rem}}
+[hidden]{display:none!important}.eq-input{font:inherit;font-family:"STIX Two Text",Cambria,serif;padding:.35rem .5rem;border:2px solid #cfd8ea;border-radius:6px;max-width:100%;width:11em}.step-a select{max-width:100%;white-space:normal}.step-q{display:block}.home{margin-bottom:1rem}.step select{min-height:44px}.step .btn{min-height:44px}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--red);outline-offset:3px}.seyes{overflow-x:auto}.seyes p{font-family:"STIX Two Text",Cambria,serif;font-size:1.08rem}footer a{color:var(--ink)}@media print{.subtabs,.eq-input,.step button,.fb{display:none!important}.step-q:after{content:' …………………………………………………………';display:block}.ds-exo{break-inside:avoid}.step{border:0;padding:.15rem 0}.card{padding:0}.seyes{background:white;padding:1rem}}
+.back-home{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:0 0 16px;padding:8px 14px;border:2px solid var(--ink);border-radius:7px;background:var(--card);color:var(--ink);font:inherit;font-size:1rem;font-weight:700;text-decoration:none}.back-home:hover{background:#eef2fb}.back-home:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+i.m{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-style:italic;text-transform:none;letter-spacing:0}
+.ds-item{margin:.8em 0}.ds-q{margin:.1em 0 .35em}.ds-ans{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:.3em 0 .6em;padding:.4em .7em}.ds-ans .eq-input{width:9em}.ds-corr{margin-top:.8em}.aide{background:#f6f8fe;border-left:3px solid var(--ink2);padding:.3em .6em;color:var(--text);margin:.2em 0 .5em}.exo-head p{margin-top:0}
+details.cours-part{background:var(--card);border:1px solid #e2e6ef;border-radius:8px;padding:.5em 1em;margin:0 0 14px}details.cours-part>summary{cursor:pointer;color:var(--ink);font-weight:700;min-height:32px}details.cours-part[open]>summary{margin-bottom:.4em}details.cours-part h3:first-child{margin-top:.4em}
+@media print{.ds-q{break-after:avoid}.ds-item{margin:.5em 0}}
+.step-a.col{flex-direction:column;align-items:stretch}.step-a .opt{min-height:44px}.step-a .opt .frac{font-size:1em}.ds-radios .frac{font-size:.95em}.ds-q svg.fig{margin-left:0}.ds-radios label{display:inline-flex;align-items:center;gap:4px}
+</style></head><body><div class="wrap"><header><a class="back-home" href="../4e/">← Toutes les applications</a><h1><span>Chapitre 2 : Pyramides et cônes</span></h1><p>Je prépare mon D.S. de fin de chapitre.</p><nav aria-label="Parcours du chapitre"><button type="button" data-page="home" class="on">Sommaire</button><button type="button" data-page="cours">Cours</button><button type="button" data-page="voc">1. Vocabulaire</button><button type="button" data-page="pat">2. Patrons</button><button type="button" data-page="form">3. Formules</button><button type="button" data-page="pyr">4. Volume d’une pyramide</button><button type="button" data-page="cone">5. Volume d’un cône</button><button type="button" data-page="conv">6. Conversions</button><button type="button" data-page="ds">7. D.S. blanc</button></nav></header><main id="app"></main><footer>Collège La Rochefoucauld · Mathématiques 4<sup>e</sup></footer></div><template id="course-source"><section data-mod="voc"><h3>1. La pyramide</h3>
+<p>Une <b>pyramide</b> est un solide formé d’une <b>base</b>, qui est un polygone, et d’un <b>sommet</b> situé hors du plan de cette base. Ses autres faces sont des triangles : ce sont les <b>faces latérales</b>.</p>
+<p>Une <b>arête latérale</b> est un segment qui joint un sommet de la base au sommet de la pyramide.</p>
+<p>La <b>hauteur</b> de la pyramide est le segment qui part du sommet et qui est perpendiculaire à la base.</p>
+<div data-fig="cours-pyr"></div>
+<div class="seyes"><h4>Exemple</h4><p>Le sommet de la pyramide <span class="m">SABCD</span> est le point <span class="m">S</span>.</p><p>Sa base est le quadrilatère <span class="m">ABCD</span>.</p><p>Ses faces latérales sont <span class="m">SAB</span>, <span class="m">SBC</span>, <span class="m">SCD</span> et <span class="m">SDA</span>.</p><p>Ses arêtes latérales sont <span class="m">[SA]</span>, <span class="m">[SB]</span>, <span class="m">[SC]</span> et <span class="m">[SD]</span>.</p><p><span class="m">[SH]</span> est la hauteur de la pyramide.</p></div>
+<div class="retenir"><b>Pyramide régulière</b>Une pyramide est régulière quand sa base est un polygone régulier (un triangle équilatéral, un carré…) et que le pied de sa hauteur est le centre de cette base. Ses faces latérales sont alors des triangles isocèles superposables, et ses arêtes latérales ont toutes la même longueur.</div>
+<p>Quand la base est un carré, son centre est le point d’intersection des diagonales.</p>
+<p>Un <b>tétraèdre régulier</b> est une pyramide dont les quatre faces sont des triangles équilatéraux superposables.</p>
+<h3>2. Le cône de révolution</h3>
+<p>Un <b>cône de révolution</b> est un solide formé d’un <b>disque de base</b> et d’un <b>sommet</b> situé hors du plan de ce disque.</p>
+<p>Sa <b>hauteur</b> est le segment qui joint le sommet au centre du disque de base. Elle est perpendiculaire à la base.</p>
+<div data-fig="cours-cone"></div>
+<div class="seyes"><h4>Exemple</h4><p>Le cône a pour sommet <span class="m">S</span>.</p><p><span class="m">O</span> est le centre du disque de base.</p><p><span class="m">[OA]</span> est un rayon de la base.</p><p><span class="m">[SO]</span> est la hauteur du cône.</p></div>
+<p>Attention : le diamètre est le double du rayon. Si le diamètre mesure 10 cm, le rayon mesure 10 : 2 = 5 cm.</p></section>
+<section data-mod="pat"><h3>3. Patron d’une pyramide</h3>
+<p>Le <b>patron</b> d’une pyramide est formé de sa base et de ses faces latérales, à plat. Quand on le replie, on obtient la pyramide.</p>
+<div data-fig="cours-patron"></div>
+<div class="retenir"><b>Pour savoir si une figure est un patron</b><ol><li>On compte les faces : il faut la base et toutes les faces latérales, ni plus ni moins.</li><li>On vérifie que les côtés qui se collent l’un sur l’autre ont la même longueur.</li><li>On replie la figure dans sa tête : deux faces ne doivent pas se superposer.</li></ol></div>
+<div class="retenir"><b>Pour construire un patron</b><ol><li>On trace la base en vraie grandeur.</li><li>Sur chaque côté de la base, on trace un triangle. Pour reporter la longueur des arêtes latérales, on utilise le compas : on trace deux arcs de cercle centrés aux extrémités du côté.</li><li>On laisse les traits de construction visibles.</li></ol></div>
+<p>Le patron d’un cône est formé d’un disque et d’un secteur de disque. Il n’est pas au programme.</p></section>
+<section data-mod="form"><h3>4. Les formules à connaître</h3>
+<table class="tab"><tr><th>Figure</th><th>Périmètre</th><th>Aire</th></tr>
+<tr><td>Carré de côté <i class="m">c</i></td><td><span class="m">4 × <i class="m">c</i></span></td><td><span class="m"><i class="m">c</i> × <i class="m">c</i></span></td></tr>
+<tr><td>Rectangle de longueur <i class="m">L</i> et de largeur <i class="m">l</i></td><td><span class="m">2 × (<i class="m">L</i> + <i class="m">l</i>)</span></td><td><span class="m"><i class="m">L</i> × <i class="m">l</i></span></td></tr>
+<tr><td>Triangle</td><td>somme des trois côtés</td><td><span class="frac"><span>base × hauteur</span><span>2</span></span></td></tr>
+<tr><td>Cercle et disque de rayon <i class="m">r</i></td><td><span class="m">2 × π × <i class="m">r</i></span></td><td><span class="m">π × <i class="m">r</i> × <i class="m">r</i></span></td></tr></table>
+<p>Dans un triangle, la hauteur est la distance entre la base et le troisième sommet.</p>
+<p>En 5<sup>e</sup>, on a appris que le volume d’un prisme droit ou d’un cylindre est égal à <span class="m"><i class="m">A</i><sub>base</sub> × <i class="m">h</i></span>. La pyramide et le cône « se rétrécissent » jusqu’à un sommet : on divise par 3.</p>
+<div class="retenir"><b>Volumes</b><p><span class="m"><i class="m">V</i><sub>pyramide</sub> = </span><span class="frac"><span><i class="m">A</i><sub>base</sub> × <i class="m">h</i></span><span>3</span></span> et <span class="m"><i class="m">V</i><sub>cône</sub> = </span><span class="frac"><span>π × <i class="m">r</i>² × <i class="m">h</i></span><span>3</span></span></p><p><i class="m">h</i> est la hauteur, <i class="m">r</i> est le rayon de la base.</p></div></section>
+<section data-mod="pyr"><h3>5. Volume d’une pyramide</h3>
+<ol><li>On calcule l’aire de la base.</li><li>On la multiplie par la hauteur.</li><li>On divise par 3.</li></ol>
+<div class="seyes"><h4>Exemple · base rectangle de 5,4 m sur 3,2 m, hauteur 7 m</h4><p><i class="m">A</i><sub>base</sub> = 5,4 × 3,2 = 17,28 m²</p><p><i class="m">V</i> = <span class="frac"><span><i class="m">A</i><sub>base</sub> × <i class="m">h</i></span><span>3</span></span></p><p><i class="m">V</i> = <span class="frac"><span>17,28 × 7</span><span>3</span></span></p><p><i class="m">V</i> = <span class="frac"><span>120,96</span><span>3</span></span></p><p><span class="box"><i class="m">V</i> = 40,32 m³</span></p></div>
+<p>Pour retrouver la hauteur quand on connaît le volume, on remplace <i class="m">V</i> et <i class="m">A</i><sub>base</sub> par leurs valeurs, puis on résout l’équation.</p></section>
+<section data-mod="cone"><h3>6. Volume d’un cône</h3>
+<ol><li>On cherche le rayon. Si l’énoncé donne le diamètre, on le divise par 2.</li><li>On remplace dans la formule. On garde π pour avoir la valeur exacte.</li><li>On arrondit avec la calculatrice, comme demandé.</li></ol>
+<div class="seyes"><h4>Exemple · bougie de 7 cm de diamètre et de 9 cm de hauteur</h4><p><i class="m">r</i> = 7 : 2 = 3,5 cm</p><p><i class="m">V</i> = <span class="frac"><span>π × <i class="m">r</i>² × <i class="m">h</i></span><span>3</span></span></p><p><i class="m">V</i> = <span class="frac"><span>π × 3,5² × 9</span><span>3</span></span></p><p><i class="m">V</i> = <span class="frac"><span>π × 12,25 × 9</span><span>3</span></span></p><p><span class="box"><i class="m">V</i> = 36,75π cm³</span></p><p><i class="m">V</i> ≈ 115 cm³</p></div>
+<p>Un cône a le même volume qu’un cylindre de même base trois fois moins haut.</p></section>
+<section data-mod="conv"><h3>7. Unités de volume et de contenance</h3>
+<p>Entre deux unités de volume qui se suivent (m³, dm³, cm³, mm³), on multiplie ou on divise par 1 000. Entre deux unités de contenance qui se suivent (L, dL, cL, mL), on multiplie ou on divise par 10.</p>
+<div style="overflow-x:auto"><table class="tab"><tr><th colspan="3">m³</th><th colspan="3">dm³</th><th colspan="3">cm³</th></tr><tr><td></td><td></td><td></td><td>hL</td><td>daL</td><td>L</td><td>dL</td><td>cL</td><td>mL</td></tr></table></div>
+<div class="retenir"><b>Trois égalités à connaître</b><p><span class="m">1 m³ = 1 000 L</span> ; <span class="m">1 dm³ = 1 L</span> ; <span class="m">1 cm³ = 1 mL</span></p></div>
+<div class="seyes"><h4>Exemples</h4><p>2,5 m³ = 2,5 × 1 000 dm³ = 2 500 dm³</p><p>40 320 cm³ = 40 320 : 1 000 dm³ = 40,32 dm³</p><p>40,32 m³ = 40,32 × 1 000 L = 40 320 L</p><p>21,3 cm³ = 21,3 mL = 0,0213 L</p></div>
+<p>Quand on passe à une unité plus petite, le nombre devient plus grand : on multiplie. Quand on passe à une unité plus grande, on divise.</p></section>
+</template><script>(() => {
+'use strict';
+const $=s=>document.querySelector(s),R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),pick=a=>a[R(0,a.length-1)];
+const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=R(0,i);[b[i],b[j]]=[b[j],b[i]];}return b;};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fix=n=>Math.round(n*1e9)/1e9;
+/* Nombres à la française : virgule décimale, espace insécable entre les milliers (1 000). */
+function fmt(n){n=fix(n);if(Math.abs(n)<1e-12)n=0;let s=String(Math.abs(n));if(/e/.test(s))s=Math.abs(n).toFixed(12).replace(/0+$/,'');let[i,d]=s.split('.');if(i.length>3)i=i.replace(/\B(?=(\d{3})+(?!\d))/g,' ');return (n<0?'−':'')+i+(d?','+d:'');}
+function parseNum(v){let s=v.trim().replace(/\s/g,'').replace(/−/g,'-').replace(',','.');while(/^\(.*\)$/.test(s))s=s.slice(1,-1);if(!s)return null;return /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(s)?Number(s):null;}
+function correct(v,a){if(typeof a==='number'){const n=parseNum(v);return n!==null&&Math.abs(n-a)<1e-8;}return String(v).trim().toLocaleLowerCase('fr')===String(a).toLocaleLowerCase('fr');}
+const check=(t,v)=>t.check?t.check(v):correct(v,t.a);
+const answer=t=>t.answerHtml||(t.rich?t.a:(typeof t.a==='number'?fmt(t.a):esc(t.a)))+(t.unit&&typeof t.a==='number'?' '+t.unit:'');
+function dom(tag,cls,html){const n=document.createElement(tag);if(cls)n.className=cls;if(html!==undefined)n.innerHTML=html;return n;}
+function button(label,fn,cls='btn'){const b=dom('button',cls,esc(label));b.type='button';b.addEventListener('click',fn);return b;}
+const lines=a=>a.map(l=>`<p>${l}</p>`).join('');
+/* Écriture mathématique : m = nom de point ou calcul (STIX droit), im = lettre en italique STIX. */
+const m=s=>`<span class="m">${s}</span>`,im=s=>`<i class="m">${s}</i>`;
+const frac=(a,b)=>`<span class="frac"><span>${a}</span><span>${b}</span></span>`;
+const op=s=>`<span class="op">${s}</span>`,box=s=>`<span class="box">${s}</span>`;
+const AB=`${im('A')}<sub>base</sub>`,VV=im('V'),HH=im('h'),RR=im('r');
+const OUINON=['oui','non'];
+const r1=x=>Math.round(x*10)/10,r0=x=>Math.round(x);
+
+/* ---------- Figures (SVG) ---------- */
+/* Perspective cavalière : x vers la droite, y en profondeur (fuyante à 35°, coefficient 0,5), z vers le haut. */
+const KC=.5,AC=35*Math.PI/180,SC=46;
+const pj=p=>({X:(p[0]+KC*p[1]*Math.cos(AC))*SC,Y:-(p[2]+KC*p[1]*Math.sin(AC))*SC});
+function Fig(){this.e=[];this.p=[];}
+Fig.prototype.pt=function(...ps){for(const q of ps)this.p.push(q);return this;};
+Fig.prototype.line=function(a,b,o={}){this.pt(a,b);this.e.push(`<line x1="${a.X.toFixed(1)}" y1="${a.Y.toFixed(1)}" x2="${b.X.toFixed(1)}" y2="${b.Y.toFixed(1)}" stroke="${o.c||'#1d3a8a'}" stroke-width="${o.w||1.8}"${o.dash?' stroke-dasharray="6 5"':''} stroke-linecap="round"/>`);return this;};
+Fig.prototype.poly=function(ps,o={}){this.pt(...ps);this.e.push(`<polygon points="${ps.map(q=>q.X.toFixed(1)+','+q.Y.toFixed(1)).join(' ')}" fill="${o.fill||'none'}" stroke="${o.stroke||'none'}" stroke-width="${o.w||1.8}" stroke-linejoin="round"/>`);return this;};
+Fig.prototype.path=function(d,o={},ext=[]){this.pt(...ext);this.e.push(`<path d="${d}" fill="${o.fill||'none'}" stroke="${o.stroke||'#1d3a8a'}" stroke-width="${o.w||1.8}"${o.dash?' stroke-dasharray="6 5"':''}/>`);return this;};
+Fig.prototype.text=function(s,q,o={}){const X=q.X+(o.dx||0),Y=q.Y+(o.dy||0);this.pt({X:X-(o.anchor==='end'?s.length*8:o.anchor==='start'?0:s.length*4),Y:Y-14},{X:X+(o.anchor==='end'?0:o.anchor==='start'?s.length*8:s.length*4),Y:Y+4});this.e.push(`<text x="${X.toFixed(1)}" y="${Y.toFixed(1)}" text-anchor="${o.anchor||'middle'}" font-size="${o.size||17}" fill="${o.c||'#1b2333'}"${o.it?' font-style="italic"':''}>${esc(s)}</text>`);return this;};
+Fig.prototype.dot=function(q,o={}){this.e.push(`<circle cx="${q.X.toFixed(1)}" cy="${q.Y.toFixed(1)}" r="2.6" fill="${o.c||'#1d3a8a'}"/>`);return this;};
+Fig.prototype.svg=function(label,scale=1){const xs=this.p.map(q=>q.X),ys=this.p.map(q=>q.Y),pad=12;const x0=Math.min(...xs)-pad,y0=Math.min(...ys)-pad,w=Math.max(...xs)+pad-x0,h=Math.max(...ys)+pad-y0;
+ return `<svg class="fig" viewBox="${x0.toFixed(0)} ${y0.toFixed(0)} ${w.toFixed(0)} ${h.toFixed(0)}" style="max-width:${Math.round(w*1.25*scale)}px" role="img" aria-label="${esc(label)}">${this.e.join('')}</svg>`;};
+const mid=(a,b)=>({X:(a.X+b.X)/2,Y:(a.Y+b.Y)/2});
+function away(q,c,d){const dx=q.X-c.X,dy=q.Y-c.Y,n=Math.hypot(dx,dy)||1;return {X:q.X+dx/n*d,Y:q.Y+dy/n*d+5};}
+function hullIdx(P){/* indices des points sur l'enveloppe convexe (points alignés compris) */
+ const idx=P.map((_,i)=>i).sort((i,j)=>P[i].X-P[j].X||P[i].Y-P[j].Y),cr=(o,a,b)=>(P[a].X-P[o].X)*(P[b].Y-P[o].Y)-(P[a].Y-P[o].Y)*(P[b].X-P[o].X);
+ const half=list=>{const h=[];for(const i of list){while(h.length>=2&&cr(h[h.length-2],h[h.length-1],i)<-1e-6)h.pop();h.push(i);}return h;};
+ return new Set([...half(idx),...half([...idx].reverse())]);}
+/* Pyramide : base = sommets [x,y] (plan z = 0), apex = [x,y,z]. Les arêtes cachées sont en pointillés. */
+function pyrFig(o){
+ const B=o.base.map(([x,y])=>[x,y,0]),A=o.apex,H=[A[0],A[1],0],PB=B.map(pj),PA=pj(A),PH=pj(H),n=B.length,f=new Fig();
+ const hs=hullIdx([...PB,PA]),back=B.map((q,i)=>q[1]>1e-6&&!hs.has(i));
+ const cen={X:PB.reduce((s,q)=>s+q.X,0)/n,Y:PB.reduce((s,q)=>s+q.Y,0)/n};
+ f.poly(PB,{fill:'#dfe7f8'});
+ for(let i=0;i<n;i++){const j=(i+1)%n;f.line(PB[i],PB[j],{dash:back[i]||back[j]});}
+ for(let i=0;i<n;i++)f.line(PA,PB[i],{dash:back[i]});
+ if(o.diag&&n===4){f.line(PB[0],PB[2],{dash:true,c:'#7d8fb8',w:1.2});f.line(PB[1],PB[3],{dash:true,c:'#7d8fb8',w:1.2});}
+ if(o.showH!==false){f.line(PA,PH,{dash:true,c:'#b8322a'});const d=[B[0][0]-H[0],B[0][1]-H[1]],L=Math.hypot(...d)||1,e=[d[0]/L*.28,d[1]/L*.28];
+  const q1=pj([H[0]+e[0],H[1]+e[1],0]),q2=pj([H[0]+e[0],H[1]+e[1],.28]),q3=pj([H[0],H[1],.28]);f.e.push(`<polyline points="${q1.X},${q1.Y} ${q2.X},${q2.Y} ${q3.X},${q3.Y}" fill="none" stroke="#b8322a" stroke-width="1.4"/>`);f.dot(PH,{c:'#b8322a'});if(o.H)f.text(o.H,PH,{dx:12,dy:16,c:'#b8322a'});}
+ if(o.names){f.text(o.names[0],PA,{dy:-10});o.names.slice(1).forEach((s,i)=>f.text(s,away(PB[i],cen,16)));}
+ for(const[i,j,s]of o.lab||[]){const P=i==='S'?PA:PB[i],Q=PB[j],M=mid(P,Q);const nx=-(Q.Y-P.Y),ny=Q.X-P.X,L=Math.hypot(nx,ny);let ux=nx/L,uy=ny/L;const c2=i==='S'?{X:(PA.X+cen.X)/2,Y:(PA.Y+cen.Y)/2}:cen;if((M.X-c2.X)*ux+(M.Y-c2.Y)*uy<0){ux=-ux;uy=-uy;}f.text(s,{X:M.X+ux*20,Y:M.Y+uy*20+5},{c:'#7a3f98',size:15});}
+ if(o.hLab)f.text(o.hLab,mid(PA,PH),{dx:8,anchor:'start',c:'#b8322a',size:15});
+ return f.svg(o.label||'Pyramide en perspective cavalière',o.scale||1);
+}
+const regBase=(n,R,rot=0)=>Array.from({length:n},(_,k)=>{const t=rot+2*Math.PI*k/n;return [R*Math.cos(t),R*Math.sin(t)];});
+/* Bases toutes prêtes. Ordre des sommets : sens trigonométrique, en commençant à l'avant. */
+const BASES={
+ carre:()=>[[-1.3,-1.3],[1.3,-1.3],[1.3,1.3],[-1.3,1.3]],
+ losange:()=>regBase(4,1.8,Math.PI/2+.9),
+ rect:()=>[[-1.7,-1.1],[1.7,-1.1],[1.7,1.1],[-1.7,1.1]],
+ tri:()=>regBase(3,1.6,-Math.PI/2-.35),
+ penta:()=>regBase(5,1.6,-Math.PI/2),
+ hexa:()=>regBase(6,1.6,-Math.PI/2+.25)
+};
+/* Cône : rayon et hauteur en unités de figure. */
+function coneFig(o){
+ const a=(o.R||1.5)*SC,b=a*.32,Hs=(o.H||3)*SC,f=new Fig(),O={X:0,Y:0},S={X:0,Y:-Hs},yt=-b*b/Hs,xt=a*Math.sqrt(1-b*b/(Hs*Hs)),Lt={X:-xt,Y:yt},Rt={X:xt,Y:yt};
+ f.poly([S,Lt,{X:0,Y:b},Rt],{fill:'#eef2fb'});
+ f.path(`M ${-a} 0 A ${a} ${b} 0 1 0 ${a} 0 A ${a} ${b} 0 1 0 ${-a} 0`,{fill:'#dfe7f8',stroke:'none'},[{X:-a,Y:-b},{X:a,Y:b}]);
+ f.path(`M ${(-xt).toFixed(1)} ${yt.toFixed(1)} A ${a} ${b} 0 0 1 ${xt.toFixed(1)} ${yt.toFixed(1)}`,{dash:true});
+ f.path(`M ${(-xt).toFixed(1)} ${yt.toFixed(1)} A ${a} ${b} 0 1 0 ${xt.toFixed(1)} ${yt.toFixed(1)}`,{});
+ f.line(S,Lt).line(S,Rt);
+ const A={X:a,Y:0};f.line(O,S,{dash:true,c:'#b8322a'});f.line(O,A,{dash:true,c:'#7a3f98'});
+ f.e.push(`<polyline points="9,0 9,-9 0,-9" fill="none" stroke="#b8322a" stroke-width="1.4"/>`);f.dot(O);f.dot(A);
+ const nm=o.names||['S','O','A'];f.text(nm[0],S,{dy:-10});f.text(nm[1],O,{dx:-12,dy:18});f.text(nm[2],A,{dx:13,dy:6});
+ if(o.rLab)f.text(o.rLab,{X:a/2,Y:-7},{c:'#7a3f98',size:15});
+ if(o.hLab)f.text(o.hLab,{X:-8,Y:-Hs/2+20},{anchor:'end',c:'#b8322a',size:15});
+ return f.svg(o.label||'Cône de révolution en perspective',o.scale||1);
+}
+/* Patrons (à plat, en cm ; 1 cm = 22 unités). */
+const SN=22,V2=(x,y)=>({X:x,Y:y}),sub=(a,b)=>V2(a.X-b.X,a.Y-b.Y),add=(a,b)=>V2(a.X+b.X,a.Y+b.Y),mul=(a,k)=>V2(a.X*k,a.Y*k),len=a=>Math.hypot(a.X,a.Y),unit=a=>mul(a,1/len(a));
+const cent=ps=>V2(ps.reduce((s,q)=>s+q.X,0)/ps.length,ps.reduce((s,q)=>s+q.Y,0)/ps.length);
+/* Point X tel que UX = dU et VX = dV, du côté opposé au point « inside ». */
+function triOn(U,V,dU,dV,inside){const d=len(sub(V,U)),x=(dU*dU-dV*dV+d*d)/(2*d),y=Math.sqrt(Math.max(0,dU*dU-x*x)),e=unit(sub(V,U));let nrm=V2(-e.Y,e.X);if((inside.X-U.X)*nrm.X+(inside.Y-U.Y)*nrm.Y>0)nrm=mul(nrm,-1);return add(add(U,mul(e,x)),mul(nrm,y));}
+/* Polygone régulier à n côtés de longueur c, construit sur le côté [UV], du côté opposé à « inside ». */
+function polyOn(U,V,n,c,inside){for(const s of[1,-1]){const ps=[U,V];let dir=unit(sub(V,U));for(let k=2;k<n;k++){const t=s*2*Math.PI/n;dir=V2(dir.X*Math.cos(t)-dir.Y*Math.sin(t),dir.X*Math.sin(t)+dir.Y*Math.cos(t));ps.push(add(ps[ps.length-1],mul(dir,c)));}
+ const g=cent(ps),e=unit(sub(V,U)),nrm=V2(-e.Y,e.X);if(((g.X-U.X)*nrm.X+(g.Y-U.Y)*nrm.Y)*((inside.X-U.X)*nrm.X+(inside.Y-U.Y)*nrm.Y)<0)return ps;}}
+/* type : croix, eventail, manque (une face en moins), extra (une face en trop), cote (base collée sur une arête latérale). */
+function netFaces(n,c,a,type,base){
+ c*=SN;a*=SN;const faces=[];let labB,labL;
+ if(type==='eventail'||type==='cote'){const S=V2(0,0),dl=2*Math.asin(c/(2*a)),P=[];for(let k=0;k<=n;k++){const t=-Math.PI/2-dl*n/2+dl*k;P.push(V2(a*Math.cos(t),-a*Math.sin(t)));}
+  for(let k=0;k<n;k++)faces.push([S,P[k],P[k+1]]);
+  const j=Math.floor(n/2);if(type==='eventail'){faces.push(polyOn(P[j],P[j+1],n,c,S));labB=[P[j],P[j+1],cent(faces.at(-1))];}
+  else{const V=add(S,mul(unit(sub(P[0],S)),c));faces.push(polyOn(S,V,n,c,P[1]));labB=[S,V,cent(faces.at(-1))];}
+  labL=[S,P[n],P[n-1]];}
+ else{const ps=base||regBase(n,c/(2*Math.sin(Math.PI/n)),Math.PI/2+Math.PI/n).map(([x,y])=>V2(x,y)),g=cent(ps);faces.push(ps);
+  const L=ps.length,skip=type==='manque'?L-1:-1;let first;
+  for(let k=0;k<L;k++){if(k===skip)continue;const U=ps[k],V=ps[(k+1)%L],X=triOn(U,V,a,a,g);faces.push([U,V,X]);if(!first)first=[U,V,X];}
+  if(type==='extra'){const [U,,X]=first;faces.push([X,U,triOn(X,U,a,c,first[1])]);}
+  labB=[first[0],first[1],g];labL=[first[1],first[2],first[0]];}
+ return {faces,labB,labL};
+}
+function netFig(n,c,a,type,o={}){
+ const {faces,labB,labL}=netFaces(n,c,a,type,o.base),f=new Fig();
+ faces.forEach((F,i)=>f.poly(F,{fill:i===(type==='eventail'||type==='cote'?faces.length-1:0)?'#dfe7f8':'#f3f0fa',stroke:'#1d3a8a'}));
+ const tag=(P,Q,inside,s)=>{const M=V2((P.X+Q.X)/2,(P.Y+Q.Y)/2),e=unit(sub(Q,P));let nr=V2(-e.Y,e.X);if((inside.X-M.X)*nr.X+(inside.Y-M.Y)*nr.Y<0)nr=mul(nr,-1);f.text(s,{X:M.X+nr.X*16,Y:M.Y+nr.Y*16+5},{c:'#7a3f98',size:14});};
+ if(o.labels!==false){tag(labB[0],labB[1],labB[2],o.cl||fmt(c)+' cm');if(a!==c||o.both)tag(labL[0],labL[1],labL[2],o.al||fmt(a)+' cm');}
+ return f.svg(o.label||'Figure à plat',o.scale||1);
+}
+const FIGS={
+ 'cours-pyr':()=>pyrFig({base:BASES.carre(),apex:[0,0,3.2],names:['S','A','B','C','D'],H:'H',diag:true,label:'Pyramide SABCD de sommet S et de hauteur [SH]'}),
+ 'cours-cone':()=>coneFig({R:1.6,H:3,label:'Cône de sommet S, de centre O et de rayon [OA]'}),
+ 'cours-patron':()=>netFig(4,3,4,'croix',{label:'Patron d’une pyramide régulière à base carrée',scale:.9})
+};
+function fillFigs(root){root.querySelectorAll('[data-fig]').forEach(d=>{const g=FIGS[d.dataset.fig];if(g)d.innerHTML=g();});}
+
+/* ---------- 1. Vocabulaire ---------- */
+const POLY={3:'triangle',4:'quadrilatère',5:'pentagone',6:'hexagone'};
+function vocExercise(level=1,example=false){
+ if(level===1){
+  const n=example?4:pick([3,4,4,5,6]),set=example?['S','ABCDEF','H']:pick([['S','ABCDEF','H'],['T','KLMNPQ','O'],['S','EFGIJK','H']]);
+  const S=set[0],V=[...set[1]].slice(0,n),Hn=set[2],base=V.join(''),faces=V.map((p,i)=>S+p+V[(i+1)%n]);
+  const shape=n===3?BASES.tri():n===4?(Math.random()<.5&&!example?BASES.losange():BASES.carre()):n===5?BASES.penta():BASES.hexa();
+  const fig=pyrFig({base:shape,apex:[0,0,3.1],names:[S,...V],H:Hn,label:`Pyramide ${S}${base}`});
+  const k=example?1:R(0,n-1),edge=`[${S}${V[k]}]`,bEdge=`[${V[k]}${V[(k+1)%n]}]`,hgt=`[${S}${Hn}]`;
+  return {head:`<p>Voici une pyramide en perspective cavalière. Le point ${m(Hn)} est le pied de sa hauteur.</p>${fig}`,tasks:[
+   {q:'Quel point est le sommet de la pyramide ?',a:S,options:[S,V[0],Hn],hint:'Le sommet est le point commun à toutes les faces triangulaires.',corr:`Le sommet est le point ${m(S)} : toutes les faces latérales passent par ce point.`},
+   {q:'Quelle est la base de la pyramide ?',a:base,options:[base,faces[0],S+Hn],hint:'La base est la seule face qui ne contient pas le sommet.',corr:`La base est le ${POLY[n]} ${m(base)}.`},
+   {q:'Combien la pyramide a-t-elle de faces latérales ?',a:n,hint:'Il y a une face latérale sur chaque côté de la base.',corr:`La base a ${n} côtés, donc il y a ${n} faces latérales : ${faces.map(m).join(', ')}.`},
+   {q:'Lequel de ces segments est une arête latérale ?',a:edge,options:[edge,bEdge,hgt],hint:'Une arête latérale joint un sommet de la base au sommet de la pyramide.',corr:`${m(edge)} joint le point ${m(V[k])} de la base au sommet ${m(S)}. ${m(bEdge)} est un côté de la base.`},
+   {q:'Quel segment est la hauteur de la pyramide ?',a:hgt,options:[hgt,edge,`[${V[0]}${Hn}]`],hint:'La hauteur part du sommet et elle est perpendiculaire à la base.',corr:`${m(hgt)} part du sommet et il est perpendiculaire à la base : c’est la hauteur.`}],
+   correction:lines([`Sommet : ${m(S)}`,`Base : ${m(base)}`,`Faces latérales : ${faces.map(m).join(', ')}`,`Arêtes latérales : ${V.map(p=>m('['+S+p+']')).join(', ')}`,`Hauteur : ${m(hgt)}`])};
+ }
+ if(level===2){
+  const tri=example?false:Math.random()<.35;let c,a;
+  if(example){c=4;a=6;}else{c=R(3,8);a=Math.random()<.2?c:c+R(1,5);}
+  const V=tri?['A','B','C']:['A','B','C','D'],name='S'+V.join(''),Hn='H';
+  const fig=pyrFig({base:tri?BASES.tri():BASES.losange(),apex:[0,0,3.1],names:['S',...V],H:Hn,diag:!tri,lab:[[1,2,c+' cm'],['S',V.length-1,a+' cm']],label:`Pyramide régulière ${name}`});
+  const eq=a===c,face='S'+V[0]+V[1];
+  const natB=tri?'équilatéral':`rectangle et isocèle en ${V[1]}`,natOpts=tri?['équilatéral','isocèle en S','rectangle en B']:[natB,'équilatéral','isocèle en S'];
+  const natF=eq?'équilatéral':'isocèle en S';
+  return {head:`<p>${m(name)} est une pyramide régulière ${tri?'dont la base est un triangle équilatéral':'à base carrée'}. On a ${m('S'+V.at(-1)+' = '+a+' cm')} et ${m(V[1]+V[2]+' = '+c+' cm')}. ${m(Hn)} est le centre de la base.</p>${fig}`,tasks:[
+   {q:`Que représente le segment ${m('[S'+Hn+']')} pour la pyramide ?`,a:'la hauteur',options:['la hauteur','une arête latérale','une face latérale'],hint:'Le segment part du sommet et il est perpendiculaire à la base.',corr:`${m('[S'+Hn+']')} part du sommet ${m('S')} et il est perpendiculaire à la base en son centre ${m(Hn)} : c’est la hauteur.`},
+   {q:`Quelle est la longueur de l’arête ${m('[S'+V[1]+']')} ?`,a,unit:'cm',hint:'Dans une pyramide régulière, toutes les arêtes latérales ont la même longueur.',corr:`La pyramide est régulière, donc ses arêtes latérales ont la même longueur : ${m('S'+V[1]+' = S'+V.at(-1)+' = '+a+' cm')}.`},
+   {q:`Quelle est la longueur du côté ${m('['+V[0]+V[1]+']')} ?`,a:c,unit:'cm',hint:tri?'La base est un triangle équilatéral : ses trois côtés ont la même longueur.':'La base est un carré : ses quatre côtés ont la même longueur.',corr:`La base est ${tri?'un triangle équilatéral':'un carré'}, donc ${m(V[0]+V[1]+' = '+V[1]+V[2]+' = '+c+' cm')}.`},
+   {q:`Quelle est la nature du triangle ${m(V[0]+V[1]+V[2])} ?`,a:natB,options:natOpts,hint:tri?'C’est la base de la pyramide.':'Ce triangle est la moitié du carré de base : regarde ses côtés et son angle.',corr:tri?`${m(V.join(''))} est la base, c’est un triangle équilatéral.`:`${m(V.join(''))} est un carré, donc ${m(V[0]+V[1]+' = '+V[1]+V[2])} et l’angle en ${m(V[1])} est droit : le triangle ${m(V[0]+V[1]+V[2])} est rectangle et isocèle en ${m(V[1])}.`},
+   {q:`Quelle est la nature du triangle ${m(face)} ?`,a:natF,options:['isocèle en S','équilatéral','rectangle en S'],hint:'Compare les longueurs des trois côtés de cette face latérale.',corr:eq?`${m('S'+V[0]+' = S'+V[1]+' = '+a+' cm')} et ${m(V[0]+V[1]+' = '+c+' cm')} : les trois côtés ont la même longueur, le triangle ${m(face)} est équilatéral.`:`${m('S'+V[0]+' = S'+V[1]+' = '+a+' cm')} et ${m(V[0]+V[1]+' = '+c+' cm')} : le triangle ${m(face)} est isocèle en ${m('S')}.`}],
+   correction:lines([`${m('[S'+Hn+']')} est la hauteur de la pyramide.`,`${m('S'+V[1]+' = '+a+' cm')} et ${m(V[0]+V[1]+' = '+c+' cm')}`,`${m(V[0]+V[1]+V[2])} est ${natB}.`,`${m(face)} est ${natF}.`])};
+ }
+ const d=example?8:2*R(2,9),nm=example?['S','O','A']:pick([['S','O','A'],['T','O','M'],['S','I','B']]);
+ const fig=coneFig({R:1.6,H:3,names:nm,label:`Cône de sommet ${nm[0]}`});
+ return {head:`<p>Voici un cône de révolution de sommet ${m(nm[0])}. Le point ${m(nm[1])} est le centre du disque de base et le point ${m(nm[2])} est sur le cercle de base.</p>${fig}`,tasks:[
+  {q:'Quelle est la base du cône ?',a:`le disque de centre ${nm[1]}`,options:[`le disque de centre ${nm[1]}`,`le triangle ${nm.join('')}`,`le segment [${nm[0]}${nm[2]}]`],hint:'La base d’un cône est la face plane.',corr:`La base est le disque de centre ${m(nm[1])} et de rayon ${m(nm[1]+nm[2])}.`},
+  {q:'Quel segment est la hauteur du cône ?',a:`[${nm[0]}${nm[1]}]`,options:[`[${nm[0]}${nm[1]}]`,`[${nm[0]}${nm[2]}]`,`[${nm[1]}${nm[2]}]`],hint:'La hauteur joint le sommet au centre du disque de base.',corr:`${m('['+nm[0]+nm[1]+']')} joint le sommet au centre de la base : c’est la hauteur.`},
+  {q:'Quel segment est un rayon de la base ?',a:`[${nm[1]}${nm[2]}]`,options:[`[${nm[1]}${nm[2]}]`,`[${nm[0]}${nm[1]}]`,`[${nm[0]}${nm[2]}]`],hint:'Un rayon joint le centre du cercle à un point du cercle.',corr:`${m('['+nm[1]+nm[2]+']')} joint le centre ${m(nm[1])} à un point du cercle : c’est un rayon.`},
+  {q:`Le diamètre de la base mesure ${d} cm. Combien mesure le rayon ${m(nm[1]+nm[2])} ?`,a:d/2,unit:'cm',hint:'Le rayon est la moitié du diamètre.',corr:`${m(nm[1]+nm[2]+' = '+d+' : 2 = '+fmt(d/2)+' cm')}.`}],
+  correction:lines([`Base : le disque de centre ${m(nm[1])}`,`Hauteur : ${m('['+nm[0]+nm[1]+']')}`,`Rayon : ${m('['+nm[1]+nm[2]+']')}`,`${m(nm[1]+nm[2]+' = '+d+' : 2 = '+fmt(d/2)+' cm')}`])};
+}
+
+/* ---------- 2. Patrons ---------- */
+const NETREASON={
+ croix:n=>`Il y a bien ${n+1} faces, les côtés qui se collent ont la même longueur et, en repliant les triangles autour de la base, on obtient la pyramide. C’est un patron.`,
+ eventail:n=>`Il y a bien ${n+1} faces. Les triangles se replient les uns sur les autres et la base se colle sur leurs côtés de même longueur. C’est un patron.`,
+ manque:n=>`Il n’y a que ${n} faces : il manque une face latérale. Ce n’est pas un patron.`,
+ extra:n=>`Il y a ${n+2} faces, une de trop : en repliant, deux faces se superposent. Ce n’est pas un patron.`,
+ cote:(n,c,a)=>`La base est collée sur une arête latérale. Or le côté de la base mesure ${fmt(c)} cm et l’arête latérale mesure ${fmt(a)} cm : ces côtés ne peuvent pas se coller. Ce n’est pas un patron.`
+};
+function patExercise(level=1,example=false){
+ if(level===1){
+  const n=example?4:pick([4,4,3]);let c,a,type;
+  if(example){c=3;a=5;type='cote';}else{c=R(3,5);a=Math.random()<.25?c:c+R(1,3);type=pick(a===c?['croix','eventail','manque','extra']:['croix','eventail','manque','extra','cote','cote']);}
+  const name=n===4?'SABCD':'SABC',faces=netFaces(n,c,a,type).faces.length,ok=type==='croix'||type==='eventail';
+  const fig=netFig(n,c,a,type,{label:'Figure à étudier, qui n’est pas en vraie grandeur'});
+  const tasks=[
+   {q:'Combien de faces cette pyramide a-t-elle ?',a:n+1,guide:true,hint:'Compte la base, puis une face latérale sur chaque côté de la base.',corr:`Une base ${n===4?'carrée':'triangulaire'} et ${n} faces latérales : ${n+1} faces.`},
+   {q:'Combien de faces compte la figure ?',a:faces,guide:true,hint:'Compte tous les polygones de la figure, la base comprise.',corr:`La figure compte ${faces} faces${faces===n+1?', comme la pyramide':faces<n+1?' : il en manque une':' : il y en a une de trop'}.`}];
+  if(faces===n+1)tasks.push({q:'Les côtés qui viennent se coller l’un sur l’autre ont-ils la même longueur ?',a:type==='cote'?'non':'oui',options:OUINON,guide:true,hint:'Regarde sur quel côté la base est collée : un côté de la base ou une arête latérale ?',corr:type==='cote'?`Le côté de la base (${fmt(c)} cm) est collé sur une arête latérale (${fmt(a)} cm) : les longueurs sont différentes.`:'Oui. Chaque côté de la base se colle sur la base d’un triangle, et les arêtes latérales se collent deux par deux.'});
+  tasks.push({q:'Cette figure est-elle un patron de la pyramide ?',a:ok?'oui':'non',options:OUINON,hint:'Pour être un patron, la figure doit avoir le bon nombre de faces et des côtés de même longueur qui se collent.',corr:NETREASON[type](n,c,a)});
+  return {head:`<p>${m(name)} est une pyramide régulière ${n===4?'à base carrée':'dont la base est un triangle équilatéral'}. Le côté de la base mesure ${c} cm et chaque arête latérale mesure ${a} cm.</p>${fig}<p>La figure n’est pas en vraie grandeur. Est-ce un patron de la pyramide ${m(name)} ?</p>`,tasks,correction:lines([`La pyramide a ${n+1} faces et la figure en compte ${faces}.`,NETREASON[type](n,c,a)])};
+ }
+ let L,l,a;if(example){L=5;l=3;a=6;}else{L=R(4,7);l=R(2,L-1);a=R(L+1,L+3);}
+ const base=[V2(0,0),V2(L*SN,0),V2(L*SN,l*SN),V2(0,l*SN)];
+ const fig=netFig(4,L,a,'croix',{base,cl:L+' cm',al:a+' cm',label:'Patron obtenu',scale:.8});
+ return {head:`<p>On veut construire le patron d’une pyramide dont la base est un rectangle de longueur ${L} cm et de largeur ${l} cm, et dont chaque arête latérale mesure ${a} cm.</p>`,tasks:[
+  {q:'Que trace-t-on en premier ?',a:'la base',options:['la base','une face latérale','la hauteur'],hint:'On part de la face qui touche toutes les autres.',corr:`On trace d’abord la base : un rectangle de ${L} cm sur ${l} cm.`},
+  {q:'Quel instrument utilise-t-on pour reporter la longueur des arêtes latérales ?',a:'le compas',options:['le compas','le rapporteur','l’équerre'],hint:'On veut reporter une longueur, pas mesurer un angle.',corr:'On reporte une longueur avec le compas.'},
+  {q:'Quel rayon faut-il donner aux arcs de cercle ?',a,unit:'cm',hint:'Les arcs servent à placer le troisième sommet de chaque triangle.',corr:`Les arcs ont pour rayon la longueur d’une arête latérale : ${a} cm. Ils sont centrés aux extrémités de chaque côté du rectangle.`},
+  {q:'Combien de triangles faut-il tracer autour de la base ?',a:4,hint:'Il y a une face latérale sur chaque côté de la base.',corr:'Le rectangle a 4 côtés, donc on trace 4 triangles isocèles.'}],
+  correction:lines([`On trace le rectangle de ${L} cm sur ${l} cm.`,`Sur chaque côté, on trace deux arcs de cercle de rayon ${a} cm, centrés aux extrémités du côté.`,'On relie le point d’intersection des arcs aux extrémités du côté.','On obtient 4 triangles isocèles.'])+fig};
+}
+
+/* ---------- 3. Formules ---------- */
+const F={
+ perCercle:['le périmètre d’un cercle de rayon '+im('r'),m(`2 × π × ${RR}`),[m(`π × ${RR} × ${RR}`),m(`2 × ${RR}`),m(`π × ${RR}`)],`${RR} est le rayon. On peut aussi écrire π × ${im('d')}, où ${im('d')} est le diamètre.`],
+ aireDisque:['l’aire d’un disque de rayon '+im('r'),m(`π × ${RR} × ${RR}`),[m(`2 × π × ${RR}`),m(`π × ${RR}`),m(`${RR} × ${RR}`)],`On peut aussi écrire π × ${RR}². ${RR} est le rayon.`],
+ aireTri:['l’aire d’un triangle',frac('base × hauteur','2'),['base × hauteur',frac('base + hauteur','2'),'3 × base'],'La hauteur est la distance entre la base et le troisième sommet.'],
+ aireRect:['l’aire d’un rectangle de longueur '+im('L')+' et de largeur '+im('l'),m(`${im('L')} × ${im('l')}`),[m(`2 × (${im('L')} + ${im('l')})`),m(`${im('L')} + ${im('l')}`),frac(m(`${im('L')} × ${im('l')}`),'2')],'On multiplie la longueur par la largeur.'],
+ perRect:['le périmètre d’un rectangle de longueur '+im('L')+' et de largeur '+im('l'),m(`2 × (${im('L')} + ${im('l')})`),[m(`${im('L')} × ${im('l')}`),m(`${im('L')} + ${im('l')}`),m(`4 × ${im('L')}`)],'On fait le tour : deux longueurs et deux largeurs.'],
+ aireCarre:['l’aire d’un carré de côté '+im('c'),m(`${im('c')} × ${im('c')}`),[m(`4 × ${im('c')}`),m(`2 × ${im('c')}`),m(`${im('c')} + ${im('c')}`)],'On multiplie le côté par lui-même.'],
+ perCarre:['le périmètre d’un carré de côté '+im('c'),m(`4 × ${im('c')}`),[m(`${im('c')} × ${im('c')}`),m(`2 × ${im('c')}`),m(`3 × ${im('c')}`)],'On fait le tour : quatre côtés de même longueur.'],
+ volPave:['le volume d’un pavé droit',m(`${im('L')} × ${im('l')} × ${HH}`),[m(`${im('L')} + ${im('l')} + ${HH}`),frac(m(`${im('L')} × ${im('l')} × ${HH}`),'3'),m(`2 × (${im('L')} + ${im('l')})`)],'Longueur × largeur × hauteur.'],
+ volCyl:['le volume d’un cylindre de rayon '+im('r')+' et de hauteur '+im('h'),m(`π × ${RR}² × ${HH}`),[frac(m(`π × ${RR}² × ${HH}`),'3'),m(`2 × π × ${RR} × ${HH}`),m(`π × ${RR} × ${HH}`)],`C’est l’aire du disque de base, π × ${RR}², multipliée par la hauteur.`],
+ volPyr:['le volume d’une pyramide',frac(m(`${AB} × ${HH}`),'3'),[m(`${AB} × ${HH}`),frac(m(`${AB} × ${HH}`),'2'),m(`3 × ${AB} × ${HH}`)],`${AB} est l’aire de la base et ${HH} est la hauteur. On divise par 3.`],
+ volCone:['le volume d’un cône de rayon '+im('r')+' et de hauteur '+im('h'),frac(m(`π × ${RR}² × ${HH}`),'3'),[m(`π × ${RR}² × ${HH}`),frac(m(`2 × π × ${RR} × ${HH}`),'3'),frac(m(`π × ${RR} × ${HH}`),'2')],`L’aire de la base est π × ${RR}². On la multiplie par la hauteur, puis on divise par 3.`]
+};
+const FLEV={1:['perCercle','aireDisque','aireTri','aireRect','perRect','aireCarre','perCarre'],2:['volPave','volCyl','volPyr','volCone']};
+function formExercise(level=1,example=false){
+ const k=example?(level===1?'aireTri':'volPyr'):pick(FLEV[level]),[nm,good,bad,why]=F[k];
+ return {head:`<p>Quelle est la formule de ${nm} ?</p>`,tasks:[{q:'Choisis la bonne formule.',rich:true,a:good,options:[good,...bad],hint:'Pense à ce que la formule mesure : une longueur (on fait le tour), une aire (on multiplie deux longueurs) ou un volume.',corr:why}],
+  correction:lines([`${nm[0].toUpperCase()+nm.slice(1)} : ${good}`,why])};
+}
+
+/* ---------- 4. Volume d'une pyramide ---------- */
+function pyrBase(level,example){
+ /* Renvoie {desc, A, line} : description de la base, son aire et la ligne de calcul. */
+ const u=example?'cm':pick(['cm','cm','m']);let b;
+ if(level===2){const tr=example?true:Math.random()<.55;let p,q;do{p=R(3,12);q=R(3,12);}while((p*q)%2);if(example){p=6;q=8;}
+  b=tr?{desc:`un triangle rectangle dont les côtés de l’angle droit mesurent ${p} ${u} et ${q} ${u}`,A:p*q/2,line:`${AB} = ${frac(`${p} × ${q}`,2)} = ${fmt(p*q/2)} ${u}²`,u}
+     :{desc:`un triangle de base ${p} ${u} et de hauteur ${q} ${u} (la hauteur du triangle)`,A:p*q/2,line:`${AB} = ${frac(`${p} × ${q}`,2)} = ${fmt(p*q/2)} ${u}²`,u};
+  b.fig=null;return b;}
+ if(example||Math.random()<.5){const c=example?6:R(3,12);return {desc:`un carré de côté ${c} ${u}`,A:c*c,line:`${AB} = ${c} × ${c} = ${c*c} ${u}²`,u,fig:{base:BASES.carre(),lab:[[0,1,c+' '+u]]}};}
+ const dec=Math.random()<.3,L=dec?R(21,99)/10:R(4,15),l=dec?R(11,Math.floor(L*10)-1)/10:R(2,L-1);
+ return {desc:`un rectangle de longueur ${fmt(L)} ${u} et de largeur ${fmt(l)} ${u}`,A:fix(L*l),line:`${AB} = ${fmt(L)} × ${fmt(l)} = ${fmt(L*l)} ${u}²`,u,fig:{base:BASES.rect(),lab:[[0,1,fmt(L)+' '+u],[1,2,fmt(l)+' '+u]]}};
+}
+function pyrExercise(level=1,example=false){
+ let b,h;
+ if(level===3){let c;do{c=R(3,10);h=R(3,15);}while((c*c*h)%3);if(example){c=6;h=7;}const u=example?'cm':pick(['cm','m']),A=c*c,V=A*h/3;
+  return {head:`<p>Une pyramide a pour base un carré de côté ${c} ${u}. Son volume est égal à ${fmt(V)} ${u}³. Quelle est sa hauteur ?</p>`,tasks:[
+   {q:'Calcule l’aire de la base.',a:A,unit:u+'²',guide:true,hint:'La base est un carré : côté × côté.',corr:`${AB} = ${c} × ${c} = ${A} ${u}².`},
+   {q:`On remplace dans la formule : ${fmt(V)} = ${frac(A+' × '+HH,3)}. On multiplie les deux membres par 3. Combien vaut ${A} × ${HH} ?`,qAlone:null,a:3*V,unit:u+'³',guide:true,hint:`Multiplie ${fmt(V)} par 3.`,corr:`${fmt(V)} × 3 = ${fmt(3*V)}, donc ${A} × ${HH} = ${fmt(3*V)}.`},
+   {q:'Quelle est la hauteur de la pyramide ?',a:h,unit:u,hint:`On divise ${fmt(3*V)} par ${A}.`,corr:`${HH} = ${fmt(3*V)} : ${A} = ${h} ${u}.`}],
+   correction:lines([`${AB} = ${c} × ${c} = ${A} ${u}²`,`${VV} = ${frac(AB+' × '+HH,3)}`,`${fmt(V)} = ${frac(A+' × '+HH,3)}`,`${fmt(V)} ${op('× 3')} = ${frac(A+' × '+HH,3)} ${op('× 3')}`,`${fmt(3*V)} = ${A} × ${HH}`,`${frac(fmt(3*V),op(A))} = ${frac(A+' × '+HH,op(A))}`,box(`${HH} = ${h} ${u}`)])};}
+ do{b=pyrBase(level,example);h=example?(level===1?10:9):R(3,15);}while(!example&&!Number.isInteger(fix(b.A*h*100/3)));
+ const u=b.u,P=fix(b.A*h),V=fix(P/3);
+ const fig=b.fig?pyrFig({base:b.fig.base,apex:[0,0,3],showH:true,lab:b.fig.lab,hLab:fmt(h)+' '+u,label:'Pyramide et ses dimensions'}):'';
+ return {head:`<p>Une pyramide a pour base ${b.desc}. Sa hauteur mesure ${fmt(h)} ${u}. Calcule son volume.</p>${fig}`,tasks:[
+  {q:'Calcule l’aire de la base.',a:b.A,unit:u+'²',guide:true,hint:level===2?'Aire d’un triangle : base × hauteur, divisé par 2.':'Carré : côté × côté. Rectangle : longueur × largeur.',corr:b.line+'.'},
+  {q:`Calcule ${AB} × ${HH}.`,a:P,unit:u+'³',guide:true,hint:'Multiplie l’aire de la base par la hauteur de la pyramide.',corr:`${fmt(b.A)} × ${fmt(h)} = ${fmt(P)}.`},
+  {q:'Quel est le volume de la pyramide ?',a:V,unit:u+'³',hint:'Divise le résultat précédent par 3.',corr:`${frac(fmt(P),3)} = ${fmt(V)}, donc ${VV} = ${fmt(V)} ${u}³.`}],
+  correction:lines([b.line,`${VV} = ${frac(AB+' × '+HH,3)}`,`${VV} = ${frac(fmt(b.A)+' × '+fmt(h),3)}`,`${VV} = ${frac(fmt(P),3)}`,box(`${VV} = ${fmt(V)} ${u}³`)])};
+}
+
+/* ---------- 5. Volume d'un cône ---------- */
+function coneExercise(level=1,example=false){
+ let r,h,d=null;
+ if(example){[r,h]=level===1?[3,8]:level===2?[4,6]:[6,20];if(level===2)d=8;}
+ else do{if(level===2){d=R(4,20);r=d/2;}else r=level===3?R(3,9):R(2,9);h=R(3,level===3?25:15);}while(!Number.isInteger(fix(r*r*h*100/3)));
+ const k=fix(r*r*h/3),u='cm',tasks=[],out=[];
+ if(d!==null){tasks.push({q:`Le diamètre de la base mesure ${d} cm. Quel est le rayon ?`,a:r,unit:'cm',guide:true,hint:'Le rayon est la moitié du diamètre.',corr:`${RR} = ${d} : 2 = ${fmt(r)} cm.`});out.push(`${RR} = ${d} : 2 = ${fmt(r)} cm`);}
+ tasks.push({q:`Calcule ${RR}², c’est-à-dire ${fmt(r)} × ${fmt(r)}.`,a:fix(r*r),guide:true,hint:'Le carré d’un nombre, c’est ce nombre multiplié par lui-même.',corr:`${fmt(r)}² = ${fmt(r)} × ${fmt(r)} = ${fmt(r*r)}.`});
+ tasks.push({q:`La valeur exacte du volume s’écrit sous la forme « un nombre × π ». Quel est ce nombre ?`,a:k,hint:`Calcule ${frac(fmt(r*r)+' × '+fmt(h),3)}, sans t’occuper de π.`,corr:`${frac(fmt(r*r)+' × '+fmt(h),3)} = ${fmt(k)}, donc ${VV} = ${fmt(k)}π cm³.`});
+ out.push(`${VV} = ${frac(`π × ${RR}² × ${HH}`,3)}`,`${VV} = ${frac(`π × ${fmt(r)}² × ${fmt(h)}`,3)}`,`${VV} = ${frac(`π × ${fmt(r*r)} × ${fmt(h)}`,3)}`,box(`${VV} = ${fmt(k)}π cm³`));
+ if(level<3){const v=r1(k*Math.PI);tasks.push({q:'Donne l’arrondi du volume au dixième de cm³.',a:v,unit:'cm³',hint:`Tape ${fmt(k)} × π sur la calculatrice, puis garde un seul chiffre après la virgule.`,corr:`${fmt(k)} × π ≈ ${fmt(Math.round(k*Math.PI*1000)/1000)}…, donc ${VV} ≈ ${fmt(v)} cm³.`});out.push(`${VV} ≈ ${fmt(v)} cm³`);}
+ else{const v=r0(k*Math.PI);tasks.push({q:'Donne l’arrondi du volume au cm³.',a:v,unit:'cm³',hint:`Tape ${fmt(k)} × π sur la calculatrice, puis arrondis à l’unité.`,corr:`${VV} ≈ ${fmt(v)} cm³.`});
+  tasks.push({q:'Convertis ce volume arrondi en litres.',a:fix(v/1000),unit:'L',hint:'1 cm³ = 1 mL et 1 L = 1 000 mL : on divise par 1 000.',corr:`${fmt(v)} cm³ = ${fmt(v)} mL = ${fmt(v/1000)} L.`});out.push(`${VV} ≈ ${fmt(v)} cm³`,`${VV} ≈ ${fmt(v)} mL ≈ ${fmt(v/1000)} L`);}
+ const fig=coneFig({R:1.5,H:2.8,rLab:d!==null?null:fmt(r)+' cm',hLab:fmt(h)+' cm',label:'Cône et ses dimensions'});
+ const head=level===3?`<p>Un récipient a la forme d’un cône de rayon ${fmt(r)} cm et de hauteur ${fmt(h)} cm. Calcule son volume, puis exprime-le en litres.</p>`:`<p>Un cône de révolution a pour base un disque de ${d!==null?'diamètre '+d:'rayon '+fmt(r)} cm. Sa hauteur mesure ${fmt(h)} cm. Calcule la valeur exacte de son volume, puis son arrondi au dixième.</p>`;
+ return {head:head+fig,tasks,correction:lines(out)};
+}
+
+/* ---------- 6. Conversions ---------- */
+const UV=['dam³','m³','dm³','cm³','mm³'],UC=['hL','daL','L','dL','cL','mL'];
+function convSimple(units,base,ex){
+ let i,j,v,res;
+ if(ex){i=units.indexOf(base===1000?'m³':'L');j=i+1;v=3.5;}
+ else{do{i=R(0,units.length-1);j=R(0,units.length-1);}while(i===j||Math.abs(i-j)>(base===1000?2:3)||(base===1000&&(i===0||j===0)&&Math.random()<.7));}
+ const k=j-i,f=Math.pow(base,Math.abs(k));
+ if(!ex){if(k>0)v=R(1,999)/pick([1,10,100]);else{res=R(1,9999)/pick([1,10,100,1000]);v=fix(res*f);}}
+ res=fix(k>0?v*f:v/f);
+ const u1=units[i],u2=units[j],plus=k>0;
+ return {head:`<p>Complète l’égalité : ${m(fmt(v)+' '+u1+' = … '+u2)}.</p>`,tasks:[
+  {q:`Le ${u2} est-il une unité plus petite ou plus grande que le ${u1} ?`,a:plus?'plus petite':'plus grande',options:['plus petite','plus grande'],guide:true,hint:`Dans l’ordre ${units.join(', ')}, les unités sont de plus en plus petites.`,corr:plus?`Le ${u2} est plus petit, donc le nombre devient plus grand : on multiplie.`:`Le ${u2} est plus grand, donc le nombre devient plus petit : on divise.`},
+  {q:`Par quel nombre faut-il ${plus?'multiplier':'diviser'} ?`,a:f,guide:true,hint:base===1000?'D’une unité de volume à la suivante, on multiplie ou on divise par 1 000.':'D’une unité de contenance à la suivante, on multiplie ou on divise par 10.',corr:`Du ${u1} au ${u2}, il y a ${Math.abs(k)} rang${Math.abs(k)>1?'s':''} : on ${plus?'multiplie':'divise'} par ${fmt(f)}.`},
+  {q:`Complète : ${m(fmt(v)+' '+u1+' = … '+u2)}.`,a:res,unit:u2,hint:'Déplace la virgule, en ajoutant des zéros si besoin.',corr:`${m(fmt(v)+' '+u1+' = '+fmt(res)+' '+u2)}.`}],
+  correction:lines([m(`${fmt(v)} ${u1} = ${fmt(v)} ${plus?'×':':'} ${fmt(f)} ${u2} = ${fmt(res)} ${u2}`)])};
+}
+const EQS=['1 dm³ = 1 L','1 cm³ = 1 mL','1 m³ = 1 000 L'];
+const MIX=[['cm³','mL',1,1],['mL','cm³',1,1],['dm³','L',1,0],['L','dm³',1,0],['m³','L',1000,2],['L','m³',.001,2],['cm³','L',.001,1],['L','cm³',1000,1]];
+function convMix(ex){
+ const [u1,u2,f,e]=ex?MIX[4]:pick(MIX);let v;
+ if(ex)v=2.4;else if(f===1)v=R(1,999)/pick([1,10]);else if(f>1)v=R(1,99)/pick([1,10,100]);else v=R(50,99999)/pick([1,10]);
+ const res=fix(v*f),chain=(u1==='cm³'&&u2==='L')?`${fmt(v)} cm³ = ${fmt(v)} mL = ${fmt(res)} L`:(u1==='L'&&u2==='cm³')?`${fmt(v)} L = ${fmt(res)} mL = ${fmt(res)} cm³`:f===1?`${fmt(v)} ${u1} = ${fmt(res)} ${u2}`:`${fmt(v)} ${u1} = ${fmt(v)} ${f>1?'×':':'} 1 000 ${u2} = ${fmt(res)} ${u2}`;
+ return {head:`<p>Complète l’égalité : ${m(fmt(v)+' '+u1+' = … '+u2)}.</p>`,tasks:[
+  {q:'Quelle égalité vas-tu utiliser ?',a:EQS[e],options:EQS,guide:true,hint:'Repère l’unité de volume et l’unité de contenance de l’énoncé.',corr:`On utilise ${m(EQS[e])}.`},
+  {q:`Complète : ${m(fmt(v)+' '+u1+' = … '+u2)}.`,a:res,unit:u2,hint:f===1?'Les deux unités se correspondent : le nombre ne change pas.':(u1==='cm³'||u2==='cm³')?'Passe par les mL : 1 L = 1 000 mL.':'1 m³ = 1 000 L.',corr:`${m(chain)}.`}],
+  correction:lines([m(chain)])};
+}
+function convExercise(level=1,example=false){return level===1?convSimple(UV,1000,example):level===2?convSimple(UC,10,example):convMix(example);}
+
+const MODULES={
+ voc:{title:'1. Vocabulaire',desc:'Sommet, base, faces et arêtes latérales, hauteur, pyramide régulière et cône de révolution.',retain:'La base d’une pyramide est un polygone, ses faces latérales sont des triangles qui se rejoignent au sommet. La hauteur part du sommet et elle est perpendiculaire à la base. Dans une pyramide régulière, les arêtes latérales ont toutes la même longueur.',gen:vocExercise,alone:'Réponds à chaque question. L’aide n’est pas affichée.',levels:[[1,'1. Pyramide'],[2,'2. Pyramide régulière'],[3,'3. Cône']]},
+ pat:{title:'2. Patrons',desc:'Reconnaître le patron d’une pyramide et savoir le construire.',retain:'Un patron de pyramide contient la base et toutes les faces latérales. Les côtés qui se collent ont la même longueur. Pour reporter une longueur, on utilise le compas.',gen:patExercise,alone:'Réponds à chaque question. Sur ton cahier, justifie ta réponse.',levels:[[1,'1. Est-ce un patron ?'],[2,'2. Construire un patron']]},
+ form:{title:'3. Formules',desc:'Périmètres, aires et volumes à connaître par cœur.',retain:'Volume d’une pyramide et d’un cône : on multiplie l’aire de la base par la hauteur, puis on divise par 3.',gen:formExercise,alone:'Choisis la bonne formule, puis recopie-la sur ton cahier.',levels:[[1,'1. Périmètres et aires'],[2,'2. Volumes']]},
+ pyr:{title:'4. Volume d’une pyramide',desc:'Aire de la base, multiplication par la hauteur, division par 3, puis la hauteur à retrouver.',retain:`${VV} = ${frac(AB+' × '+HH,3)}. On calcule d’abord l’aire de la base.`,gen:pyrExercise,levels:[[1,'1. Base carrée ou rectangle'],[2,'2. Base triangulaire'],[3,'3. Retrouver la hauteur']]},
+ cone:{title:'5. Volume d’un cône',desc:'Rayon ou diamètre, valeur exacte avec π, puis arrondi.',retain:`${VV} = ${frac(`π × ${RR}² × ${HH}`,3)}. Attention : si l’énoncé donne le diamètre, on le divise par 2 pour avoir le rayon.`,gen:coneExercise,levels:[[1,'1. Avec le rayon'],[2,'2. Avec le diamètre'],[3,'3. En litres']]},
+ conv:{title:'6. Conversions',desc:'Unités de volume, unités de contenance, et le passage de l’une à l’autre.',retain:'Volumes : on multiplie ou on divise par 1 000 d’une unité à la suivante. Contenances : par 10. À connaître : 1 m³ = 1 000 L, 1 dm³ = 1 L et 1 cm³ = 1 mL.',gen:convExercise,levels:[[1,'1. Unités de volume'],[2,'2. Unités de contenance'],[3,'3. Volume et contenance']]}
+};
+/* Mon travail : suivi léger, enregistré dans le navigateur (clé propre à l'app).
+   On compte les exercices finis dans « Je m'entraîne seul » (et ceux réussis sans erreur),
+   et la dernière note provisoire de chaque D.S. blanc. Le code résume ce travail pour le professeur. */
+function makeSuivi(app,prefix,modules){
+ const KEY=app+'-suivi',B36=n=>Math.max(0,Math.min(1295,n|0)).toString(36).toUpperCase().padStart(2,'0');
+ let st={};try{st=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){}
+ st.m=st.m||{};st.ds=st.ds||{};
+ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}};
+ const sum=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))%1296;return h;};
+ const nf=x=>String(x).replace('.',',');
+ const fait=(f,r)=>f?`${f} exercice${f>1?'s':''} fait${f>1?'s':''} seul, dont ${r} sans erreur`:'pas commencé';
+ function code(){const day=Math.floor((Date.now()-Date.UTC(2026,0,1))/864e5);let b=B36(day);
+  modules.forEach(([k],i)=>{const r=st.m[k];if(r&&r[0])b+=String(i)+'M'+B36(r[0])+B36(r[1]);});
+  Object.keys(st.ds).sort().forEach(s=>{const d=st.ds[s];b+='D'+s+B36(Math.round(d.n*2))+B36(Math.round(d.max*2));});
+  return (prefix+b+B36(sum(b))).match(/.{1,6}/g).join('-');}
+ function decode(str){const s=String(str).toUpperCase().replace(/[^0-9A-Z]/g,'');if(!s.startsWith(prefix)||s.length<prefix.length+4)return null;
+  const b=s.slice(prefix.length,-2);if(sum(b)!==parseInt(s.slice(-2),36))return null;
+  const out={date:new Date(Date.UTC(2026,0,1)+parseInt(b.slice(0,2),36)*864e5),m:{},ds:{}};
+  for(let i=2;i+6<=b.length;i+=6){const e=b.slice(i,i+6);
+   if(e[0]==='D')out.ds[e[1]]={n:parseInt(e.slice(2,4),36)/2,max:parseInt(e.slice(4,6),36)/2};
+   else{const mod=modules[+e[0]];if(!mod||e[1]!=='M')return null;out.m[mod[0]]=[parseInt(e.slice(2,4),36),parseInt(e.slice(4,6),36)];}}
+  return out;}
+ function table(d){const rows=modules.map(([k,l])=>{const r=d.m[k]||[0,0];return `<tr><td>${l}</td><td>${r[0]?r[0]:'—'}</td><td>${r[0]?r[1]:'—'}</td></tr>`;}).join('');
+  const ds=Object.keys(d.ds).sort().map(s=>`Sujet ${s === 'R' ? 'tiré au hasard' : s} : ${nf(d.ds[s].n)} / ${nf(d.ds[s].max)}`).join(' ; ');
+  return `<table class="suivi-t"><tr><th>Partie</th><th>Exercices faits seul</th><th>Sans erreur</th></tr>${rows}</table><p>Dernière note provisoire au D.S. blanc : ${ds||'pas encore de D.S. vérifié'}.</p>`;}
+ if(!document.getElementById('suivi-css')){const c=document.createElement('style');c.id='suivi-css';c.textContent='.suivi{margin-top:18px}.suivi h2{color:#7a3f98;font-size:1.2rem;line-height:1.3;margin:0 0 .5em}.suivi-st{margin:.2em 0 .6em;font-size:.88rem;color:#5b6478}.suivi-t{border-collapse:collapse;width:100%;margin:.4em 0;font-size:.95rem}.suivi-t th,.suivi-t td{border:1px solid #c9d3ee;padding:.35em .5em;text-align:left}.suivi-t th{background:#f4f6fb;font-weight:700}.suivi-code{display:inline-block;font-family:"STIX Two Text",Cambria,serif;font-size:1.2rem;letter-spacing:.06em;padding:.2em .6em;border:2px dashed #1d3a8a;border-radius:8px;background:#fff;margin:.3em .5em .3em 0}.suivi details{margin-top:.8em}.suivi summary{cursor:pointer;font-weight:700;color:#1d3a8a}.suivi input[type=text]{font:inherit;padding:.4em .6em;border:2px solid #c9d3ee;border-radius:8px;min-width:0;width:16em;max-width:100%}.suivi .suivi-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:.5em 0}.suivi .suivi-bad{color:#b8322a}';document.head.append(c);}
+ return {
+  done(mod,first){const r=st.m[mod]||[0,0];r[0]++;if(first)r[1]++;st.m[mod]=r;save();},
+  ds(s,n,max){st.ds[s]={n:Math.round(n*2)/2,max};save();},
+  status(mod){const r=st.m[mod]||[0,0];return fait(r[0],r[1]);},
+  box(){const sec=document.createElement('section');sec.className='card suivi';const c=code();
+   sec.innerHTML=`<h2>Mon travail</h2><p>Ce que j’ai fait dans « Je m’entraîne seul », partie par partie, et ma dernière note provisoire au D.S. blanc.</p>${table(st)}
+    <p><b>Mon code pour le professeur.</b> Copie-le et envoie-le à ton professeur s’il te le demande.</p>
+    <div class="suivi-row"><span class="suivi-code">${c}</span><button type="button" class="btn light" data-s="copy">Copier le code</button></div>
+    <details><summary>Espace professeur : lire un code</summary><div class="suivi-row"><input type="text" data-s="in" placeholder="${prefix}…" autocomplete="off" aria-label="Code d’un élève"><button type="button" class="btn" data-s="read">Lire le code</button></div><div data-s="out"></div>
+    <p class="suivi-st">Effacer le suivi enregistré sur cet appareil :</p><button type="button" class="btn light" data-s="reset">Tout effacer</button></details>`;
+   const $s=k=>sec.querySelector(`[data-s="${k}"]`);
+   $s('copy').addEventListener('click',()=>{(navigator.clipboard?navigator.clipboard.writeText(c):Promise.reject()).then(()=>{$s('copy').textContent='Code copié';}).catch(()=>{const r=document.createRange();r.selectNode(sec.querySelector('.suivi-code'));getSelection().removeAllRanges();getSelection().addRange(r);});});
+   $s('read').addEventListener('click',()=>{const d=decode($s('in').value);$s('out').innerHTML=d?`<p>Code créé le ${d.date.toLocaleDateString('fr-FR')}.</p>`+table(d):'<p class="suivi-bad">Ce code n’est pas valide. Vérifiez qu’il a été copié en entier.</p>';});
+   let armed=false;$s('reset').addEventListener('click',()=>{if(!armed){armed=true;$s('reset').textContent='Cliquer encore pour tout effacer';return;}st={m:{},ds:{}};save();sec.replaceWith(this.box());});
+   return sec;}
+ };
+}
+const SUIVI=makeSuivi('pyramides-cones','PY',[['voc','1. Vocabulaire'],['pat','2. Patrons'],['form','3. Formules'],['pyr','4. Volume d’une pyramide'],['cone','5. Volume d’un cône'],['conv','6. Conversions']]);
+const VIEW={page:'home',mode:'exemple',level:1};
+function go(id){if(id!==VIEW.page)VIEW.level=1;VIEW.page=id;render();window.scrollTo({top:0});}
+function modeBar(parent){const bar=dom('div','subtabs');for(const[key,label]of[['exemple','Je regarde un exemple'],['aide','Je m’entraîne avec de l’aide'],['seul','Je m’entraîne seul']])bar.append(button(label,()=>{VIEW.mode=key;render();},VIEW.mode===key?'on':''));parent.append(bar);}
+/* Modelage : toutes les étapes, avec la réponse et l'explication. Pratique guidée : les mêmes étapes, avec l'aide affichée.
+   Pratique autonome : les étapes de guidage (guide:true) sont retirées et l'aide n'est pas affichée. Dans les deux pratiques : deux essais, puis la correction. */
+function renderExercise(parent,ex){
+ const alone=VIEW.mode==='seul',mod=MODULES[VIEW.page];
+ if(alone)parent.append(dom('p','small',mod.alone||'Écris les étapes du calcul sur ton cahier, puis saisis seulement ta réponse.'));
+ parent.append(dom('div','exo-head',ex.head));const box=dom('div','steps');parent.append(box);
+ let tasks=alone?ex.tasks.filter(t=>!t.guide):ex.tasks;if(!tasks.length)tasks=[ex.tasks.at(-1)];
+ let step=0,allFirst=true;
+ function next(){
+  if(step>=tasks.length){if(alone)SUIVI.done(VIEW.page,allFirst);parent.append(dom('div','seyes','<h4>Correction rédigée</h4>'+ex.correction));parent.append(button('Nouvel exercice',render));return;}
+  const t=tasks[step++],q=alone&&t.qAlone?t.qAlone:t.q;const single=tasks.length===1;const row=dom('div','step',(single?'':`<div class="step-n">Étape ${step} sur ${tasks.length}</div>`)+`<div class="step-q">${q}</div>`);box.append(row);
+  if(VIEW.mode==='exemple'){row.classList.add('done');row.append(dom('div','model-a',answer(t)),dom('div','model-e',t.corr));row.append(button(step<tasks.length?'Étape suivante':'Voir la rédaction',()=>{row.querySelector('button').remove();next();}));return;}
+  if(VIEW.mode==='aide'&&t.hint)row.append(dom('p','small aide','<b>Aide :</b> '+t.hint));
+  const area=dom('div','step-a'),feedback=dom('div','fb');feedback.setAttribute('aria-live','polite');row.append(area,feedback);let tries=0;
+  const retry=()=>{feedback.className='fb warn';feedback.textContent=VIEW.mode==='aide'&&t.hint?'Ce n’est pas encore juste. Relis l’aide, puis fais un deuxième essai.':'Ce n’est pas encore juste. Relis l’énoncé et vérifie, puis fais un deuxième essai.';};
+  const finish=ok=>{row.classList.add(ok?'done':'missed');feedback.className='fb '+(ok?'ok':'ko');feedback.innerHTML=`<b>${ok?'C’est juste.':'La bonne réponse est '+answer(t)+'.'}</b> ${t.corr}`;row.append(button('Continuer',()=>{row.querySelectorAll('button:not(.opt)').forEach(b=>b.remove());next();}));};
+  if(t.rich){area.classList.add('col');for(const o of shuffle(t.options)){const b=dom('button','opt',o);b.type='button';b.dataset.v=String(t.options.indexOf(o));b.addEventListener('click',()=>{const ok=o===t.a;tries++;if(!ok)allFirst=false;if(!ok&&tries<2){b.classList.add('bad');b.disabled=true;retry();return;}area.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.v==='0')x.classList.add('good');});finish(ok);});area.append(b);}return;}
+  let input;
+  if(t.options){input=dom('select');input.append(new Option('Choisir une réponse',''));for(const o of (t.options.length>2?shuffle(t.options):t.options))input.append(new Option(o,o));}
+  else {input=dom('input');input.type='text';input.className='eq-input';input.autocomplete='off';input.inputMode='decimal';input.placeholder='Nombre';}
+  input.setAttribute('aria-label','Réponse à l’étape '+step);
+  const valid=button('Valider',()=>{
+   if(!input.value.trim()){feedback.className='fb warn';feedback.textContent='Donne une réponse avant de valider.';return;}
+   if(!t.options&&parseNum(input.value)===null){feedback.className='fb warn';feedback.textContent='Écris seulement un nombre, sans l’unité, par exemple 120 ou 2,5.';return;}
+   const ok=check(t,input.value);tries++;if(!ok)allFirst=false;
+   if(!ok&&tries<2){retry();input.classList.add('bad');return;}
+   input.classList.remove('bad');input.disabled=true;valid.disabled=true;finish(ok);
+  });input.addEventListener('keydown',e=>{if(e.key==='Enter')valid.click();});area.append(input);if(t.unit)area.append(dom('span','unit',t.unit));area.append(valid);
+ }
+ next();
+}
+
+/* D.S. blancs, sur le modèle du D.S. 402 : formules, fondamentaux, patrons, volume d'un cône, problème, conversions.
+   Nombres absents du cours et des exemples ; le sujet B ne reprend aucun exercice du sujet A. L'élève rédige sur une feuille et ne saisit que les résultats. */
+function dsData(variant){
+ const num=(q,a,c,w,unit)=>({q,a,corr:lines(c),w,unit});
+ const rad=(q,options,a,c,w)=>({q,options,a,answerHtml:a,corr:lines(c),w});
+ const fq=(k,w=.5)=>{const[nm,good,bad,why]=F[k];return rad(`${nm[0].toUpperCase()+nm.slice(1)}`,shuffle([good,...bad.slice(0,2)]),good,[`${nm[0].toUpperCase()+nm.slice(1)} : ${good}`],w);};
+ const cv=(v,u1,u2,res,chain)=>num(m(`${v} ${u1} = … ${u2}`),res,[m(chain)],.5,u2);
+ const fig=(t,s)=>`<p><b>${t}</b></p>${s}`;
+ if(variant==='B'){
+  const pyr=pyrFig({base:BASES.tri(),apex:[0,0,3.3],names:['S','E','F','G'],H:'K',lab:[[0,1,'6 cm'],['S',0,'9 cm']],label:'Pyramide régulière SEFG'});
+  return [
+  {title:'Automatismes',pts:2,head:'<p>Choisis la bonne formule pour chacune des grandeurs suivantes.</p>',items:[fq('aireDisque'),fq('perRect'),fq('volCone'),fq('aireCarre')]},
+  {title:'Fondamentaux',pts:6,head:`<p>${m('SEFG')} est une pyramide régulière dont la base est un triangle équilatéral, telle que ${m('SE = 9 cm')} et ${m('EF = 6 cm')}. ${m('K')} est le centre de la base. Sur ta feuille, justifie chaque réponse.</p>${pyr}`,items:[
+   rad('Quel est le sommet de cette pyramide ?',['S','E','K'],'S',['Le sommet est le point S.'],.5),
+   rad('Quelle est sa base ?',['EFG','SEF','SK'],'EFG',['La base est le triangle EFG.'],.5),
+   rad(`Que représente le segment ${m('[SK]')} pour la pyramide ?`,['la hauteur','une arête latérale','une face latérale'],'la hauteur',['K est le centre de la base EFG et (SK) est perpendiculaire à la base.','Donc [SK] est la hauteur de la pyramide.'],1),
+   num('Combien d’arêtes de cette pyramide mesurent 9 cm ?',3,['La pyramide est régulière, donc ses arêtes latérales ont la même longueur.','SE = SF = SG = 9 cm : 3 arêtes mesurent 9 cm.'],.5),
+   num('Combien d’arêtes de cette pyramide mesurent 6 cm ?',3,['La base est un triangle équilatéral.','EF = FG = GE = 6 cm : 3 arêtes mesurent 6 cm.'],.5),
+   rad(`Quelle est la nature du triangle ${m('EFG')} ?`,['équilatéral','isocèle en E','rectangle en F'],'équilatéral',['EF = FG = GE = 6 cm.','Donc le triangle EFG est équilatéral.'],1.5),
+   rad(`Quelle est la nature du triangle ${m('SFG')} ?`,['isocèle en S','équilatéral','rectangle en S'],'isocèle en S',['SF = SG = 9 cm et FG = 6 cm.','Donc le triangle SFG est isocèle en S.'],1.5)]},
+  {title:'Patrons',pts:3,head:'<p>Les trois figures ci-dessous ne sont pas en vraie grandeur. Pour chacune, indique si elle est un patron de la pyramide SEFG de l’exercice 2, puis justifie sur ta feuille.</p>',items:[
+   rad(fig('Figure 1',netFig(3,6,9,'eventail',{scale:.75})),OUINON,'oui',['La figure a 4 faces : la base et 3 faces latérales.','Les trois triangles se replient les uns sur les autres et la base se colle sur un côté de 6 cm.','C’est un patron.'],1),
+   rad(fig('Figure 2',netFig(3,6,9,'cote',{scale:.75})),OUINON,'non',['La base est collée sur une arête latérale.','Le côté de la base mesure 6 cm et l’arête latérale mesure 9 cm : ces côtés ne peuvent pas se coller.','Ce n’est pas un patron.'],1),
+   rad(fig('Figure 3',netFig(3,6,9,'croix',{scale:.75})),OUINON,'oui',['La figure a 4 faces : la base EFG et un triangle isocèle sur chacun de ses côtés.','En repliant les triangles, on obtient la pyramide. C’est un patron.'],1)]},
+  {title:'Volume d’un cône',pts:3,head:`<p>Un cône de révolution a pour base un disque de rayon 4,5 cm. Sa hauteur mesure 8 cm.</p>`,items:[
+   num(`Calcule ${RR}².`,20.25,['4,5² = 4,5 × 4,5 = 20,25'],.5),
+   num('La valeur exacte du volume s’écrit « un nombre × π ». Quel est ce nombre ?',54,[`${VV} = ${frac(`π × ${RR}² × ${HH}`,3)}`,`${VV} = ${frac('π × 4,5² × 8',3)}`,`${VV} = ${frac('π × 20,25 × 8',3)}`,box(`${VV} = 54π cm³`)],1.5,'π cm³'),
+   num('Donne l’arrondi du volume au dixième de cm³.',169.6,[`${VV} ≈ 169,6 cm³`],1,'cm³')]},
+  {title:'Problème',pts:3,head:'<p>Une tente a la forme d’une pyramide dont la base est un rectangle de 3 m de longueur et de 2,4 m de largeur. Sa hauteur mesure 2 m.</p>',items:[
+   num('Calcule le volume de la tente, en m³.',4.8,[`${AB} = 3 × 2,4 = 7,2 m²`,`${VV} = ${frac(AB+' × '+HH,3)}`,`${VV} = ${frac('7,2 × 2',3)}`,`${VV} = ${frac('14,4',3)}`,box(`${VV} = 4,8 m³`)],1,'m³'),
+   num('Exprime ce volume en litres.',4800,['1 m³ = 1 000 L',`4,8 m³ = 4,8 × 1 000 L = ${fmt(4800)} L`],1,'L'),
+   rad('Une autre tente a la forme d’un cône de rayon 1,5 m et de hauteur 2 m. Quelle tente a le plus grand volume ?',['la tente en forme de pyramide','la tente en forme de cône'],'la tente en forme de pyramide',[`${VV}<sub>cône</sub> = ${frac('π × 1,5² × 2',3)}`,`${VV}<sub>cône</sub> = ${frac('π × 2,25 × 2',3)}`,`${VV}<sub>cône</sub> = 1,5π m³`,`${VV}<sub>cône</sub> ≈ 4,71 m³`,'4,71 m³ &lt; 4,8 m³, donc la tente en forme de pyramide a le plus grand volume.'],1)]},
+  {title:'Conversions',pts:3,head:'<p>Complète les égalités suivantes.</p>',items:[
+   cv('0,009','m³','L',9,'0,009 m³ = 0,009 × 1 000 L = 9 L'),cv('48','dm³','m³',0.048,'48 dm³ = 48 : 1 000 m³ = 0,048 m³'),cv(fmt(3700),'mm³','cm³',3.7,`${fmt(3700)} mm³ = ${fmt(3700)} : 1 000 cm³ = 3,7 cm³`),
+   cv('1,25','L','mL',1250,`1,25 L = 1,25 × 1 000 mL = ${fmt(1250)} mL`),cv('830','cL','L',8.3,'830 cL = 830 : 100 L = 8,3 L'),cv('0,7','dam³','m³',700,'0,7 dam³ = 0,7 × 1 000 m³ = 700 m³')]}
+  ];
+ }
+ const pyr=pyrFig({base:BASES.losange(),apex:[0,0,3.3],names:['S','A','B','C','D'],H:'H',diag:true,lab:[[1,2,'5 cm'],['S',2,'7 cm']],label:'Pyramide régulière SABCD'});
+ return [
+ {title:'Automatismes',pts:2,head:'<p>Choisis la bonne formule pour chacune des grandeurs suivantes.</p>',items:[fq('perCercle'),fq('aireTri'),fq('aireRect'),fq('volPyr')]},
+ {title:'Fondamentaux',pts:6,head:`<p>${m('SABCD')} est une pyramide régulière à base carrée telle que ${m('SC = 7 cm')} et ${m('BC = 5 cm')}. ${m('H')} est le centre de la base. Sur ta feuille, justifie chaque réponse.</p>${pyr}`,items:[
+  rad('Quel est le sommet de cette pyramide ?',['S','A','H'],'S',['Le sommet est le point S.'],.5),
+  rad('Quelle est sa base ?',['ABCD','SAB','SH'],'ABCD',['La base est le carré ABCD.'],.5),
+  rad(`Que représente le segment ${m('[SH]')} pour la pyramide ?`,['la hauteur','une arête latérale','une face latérale'],'la hauteur',['H est le centre du carré ABCD et (SH) est perpendiculaire à la base.','Donc [SH] est la hauteur de la pyramide.'],1),
+  num('Combien d’arêtes de cette pyramide mesurent 7 cm ?',4,['La pyramide est régulière, donc ses arêtes latérales ont la même longueur.','SA = SB = SC = SD = 7 cm : 4 arêtes mesurent 7 cm.'],.5),
+  num('Combien d’arêtes de cette pyramide mesurent 5 cm ?',4,['La base est un carré.','AB = BC = CD = DA = 5 cm : 4 arêtes mesurent 5 cm.'],.5),
+  rad(`Quelle est la nature du triangle ${m('ADC')} ?`,['rectangle et isocèle en D','équilatéral','isocèle en S'],'rectangle et isocèle en D',['ABCD est un carré, donc DA = DC = 5 cm et l’angle en D est droit.','Donc le triangle ADC est rectangle et isocèle en D.'],1.5),
+  rad(`Quelle est la nature du triangle ${m('SAB')} ?`,['isocèle en S','équilatéral','rectangle en A'],'isocèle en S',['SA = SB = 7 cm et AB = 5 cm.','Donc le triangle SAB est isocèle en S.'],1.5)]},
+ {title:'Patrons',pts:3,head:'<p>On considère une pyramide régulière dont la base est un carré de côté 4 cm et dont les quatre faces latérales sont des triangles équilatéraux. Les trois figures ci-dessous ne sont pas en vraie grandeur. Pour chacune, indique si elle est un patron de cette pyramide, puis justifie sur ta feuille.</p>',items:[
+  rad(fig('Figure 1',netFig(4,4,4,'croix',{scale:.7})),OUINON,'oui',['La figure a 5 faces : le carré et un triangle équilatéral sur chacun de ses côtés.','En repliant les triangles autour du carré, on obtient la pyramide. C’est un patron.'],1),
+  rad(fig('Figure 2',netFig(4,4,4,'manque',{scale:.7})),OUINON,'non',['La figure n’a que 4 faces : le carré et 3 triangles.','Il manque une face latérale. Ce n’est pas un patron.'],1),
+  rad(fig('Figure 3',netFig(4,4,4,'eventail',{scale:.7})),OUINON,'oui',['La figure a 5 faces : 4 triangles équilatéraux côte à côte et le carré.','Les triangles se replient les uns sur les autres et le carré ferme la base. C’est un patron.'],1)]},
+ {title:'Volume d’un cône',pts:3,head:'<p>Un cône de révolution a pour base un disque de <b>diamètre</b> 10 cm. Sa hauteur mesure 12 cm.</p>',items:[
+  num('Quel est le rayon de la base ?',5,[`${RR} = 10 : 2 = 5 cm`],.5,'cm'),
+  num('La valeur exacte du volume s’écrit « un nombre × π ». Quel est ce nombre ?',100,[`${VV} = ${frac(`π × ${RR}² × ${HH}`,3)}`,`${VV} = ${frac('π × 5² × 12',3)}`,`${VV} = ${frac('π × 25 × 12',3)}`,box(`${VV} = 100π cm³`)],1.5,'π cm³'),
+  num('Donne l’arrondi du volume au dixième de cm³.',314.2,[`${VV} ≈ 314,2 cm³`],1,'cm³')]},
+ {title:'Problème',pts:3,head:'<p>Un vendeur prépare un coffret de bain moussant. Il contient un pavé droit de 12 cm de longueur, 12 cm de largeur et 5 cm de hauteur. Par-dessus, il pose une pyramide dont la base est un carré de 12 cm de côté.</p>',items:[
+  num('Calcule le volume du pavé.',720,[`${VV}<sub>pavé</sub> = 12 × 12 × 5`,box(`${VV}<sub>pavé</sub> = 720 cm³`)],1,'cm³'),
+  num('Le vendeur veut que la pyramide ait le même volume que le pavé. Quelle doit être sa hauteur ?',15,[`${AB} = 12 × 12 = 144 cm²`,`720 = ${frac('144 × '+HH,3)}`,`720 ${op('× 3')} = ${frac('144 × '+HH,3)} ${op('× 3')}`,`${fmt(2160)} = 144 × ${HH}`,`${frac(fmt(2160),op('144'))} = ${frac('144 × '+HH,op('144'))}`,box(`${HH} = 15 cm`)],1,'cm'),
+  num('Finalement, le coffret complet (pavé et pyramide) doit avoir un volume de 1,2 L. Le pavé ne change pas. Quelle doit être la hauteur de la pyramide ?',10,[`1,2 L = ${fmt(1200)} mL = ${fmt(1200)} cm³`,`${VV}<sub>pyramide</sub> = ${fmt(1200)} − 720 = 480 cm³`,`480 = ${frac('144 × '+HH,3)}`,`480 ${op('× 3')} = ${frac('144 × '+HH,3)} ${op('× 3')}`,`${fmt(1440)} = 144 × ${HH}`,`${frac(fmt(1440),op('144'))} = ${frac('144 × '+HH,op('144'))}`,box(`${HH} = 10 cm`)],1,'cm')]},
+ {title:'Conversions',pts:3,head:'<p>Complète les égalités suivantes.</p>',items:[
+  cv('3,8','m³','dm³',3800,`3,8 m³ = 3,8 × 1 000 dm³ = ${fmt(3800)} dm³`),cv(fmt(7250),'cm³','L',7.25,`${fmt(7250)} cm³ = ${fmt(7250)} mL = 7,25 L`),cv('0,45','L','cL',45,'0,45 L = 0,45 × 100 cL = 45 cL'),
+  cv('2,6','dm³','cm³',2600,`2,6 dm³ = 2,6 × 1 000 cm³ = ${fmt(2600)} cm³`),cv(fmt(15000),'L','m³',15,`${fmt(15000)} L = ${fmt(15000)} : 1 000 m³ = 15 m³`),cv('92','mL','cm³',92,'92 mL = 92 cm³')]}
+ ];
+}
+/* D.S. blanc : les réponses restent enregistrées dans le navigateur (une clé par sujet),
+   et la vérification affiche une note provisoire, calculée sur les résultats seulement. */
+function dsKeep(paper,key){const els=()=>[...paper.querySelectorAll('input,select,textarea')].filter(e=>!['button','hidden','submit'].includes(e.type));
+ try{const v=JSON.parse(localStorage.getItem(key)||'null');if(Array.isArray(v))els().forEach((e,i)=>{if(i>=v.length)return;if(e.type==='radio'||e.type==='checkbox')e.checked=!!v[i];else e.value=v[i]==null?'':v[i];});}catch(e){}
+ let dead=false;const save=()=>setTimeout(()=>{if(dead)return;try{localStorage.setItem(key,JSON.stringify(els().map(e=>e.type==='radio'||e.type==='checkbox'?e.checked:e.value)));}catch(e){}},0);
+ ['input','change','click'].forEach(ev=>paper.addEventListener(ev,save));
+ return ()=>{dead=true;try{localStorage.removeItem(key);}catch(e){}};}
+function dsNote(n,total){return String(Math.round(n*2)/2).replace('.',',')+' / '+total;}
+function renderDS(){
+ const main=$('#app');main.append(dom('h2','ttl','<span>7. D.S. blanc</span>'));const bar=dom('div','subtabs');const variant=VIEW.variant||'A';for(const v of ['A','B'])bar.append(button('Sujet '+v,()=>{VIEW.variant=v;render();},variant===v?'on':''));bar.append(button('Imprimer le sujet',()=>window.print(),'btn light'));main.append(bar);
+ const exos=dsData(variant),total=exos.reduce((s,e)=>s+(e.bonus?0:e.pts),0);
+ const paper=dom('div','card ds');paper.append(dom('h3','ds-title','D.S. blanc · Pyramides et cônes · Sujet '+variant),dom('p','','Durée conseillée 55 minutes. La calculatrice est autorisée. Rédige toutes tes réponses sur une feuille, en détaillant tes calculs et en justifiant. Le D.S. est noté sur '+total+' points.'),dom('p','consigne','Quand tu as fini, écris seulement le résultat de chaque question dans sa case, sans l’unité, puis vérifie.'));main.append(paper);const controls=[],corrs=[];
+ const LET='abcdefghijkl';
+ exos.forEach((ex,ei)=>{
+  const block=dom('section','ds-exo',`<h3>Exercice ${ei+1} · ${ex.title} <span class="small">(${ex.pts} point${ex.pts>1?'s':''}${ex.bonus?' bonus':''})</span></h3>${ex.head}`);paper.append(block);
+  ex.items.forEach((t,qi)=>{
+   const letter=ex.items.length>1?`<span class="no-math">${LET[qi]})</span> `:'',id=`ds-${ei}-${qi}`,row=dom('div','ds-item'),ans=dom('div','ds-ans');row.append(dom('div','ds-q',letter+t.q),ans);block.append(row);let get,fields;
+   if(t.options){const g=dom('div','ds-radios');g.setAttribute('role','radiogroup');g.setAttribute('aria-label','Réponse '+(ei+1)+(ex.items.length>1?LET[qi]:''));for(const o of t.options){const l=dom('label'),r=dom('input');r.type='radio';r.name=id;r.value=o;l.append(r);l.insertAdjacentHTML('beforeend',' '+o);g.append(l);}ans.append(g);get=()=>{const c=g.querySelector('input:checked');return c?c.value:'';};fields=[...g.querySelectorAll('input')];}
+   else{const lab=dom('label','ds-lab','Résultat'),input=dom('input','eq-input');input.type='text';input.id=id;input.autocomplete='off';input.inputMode='decimal';input.placeholder='Nombre';lab.htmlFor=input.id;ans.append(lab,input);if(t.unit)ans.append(dom('span','unit',t.unit));get=()=>input.value;fields=[input];}
+   controls.push({t,ans,get,fields,w:t.w??ex.pts/ex.items.length});
+  });
+  const corr=dom('div','seyes ds-corr');corr.hidden=true;corr.innerHTML=`<h4>Correction de l’exercice ${ei+1}</h4>`+ex.items.map((t,qi)=>(ex.items.length>1?`<p><b class="no-math">${LET[qi]})</b></p>`:'')+t.corr).join('');block.append(corr);corrs.push(corr);
+ });
+ const clear=dsKeep(paper,'pyramides-cones-ds-'+variant);
+ const end=button('Vérifier mes résultats et afficher la correction',()=>{let score=0,note=0;setTimeout(()=>SUIVI.ds(variant,note,total));for(const{t,ans,get,fields,w}of controls){const ok=check(t,get());if(ok){score++;note+=w;}fields.forEach(f=>f.disabled=true);if(t.options)ans.querySelectorAll('label').forEach(l=>{if(l.querySelector('input').value===t.a)l.classList.add('good');});ans.append(dom('span',ok?'okm':'kom',ok?' Juste.':' La bonne réponse est '+answer(t)+'.'));}corrs.forEach(c=>c.hidden=false);
+  const sum=dom('div','corrige',`<b>Note provisoire : ${dsNote(note,total)}</b> (${score} résultat${score>1?'s':''} juste${score>1?'s':''} sur ${controls.length}).<p>Cette note ne compte que tes résultats. Ta vraie note dépend aussi de ta rédaction : formules écrites, calculs détaillés, unités et justifications. Compare ta feuille avec la correction de chaque exercice.</p>`);sum.append(button('Effacer mes réponses et recommencer',()=>{clear();render();window.scrollTo({top:0});},'btn light'));end.replaceWith(sum);paper.prepend(dom('div','corrige',`<b>Note provisoire : ${dsNote(note,total)}</b> (${score} sur ${controls.length} résultats justes). La correction est sous chaque exercice, et le détail en bas de la page.`));});
+ paper.append(end);
+}
+function render(){
+ const main=$('#app');main.innerHTML='';document.querySelectorAll('nav [data-page]').forEach(b=>b.classList.toggle('on',b.dataset.page===VIEW.page));
+ if(VIEW.page==='cours'){const c=dom('div','card',$('#course-source').innerHTML);fillFigs(c);main.append(dom('h2','ttl','<span>Cours · Pyramides et cônes</span>'),c);return;}
+ if(VIEW.page==='ds'){renderDS();return;}
+ if(VIEW.page==='home'){main.append(dom('div','retenir',`<b>À retenir</b>Une pyramide et un cône « se rétrécissent » jusqu’à un sommet : leur volume est égal à l’aire de la base multipliée par la hauteur, divisé par 3.`));const grid=dom('div','home');for(const[k,mo]of Object.entries(MODULES)){const card=dom('section','card',`<h2>${mo.title}</h2><p>${mo.desc}</p>`);card.append(dom('p','suivi-st',SUIVI.status(k)),button('Commencer',()=>go(k)));grid.append(card);}const ds=dom('section','card','<h2>7. D.S. blanc</h2><p>Deux sujets différents sur le modèle du D.S. : tu rédiges sur une feuille, puis tu vérifies tes résultats et tu lis la correction.</p>');ds.append(button('Commencer',()=>go('ds')));grid.append(ds);main.append(grid,SUIVI.box());return;}
+ const mod=MODULES[VIEW.page];main.append(dom('h2','ttl','<span>'+mod.title+'</span>'));modeBar(main);
+ if(VIEW.mode!=='seul'){const part=$('#course-source').content.querySelector(`[data-mod="${VIEW.page}"]`);if(part){const det=dom('details','cours-part','<summary>Relire le cours de cette partie</summary>');const cp=part.cloneNode(true);fillFigs(cp);det.append(cp);main.append(det);}main.append(dom('div','retenir','<b>À retenir</b>'+mod.retain));}
+ if(mod.levels){const levels=dom('div','levels');for(const[n,label]of mod.levels)levels.append(button(label,()=>{VIEW.level=n;render();},VIEW.level===n?'on':''));main.append(levels);}
+ const panel=dom('div','card');main.append(panel);renderExercise(panel,mod.gen(VIEW.level,VIEW.mode==='exemple'));
+}
+document.querySelectorAll('nav [data-page]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));render();
+})();
+</script><script>
+/* Charte : dans le texte courant, la lettre x (seule ou après un chiffre : 3x, x²),
+   la lettre f seule et g, h, p suivies d'une parenthèse sont des lettres mathématiques.
+   On les affiche en italique STIX pour ne pas confondre x avec le signe ×.
+   Le texte déjà en italique (<i>), le SVG et les champs de saisie ne sont pas touchés. */
+(() => {
+  "use strict";
+  const RE = /(^|[^\p{L}\p{M}])(x|f|[ghp](?=\())(?![\p{L}\p{M}])/gu;
+  const SKIP = "i, em, svg, code, pre, script, style, textarea, select, option, title, [contenteditable], .no-math";
+  function fix(text) {
+    const parent = text.parentElement;
+    if (!parent || parent.closest(SKIP)) return;
+    const value = text.data;
+    RE.lastIndex = 0;
+    if (!RE.test(value)) return;
+    const frag = document.createDocumentFragment();
+    let last = 0;
+    value.replace(RE, (all, before, letter, offset) => {
+      const start = offset + before.length;
+      if (start > last) frag.append(value.slice(last, start));
+      const i = document.createElement("i");
+      i.className = "m";
+      i.textContent = letter;
+      frag.append(i);
+      last = start + letter.length;
+      return all;
+    });
+    if (last < value.length) frag.append(value.slice(last));
+    text.replaceWith(frag);
+  }
+  function scan(root) {
+    if (root.nodeType === Node.TEXT_NODE) { fix(root); return; }
+    if (root.nodeType !== Node.ELEMENT_NODE || root.closest(SKIP)) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const texts = [];
+    while (walker.nextNode()) texts.push(walker.currentNode);
+    texts.forEach(fix);
+  }
+  scan(document.body);
+  new MutationObserver((records) => {
+    for (const r of records) {
+      if (r.type === "characterData") fix(r.target);
+      else r.addedNodes.forEach(scan);
+    }
+  }).observe(document.body, { childList: true, subtree: true, characterData: true });
+})();
+</script>
+</body></html>

@@ -10,35 +10,21 @@
   <link rel="preload" href="fonts/atkinson-hyperlegible-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/stix-two-text.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="fonts/polices.css?v=20261122-3">
-  <link rel="stylesheet" href="style.css?v=20261122-3">
-  <script src="applications.js?v=20261122-8" defer></script>
-  <script src="page.js?v=20261122-3" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261126-1">
+  <script src="applications.js?v=20261126-1" defer></script>
+  <script src="page.js?v=20261126-1" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#applications">Aller aux applications</a>
+  <a class="skip-link" href="#classes">Aller aux classes</a>
   <div class="wrap">
     <header>
       <p class="author">Fabien Boyer · Mathématiques · Collège</p>
       <h1><span>Applications compagnon du cours</span></h1>
-      <p class="intro">Pour réviser et préparer les D.S.</p>
+      <p class="intro">Choisis ta classe pour réviser et préparer les D.S.</p>
     </header>
-    <main id="applications">
-      <div id="filters" class="filters" hidden>
-        <div class="levels" role="group" aria-label="Filtrer par niveau"></div>
-        <div class="search-wrap" hidden>
-          <label class="sr-only" for="search">Rechercher une application ou un chapitre</label>
-          <input type="search" id="search" placeholder="Rechercher une application…" autocomplete="off">
-        </div>
-      </div>
-      <p id="results" class="sr-only" role="status" aria-live="polite"></p>
-      <div id="sections"></div>
-      <div id="empty-state" class="card empty-state" hidden>
-        <h2 id="empty-title">Aucune application disponible</h2>
-        <p id="empty-text">Les applications seront ajoutées ici.</p>
-        <button id="reset" class="button" type="button" hidden>Afficher toutes les applications</button>
-      </div>
-      <noscript><div class="card"><p>Active JavaScript dans ton navigateur pour afficher les applications.</p></div></noscript>
-      <p id="copy-status" class="sr-only" role="status" aria-live="polite"></p>
+    <main>
+      <nav id="classes" class="class-grid" aria-label="Les classes"></nav>
+      <noscript><div class="card"><p>Active JavaScript dans ton navigateur pour afficher les classes.</p></div></noscript>
     </main>
     <footer><p id="updated"></p></footer>
   </div>

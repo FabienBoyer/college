@@ -1,14 +1,37 @@
 (() => {
   "use strict";
-  // Ordre d'affichage des sections : les 3e d'abord.
-  const levelOrder = ["3e", "4e", "5e", "6e"];
-  const FILTER_THRESHOLD = 10; // filtres et recherche seulement au-delà de 10 fiches
+  /*
+   * Une seule page.js pour l'accueil et pour les pages de classe.
+   * - Accueil (index.html, <body> sans data-niveau) : une carte par classe.
+   * - Page de classe (6e/, 4e/, 3e/ : <body data-niveau="6e">) : les fiches
+   *   de applications.js dont le niveau correspond.
+   * Les adresses de applications.js (apps/…, devoirs-communs-4e/…) partent de
+   * la racine du site, quelle que soit la page qui les affiche.
+   */
+  const CLASSES = [
+    { niveau: "6e", nom: "sixième" },
+    { niveau: "4e", nom: "quatrième" },
+    { niveau: "3e", nom: "troisième" }
+  ];
+  const FILTER_THRESHOLD = 10; // recherche seulement au-delà de 10 fiches sur une page
+  const SCRIPT_URL = document.currentScript ? document.currentScript.src : document.baseURI;
+  const ROOT = new URL(".", SCRIPT_URL); // dossier de page.js = racine du site
+  const pageLevel = document.body.dataset.niveau || "";
   const normalized = (text) => String(text).normalize("NFD").replace(/[̀-ͯ]/g, "").toLocaleLowerCase("fr");
+
+  // Ancien lien partagé « ?niveau=3e » : on va directement à la page de la classe.
+  if (!pageLevel) {
+    const requested = new URLSearchParams(location.search).get("niveau");
+    if (CLASSES.some((c) => c.niveau === requested)) {
+      location.replace(new URL(requested + "/", ROOT).href);
+      return;
+    }
+  }
 
   function resolveUrl(value) {
     if (typeof value !== "string" || !value.trim()) return null;
     try {
-      const url = new URL(value, document.baseURI);
+      const url = new URL(value, ROOT);
       return ["https:", "http:", "file:"].includes(url.protocol) ? url.href : null;
     } catch { return null; }
   }
@@ -16,7 +39,7 @@
   const source = Array.isArray(window.APPLICATIONS_ELEVES) ? window.APPLICATIONS_ELEVES : [];
   const items = source.flatMap((item) => {
     if (!item || typeof item.titre !== "string" || !item.titre.trim()) return [];
-    if (!levelOrder.includes(item.niveau)) return [];
+    if (!CLASSES.some((c) => c.niveau === item.niveau)) return [];
     const liens = Array.isArray(item.liens)
       ? item.liens.map((l) => ({ texte: l && l.texte, href: resolveUrl(l && l.url) })).filter((l) => l.texte && l.href)
       : [];
@@ -25,23 +48,9 @@
     const parties = Array.isArray(item.parties) ? item.parties.filter((p) => typeof p === "string") : [];
     return [{
       ...item, href, liens, parties,
-      search: normalized([item.titre, item.theme || "", item.description || "", item.niveau, ...parties].join(" "))
+      search: normalized([item.titre, item.theme || "", item.description || "", ...parties].join(" "))
     }];
   });
-  const levels = levelOrder.filter((level) => items.some((item) => item.niveau === level));
-
-  const sections = document.querySelector("#sections");
-  const filters = document.querySelector("#filters");
-  const levelBox = filters.querySelector(".levels");
-  const searchWrap = filters.querySelector(".search-wrap");
-  const search = document.querySelector("#search");
-  const results = document.querySelector("#results");
-  const empty = document.querySelector("#empty-state");
-  const reset = document.querySelector("#reset");
-
-  const requestedLevel = new URLSearchParams(location.search).get("niveau");
-  let selectedLevel = levels.includes(requestedLevel) ? requestedLevel : "tous";
-  const manyItems = items.length > FILTER_THRESHOLD;
 
   function element(tag, className, content) {
     const node = document.createElement(tag);
@@ -50,15 +59,54 @@
     return node;
   }
   // « 3e » s'écrit partout 3 suivi d'un e en exposant.
-  function levelNode(level, prefix = "") {
+  function levelNode(level, prefix = "", suffix = "") {
     const frag = document.createDocumentFragment();
     const match = /^(\d+)(e)$/.exec(level);
-    if (!match) { frag.append(prefix + level); return frag; }
-    frag.append(prefix + match[1]);
-    frag.append(element("sup", "", match[2]));
+    if (!match) { frag.append(prefix + level + suffix); return frag; }
+    frag.append(prefix + match[1], element("sup", "", match[2]));
+    if (suffix) frag.append(suffix);
     return frag;
   }
+  const plural = (n, word) => `${n} ${word}${n > 1 ? "s" : ""}`;
 
+  function showUpdateDate() {
+    const out = document.querySelector("#updated");
+    const value = typeof window.MISE_A_JOUR === "string" ? window.MISE_A_JOUR : "";
+    const date = /^\d{4}-\d{2}-\d{2}$/.test(value) ? new Date(value + "T12:00:00") : null;
+    if (!out || !date || Number.isNaN(date.getTime())) return;
+    const time = element("time", "", date.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }));
+    time.dateTime = value;
+    out.append("Mise à jour le ", time, ".");
+  }
+
+  /* ---------- Accueil : une carte par classe ---------- */
+  function renderHome() {
+    const doors = document.querySelector("#classes");
+    for (const c of CLASSES) {
+      const inLevel = items.filter((item) => item.niveau === c.niveau);
+      const apps = inLevel.filter((item) => item.href).length;
+      const docs = inLevel.length - apps;
+      const parts = [];
+      if (apps) parts.push(plural(apps, "application"));
+      if (docs) parts.push(plural(docs, "document"));
+
+      const a = element("a", "card class-card");
+      a.href = new URL(c.niveau + "/", ROOT).href;
+      a.dataset.niveau = c.niveau;
+      const band = element("div", "band");
+      const big = element("p", "class-level");
+      big.append(levelNode(c.niveau));
+      const h2 = element("h2", "", `Classe de ${c.nom}`);
+      band.append(big, h2);
+      const count = element("p", "class-count", parts.length ? parts.join(" et ") : "Les applications arrivent bientôt.");
+      const go = element("span", "button");
+      go.append(levelNode(c.niveau, "Ouvrir la page des "));
+      a.append(band, count, go);
+      doors.append(a);
+    }
+  }
+
+  /* ---------- Page de classe ---------- */
   async function copyLink(item, button) {
     const status = document.querySelector("#copy-status");
     try {
@@ -75,6 +123,7 @@
 
   function card(item) {
     const article = element("article", "card app-card");
+    const band = element("div", "band");
     const head = element("div", "card-head");
     if (Number.isFinite(item.numero)) {
       const num = element("p", "card-number");
@@ -85,10 +134,10 @@
     if (item.theme) titles.append(element("p", "card-theme", item.theme));
     titles.append(element("h3", "", item.titre));
     head.append(titles);
-    article.append(head);
+    band.append(head);
+    article.append(band);
 
     if (item.description) article.append(element("p", "card-description", item.description));
-
     if (item.parties.length) {
       const label = element("p", "card-parts-label", "Dans ce chapitre :");
       const list = element("ul", "card-parts");
@@ -116,85 +165,48 @@
     return article;
   }
 
-  function buildFilters() {
-    if (!manyItems) return;
-    filters.hidden = false;
-    searchWrap.hidden = false;
-    if (levels.length < 2) return;
-    const all = element("button", "", "Tous les niveaux");
-    all.type = "button";
-    all.dataset.level = "tous";
-    levelBox.append(all);
-    for (const level of levels) {
-      const b = element("button");
-      b.type = "button";
-      b.dataset.level = level;
-      b.append(levelNode(level));
-      levelBox.append(b);
+  function renderLevel() {
+    const own = items.filter((item) => item.niveau === pageLevel);
+    const sections = document.querySelector("#sections");
+    const searchWrap = document.querySelector(".search-wrap");
+    const search = document.querySelector("#search");
+    const results = document.querySelector("#results");
+    const empty = document.querySelector("#empty-state");
+    const many = own.length > FILTER_THRESHOLD;
+    if (many) searchWrap.hidden = false;
+
+    const groups = [
+      { titre: "Les applications", test: (item) => Boolean(item.href) },
+      { titre: "Les documents", test: (item) => !item.href }
+    ];
+
+    function render() {
+      const terms = many ? normalized(search.value.trim()).split(/\s+/).filter(Boolean) : [];
+      const visible = own.filter((item) => terms.every((term) => item.search.includes(term)));
+      const blocks = [];
+      for (const g of groups) {
+        const list = visible.filter(g.test);
+        if (!list.length) continue;
+        const section = element("section", "level-section");
+        const h2 = element("h2", "level-title");
+        h2.append(element("span", "", g.titre));
+        const grid = element("div", "app-grid");
+        grid.append(...list.map(card));
+        section.append(h2, grid);
+        blocks.push(section);
+      }
+      sections.replaceChildren(...blocks);
+      results.textContent = many ? `${plural(visible.length, "fiche")} affichée${visible.length > 1 ? "s" : ""}` : "";
+      empty.hidden = visible.length > 0;
+      document.querySelector("#empty-title").textContent = own.length ? "Aucune application trouvée" : "Les applications arrivent bientôt";
+      document.querySelector("#empty-text").textContent = own.length
+        ? "Essaie un autre mot."
+        : "Ton professeur ajoutera ici les applications à utiliser en classe ou à la maison.";
     }
-    levelBox.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-level]");
-      if (!button) return;
-      selectedLevel = button.dataset.level;
-      render();
-    });
+    if (many) search.addEventListener("input", render);
+    render();
   }
 
-  function render() {
-    const terms = manyItems ? normalized(search.value.trim()).split(/\s+/).filter(Boolean) : [];
-    const visible = items.filter((item) =>
-      (selectedLevel === "tous" || item.niveau === selectedLevel) &&
-      terms.every((term) => item.search.includes(term))
-    );
-    const blocks = [];
-    for (const level of levels) {
-      const inLevel = visible.filter((item) => item.niveau === level);
-      if (!inLevel.length) continue;
-      const section = element("section", "level-section");
-      section.id = `niveau-${level}`;
-      const h2 = element("h2", "level-title");
-      const span = element("span");
-      span.append(levelNode(level, "Classe de "));
-      h2.append(span);
-      const grid = element("div", "app-grid");
-      grid.append(...inLevel.map(card));
-      section.append(h2, grid);
-      blocks.push(section);
-    }
-    if (selectedLevel !== "tous" && !manyItems) {
-      // Lien ?niveau=… partagé : proposer de revenir à toutes les fiches.
-      const back = element("p", "show-all");
-      const a = element("a", "", "Afficher tous les niveaux");
-      a.href = location.pathname;
-      back.append(a);
-      blocks.push(back);
-    }
-    sections.replaceChildren(...blocks);
-    for (const button of levelBox.querySelectorAll("[data-level]")) {
-      button.setAttribute("aria-pressed", String(button.dataset.level === selectedLevel));
-    }
-    results.textContent = manyItems ? `${visible.length} fiche${visible.length === 1 ? "" : "s"} affichée${visible.length === 1 ? "" : "s"}` : "";
-    empty.hidden = visible.length > 0;
-    reset.hidden = items.length === 0;
-    document.querySelector("#empty-title").textContent = items.length ? "Aucune application trouvée" : "Les applications arrivent bientôt";
-    document.querySelector("#empty-text").textContent = items.length
-      ? "Essaie un autre mot ou un autre niveau."
-      : "Ton professeur ajoutera ici les applications à utiliser en classe ou à la maison.";
-  }
-
-  function showUpdateDate() {
-    const out = document.querySelector("#updated");
-    const value = typeof window.MISE_A_JOUR === "string" ? window.MISE_A_JOUR : "";
-    const date = /^\d{4}-\d{2}-\d{2}$/.test(value) ? new Date(value + "T12:00:00") : null;
-    if (!date || Number.isNaN(date.getTime())) return;
-    const time = element("time", "", date.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }));
-    time.dateTime = value;
-    out.append("Mise à jour le ", time, ".");
-  }
-
-  buildFilters();
-  search.addEventListener("input", render);
-  reset.addEventListener("click", () => { selectedLevel = "tous"; search.value = ""; render(); });
-  render();
+  if (pageLevel) renderLevel(); else renderHome();
   showUpdateDate();
 })();

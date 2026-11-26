@@ -8,10 +8,14 @@ et la balise ne s’applique pas aux PDF.
 
 ## Contenu du dépôt
 
-- `index.html`, `style.css`, `page.js` : l’accueil, qui affiche une section par niveau.
+- `index.html` : l’accueil, avec une carte par classe (6e, 4e, 3e).
+- `6e/`, `4e/`, `3e/` : une page par classe. Chaque fiche de `applications.js` apparaît sur la
+  page de son niveau. Couleur d’accent : 6e vert `#2f7a45`, 4e violet `#7a3f98`, 3e rouge `#b8322a`,
+  avec un bandeau pastel en tête des cartes (`style.css`, sélecteurs `[data-niveau]`).
+- `style.css`, `page.js` : communs à l’accueil et aux pages de classe.
 - `applications.js` : la liste des fiches de l’accueil et la date de mise à jour.
 - `apps/` : une application par fichier HTML autonome :
-  Arithmétique, Équations, Fonctions (1), Triangles semblables, Calcul littéral (1) (3e).
+  Arithmétique, Équations, Fonctions (1), Triangles semblables, Calcul littéral (1) (3e) ; Nombres relatifs, Pyramides et cônes (4e) ; Nombres entiers et décimaux, Éléments de géométrie (6e).
 - `devoirs-communs-4e/` : sujet et corrigé du devoir commun de 4e (PDF).
 - `fonts/` : les polices, hébergées dans le dépôt (aucun appel à Google Fonts).
 
@@ -19,7 +23,8 @@ et la balise ne s’applique pas aux PDF.
 
 Fond papier `#fbf8f1` ligné, encre bleue `#1d3a8a`, titres rouges `#b8322a` soulignés,
 marge rouge `#e7a4a0` sur les cartes. Texte en Atkinson Hyperlegible, mathématiques en
-STIX Two Text. Une seule navigation de retour dans les apps : « Toutes les applications ».
+STIX Two Text. Une seule navigation de retour dans les apps : « Toutes les applications », qui mène à la page
+de la classe (`../3e/` pour les apps de 3e).
 
 `fonts/polices.css` déclare les polices. Les chiffres, exposants et signes
 (+ = < > × ÷ − ± °) ne sont jamais pris dans Atkinson : ils s’affichent en STIX Two Text,
@@ -42,15 +47,15 @@ se balisent à la main : `<i class="m">a</i>`.
 2. Ajouter sa fiche dans `applications.js` (le modèle est en tête du fichier) :
    numéro de chapitre, titre, niveau, thème, description, liste des parties, adresse.
 3. Mettre à jour `MISE_A_JOUR` dans `applications.js`.
-4. Changer la valeur `v=` des références de `index.html` pour éviter les anciennes
+4. Changer la valeur `v=` des références de `index.html` et des pages `6e/`, `4e/`, `3e/` pour éviter les anciennes
    versions en cache.
 
-Les filtres par niveau et la recherche n’apparaissent qu’au-delà de dix fiches.
+La recherche n’apparaît sur une page de classe qu’au-delà de dix fiches.
 
 ## Liens à partager après publication
 
 - Accueil : `https://fabienboyer.github.io/college/`
-- Accueil limité à un niveau : `https://fabienboyer.github.io/college/?niveau=3e`
+- Page d’une classe : `https://fabienboyer.github.io/college/3e/` (l’ancien lien `?niveau=3e` y mène aussi)
 - Application : `https://fabienboyer.github.io/college/apps/equations.html`
 
 ## Vérifier localement

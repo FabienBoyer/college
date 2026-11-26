@@ -1,0 +1,646 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Chapitre 1 : Nombres entiers et décimaux – Je prépare mon D.S.</title><link rel="stylesheet" href="../fonts/polices.css"><style>
+:root{
+  --paper:#fbf8f1; --card:#fffefa; --ink:#1d3a8a; --ink2:#2c4fb5; --red:#2f7a45; --margin:#a9d3b5;
+  --line:#dbe3f3; --text:#1b2333; --muted:#5b6478;
+  --ok:#1f7a4d; --okbg:#e7f5ed; --ko:#b8322a; --kobg:#fcecea; --warn:#7a5200; --warnbg:#fff4d6;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; color:var(--text); background:var(--paper);
+  background-image:repeating-linear-gradient(to bottom, transparent 0 31px, #e6ecf7 31px 32px);
+  font:17px/1.55 "Atkinson Hyperlegible", "STIX Two Text", "Segoe UI", system-ui, sans-serif;
+}
+.m,.frac,.ang,svg text{font-family:"STIX Two Text","Cambria Math",Cambria,"Times New Roman",serif}
+.m{font-size:1.08em}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+header{padding:26px 0 10px}
+header h1{margin:0;color:var(--red);font-size:1.9rem;font-weight:700;letter-spacing:.2px}
+header h1 span{border-bottom:2px solid var(--red)}
+header p{margin:.35em 0 0;color:var(--muted)}
+nav{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 0;border-bottom:2px solid var(--ink)}
+nav button{font:inherit;font-size:.95rem;border:2px solid var(--ink);border-bottom:none;background:#eef2fb;color:var(--ink);
+  padding:.45em .9em;border-radius:10px 10px 0 0;cursor:pointer;margin-bottom:-2px}
+nav button.on{background:var(--card);font-weight:700}
+nav button:hover{background:#fff}
+main{padding:18px 0 40px}
+.card{background:var(--card);border:1px solid #e2e6ef;border-radius:4px 14px 14px 4px;padding:22px 24px 26px 34px;position:relative;
+  box-shadow:0 1px 0 rgba(0,0,0,.03),0 6px 18px -12px rgba(29,58,138,.35)}
+.card::before{content:"";position:absolute;left:18px;top:0;bottom:0;width:2px;background:var(--margin)}
+h2.ttl{margin:0 0 .6em;color:var(--red);font-size:1.45rem}
+h2.ttl span{border-bottom:2px solid var(--red)}
+h3{color:var(--ink);margin:1.2em 0 .4em}
+.retenir{border:2px solid var(--ink);border-radius:6px;padding:.6em .9em;margin:0 0 16px;color:var(--ink);background:#f6f8fe}
+.retenir b{display:block;color:var(--red);margin-bottom:.15em}
+.retenir ol,.retenir ul{margin:.2em 0 0;padding-left:1.3em}
+.subtabs{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px}
+.subtabs button,.levels button{font:inherit;font-size:.95rem;padding:.45em .9em;border-radius:999px;border:2px solid var(--ink2);background:#fff;color:var(--ink2);cursor:pointer}
+.subtabs button.on,.levels button.on{background:var(--ink2);color:#fff}
+.levels{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px}
+.levels .lab{color:var(--muted);margin-right:4px}
+.home{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.home .card h2{font-size:1.2rem;margin:0 0 .3em;color:var(--red)}
+.home .card p{margin:.2em 0 1em;color:var(--text)}
+.home .card{display:flex;flex-direction:column}.home .card>button,.home .card>.btn{margin-top:auto;align-self:flex-start}.home .card p.suivi-st{margin:auto 0 .7em;font-size:.88rem;color:var(--muted,#5b6478)}.home .card p.suivi-st+button,.home .card p.suivi-st+.btn{margin-top:0}
+.btn{font:inherit;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:.5em 1.05em;cursor:pointer;margin:.3em .4em .2em 0}
+.btn:hover{background:var(--ink2)}
+.btn.light{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.btn:disabled{opacity:.45;cursor:default}
+.consigne{margin:.2em 0 .6em}
+.question{margin:.6em 0;font-weight:700;color:var(--ink)}
+svg.fig{display:block;width:100%;max-width:600px;height:auto;margin:6px auto 4px}
+.step{background:#fff;border:1px solid #e3e8f2;border-left:5px solid var(--line);border-radius:4px 10px 10px 4px;padding:.65em 1em .75em;margin:.8em 0}
+.step.done{border-left-color:var(--ok)}
+.step.missed{border-left-color:#e0a63a}
+.step-n{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.step-q{margin:.15em 0 .45em}
+.step-a{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.opt{font:inherit;text-align:left;background:#fff;color:var(--text);border:2px solid #cfd8ea;border-radius:8px;padding:.45em .8em;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--ink2)}
+.opt.good{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--ko);background:var(--kobg)}
+.opt:disabled{cursor:default}
+.col{flex-direction:column;align-items:stretch}
+.col>.btn{align-self:flex-start}
+.numf{display:inline-flex;align-items:center;gap:6px;margin-right:10px}
+.numf input{font:inherit;font-family:"STIX Two Text",Cambria,serif;font-size:1.1em;width:6.2em;padding:.3em .45em;border:2px solid #cfd8ea;border-radius:6px;background:#fff}
+.numf input:focus{outline:none;border-color:var(--ink2)}
+.numf input.bad{border-color:var(--ko)}
+.unit{color:var(--muted)}
+select{font:inherit;font-family:"STIX Two Text",Cambria,serif;padding:.25em .35em;border:2px solid #cfd8ea;border-radius:6px;background:#fff}
+select.bad{border-color:var(--ko)}
+.fb{margin-top:.5em;border-radius:6px}
+.fb:empty{display:none}
+.fb.ok{background:var(--okbg);color:#123d28;padding:.45em .7em}
+.fb.ko{background:var(--kobg);color:#5c1712;padding:.45em .7em}
+.fb.warn{background:var(--warnbg);color:#4a3300;padding:.45em .7em}
+.fb .btn{margin-top:.5em}
+.model-a{color:var(--ink);font-weight:700;margin:.2em 0}
+.model-e{color:var(--text);background:#f4f6fb;border-radius:6px;padding:.35em .6em;margin:.3em 0 .4em}
+.corrige{margin:1em 0;border:2px solid var(--ink);border-radius:8px;padding:.7em 1em;background:#fff;color:var(--ink)}
+.corrige h4{margin:0 0 .4em;color:var(--red)}
+.corrige p{margin:.3em 0}
+.box{display:inline-block;border:2px solid var(--ink);border-radius:6px;padding:.1em .5em;margin-top:.2em;font-weight:700}
+.endmsg{margin:.8em 0 .2em;font-weight:700;color:var(--ink)}
+table.tab{border-collapse:collapse;margin:.4em 0;font-size:.97em}
+table.tab th,table.tab td{border:1.5px solid var(--ink2);padding:.3em .6em;text-align:center}
+table.tab th{font-weight:400;color:var(--ink)}
+.rankrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:.2em 0}
+.rankrow .rn{min-width:8.5em}
+.rankrow label{display:inline-flex;gap:4px;align-items:center;color:var(--muted)}
+.homorow{display:inline-flex;align-items:center;gap:6px;margin-right:16px}
+.pool,.answer{display:flex;flex-direction:column;gap:6px;width:100%}
+.answer:empty{display:none}
+.answer .opt{border-color:var(--ok);background:var(--okbg)}
+.shake{animation:sh .35s}
+@keyframes sh{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 .12em;font-size:1.02em;line-height:1.2}
+.frac>span:first-child{border-bottom:1.4px solid currentColor;padding:0 .2em}
+.frac>span:last-child{padding:0 .2em}
+.codebox{font-family:"STIX Two Text",Cambria,serif;font-size:1.6rem;letter-spacing:.08em;color:var(--ink);background:#fff;border:2px dashed var(--ink);border-radius:8px;padding:.3em .7em;display:inline-block;margin:.3em 0}
+.stats td,.stats th{text-align:left}
+.small{font-size:.9rem;color:var(--muted)}
+/* Correction sur papier Seyès (grands carreaux : interligne 8 px, ligne principale tous les 32 px) */
+.seyes{margin:1em 0;position:relative;color:#1d3a8a;background-color:#fff;border:1px solid #d6ddec;border-radius:4px;
+  padding:32px 18px 32px 64px;font-family:"Playwrite FR Moderne","Segoe Script","Comic Sans MS",cursive;font-size:15px;line-height:32px;
+  background-image:linear-gradient(90deg,transparent 0 50px,#e46d6d 50px 52px,transparent 52px),
+    repeating-linear-gradient(to bottom,transparent 0 31px,#8ea6d6 31px 32px),
+    repeating-linear-gradient(to bottom,transparent 0 7px,#dfe5f2 7px 8px);
+  background-position:0 var(--sy,6px)}
+.seyes h4{margin:0 0 32px;color:var(--red);font-weight:400;font-size:17px;line-height:32px;display:inline-block;border-bottom:1.5px solid var(--red);line-height:30px}
+.seyes p{margin:0;line-height:32px}
+.seyes p:has(.frac){line-height:64px;padding:16px 0}
+.seyes .frac{line-height:1.15;vertical-align:middle}
+.seyes b{font-weight:600}
+.seyes .m,.seyes .ang{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-size:1.38em}
+.seyes .frac{font-size:1.3em}
+.seyes .frac .m{font-size:1em}.seyes .op{color:#b8322a}.seyes p.verif{text-decoration:underline;text-underline-offset:4px}.seyes p i.m{font-size:1em}
+.seyes .box{border-color:#1d3a8a;font-weight:400;line-height:26px;margin:3px 0}
+.ds-tools{margin:0 0 6px}
+.ds-exo{border-top:2px solid var(--line);margin-top:18px;padding-top:4px}
+.ds-exo h3{color:var(--red);margin:.6em 0 .3em}
+.ds-title{color:var(--ink);font-size:1.25rem;margin:.8em 0 .2em}
+.ds-part h3{margin:1.2em 0 .1em;color:var(--ink);font-size:1.15rem;border-bottom:2px solid var(--ink);padding-bottom:.15em}
+.ds-info{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin:.2em 0;color:var(--muted)}
+.ds-info span{font-weight:700;color:var(--ink)}
+.ds-ans{background:#f6f8fe;border:2px solid var(--ink2);border-radius:8px;padding:.5em .8em;margin:.8em 0}
+.ds-ans b{color:var(--ink)}
+.ds-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:.35em 0}
+.ds-lab{min-width:2.5em}
+.ds-radios{display:inline-flex;flex-wrap:wrap;gap:8px}
+.ds-radios label{border:2px solid #cfd8ea;border-radius:8px;padding:.15em .6em;background:#fff;cursor:pointer}
+.ds-radios label.good{border-color:var(--ok);background:var(--okbg)}
+.okm{color:var(--ok);font-weight:700}.kom{color:var(--ko);font-weight:700}
+@media print{
+  body{background:#fff;font-size:12pt}
+  nav,footer,.btn,.ds-tools,.ds-ans,.ds-corr,header,.levels,.ds>.consigne,.ds>h2{display:none!important}
+  .ds-title{margin-top:0}
+  .card{box-shadow:none;border:none;padding:0}.card::before{display:none}
+  .ds-exo{break-inside:avoid;border-top:1px solid #999}
+  .ds-part{break-after:avoid}
+  svg.fig{max-width:430px}
+}
+.cl-line{margin:.35em 0;line-height:2.3}
+.blankw{position:relative;display:inline-block}
+.blank{font:inherit;min-width:3.2em;padding:.05em .5em;border:2px dashed var(--ink2);border-radius:6px;background:#f6f8fe;color:var(--ink);cursor:pointer}
+.blank.good,.cl-num.good{border-style:solid;border-color:var(--ok);background:var(--okbg)}
+.blank.bad,.cl-num.bad{border-style:solid;border-color:var(--ko);background:var(--kobg)}
+.blank.fixed,.cl-num.fixed{border-style:solid;border-color:#e0a63a;background:#fff4d6}
+.cl-num{width:4.5em!important}
+.blank-menu{position:absolute;left:0;top:calc(100% + 4px);z-index:20;display:flex;flex-direction:column;gap:4px;background:#fff;border:1px solid #cfd8ea;border-radius:8px;padding:6px;box-shadow:0 8px 24px -8px rgba(29,58,138,.45);min-width:max-content;max-width:min(560px,86vw);line-height:1.4}
+.blank-menu .opt{white-space:normal}
+.grille{margin:.8em 0;border:2px solid var(--ok);border-radius:8px;padding:.6em .9em;background:#f3faf6}
+.grille h4{margin:0 0 .2em;color:var(--ok)}
+.grille-item{display:flex;gap:.6em;align-items:flex-start;margin:.3em 0;cursor:pointer}
+.grille-item input{margin-top:.35em;width:1.1em;height:1.1em}
+.grille-msg{font-weight:700;color:var(--ok);margin:.3em 0 0}
+footer{padding:10px 0 30px;color:var(--muted);font-size:.9rem}
+footer button{font:inherit;background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;padding:0}
+@media (max-width:600px){.card{padding:18px 14px 20px 26px}.card::before{left:12px}header h1{font-size:1.5rem}}
+[hidden]{display:none!important}.eq-input{font:inherit;font-family:"STIX Two Text",Cambria,serif;padding:.35rem .5rem;border:2px solid #cfd8ea;border-radius:6px;max-width:100%;width:11em}.step-a select{max-width:100%;white-space:normal}.step-q{display:block}.home{margin-bottom:1rem}.step select{min-height:44px}.step .btn{min-height:44px}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--red);outline-offset:3px}.seyes{overflow-x:auto}.seyes p{font-family:"STIX Two Text",Cambria,serif;font-size:1.08rem}footer a{color:var(--ink)}@media print{.subtabs,.eq-input,.step button,.fb{display:none!important}.step-q:after{content:' …………………………………………………………';display:block}.ds-exo{break-inside:avoid}.step{border:0;padding:.15rem 0}.card{padding:0}.seyes{background:white;padding:1rem}}
+.back-home{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:0 0 16px;padding:8px 14px;border:2px solid var(--ink);border-radius:7px;background:var(--card);color:var(--ink);font:inherit;font-size:1rem;font-weight:700;text-decoration:none}.back-home:hover{background:#eef2fb}.back-home:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+i.m{font-family:"STIX Two Text","Cambria Math",Cambria,serif;font-style:italic;text-transform:none;letter-spacing:0}
+.ds-item{margin:.8em 0}.ds-q{margin:.1em 0 .35em}.ds-ans{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:.3em 0 .6em;padding:.4em .7em}.ds-ans .eq-input{width:9em}.ds-corr{margin-top:.8em}.aide{background:#f6f8fe;border-left:3px solid var(--ink2);padding:.3em .6em;color:var(--text);margin:.2em 0 .5em}.exo-head p{margin-top:0}
+details.cours-part{background:var(--card);border:1px solid #e2e6ef;border-radius:8px;padding:.5em 1em;margin:0 0 14px}details.cours-part>summary{cursor:pointer;color:var(--ink);font-weight:700;min-height:32px}details.cours-part[open]>summary{margin-bottom:.4em}details.cours-part h3:first-child{margin-top:.4em}
+@media print{.ds-q{break-after:avoid}.ds-item{margin:.5em 0}}
+table.num{border-collapse:collapse;margin:.5em 0 .8em;font-size:.95em;max-width:100%}
+table.num th,table.num td{border:1.5px solid var(--ink2);padding:.25em .45em;text-align:center;min-width:2.1em}
+table.num th{font-weight:400;color:var(--ink);font-size:.82em;line-height:1.2}
+table.num th.cl{font-weight:700;background:#f6f8fe}
+table.num td{font-family:"STIX Two Text",Cambria,serif;font-size:1.25em;color:var(--ink)}
+table.num .vg{border-left:4px solid var(--red)}
+table.num td.hl{background:#fff4d6;font-weight:700}
+.tabwrap{overflow-x:auto;max-width:100%}
+.big{font-family:"STIX Two Text",Cambria,serif;font-size:1.45rem;color:var(--ink);margin:.2em 0 .4em}
+.mots{font-style:italic;color:var(--ink)}
+.ds-fill{display:inline-flex;flex-wrap:wrap;align-items:center;gap:4px;font-family:"STIX Two Text",Cambria,serif;font-size:1.1em}
+.ds-fill .eq-input{width:5.2em}
+.ds-fill .frac .eq-input{width:4.4em;margin:2px 0}
+.defi{border:2px dashed var(--ink2);border-radius:8px;padding:.3em .9em;margin-top:18px}
+@media (max-width:600px){table.num th,table.num td{padding:.2em .25em;min-width:1.6em}table.num th{font-size:.7em}}
+</style></head><body><div class="wrap"><header><a class="back-home" href="../6e/">← Toutes les applications</a><h1><span>Chapitre 1 : Nombres entiers et décimaux</span></h1><p>Je prépare mon D.S. de fin de chapitre.</p><nav aria-label="Parcours du chapitre"><button type="button" data-page="home" class="on">Sommaire</button><button type="button" data-page="cours">Cours</button><button type="button" data-page="lire">1. Lire et écrire</button><button type="button" data-page="chiffres">2. Chiffres</button><button type="button" data-page="zeros">3. Zéros et virgule</button><button type="button" data-page="fractions">4. Fractions</button><button type="button" data-page="decomp">5. Décomposer</button><button type="button" data-page="ds">6. D.S. blanc</button></nav></header><main id="app"></main><footer>Collège La Rochefoucauld · Mathématiques 6<sup>e</sup></footer></div><template id="course-source"><section data-mod="lire"><h3>1. Chiffres et nombres</h3>
+<div class="retenir"><b>À retenir</b>Les dix chiffres 0, 1, 2, 3, 4, 5, 6, 7, 8 et 9 permettent d’écrire tous les nombres, comme les lettres permettent d’écrire tous les mots.</div>
+<p>Pour lire facilement un grand nombre entier, on regroupe ses chiffres par <strong>classes de trois</strong>, en partant du chiffre des unités. On laisse un petit espace entre deux classes.</p>
+<div class="seyes"><h4>Exemple · 1252342532</h4><p>1 252 342 532</p><p>un-milliard-deux-cent-cinquante-deux-millions-trois-cent-quarante-deux-mille-cinq-cent-trente-deux</p></div>
+<h3>2. Écrire un nombre en lettres</h3>
+<div class="retenir"><b>Orthographe</b><ul><li>On relie tous les mots du nombre par des traits d’union.</li><li>Le mot « mille » ne prend jamais de s.</li><li>« Vingt » et « cent » prennent un s quand ils sont multipliés et qu’ils sont à la fin du nombre : quatre-vingts, trois-cents, mais quatre-vingt-deux et trois-cent-un.</li><li>« Million » et « milliard » prennent un s au pluriel : deux-millions.</li></ul></div>
+<p>Pour écrire un nombre décimal en lettres, on lit la partie entière en unités, puis la partie décimale avec le rang de son dernier chiffre.</p>
+<div class="seyes"><h4>Exemples</h4><p>2,8 : deux unités et huit dixièmes</p><p>19,34 : dix-neuf unités et trente-quatre centièmes</p><p>4,687 : quatre unités et six-cent-quatre-vingt-sept millièmes</p></div></section>
+<section data-mod="chiffres"><h3>3. Le tableau de numération</h3>
+<p>Dans le tableau, on place un seul chiffre par colonne. La colonne d’un chiffre donne son rang. Le chiffre des unités est juste avant la virgule, et le chiffre des dixièmes est juste après.</p>
+<div class="tabwrap"><table class="num"><tr><th class="cl" colspan="3">Classe des mille</th><th class="cl" colspan="3">Classe des unités</th><th class="cl vg" colspan="3">Partie décimale</th></tr><tr><th>centaines de mille</th><th>dizaines de mille</th><th>milliers</th><th>centaines</th><th>dizaines</th><th>unités</th><th class="vg">dixièmes</th><th>centièmes</th><th>millièmes</th></tr><tr><td></td><td></td><td>7</td><td>4</td><td>2</td><td>5</td><td class="vg">3</td><td>9</td><td>5</td></tr></table></div>
+<h3>4. Chiffre des, nombre de</h3>
+<div class="retenir"><b>À retenir</b><ul><li>Le <strong>chiffre</strong> des centaines est un seul chiffre : celui de la colonne des centaines.</li><li>Le <strong>nombre</strong> de centaines s’obtient en gardant tous les chiffres jusqu’à la colonne des centaines, et en supprimant les autres.</li></ul></div>
+<div class="seyes"><h4>Exemple · 7 425,395</h4><p>Partie entière : 7 425</p><p>Partie décimale : 0,395</p><p>Chiffre des centaines : 4</p><p>Nombre de centaines : 74</p><p>Chiffre des dixièmes : 3</p><p>Nombre de dixièmes : 74 253</p></div></section>
+<section data-mod="zeros"><h3>5. Les zéros inutiles</h3>
+<div class="retenir"><b>À retenir</b>Un zéro est inutile s’il est au début de la partie entière, ou à la fin de la partie décimale. On peut le supprimer sans changer le nombre.</div>
+<div class="seyes"><h4>Exemples</h4><p>05,0 = 5</p><p>17 500,500 = 17 500,5</p><p>15,40 = 15,4</p><p>17,02 ≠ 17,2</p></div>
+<p>Dans 17,02, le zéro n’est pas inutile : il indique qu’il n’y a aucun dixième. Dans 17 500, les zéros ne sont pas inutiles non plus.</p>
+<h3>6. Placer la virgule</h3>
+<p>Pour qu’un chiffre soit à un rang donné, on cherche d’abord quel chiffre sera le chiffre des unités, puis on place la virgule juste après lui.</p>
+<div class="seyes"><h4>Exemple · 1572068</h4><p>7 doit être le chiffre des centaines.</p><p>15 720,68</p></div></section>
+<section data-mod="fractions"><h3>7. Dixièmes, centièmes, millièmes</h3>
+<div class="retenir"><b>Définitions</b>Quand on partage une unité en 10 parts égales, chaque part est un dixième : <span class="frac"><span>1</span><span>10</span></span> = 0,1.<br>En 100 parts égales, chaque part est un centième : <span class="frac"><span>1</span><span>100</span></span> = 0,01.<br>En 1 000 parts égales, chaque part est un millième : <span class="frac"><span>1</span><span>1 000</span></span> = 0,001.</div>
+<p>Il y a 10 dixièmes dans une unité, 10 centièmes dans un dixième, et 10 millièmes dans un centième.</p>
+<h3>8. Fractions décimales</h3>
+<div class="retenir"><b>À retenir</b>Une fraction décimale a pour dénominateur 10, 100, 1 000… Le nombre de zéros du dénominateur est égal au nombre de chiffres après la virgule.</div>
+<div class="seyes"><h4>Exemples</h4><p>19,34 = <span class="frac"><span>1 934</span><span>100</span></span></p><p><span class="frac"><span>4 687</span><span>1 000</span></span> = 4,687</p><p>2 + <span class="frac"><span>8</span><span>10</span></span> + <span class="frac"><span>8</span><span>100</span></span> + <span class="frac"><span>6</span><span>1 000</span></span> = 2,886</p></div></section>
+<section data-mod="decomp"><h3>9. Décomposer un nombre</h3>
+<p>On peut écrire un même nombre de plusieurs façons. Chaque chiffre est remplacé par la valeur qu’il représente.</p>
+<div class="seyes"><h4>Exemple · 15,42</h4><p>15,42 = 10 + 5 + 0,4 + 0,02</p><p>15,42 = (1 × 10) + (5 × 1) + (4 × 0,1) + (2 × 0,01)</p><p>15,42 = 15 + <span class="frac"><span>4</span><span>10</span></span> + <span class="frac"><span>2</span><span>100</span></span></p><p>15,42 = 15 + <span class="frac"><span>42</span><span>100</span></span></p></div>
+<p>Dans une décomposition, on n’écrit pas les chiffres 0 : 24,608 = 20 + 4 + 0,6 + 0,008.</p></section>
+</template><script>(() => {
+'use strict';
+const $=s=>document.querySelector(s),R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),pick=a=>a[R(0,a.length-1)];
+const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=R(0,i);[b[i],b[j]]=[b[j],b[i]];}return b;};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const NB=' ';
+/* Les nombres sont manipulés comme des chaînes « 63417,529 » (pas de calcul en virgule flottante). */
+const grp=i=>i.replace(/\B(?=(\d{3})+(?!\d))/g,NB);
+function fmt(s){const [i,d]=String(s).split(',');return d!==undefined?grp(i)+','+d:grp(i);}
+/* Écriture brute avec ses zéros inutiles (053,600) : on ne groupe que les longues parties entières. */
+function raw(s){const [i,d]=String(s).split(',');const I=i.length>4?grp(i):i;return d!==undefined?I+','+d:I;}
+const norm=v=>String(v).replace(/[\s  ]/g,'').replace(/\./g,',').replace(/^\+/,'');
+function canon(v){const s=norm(v);if(!/^\d+(,\d+)?$/.test(s))return null;let [i,d='']=s.split(',');i=i.replace(/^0+(?=\d)/,'');d=d.replace(/0+$/,'');return d?i+','+d:i;}
+const pow10=k=>'1'+'0'.repeat(k);
+const fracH=(n,d)=>`<span class="frac"><span>${n}</span><span>${d}</span></span>`;
+function fromFrac(N,k){N=String(N).padStart(k+1,'0');return canon(k?N.slice(0,-k)+','+N.slice(-k):N);}
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+/* ---------- Nombres en lettres (traits d'union partout, comme dans le cours) ---------- */
+const U=['zéro','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix','onze','douze','treize','quatorze','quinze','seize'];
+const T={2:'vingt',3:'trente',4:'quarante',5:'cinquante',6:'soixante'};
+function w99(n,fin){if(n<17)return U[n];if(n<20)return 'dix-'+U[n-10];const t=Math.floor(n/10),u=n%10;
+ if(t<7)return T[t]+(u===0?'':u===1?'-et-un':'-'+U[u]);
+ if(t===7)return 'soixante-'+(n===71?'et-onze':w99(n-60));
+ if(n===80)return 'quatre-vingt'+(fin?'s':'');
+ return 'quatre-vingt-'+w99(n-80);}
+function w999(n,fin){const h=Math.floor(n/100),r=n%100,p=[];if(h)p.push(h===1?'cent':U[h]+'-cent'+(r===0&&fin?'s':''));if(r)p.push(w99(r,fin));return p.join('-');}
+function words(n){n=Number(n);if(!n)return 'zéro';const g=[Math.floor(n/1e9),Math.floor(n/1e6)%1000,Math.floor(n/1e3)%1000,n%1000],p=[];
+ if(g[0])p.push(g[0]===1?'un-milliard':w999(g[0],true)+'-milliards');
+ if(g[1])p.push(g[1]===1?'un-million':w999(g[1],true)+'-millions');
+ if(g[2])p.push(g[2]===1?'mille':w999(g[2],false)+'-mille');
+ if(g[3])p.push(w999(g[3],true));return p.join('-');}
+const RK=['dixième','centième','millième'];
+function decWords(s){const [i,d]=s.split(','),iN=+i,dN=+d,rk=RK[d.length-1];
+ const ip=iN===0?'':(iN===1?'une unité':words(iN)+' unités')+' et ';return ip+(dN===1?'un '+rk:words(dN)+' '+rk+'s');}
+const anyWords=s=>s.includes(',')?decWords(s):words(s);
+/* ---------- Rangs ---------- */
+const RANG={6:'millions',5:'centaines de mille',4:'dizaines de mille',3:'milliers',2:'centaines',1:'dizaines',0:'unités','-1':'dixièmes','-2':'centièmes','-3':'millièmes'};
+const unitVal=p=>p>=0?pow10(p):'0,'+'0'.repeat(-p-1)+'1';
+function digitAt(s,p){const [i,d='']=s.split(',');return p>=0?(i[i.length-1-p]||'0'):(d[-p-1]||'0');}
+function nombreDe(s,p){const [i,d='']=s.split(',');const r=p>=0?(i.slice(0,i.length-p)||'0'):i+d.padEnd(-p,'0').slice(0,-p);return r.replace(/^0+(?=\d)/,'');}
+const rankHint=p=>p>=0?'Le chiffre des unités est juste avant la virgule (ou le dernier chiffre d’un nombre entier). En allant vers la gauche, on trouve les dizaines, les centaines, les milliers, puis les dizaines de mille.':'Le chiffre des dixièmes est juste après la virgule. Ensuite viennent les centièmes, puis les millièmes.';
+/* Tableau de numération d'un nombre, avec une colonne mise en valeur. */
+function numTable(s,hl){const [i,d='']=s.split(','),cls=Math.max(1,Math.ceil(i.length/3)),n=cls*3,ip=i.padStart(n,' ');
+ const CL=['unités','mille','millions','milliards'],SH={0:'u',1:'d',2:'c'};let h1='',h2='',r='';
+ for(let c=cls-1;c>=0;c--)h1+=`<th class="cl" colspan="3">Classe des ${CL[c]}</th>`;
+ if(d)h1+=`<th class="cl vg" colspan="${d.length}">Partie décimale</th>`;
+ for(let k=0;k<n;k++){const p=n-1-k,lab=p<6?RANG[p]:SH[p%3]+'.';h2+=`<th>${lab}</th>`;r+=`<td${p===hl?' class="hl"':''}>${ip[k].trim()}</td>`;}
+ for(let k=0;k<d.length;k++){const p=-k-1,v=k===0?' vg':'';h2+=`<th class="${v.trim()}">${RANG[p]}</th>`;r+=`<td class="${(v+(p===hl?' hl':'')).trim()}">${d[k]}</td>`;}
+ return `<div class="tabwrap"><table class="num" aria-label="Tableau de numération"><tr>${h1}</tr><tr>${h2}</tr><tr>${r}</tr></table></div>`;}
+/* ---------- Saisie et vérification ---------- */
+function terms(v){const p=norm(v).replace(/[()]/g,'').split('+');const out=[];for(const t of p){const c=canon(t);if(c===null)return null;if(c!=='0')out.push(c);}return out.sort();}
+function correct(v,t){const k=t.kind||(t.options?'opt':'num');
+ if(k==='opt')return v===t.a;
+ if(k==='exact')return norm(v)===norm(t.a);
+ if(k==='frac'){const m=norm(v).match(/^(\d+)\/(10+)$/);return !!m&&fromFrac(m[1],m[2].length-1)===canon(t.a);}
+ if(k==='sum'){const a=terms(v),b=[...t.terms].map(canon).sort();return !!a&&a.length===b.length&&a.every((x,i)=>x===b[i]);}
+ const c=canon(v);return c!==null&&c===canon(t.a);}
+const answer=t=>t.answerHtml||((t.kind||'num')==='num'||t.kind==='exact'?fmt(t.a):esc(t.a));
+const AVOID=new Set();
+const fresh=f=>{for(let i=0;i<60;i++){const v=f();if(!AVOID.has(canon(v.n||v)))return v;}return f();};
+function dom(tag,cls,html){const n=document.createElement(tag);if(cls)n.className=cls;if(html!==undefined)n.innerHTML=html;return n;}
+function button(label,fn,cls='btn'){const b=dom('button',cls,esc(label));b.type='button';b.addEventListener('click',fn);return b;}
+const box=s=>`<span class="box">${s}</span>`;
+function digitsDistinct(n){let d=shuffle([0,1,2,3,4,5,6,7,8,9]).slice(0,n);if(d[0]===0){const j=d.findIndex(x=>x);[d[0],d[j]]=[d[j],d[0]];}return d.join('');}
+/* =================== 1. Lire et écrire =================== */
+function wrongSpelling(w){const c=[];
+ if(/-mille/.test(w)&&!/^mille/.test(w))c.push(w.replace('-mille','-milles'));
+ if(/(cent|vingt)s$/.test(w))c.push(w.replace(/s$/,''));
+ if(/-cent-/.test(w))c.push(w.replace('-cent-','-cents-'));
+ if((w.match(/-/g)||[]).length>=3)c.push(w.replace(/-/g,' '));
+ return pick(c);}
+function wrongNumber(i){const a=i.split('');for(let k=1;k<a.length-1;k++)if(a[k]==='0'&&a[k+1]!=='0'){[a[k],a[k+1]]=[a[k+1],a[k]];return a.join('');}
+ for(let k=a.length-2;k>0;k--)if(a[k]!==a[k+1]){[a[k],a[k+1]]=[a[k+1],a[k]];return a.join('');}return i+'0';}
+function bigInt(){/* 6 ou 7 chiffres, avec des zéros à l'intérieur, sans « cents » ni « vingts » devant « millions ». */
+ for(;;){const m=Math.random()<.5?R(2,9):0,k=pick([R(101,999),R(10,99),R(2,9)*100+R(1,9)]),u=pick([R(1,99),R(1,9)*100+R(1,9),R(10,99)]);const n=m*1e6+k*1000+u;if(n%100&&!AVOID.has(String(n)))return {n:String(n),m,k,u};}}
+const pad3=x=>String(x).padStart(3,'0');
+function lireChiffres(example){const v=example?{n:'406052',m:0,k:406,u:52}:bigInt(),W=cap(words(v.n)),tasks=[];
+ if(v.m)tasks.push({guide:true,q:'Quel nombre est écrit devant le mot « millions » ?',a:String(v.m),hint:'Lis le début du nombre jusqu’au mot « millions ».',corr:`La classe des millions est ${v.m}.`});
+ tasks.push({guide:true,q:'Quel nombre est écrit devant le mot « mille » ?',a:String(v.k),hint:v.m?'Lis les mots placés entre « millions » et « mille ».':'Lis le début du nombre jusqu’au mot « mille ».',corr:`La classe des mille est ${v.m?pad3(v.k):v.k}.`});
+ tasks.push({guide:true,q:'Quel nombre est écrit après le mot « mille » ?',a:String(v.u),hint:'C’est la classe des unités. Elle s’écrit toujours avec trois chiffres : on complète avec des zéros devant si besoin.',corr:`La classe des unités est ${v.u}, qui s’écrit ${pad3(v.u)} avec trois chiffres.`});
+ tasks.push({q:'Écris ce nombre en chiffres.',a:v.n,hint:'Écris les classes l’une après l’autre, avec trois chiffres pour chaque classe sauf la première.',corr:`Le nombre s’écrit ${fmt(v.n)}.`});
+ const lines=(v.m?[`Classe des millions : ${v.m}`,`Classe des mille : ${pad3(v.k)}`]:[`Classe des mille : ${v.k}`]).concat([`Classe des unités : ${pad3(v.u)}`]);
+ return {n:v.n,head:`<p>Écris en chiffres le nombre suivant.</p><p class="mots">${W}</p>`,tasks,correction:`<p>${W}</p>`+lines.map(l=>`<p>${l}</p>`).join('')+`<p>${box(fmt(v.n))}</p>`};}
+function lireDecimal(example){let I,ds,form;
+ if(example){I=15;ds='603';form='rangs';}
+ else{I=pick([R(2,9),R(11,99)]);const len=R(1,3);for(;;){ds=Array.from({length:len},()=>R(0,9)).join('');if(+ds&&ds.at(-1)!=='0')break;}if(len===3&&!ds.includes('0'))ds=ds[0]+'0'+ds[2];form=Math.random()<.5?'rangs':'bloc';}
+ const s=I+','+ds,k=ds.length,uw=I===1?'une unité':words(I)+' unités';let phrase;
+ if(form==='bloc')phrase=decWords(s);
+ else{const parts=[uw];for(let j=0;j<k;j++)if(ds[j]!=='0')parts.push((ds[j]==='1'?'un ':words(+ds[j])+' ')+RK[j]+(ds[j]==='1'?'':'s'));phrase=parts.length>1?parts.slice(0,-1).join(', ')+' et '+parts.at(-1):parts[0];}
+ const tasks=[{guide:true,q:'Quelle est la partie entière de ce nombre ?',a:String(I),hint:'C’est le nombre d’unités, écrit avant la virgule.',corr:`La partie entière est ${I}.`},
+  {guide:true,q:'Combien de chiffres faut-il écrire après la virgule ?',a:String(k),hint:'Regarde le dernier rang cité : dixièmes, 1 chiffre ; centièmes, 2 chiffres ; millièmes, 3 chiffres.',corr:`Le dernier rang est celui des ${RK[k-1]}s, donc il faut ${k} chiffre${k>1?'s':''} après la virgule.`}];
+ const z=[...ds].findIndex(c=>c==='0');if(z>=0)tasks.push({guide:true,q:`Quel est le chiffre des ${RK[z]}s ?`,a:'0',hint:'Si un rang n’est pas cité, son chiffre est 0.',corr:`Les ${RK[z]}s ne sont pas cités, donc leur chiffre est 0.`});
+ tasks.push({q:'Écris ce nombre en chiffres.',a:s,hint:'Écris la partie entière, la virgule, puis les chiffres de la partie décimale dans l’ordre des rangs.',corr:`Le nombre s’écrit ${fmt(s)}.`});
+ const dec=form==='bloc'?fracH(+ds,fmt(pow10(k))):[...ds].map((c,j)=>c!=='0'?fracH(c,fmt(pow10(j+1))):'').filter(Boolean).join(' + ');
+ return {n:s,head:`<p>Écris en chiffres le nombre suivant.</p><p class="mots">${cap(phrase)}</p>`,tasks,correction:`<p>${I} + ${dec}</p><p>${box(fmt(s))}</p>`};}
+function lireLettres(example){let s;
+ if(example)s='2030405';else if(Math.random()<.55)s=bigInt().n;else{for(;;){s=R(11,99)+','+(Math.random()<.5?R(11,99):pad3(R(11,999)));if(s.at(-1)!=='0'&&!AVOID.has(s))break;}}
+ const good=anyWords(s);let w1,w2;
+ if(s.includes(',')){const [i,d]=s.split(','),k=d.length;w1=words(+i)+' unités et '+words(+d)+' '+RK[k%3]+'s';w2=words(+d)+' unités et '+words(+i)+' '+RK[k-1]+'s';}
+ else{w1=words(wrongNumber(s));w2=wrongSpelling(good);if(!w2||w2===good)w2=good.replace(/-/g,' ');}
+ const opts=[...new Set([good,w1,w2])],tasks=[];
+ if(s.includes(',')){const [i,d]=s.split(',');tasks.push({guide:true,q:'Quelle est la partie entière ?',a:i,hint:'C’est le nombre écrit avant la virgule.',corr:`La partie entière est ${i}, soit ${words(+i)} unités.`},{guide:true,q:`Combien de ${RK[d.length-1]}s y a-t-il dans la partie décimale ?`,a:String(+d),hint:'Lis les chiffres après la virgule comme un nombre entier. Le rang du dernier chiffre donne le mot à écrire.',corr:`Après la virgule, on lit ${+d} ${RK[d.length-1]}s.`});}
+ else{const n=+s,m=Math.floor(n/1e6),k=Math.floor(n/1e3)%1000;if(m)tasks.push({guide:true,q:'Regroupe les chiffres par classes de trois. Combien y a-t-il de millions ?',a:String(m),hint:'Pars du chiffre des unités et fais des groupes de trois chiffres vers la gauche.',corr:`${fmt(s)} : la classe des millions est ${m}.`});
+  tasks.push({guide:true,q:'Quel nombre faut-il lire devant le mot « mille » ?',a:String(k),hint:'C’est la classe des mille, juste à gauche de la classe des unités.',corr:`La classe des mille est ${pad3(k)}, qui se lit ${words(k)}.`});}
+ tasks.push({q:'Quelle est la bonne écriture en lettres de ce nombre ?',a:good,options:opts,kind:'opt',hint:'Vérifie chaque classe, les traits d’union, et les règles de « mille », « cent » et « vingt ».',corr:`${fmt(s)} s’écrit ${good}.`});
+ return {n:s,head:`<p>Écris en lettres le nombre suivant, sur ton cahier, puis choisis la bonne écriture.</p><p class="big">${fmt(s)}</p>`,tasks,correction:`<p>${fmt(s)}</p><p>${good}</p>`};}
+/* =================== 2. Chiffre des, nombre de =================== */
+function etude(example){const s=example?'74109,362':fresh(()=>{const d=digitsDistinct(8);return d.slice(0,5)+','+d.slice(5);});
+ let pI,pD,pN,last;if(example){pI=2;pD=-2;pN=1;last='dec';}else{pI=pick([0,1,2,3,4]);pD=pick([-1,-2,-3]);pN=pick([1,2,3,-1,-2].filter(p=>p!==pI&&p!==pD));last=pick(['ent','dec','rang']);}
+ const tasks=[{line:`Chiffre des ${RANG[pI]} : ${digitAt(s,pI)}`,q:`Quel est le chiffre des ${RANG[pI]} ?`,a:digitAt(s,pI),hint:rankHint(pI),corr:`Le chiffre des ${RANG[pI]} est ${digitAt(s,pI)}.`},
+  {line:`Chiffre des ${RANG[pD]} : ${digitAt(s,pD)}`,q:`Quel est le chiffre des ${RANG[pD]} ?`,a:digitAt(s,pD),hint:rankHint(pD),corr:`Le chiffre des ${RANG[pD]} est ${digitAt(s,pD)}.`},
+  {guide:true,q:`Quel est le chiffre des ${RANG[pN]} ?`,a:digitAt(s,pN),hint:rankHint(pN),corr:`Le chiffre des ${RANG[pN]} est ${digitAt(s,pN)}.`},
+  {line:`Nombre de ${RANG[pN]} : ${fmt(nombreDe(s,pN))}`,q:`Quel est le nombre de ${RANG[pN]} ?`,a:nombreDe(s,pN),hint:`Garde tous les chiffres jusqu’à celui des ${RANG[pN]}, sans la virgule, et supprime les chiffres à sa droite.`,corr:`On garde les chiffres jusqu’à celui des ${RANG[pN]} : le nombre de ${RANG[pN]} est ${fmt(nombreDe(s,pN))}.`}];
+ const [i,d]=s.split(',');
+ if(last==='ent')tasks.push({line:`Partie entière : ${fmt(i)}`,q:'Quelle est la partie entière de ce nombre ?',a:i,hint:'C’est le nombre écrit avant la virgule.',corr:`La partie entière est ${fmt(i)}.`});
+ else if(last==='dec')tasks.push({line:`Partie décimale : 0,${d}`,q:'Quelle est la partie décimale de ce nombre ?',a:'0,'+d,hint:'Elle s’écrit avec un 0, la virgule, puis les chiffres situés après la virgule.',corr:`La partie décimale est 0,${d}.`});
+ else{const p=pick([3,1,-1,-3].filter(x=>![pI,pD,pN].includes(x))),c=digitAt(s,p),opts=[RANG[p],RANG[p+1]||RANG[p-1],RANG[p-1]||RANG[p+2]];tasks.push({line:`${c} : chiffre des ${RANG[p]}`,q:`Le chiffre ${c} est le chiffre des…`,a:RANG[p],options:[...new Set(opts)],kind:'opt',hint:rankHint(p),corr:`${c} est le chiffre des ${RANG[p]}.`});}
+ const corr=tasks.filter(t=>t.line).map(t=>`<p>${t.line}</p>`).join('');
+ return {n:s,head:`<p>On considère le nombre suivant.</p><p class="big">${fmt(s)}</p>`,table:numTable(s),tasks,correction:`<p>${fmt(s)}</p>`+corr};}
+function mystere(example){let I,a,rel,c;if(example){I=25;a=4;rel=2;c=1;}else{for(;;){I=R(10,98);a=R(1,4);rel=a<=3&&Math.random()<.4?3:2;c=R(1,9);const s=`${I},${a}${a*rel}${c}`;if(!AVOID.has(s))break;}}
+ const b=a*rel,s=`${I},${a}${b}${c}`,REL={2:'le double',3:'le triple'}[rel];
+ const clues=[`Je suis compris entre ${I} et ${I+1}.`,`Mon chiffre des dixièmes est ${a}.`,`Mon chiffre des centièmes est ${REL} de mon chiffre des dixièmes.`,`Mon chiffre des millièmes est ${c}, et je n’ai pas d’autre chiffre après.`];
+ const tasks=[{guide:true,q:'Quelle est ma partie entière ?',a:String(I),hint:`Un nombre compris entre ${I} et ${I+1} s’écrit ${I},…`,corr:`Je suis compris entre ${I} et ${I+1}, donc ma partie entière est ${I}.`},
+  {guide:true,q:'Quel est mon chiffre des centièmes ?',a:String(b),hint:`${cap(REL)} d’un nombre, c’est ce nombre multiplié par ${rel}.`,corr:`${rel} × ${a} = ${b}, donc mon chiffre des centièmes est ${b}.`},
+  {q:'Qui suis-je ?',a:s,hint:'Écris la partie entière, la virgule, puis les chiffres des dixièmes, des centièmes et des millièmes.',corr:`Je suis ${fmt(s)}.`}];
+ return {n:s,head:'<p>Je suis un nombre décimal.</p><ul>'+clues.map(x=>`<li>${x}</li>`).join('')+'</ul>',tasks,correction:`<p>Partie entière : ${I}</p><p>Chiffre des dixièmes : ${a}</p><p>Chiffre des centièmes : ${rel} × ${a} = ${b}</p><p>Chiffre des millièmes : ${c}</p><p>${box(fmt(s))}</p>`};}
+/* =================== 3. Zéros et virgule =================== */
+function zerosInutiles(example){let w,L=0,Tz=0;
+ if(example){w='0207,4300';L=1;Tz=2;}
+ else{const t=R(0,3);
+  if(t===0){const I=String(pick([R(2,99),R(101,909)])),D=String(R(1,99)).replace(/0$/,'7');L=R(0,2);Tz=R(L?0:1,2);w='0'.repeat(L)+I+','+D+'0'.repeat(Tz);}
+  else if(t===1){const I=String(R(11,99)*pick([10,100]));L=R(0,1);w='0'.repeat(L)+I;}
+  else if(t===2){const I=String(R(2,99));Tz=R(1,2);L=R(0,1);w='0'.repeat(L)+I+','+'0'.repeat(Tz);}
+  else{const I=String(R(2,99)),D='0'+R(1,9);Tz=R(0,1);L=Tz?R(0,1):1;w='0'.repeat(L)+I+','+D+'0'.repeat(Tz);}}
+ const c=canon(w),dec=w.includes(','),noDec=dec&&!c.includes(',');
+ const O=['Les zéros au début de la partie entière','Les zéros à la fin de la partie décimale','Les deux','Aucun zéro n’est inutile'];
+ const which=L&&Tz?O[2]:L?O[0]:Tz?O[1]:O[3];
+ const tasks=[{guide:true,q:'Quels zéros sont inutiles dans ce nombre ?',a:which,options:O,kind:'opt',keep:true,hint:'Un zéro est inutile s’il est au tout début de la partie entière, ou tout à la fin de la partie décimale. Un zéro placé entre deux chiffres n’est jamais inutile.',corr:(which===O[3]?'Aucun zéro n’est au début de la partie entière ni à la fin d’une partie décimale.':which===O[2]?'Les zéros du début de la partie entière et ceux de la fin de la partie décimale sont inutiles.':`${which} sont inutiles.`)+(noDec?' Si toute la partie décimale disparaît, on n’écrit plus la virgule.':'')},
+  {q:'Écris ce nombre sans zéros inutiles.',a:c,kind:'exact',hint:'Supprime seulement les zéros inutiles. Si la partie décimale ne contient que des zéros, on supprime aussi la virgule.',corr:`${raw(w)} = ${fmt(c)}.`}];
+ return {n:c,head:`<p>Supprime les zéros inutiles de ce nombre, s’il y en a.</p><p class="big">${raw(w)}</p>`,tasks,correction:`<p>${raw(w)} = ${box(fmt(c))}</p>`};}
+function egalOuNon(example){let A,B;
+ if(example){A='5,60';B='5,060';}
+ else{const I=String(R(2,40)),d=String(R(1,9)),d2=String(R(1,9));const t=R(0,5);
+  [A,B]=[[`${I},${d}0`,`${I},${d}`],[`0${I},${d}${d2}`,`${I},${d}${d2}0`],[`${I},0${d}`,`${I},${d}`],[`${I},${d}0`,`${I},0${d}`],[`${I},00`,`${I}00`],[`${I},${d}0${d2}`,`${I},${d}${d2}`]][t];if(Math.random()<.5)[A,B]=[B,A];}
+ const eq=canon(A)===canon(B),sym=eq?'=':'≠';
+ const tasks=[{guide:true,q:'Écris le premier nombre sans zéros inutiles.',a:canon(A),kind:'exact',hint:'Supprime les zéros au début de la partie entière et à la fin de la partie décimale.',corr:`${raw(A)} = ${fmt(canon(A))}.`},
+  {guide:true,q:'Écris le second nombre sans zéros inutiles.',a:canon(B),kind:'exact',hint:'Même méthode pour le second nombre.',corr:`${raw(B)} = ${fmt(canon(B))}.`},
+  {q:'Quel symbole faut-il écrire entre ces deux nombres ?',a:sym,options:['=','≠'],kind:'opt',hint:'Sans les zéros inutiles, deux nombres égaux s’écrivent exactement de la même façon.',corr:eq?`Sans les zéros inutiles, les deux nombres s’écrivent ${fmt(canon(A))}. Ils sont égaux.`:`Sans les zéros inutiles, on obtient ${fmt(canon(A))} et ${fmt(canon(B))}. Ils sont différents.`}];
+ return {n:canon(A),head:`<p>Compare ces deux nombres avec le symbole = ou ≠.</p><p class="big">${raw(A)} … ${raw(B)}</p>`,tasks,correction:`<p>${raw(A)} = ${fmt(canon(A))}</p><p>${raw(B)} = ${fmt(canon(B))}</p><p>${box(raw(A)+' '+sym+' '+raw(B))}</p>`};}
+function placerVirgule(example){let D,i,p;
+ if(example){D='841736';i=4;p=-1;}
+ else{for(;;){D=digitsDistinct(R(6,7));i=R(0,D.length-1);p=pick([2,1,0,-1,-2,-3]);const u=i+p;if(u>=0&&u<=D.length-2&&!AVOID.has(D))break;}}
+ const u=i+p,res=D.slice(0,u+1)+','+D.slice(u+1),d=D[i];
+ const tasks=[{guide:true,q:'Quel chiffre sera le chiffre des unités ?',a:D[u],hint:p>=0?`Le chiffre des unités est ${p===0?'le chiffre '+d+' lui-même':p+' rang'+(p>1?'s':'')+' à droite du chiffre '+d}.`:`Le chiffre des unités est ${-p} rang${p<-1?'s':''} à gauche du chiffre ${d}.`,corr:`Pour que ${d} soit le chiffre des ${RANG[p]}, le chiffre des unités doit être ${D[u]}.`},
+  {q:'Écris le nombre obtenu.',a:res,hint:'Place la virgule juste après le chiffre des unités.',corr:`On place la virgule juste après ${D[u]} : on obtient ${fmt(res)}.`}];
+ return {n:res,head:`<p>Place une virgule dans le nombre <span class="m">${D}</span> pour que ${d} soit le chiffre des ${RANG[p]}.</p>`,table:null,tasks,correction:`<p>${D}</p><p>${box(fmt(res))}</p><p>${d} est le chiffre des ${RANG[p]}.</p>`};}
+/* =================== 4. Fractions décimales =================== */
+function fracVersDec(example){let N,k;if(example){N=3052;k=3;}else{k=R(1,3);for(;;){N=pick([R(2,99),R(101,9999),R(1,9)]);if(N%10&&!(k===1&&N<10&&Math.random()<.7))break;}}
+ const v=fromFrac(N,k),F=fracH(fmt(String(N)),fmt(pow10(k)));
+ const tasks=[{guide:true,q:'Combien de chiffres doit-il y avoir après la virgule ?',a:String(k),hint:'Autant de chiffres que de zéros au dénominateur : 10, 1 chiffre ; 100, 2 chiffres ; 1 000, 3 chiffres.',corr:`Le dénominateur ${fmt(pow10(k))} a ${k} zéro${k>1?'s':''}, donc il faut ${k} chiffre${k>1?'s':''} après la virgule.`},
+  {q:'Quelle est l’écriture décimale de cette fraction ?',a:v,hint:String(N).length<=k?'Il n’y a pas assez de chiffres : complète avec des zéros devant le numérateur.':'Place la virgule en comptant les chiffres à partir de la droite du numérateur.',corr:`${String(N).length<=k?'On complète avec des zéros : ':''}${fmt(v)}.`}];
+ return {n:v,head:`<p>Écris ce nombre sous forme décimale.</p><p class="big">${F}</p>`,tasks,correction:`<p>${F} = ${box(fmt(v))}</p>`};}
+function sommeVersDec(example){let I,dg;
+ if(example){I=6;dg=['2','0','9'];}
+ else{I=pick([R(2,9),R(11,99),R(100,999)]);const len=R(2,3);for(;;){dg=Array.from({length:len},()=>String(R(0,9)));if(dg.at(-1)!=='0'&&dg.filter(x=>x!=='0').length>=2)break;}}
+ const s=canon(I+','+dg.join('')),parts=dg.map((c,j)=>c!=='0'?{c,j}:null).filter(Boolean),shown=example?[parts[1],parts[0]]:(Math.random()<.35?shuffle(parts):parts);
+ const expr=`${fmt(String(I))} + `+shown.map(x=>fracH(x.c,fmt(pow10(x.j+1)))).join(' + ');
+ const tasks=dg.map((c,j)=>({guide:true,q:`Quel est le chiffre des ${RK[j]}s ?`,a:c,hint:c==='0'?`Cherche une fraction de dénominateur ${fmt(pow10(j+1))}. S’il n’y en a pas, le chiffre est 0.`:`La fraction de dénominateur ${fmt(pow10(j+1))} donne les ${RK[j]}s.`,corr:c==='0'?`Il n’y a pas de ${RK[j]}s : le chiffre est 0.`:`${fracH(c,fmt(pow10(j+1)))} = ${fromFrac(c,j+1)}, donc le chiffre des ${RK[j]}s est ${c}.`}));
+ tasks.push({q:'Quelle est l’écriture décimale de ce nombre ?',a:s,hint:'Écris la partie entière, la virgule, puis les chiffres des dixièmes, des centièmes et des millièmes, dans cet ordre.',corr:`On obtient ${fmt(s)}.`});
+ return {n:s,head:`<p>Écris ce nombre sous forme décimale.</p><p class="big">${expr}</p>`,tasks,correction:`<p>${expr}</p><p>= ${fmt(String(I))} + ${parts.map(x=>fromFrac(x.c,x.j+1)).join(' + ')}</p><p>= ${box(fmt(s))}</p>`};}
+function decVersFrac(example){let s;if(example)s='48,06';else s=fresh(()=>{const I=pick([R(1,9),R(10,99),R(100,999)]),k=R(1,3);let d;for(;;){d=String(R(1,10**k-1)).padStart(k,'0');if(d.at(-1)!=='0')break;}return I+','+d;});
+ const [i,d]=s.split(','),k=d.length,N=(i+d).replace(/^0+/,''),den=pow10(k);
+ const tasks=[{guide:true,q:'Quel dénominateur faut-il choisir ?',a:fmt(den),options:['10','100','1'+NB+'000'],kind:'opt',keep:true,hint:'Le dénominateur a autant de zéros qu’il y a de chiffres après la virgule.',corr:`Il y a ${k} chiffre${k>1?'s':''} après la virgule, donc le dénominateur est ${fmt(den)}.`},
+  {guide:true,q:'Quel est le numérateur ?',a:N,hint:'Écris tous les chiffres du nombre, sans la virgule et sans zéro au début.',corr:`Sans la virgule, on lit ${fmt(N)}.`},
+  {q:'Écris ce nombre sous la forme d’une fraction décimale.',qAlone:'Écris ta fraction avec le signe /, par exemple 125/100.',a:s,kind:'frac',answerHtml:fracH(fmt(N),fmt(den)),hint:'Écris le numérateur, le signe /, puis le dénominateur, par exemple 125/100.',corr:`${fmt(s)} = ${fracH(fmt(N),fmt(den))}.`}];
+ return {n:s,head:`<p>Écris ce nombre sous la forme d’une fraction décimale.</p><p class="big">${fmt(s)}</p>`,tasks,correction:`<p>${fmt(s)} = ${box(fracH(fmt(N),fmt(den)))}</p>`};}
+/* =================== 5. Décomposer =================== */
+function decNum(example,ex){return example?ex:fresh(()=>{const I=String(pick([R(11,99),R(101,999)])),k=R(2,3);let d;for(;;){d=Array.from({length:k},()=>R(0,9)).join('');if(d.at(-1)!=='0')break;}return I+','+d;});}
+const valueOf=(c,p)=>p>=0?c+'0'.repeat(p):'0,'+'0'.repeat(-p-1)+c;
+function digitsOf(s){const [i,d]=s.split(','),out=[];[...i].forEach((c,k)=>out.push({c,p:i.length-1-k}));[...d].forEach((c,k)=>out.push({c,p:-k-1}));return out.filter(x=>x.c!=='0');}
+function decompRangs(example){const s=decNum(example,'506,17'),[i,d]=s.split(','),D=digitsOf(s),Ti=D.filter(x=>x.p>=0).map(x=>valueOf(x.c,x.p)),Td=D.filter(x=>x.p<0).map(x=>valueOf(x.c,x.p));
+ const tasks=[{guide:true,q:'Décompose la partie entière, chiffre par chiffre.',a:Ti.join(' + '),kind:'sum',terms:Ti,answerHtml:Ti.map(fmt).join(' + '),hint:'Chaque chiffre vaut son chiffre multiplié par la valeur de son rang. On n’écrit pas les zéros. Écris par exemple 300 + 40 + 2.',corr:`${fmt(i)} = ${Ti.map(fmt).join(' + ')}.`},
+  {guide:true,q:'Décompose la partie décimale, chiffre par chiffre.',a:Td.join(' + '),kind:'sum',terms:Td,answerHtml:Td.join(' + '),hint:'Un dixième s’écrit 0,1, un centième 0,01 et un millième 0,001. Écris par exemple 0,5 + 0,007.',corr:`0,${d} = ${Td.join(' + ')}.`},
+  {q:'Écris la décomposition complète du nombre.',a:'',kind:'sum',terms:[...Ti,...Td],answerHtml:[...Ti.map(fmt),...Td].join(' + '),hint:'Mets bout à bout les deux décompositions, avec des signes +.',corr:`${fmt(s)} = ${[...Ti.map(fmt),...Td].join(' + ')}.`}];
+ return {n:s,head:`<p>Décompose ce nombre comme dans l’exemple : 24,608 = 20 + 4 + 0,6 + 0,008.</p><p class="big">${fmt(s)}</p>`,tasks,correction:`<p>${fmt(s)} = ${fmt(i)} + 0,${d}</p><p>${fmt(s)} = ${box([...Ti.map(fmt),...Td].join(' + '))}</p>`};}
+function decompProduits(example){const s=decNum(example,'63,945'),D=digitsOf(s);
+ const tpl=D.map(x=>`(${x.c} × …)`).join(' + '),full=D.map(x=>`(${x.c} × ${fmt(unitVal(x.p))})`).join(' + ');
+ const tasks=D.map(x=>({q:`Le chiffre des ${RANG[x.p]} est ${x.c}. Par quel nombre faut-il le multiplier ?`,a:unitVal(x.p),hint:`Une unité de ce rang vaut ${fmt(unitVal(x.p))}.`,corr:`${x.c} est le chiffre des ${RANG[x.p]}, donc on écrit (${x.c} × ${fmt(unitVal(x.p))}).`}));
+ return {n:s,head:`<p>Complète la décomposition.</p><p class="big">${fmt(s)} = ${tpl}</p>`,tasks,correction:`<p>${fmt(s)} = ${full}</p>`};}
+function decompFraction(example){const s=decNum(example,'12,409'),[i,d]=s.split(','),k=d.length,N=String(+d),den=fmt(pow10(k));
+ const tasks=[{guide:true,q:'Quelle est la partie entière ?',a:i,hint:'C’est le nombre écrit avant la virgule.',corr:`La partie entière est ${fmt(i)}.`},
+  {guide:true,q:'Quel dénominateur faut-il choisir pour la fraction ?',a:den,options:['10','100','1'+NB+'000'],kind:'opt',keep:true,hint:'Le dénominateur a autant de zéros qu’il y a de chiffres après la virgule.',corr:`Il y a ${k} chiffre${k>1?'s':''} après la virgule, donc le dénominateur est ${den}.`},
+  {q:`On écrit ${fmt(s)} = ${fmt(i)} + …/${den}. Quel est le numérateur ?`,a:N,hint:'Lis les chiffres après la virgule comme un nombre entier, sans zéro au début.',corr:`0,${d} = ${fracH(N,den)}, donc le numérateur est ${N}.`}];
+ return {n:s,head:`<p>Écris ce nombre comme la somme de sa partie entière et d’une fraction décimale.</p><p class="big">${fmt(s)}</p>`,tasks,correction:`<p>${fmt(s)} = ${fmt(i)} + 0,${d}</p><p>${fmt(s)} = ${box(fmt(i)+' + '+fracH(N,den))}</p>`};}
+/* =================== Modules =================== */
+const MODULES={
+ lire:{title:'1. Lire et écrire les nombres',desc:'Écrire en chiffres un nombre donné en lettres, et l’inverse.',retain:'On regroupe les chiffres par classes de trois à partir des unités. En lettres, tous les mots sont reliés par des traits d’union, et « mille » ne prend jamais de s.',types:[['En chiffres',lireChiffres],['Décimaux en chiffres',lireDecimal],['En lettres',lireLettres]]},
+ chiffres:{title:'2. Chiffre des, nombre de',desc:'Lire le rang d’un chiffre dans le tableau de numération, puis trouver un nombre mystère.',retain:'Le chiffre des centaines est un seul chiffre. Le nombre de centaines garde tous les chiffres jusqu’à celui des centaines.',types:[['Étudier un nombre',etude],['Nombre mystère',mystere]]},
+ zeros:{title:'3. Zéros et virgule',desc:'Supprimer les zéros inutiles, comparer avec = ou ≠, et placer une virgule.',retain:'Un zéro est inutile au début de la partie entière ou à la fin de la partie décimale. Le chiffre des unités est juste avant la virgule.',types:[['Zéros inutiles',zerosInutiles],['= ou ≠',egalOuNon],['Placer la virgule',placerVirgule]]},
+ fractions:{title:'4. Fractions décimales',desc:'Passer d’une fraction décimale à l’écriture décimale, et l’inverse.',retain:'Le nombre de zéros du dénominateur est égal au nombre de chiffres après la virgule : 407/100 = 4,07.',types:[['Fraction vers décimal',fracVersDec],['Somme vers décimal',sommeVersDec],['Décimal vers fraction',decVersFrac]]},
+ decomp:{title:'5. Décomposer un nombre',desc:'Écrire un nombre comme une somme, chiffre par chiffre ou avec une fraction.',retain:'Chaque chiffre est remplacé par la valeur qu’il représente. On n’écrit pas les chiffres 0.',types:[['Par rangs',decompRangs],['Avec des produits',decompProduits],['Entier et fraction',decompFraction]]}};
+
+/* Mon travail : suivi léger, enregistré dans le navigateur (clé propre à l'app). */
+function makeSuivi(app,prefix,modules){
+ const KEY=app+'-suivi',B36=n=>Math.max(0,Math.min(1295,n|0)).toString(36).toUpperCase().padStart(2,'0');
+ let st={};try{st=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){}
+ st.m=st.m||{};st.ds=st.ds||{};
+ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}};
+ const sum=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))%1296;return h;};
+ const nf=x=>String(x).replace('.',',');
+ const fait=(f,r)=>f?`${f} exercice${f>1?'s':''} fait${f>1?'s':''} seul, dont ${r} sans erreur`:'pas commencé';
+ function code(){const day=Math.floor((Date.now()-Date.UTC(2026,0,1))/864e5);let b=B36(day);
+  modules.forEach(([k],i)=>{const r=st.m[k];if(r&&r[0])b+=String(i)+'M'+B36(r[0])+B36(r[1]);});
+  Object.keys(st.ds).sort().forEach(s=>{const d=st.ds[s];b+='D'+s+B36(Math.round(d.n*2))+B36(Math.round(d.max*2));});
+  return (prefix+b+B36(sum(b))).match(/.{1,6}/g).join('-');}
+ function decode(str){const s=String(str).toUpperCase().replace(/[^0-9A-Z]/g,'');if(!s.startsWith(prefix)||s.length<prefix.length+4)return null;
+  const b=s.slice(prefix.length,-2);if(sum(b)!==parseInt(s.slice(-2),36))return null;
+  const out={date:new Date(Date.UTC(2026,0,1)+parseInt(b.slice(0,2),36)*864e5),m:{},ds:{}};
+  for(let i=2;i+6<=b.length;i+=6){const e=b.slice(i,i+6);
+   if(e[0]==='D')out.ds[e[1]]={n:parseInt(e.slice(2,4),36)/2,max:parseInt(e.slice(4,6),36)/2};
+   else{const mod=modules[+e[0]];if(!mod||e[1]!=='M')return null;out.m[mod[0]]=[parseInt(e.slice(2,4),36),parseInt(e.slice(4,6),36)];}}
+  return out;}
+ function table(d){const rows=modules.map(([k,l])=>{const r=d.m[k]||[0,0];return `<tr><td>${l}</td><td>${r[0]?r[0]:'—'}</td><td>${r[0]?r[1]:'—'}</td></tr>`;}).join('');
+  const ds=Object.keys(d.ds).sort().map(s=>`Sujet ${s === 'R' ? 'tiré au hasard' : s} : ${nf(d.ds[s].n)} / ${nf(d.ds[s].max)}`).join(' ; ');
+  return `<table class="suivi-t"><tr><th>Partie</th><th>Exercices faits seul</th><th>Sans erreur</th></tr>${rows}</table><p>Dernière note provisoire au D.S. blanc : ${ds||'pas encore de D.S. vérifié'}.</p>`;}
+ if(!document.getElementById('suivi-css')){const c=document.createElement('style');c.id='suivi-css';c.textContent='.suivi{margin-top:18px}.suivi h2{color:#2f7a45;font-size:1.2rem;line-height:1.3;margin:0 0 .5em}.suivi-st{margin:.2em 0 .6em;font-size:.88rem;color:#5b6478}.suivi-t{border-collapse:collapse;width:100%;margin:.4em 0;font-size:.95rem}.suivi-t th,.suivi-t td{border:1px solid #c9d3ee;padding:.35em .5em;text-align:left}.suivi-t th{background:#f4f6fb;font-weight:700}.suivi-code{display:inline-block;font-family:"STIX Two Text",Cambria,serif;font-size:1.2rem;letter-spacing:.06em;padding:.2em .6em;border:2px dashed #1d3a8a;border-radius:8px;background:#fff;margin:.3em .5em .3em 0}.suivi details{margin-top:.8em}.suivi summary{cursor:pointer;font-weight:700;color:#1d3a8a}.suivi input[type=text]{font:inherit;padding:.4em .6em;border:2px solid #c9d3ee;border-radius:8px;min-width:0;width:16em;max-width:100%}.suivi .suivi-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:.5em 0}.suivi .suivi-bad{color:#b8322a}';document.head.append(c);}
+ return {
+  done(mod,first){const r=st.m[mod]||[0,0];r[0]++;if(first)r[1]++;st.m[mod]=r;save();},
+  ds(s,n,max){st.ds[s]={n:Math.round(n*2)/2,max};save();},
+  status(mod){const r=st.m[mod]||[0,0];return fait(r[0],r[1]);},
+  box(){const sec=document.createElement('section');sec.className='card suivi';const c=code();
+   sec.innerHTML=`<h2>Mon travail</h2><p>Ce que j’ai fait dans « Je m’entraîne seul », partie par partie, et ma dernière note provisoire au D.S. blanc.</p>${table(st)}
+    <p><b>Mon code pour le professeur.</b> Copie-le et envoie-le à ton professeur s’il te le demande.</p>
+    <div class="suivi-row"><span class="suivi-code">${c}</span><button type="button" class="btn light" data-s="copy">Copier le code</button></div>
+    <details><summary>Espace professeur : lire un code</summary><div class="suivi-row"><input type="text" data-s="in" placeholder="${prefix}…" autocomplete="off" aria-label="Code d’un élève"><button type="button" class="btn" data-s="read">Lire le code</button></div><div data-s="out"></div>
+    <p class="suivi-st">Effacer le suivi enregistré sur cet appareil :</p><button type="button" class="btn light" data-s="reset">Tout effacer</button></details>`;
+   const $s=k=>sec.querySelector(`[data-s="${k}"]`);
+   $s('copy').addEventListener('click',()=>{(navigator.clipboard?navigator.clipboard.writeText(c):Promise.reject()).then(()=>{$s('copy').textContent='Code copié';}).catch(()=>{const r=document.createRange();r.selectNode(sec.querySelector('.suivi-code'));getSelection().removeAllRanges();getSelection().addRange(r);});});
+   $s('read').addEventListener('click',()=>{const d=decode($s('in').value);$s('out').innerHTML=d?`<p>Code créé le ${d.date.toLocaleDateString('fr-FR')}.</p>`+table(d):'<p class="suivi-bad">Ce code n’est pas valide. Vérifiez qu’il a été copié en entier.</p>';});
+   let armed=false;$s('reset').addEventListener('click',()=>{if(!armed){armed=true;$s('reset').textContent='Cliquer encore pour tout effacer';return;}st={m:{},ds:{}};save();sec.replaceWith(this.box());});
+   return sec;}
+ };
+}
+function dsKeep(paper,key){const els=()=>[...paper.querySelectorAll('input,select,textarea')].filter(e=>!['button','hidden','submit'].includes(e.type));
+ try{const v=JSON.parse(localStorage.getItem(key)||'null');if(Array.isArray(v))els().forEach((e,i)=>{if(i>=v.length)return;if(e.type==='radio'||e.type==='checkbox')e.checked=!!v[i];else e.value=v[i]==null?'':v[i];});}catch(e){}
+ let dead=false;const save=()=>setTimeout(()=>{if(dead)return;try{localStorage.setItem(key,JSON.stringify(els().map(e=>e.type==='radio'||e.type==='checkbox'?e.checked:e.value)));}catch(e){}},0);
+ ['input','change','click'].forEach(ev=>paper.addEventListener(ev,save));
+ return ()=>{dead=true;try{localStorage.removeItem(key);}catch(e){}};}
+const SUIVI=makeSuivi('entiers-decimaux','ND',Object.entries(MODULES).map(([k,m])=>[k,m.title]));
+const VIEW={page:'home',mode:'exemple',lv:{lire:0,chiffres:0,zeros:0,fractions:0,decomp:0}};
+function go(id){VIEW.page=id;render();window.scrollTo({top:0});}
+function modeBar(parent){const bar=dom('div','subtabs');for(const[key,label]of[['exemple','Je regarde un exemple'],['aide','Je m’entraîne avec de l’aide'],['seul','Je m’entraîne seul']])bar.append(button(label,()=>{VIEW.mode=key;render();},VIEW.mode===key?'on':''));parent.append(bar);}
+const PH={num:'Nombre',exact:'Nombre',frac:'Exemple : 125/100',sum:'Exemple : 30 + 2 + 0,4'};
+function makeInput(t,label){let input;
+ if(t.options){input=dom('select');input.append(new Option('Choisir une réponse',''));for(const o of (t.options.length>2&&!t.keep?shuffle(t.options):t.options))input.append(new Option(o,o));}
+ else{input=dom('input');input.type='text';input.className='eq-input';input.autocomplete='off';input.spellcheck=false;const k=t.kind||'num';input.placeholder=PH[k];if(k==='num'||k==='exact')input.inputMode='decimal';if(k==='sum')input.style.width='16em';}
+ input.setAttribute('aria-label',label);return input;}
+/* Modelage : toutes les étapes, réponse et explication. Pratique guidée : les mêmes étapes, avec l'aide et le tableau.
+   Pratique autonome : les étapes intermédiaires (guide) disparaissent. Dans les deux pratiques : deux essais, puis la correction. */
+function renderExercise(parent,ex){
+ const alone=VIEW.mode==='seul';
+ if(alone)parent.append(dom('p','small','Fais le travail sur ton cahier, puis saisis seulement ta réponse. Les espaces entre les classes sont facultatifs.'));
+ parent.append(dom('div','exo-head',ex.head));if(ex.table&&!alone)parent.append(dom('div','',ex.table));const box=dom('div','steps');parent.append(box);
+ const tasks=alone?ex.tasks.filter(t=>!t.guide):ex.tasks;
+ let step=0,allFirst=true;
+ function next(){
+  if(step>=tasks.length){if(alone)SUIVI.done(VIEW.page,allFirst);parent.append(dom('div','seyes','<h4>Correction rédigée</h4>'+ex.correction));parent.append(button('Nouvel exercice',render));return;}
+  const t=tasks[step++],q=alone&&t.qAlone?t.qAlone:t.q;const single=tasks.length===1;const row=dom('div','step',(single?'':`<div class="step-n">Étape ${step} sur ${tasks.length}</div>`)+`<div class="step-q">${q}</div>`);box.append(row);
+  if(VIEW.mode==='exemple'){row.classList.add('done');row.append(dom('div','model-a',answer(t)),dom('div','model-e',t.corr));row.append(button(step<tasks.length?'Étape suivante':'Voir la rédaction',()=>{row.querySelector('button').remove();next();}));return;}
+  if(VIEW.mode==='aide'&&t.hint)row.append(dom('p','small aide','<b>Aide :</b> '+t.hint));
+  const area=dom('div','step-a'),feedback=dom('div','fb');feedback.setAttribute('aria-live','polite');row.append(area,feedback);
+  const input=makeInput(t,'Réponse à l’étape '+step);let tries=0;
+  const valid=button('Valider',()=>{
+   if(!input.value.trim()){feedback.className='fb warn';feedback.textContent='Donne une réponse avant de valider.';return;}
+   const ok=correct(input.value,t);tries++;if(!ok)allFirst=false;
+   if(!ok&&tries<2){feedback.className='fb warn';feedback.textContent=VIEW.mode==='aide'&&t.hint?'Ce n’est pas encore juste. Relis l’aide, puis fais un deuxième essai.':'Ce n’est pas encore juste. Vérifie ton travail, puis fais un deuxième essai.';input.classList.add('bad');return;}
+   input.classList.remove('bad');input.disabled=true;valid.disabled=true;row.classList.add(ok?'done':'missed');feedback.className='fb '+(ok?'ok':'ko');feedback.innerHTML=`<b>${ok?'C’est juste.':'La bonne réponse est '+answer(t)+'.'}</b> ${t.corr}`;row.append(button('Continuer',()=>{row.querySelectorAll('button').forEach(b=>b.remove());next();}));
+  });input.addEventListener('keydown',e=>{if(e.key==='Enter')valid.click();});area.append(input,valid);
+ }
+ next();
+}
+/* =================== D.S. blancs ===================
+   Nombres absents du cours, des exemples et des D.S. de la classe. Le sujet B ne reprend pas les exercices du sujet A.
+   L'élève rédige sur une feuille et ne saisit que le résultat de chaque question. */
+const F=(n,d)=>fracH(n,d),M='1'+NB+'000';
+const C=(q,a,corr,extra={})=>{const t=q.replace(/<[^>]+>/g,'').replace(/ :$/,'');return {q,a,corr:corr||`<p>${t}${/(=|est)$/.test(t)?' ':' : '}${fmt(a)}</p>`,...extra};};
+const W=(q,a,opts)=>({q,a,options:opts,kind:'opt',corr:`<p>${q} : ${a}</p>`});
+const DS={
+A:[
+ {title:'Écrire des nombres',pts:4,head:'<p>1. Écris chaque nombre en chiffres. 2. Écris chaque nombre en lettres sur ta feuille, puis choisis la bonne écriture.</p>',items:[
+  C('1. a) <span class="mots">Cinq-cent-huit-mille-soixante-quatre</span>','508064','<p>Cinq-cent-huit-mille-soixante-quatre = 508 064</p>'),
+  C('1. b) <span class="mots">Trois-millions-sept-cent-quatre-mille-quinze</span>','3704015','<p>Trois-millions-sept-cent-quatre-mille-quinze = 3 704 015</p>'),
+  C('1. c) <span class="mots">Vingt-six unités et neuf dixièmes</span>','26,9',`<p>26 + ${F(9,10)} = 26,9</p>`),
+  C('1. d) <span class="mots">Neuf unités, cinq dixièmes et trois millièmes</span>','9,503',`<p>9 + ${F(5,10)} + ${F(3,M)} = 9,503</p>`),
+  W('2. a) 64 302','soixante-quatre-mille-trois-cent-deux',['soixante-quatre-mille-trois-cent-deux','soixante-quatre-mille-trente-deux','soixante-quatre-milles-trois-cent-deux']),
+  W('2. b) 5 090 017','cinq-millions-quatre-vingt-dix-mille-dix-sept',['cinq-millions-neuf-mille-dix-sept','cinq-millions-quatre-vingt-dix-mille-dix-sept','cinq millions quatre-vingt-dix mille dix-sept']),
+  W('2. c) 18,47','dix-huit unités et quarante-sept centièmes',['dix-huit unités et quarante-sept dixièmes','quarante-sept unités et dix-huit centièmes','dix-huit unités et quarante-sept centièmes']),
+  W('2. d) 2,075','deux unités et soixante-quinze millièmes',['deux unités et soixante-quinze centièmes','deux unités et soixante-quinze millièmes','deux unités et sept-cent-cinquante millièmes'])]},
+ {title:'Chiffres et nombres',pts:4,head:'<p>On considère le nombre <span class="big">52 836,174</span>.</p>',items:[
+  C('a) Le chiffre des dizaines est :','3'),C('b) Le chiffre des centièmes est :','7'),C('c) Le chiffre des milliers est :','2'),
+  C('d) Le chiffre 1 représente combien de dixièmes ?','1','<p>1 est le chiffre des dixièmes : il représente 1 dixième.</p>'),
+  C('e) Le nombre de centaines est :','528'),C('f) Le nombre de dixièmes est :','528361'),C('g) La partie entière est :','52836'),C('h) La partie décimale est :','0,174')]},
+ {title:'Zéros et virgule',pts:3.5,head:'<p>1. Supprime les zéros inutiles lorsqu’il y en a. 2. Complète avec = ou ≠. 3. Place une virgule.</p>',items:[
+  C('1. a) 061,800 =','61,8',null,{kind:'exact'}),C('1. b) 30 070 =','30070','<p>30 070 = 30 070 (aucun zéro inutile)</p>',{kind:'exact'}),C('1. c) 008,040 =','8,04',null,{kind:'exact'}),C('1. d) 5,090 =','5,09',null,{kind:'exact'}),
+  W('2. a) 9,40 … 9,4','=',['=','≠']),W('2. b) 12,06 … 12,600','≠',['=','≠']),W('2. c) 3,070 … 3,07','=',['=','≠']),
+  C('3. Place une virgule dans le nombre 625948 pour que 9 soit le chiffre des dixièmes.','625,948','<p>625,948 : 5 est le chiffre des unités et 9 celui des dixièmes.</p>')]},
+ {title:'Fractions décimales',pts:3,head:'<p>Écris chaque nombre sous forme décimale.</p>',items:[
+  C(`a) ${F(58,10)} =`,'5,8',`<p>${F(58,10)} = 5,8</p>`),C(`b) ${F(609,100)} =`,'6,09',`<p>${F(609,100)} = 6,09</p>`),C(`c) ${F(4,M)} =`,'0,004',`<p>${F(4,M)} = 0,004</p>`),
+  C(`d) 17 + ${F(3,10)} + ${F(9,100)} =`,'17,39',`<p>17 + ${F(3,10)} + ${F(9,100)} = 17 + 0,3 + 0,09 = 17,39</p>`),
+  C(`e) 50 + ${F(8,10)} + ${F(4,M)} =`,'50,804',`<p>50 + ${F(8,10)} + ${F(4,M)} = 50 + 0,8 + 0,004 = 50,804</p>`),
+  C(`f) ${F('7'+NB+'031',100)} =`,'70,31',`<p>${F('7'+NB+'031',100)} = 70,31</p>`)]},
+ {title:'Décomposer un nombre',pts:3.5,head:'<p>1. Complète la décomposition. 2. Décompose comme dans l’exemple : 24,608 = 20 + 4 + 0,6 + 0,008. 3. Complète.</p>',items:[
+  {q:'1.',fill:'57,264 = (5 × {}) + (7 × {}) + (2 × {}) + (6 × {}) + (4 × {})',a:['10','1','0,1','0,01','0,001'],corr:'<p>57,264 = (5 × 10) + (7 × 1) + (2 × 0,1) + (6 × 0,01) + (4 × 0,001)</p>'},
+  {q:'2. a) 84,57 =',kind:'sum',terms:['80','4','0,5','0,07'],answerHtml:'80 + 4 + 0,5 + 0,07',corr:'<p>84,57 = 80 + 4 + 0,5 + 0,07</p>'},
+  {q:'2. b) 309,402 =',kind:'sum',terms:['300','9','0,4','0,002'],answerHtml:'300 + 9 + 0,4 + 0,002',corr:'<p>309,402 = 300 + 9 + 0,4 + 0,002</p>'},
+  {q:'3.',fill:`41,083 = {} + <span class="frac"><span>{}</span><span>1${NB}000</span></span>`,a:['41','83'],corr:`<p>41,083 = 41 + ${F(83,M)}</p>`}]},
+ {title:'Nombre mystère',pts:2,head:'<p>Je suis un nombre décimal.</p><ul><li>Je suis compris entre 60 et 61.</li><li>Mon chiffre des dixièmes est 2.</li><li>Mon chiffre des centièmes est le triple de mon chiffre des dixièmes.</li><li>Mon chiffre des millièmes est 9, et je n’ai pas d’autre chiffre après.</li></ul>',items:[
+  C('Je suis :','60,269','<p>Partie entière : 60</p><p>Chiffre des dixièmes : 2</p><p>Chiffre des centièmes : 3 × 2 = 6</p><p>Chiffre des millièmes : 9</p><p>Je suis 60,269.</p>')]},
+ {title:'Défi',pts:0,defi:true,head:'<p>À faire seulement si tu as terminé et vérifié tout le reste. Avec les chiffres 2, 5, 6 et 9, utilisés chacun une seule fois, et une virgule :</p>',items:[
+  C('1. Trouve le plus grand nombre décimal possible inférieur à 60.','59,62','<p>La partie entière doit être inférieure à 60 : la plus grande possible est 59. On place ensuite les chiffres restants du plus grand au plus petit : 59,62.</p>'),
+  C('2. Trouve le plus petit nombre décimal possible supérieur à 20.','25,69','<p>La partie entière doit commencer par 2 : la plus petite possible est 25. On place ensuite les chiffres restants du plus petit au plus grand : 25,69.</p>')]}],
+B:[
+ {title:'Écrire des nombres',pts:4,head:'<p>1. Écris chaque nombre en chiffres. 2. Écris chaque nombre en lettres sur ta feuille, puis choisis la bonne écriture.</p>',items:[
+  C('1. a) <span class="mots">Quarante-sept-millions-trois-cent-mille-huit</span>','47300008','<p>Quarante-sept-millions-trois-cent-mille-huit = 47 300 008</p>'),
+  C('1. b) <span class="mots">Neuf-cent-mille-six-cent-cinquante</span>','900650','<p>Neuf-cent-mille-six-cent-cinquante = 900 650</p>'),
+  C('1. c) <span class="mots">Trois-cent-six unités et quatorze millièmes</span>','306,014',`<p>306 + ${F(14,M)} = 306,014</p>`),
+  C('1. d) <span class="mots">Onze unités et huit centièmes</span>','11,08',`<p>11 + ${F(8,100)} = 11,08</p>`),
+  W('2. a) 7 400 090','sept-millions-quatre-cent-mille-quatre-vingt-dix',['sept-millions-quarante-mille-quatre-vingt-dix','sept-millions-quatre-cents-mille-quatre-vingt-dix','sept-millions-quatre-cent-mille-quatre-vingt-dix']),
+  W('2. b) 3 280','trois-mille-deux-cent-quatre-vingts',['trois-mille-deux-cent-quatre-vingt','trois-mille-deux-cent-quatre-vingts','trois-milles-deux-cents-quatre-vingts']),
+  W('2. c) 40,6','quarante unités et six dixièmes',['quarante unités et six dixièmes','quatre unités et six dixièmes','quarante unités et six centièmes']),
+  W('2. d) 0,52','cinquante-deux centièmes',['cinquante-deux dixièmes','cinq-cent-deux millièmes','cinquante-deux centièmes'])]},
+ {title:'Vrai ou faux',pts:4,head:'<p>On considère le nombre <span class="big">38 069,257</span>. Pour chaque affirmation, réponds par vrai ou faux, et corrige sur ta feuille les affirmations fausses.</p>',items:[
+  W('a) Le chiffre des unités est 6.','Faux',['Vrai','Faux']),W('b) Le chiffre des dizaines est 6.','Vrai',['Vrai','Faux']),W('c) Le nombre de centaines est 380.','Vrai',['Vrai','Faux']),W('d) Le chiffre des centaines est 3.','Faux',['Vrai','Faux']),
+  W('e) Le chiffre des centièmes est 5.','Vrai',['Vrai','Faux']),W('f) Le nombre de dixièmes est 380 692.','Vrai',['Vrai','Faux']),W('g) La partie décimale est 257.','Faux',['Vrai','Faux']),W('h) Le chiffre 7 est le chiffre des millièmes.','Vrai',['Vrai','Faux'])],
+  corrs:['<p>a) Faux : le chiffre des unités est 9.</p>','<p>b) Vrai.</p>','<p>c) Vrai.</p>','<p>d) Faux : le chiffre des centaines est 0.</p>','<p>e) Vrai.</p>','<p>f) Vrai.</p>','<p>g) Faux : la partie décimale est 0,257.</p>','<p>h) Vrai.</p>']},
+ {title:'Virgule et zéros',pts:3.5,head:'<p>1. Dans le nombre 472918, place une virgule, et des zéros si besoin, pour répondre à chaque consigne. 2. Complète avec = ou ≠.</p>',items:[
+  C('1. a) 7 est le chiffre des unités :','47,2918'),C('1. b) 1 est le chiffre des dixièmes :','4729,18'),C('1. c) 8 est le chiffre des dizaines :','4729180','<p>On ajoute un zéro à droite : 4 729 180.</p>'),C('1. d) 4 est le chiffre des millièmes :','0,00472918','<p>On ajoute des zéros à gauche : 0,00472918.</p>'),
+  W('2. a) 60,0 … 60','=',['=','≠']),W('2. b) 5,08 … 5,8','≠',['=','≠']),W('2. c) 0230 … 230','=',['=','≠']),W('2. d) 14,50 … 1 450','≠',['=','≠'])]},
+ {title:'Fractions décimales',pts:3,head:'<p>Complète les égalités.</p>',items:[
+  {q:'a)',fill:`6,47 = <span class="frac"><span>{}</span><span>100</span></span>`,a:['647'],corr:`<p>6,47 = ${F(647,100)}</p>`},
+  {q:'b)',fill:`0,305 = <span class="frac"><span>{}</span><span>1${NB}000</span></span>`,a:['305'],corr:`<p>0,305 = ${F(305,M)}</p>`},
+  {q:'c)',fill:`81,2 = <span class="frac"><span>{}</span><span>10</span></span>`,a:['812'],corr:`<p>81,2 = ${F(812,10)}</p>`},
+  C(`d) 9 + ${F(4,100)} =`,'9,04',`<p>9 + ${F(4,100)} = 9 + 0,04 = 9,04</p>`),C(`e) 600 + ${F(6,M)} =`,'600,006',`<p>600 + ${F(6,M)} = 600 + 0,006 = 600,006</p>`),C(`f) ${F(25,M)} =`,'0,025',`<p>${F(25,M)} = 0,025</p>`)]},
+ {title:'Décomposer un nombre',pts:3.5,head:'<p>Complète chaque décomposition.</p>',items:[
+  {q:'1.',fill:`73,508 = 70 + 3 + <span class="frac"><span>{}</span><span>10</span></span> + <span class="frac"><span>{}</span><span>1${NB}000</span></span>`,a:['5','8'],corr:`<p>73,508 = 70 + 3 + ${F(5,10)} + ${F(8,M)}</p>`},
+  {q:'2.',fill:'902,46 = (9 × {}) + (2 × {}) + (4 × {}) + (6 × {})',a:['100','1','0,1','0,01'],corr:'<p>902,46 = (9 × 100) + (2 × 1) + (4 × 0,1) + (6 × 0,01)</p>'},
+  {q:'3. Décompose comme dans l’exemple 24,608 = 20 + 4 + 0,6 + 0,008 : 615,07 =',kind:'sum',terms:['600','10','5','0,07'],answerHtml:'600 + 10 + 5 + 0,07',corr:'<p>615,07 = 600 + 10 + 5 + 0,07</p>'}]},
+ {title:'Devinette',pts:2,head:'<p>Je suis un nombre décimal.</p><ul><li>Mon chiffre des centaines est 1 et mon chiffre des unités est 0.</li><li>Mon chiffre des dixièmes est 4.</li><li>Mon chiffre des dizaines est le double de mon chiffre des dixièmes.</li><li>Mon chiffre des centièmes est 3, et je n’ai pas d’autre chiffre.</li></ul>',items:[
+  C('Je suis :','180,43','<p>Chiffre des centaines : 1</p><p>Chiffre des dizaines : 2 × 4 = 8</p><p>Chiffre des unités : 0</p><p>Chiffre des dixièmes : 4</p><p>Chiffre des centièmes : 3</p><p>Je suis 180,43.</p>')]},
+ {title:'Défi',pts:0,defi:true,head:'<p>À faire seulement si tu as terminé et vérifié tout le reste. Avec les chiffres 3, 4, 7 et 8, utilisés chacun une seule fois, et une virgule :</p>',items:[
+  C('1. Trouve le plus petit nombre décimal possible supérieur à 40.','43,78','<p>La partie entière doit commencer par 4 : la plus petite possible est 43. On place ensuite les chiffres restants du plus petit au plus grand : 43,78.</p>'),
+  C('2. Trouve le plus grand nombre décimal possible inférieur à 8.','7,843','<p>La partie entière est 7. On place ensuite les chiffres restants du plus grand au plus petit : 7,843.</p>')]}]};
+/* Les nombres des D.S. blancs et du cours ne sont jamais tirés dans les exercices. */
+['52836,174','38069,257','625,948','508064','3704015','47300008','900650','64302','5090017','7400090','60,269','180,43','57,264','902,46','84,57','309,402','615,07','73,508','41,083','7425,395','1252342532','19,34','4,687','15,42','24,608','2,886','63417,529','47325,618','40,367','30,485','603047','407032'].forEach(x=>AVOID.add(x));
+function dsNote(n,total){return String(Math.round(n*2)/2).replace('.',',')+' / '+String(total).replace('.',',');}
+function renderDS(){
+ const main=$('#app');main.append(dom('h2','ttl','<span>6. D.S. blanc</span>'));const bar=dom('div','subtabs');const variant=VIEW.variant||'A';for(const v of ['A','B'])bar.append(button('Sujet '+v,()=>{VIEW.variant=v;render();},variant===v?'on':''));bar.append(button('Imprimer le sujet',()=>window.print(),'btn light'));main.append(bar);
+ const exos=DS[variant],total=exos.reduce((s,e)=>s+e.pts,0);
+ const paper=dom('div','card ds');paper.append(dom('h3','ds-title','D.S. blanc · Nombres entiers et décimaux · Sujet '+variant),dom('p','','Durée : 45 minutes. Calculatrice interdite. Rédige toutes tes réponses sur une feuille. Le D.S. est noté sur '+total+' points.'),dom('p','consigne','Quand tu as fini, recopie tes résultats dans les cases, puis vérifie. Les espaces entre les classes sont facultatifs.'));main.append(paper);const controls=[],corrs=[];
+ exos.forEach((ex,ei)=>{
+  const block=dom('section','ds-exo'+(ex.defi?' defi':''),`<h3>${ex.defi?'Défi':'Exercice '+(ei+1)+' · '+ex.title} <span class="small">(${ex.defi?'non noté':String(ex.pts).replace('.',',')+' points'})</span></h3>${ex.head}`);paper.append(block);
+  ex.items.forEach((t,qi)=>{
+   const id=`ds-${ei}-${qi}`,row=dom('div','ds-item'),ans=dom('div','ds-ans');row.append(dom('div','ds-q',t.q),ans);block.append(row);let get,fields,check;
+   if(t.options){const g=dom('div','ds-radios');g.setAttribute('role','radiogroup');g.setAttribute('aria-label','Réponse '+(ei+1)+'.'+(qi+1));for(const o of t.options){const l=dom('label'),r=dom('input');r.type='radio';r.name=id;r.value=o;l.append(r,' '+o);g.append(l);}ans.append(g);get=()=>{const c=g.querySelector('input:checked');return c?c.value:'';};fields=[...g.querySelectorAll('input')];check=()=>correct(get(),t);}
+   else if(t.fill){const wrap=dom('span','ds-fill');let k=0;wrap.innerHTML=t.fill.replace(/\{\}/g,()=>`<input type="text" class="eq-input" inputmode="decimal" autocomplete="off" aria-label="Case ${++k}">`);ans.append(wrap);fields=[...wrap.querySelectorAll('input')];check=()=>fields.every((f,j)=>correct(f.value,{a:t.a[j]}));t.answerHtml=t.answerHtml||t.corr.replace(/<\/?p>/g,'');}
+   else{const lab=dom('label','ds-lab','Résultat :'),input=makeInput(t,'Résultat');input.id=id;lab.htmlFor=id;ans.append(lab,input);fields=[input];check=()=>correct(input.value,t);}
+   controls.push({t,ans,fields,check,w:ex.pts/ex.items.length});
+  });
+  const corr=dom('div','seyes ds-corr');corr.hidden=true;corr.innerHTML=`<h4>Correction ${ex.defi?'du défi':'de l’exercice '+(ei+1)}</h4>`+(ex.corrs||ex.items.map(t=>t.corr)).join('');block.append(corr);corrs.push(corr);
+ });
+ const clear=dsKeep(paper,'entiers-decimaux-ds-'+variant);
+ const end=button('Vérifier mes résultats et afficher la correction',()=>{let score=0,note=0,n=0;for(const{t,ans,fields,check,w}of controls){const ok=check();if(w){n++;if(ok){score++;note+=w;}}fields.forEach(f=>f.disabled=true);if(t.options)ans.querySelectorAll('label').forEach(l=>{if(l.querySelector('input').value===t.a)l.classList.add('good');});ans.append(dom('span',ok?'okm':'kom',ok?' Juste.':' La bonne réponse est '+answer(t)+'.'));}corrs.forEach(c=>c.hidden=false);setTimeout(()=>SUIVI.ds(variant,note,total));
+  const sum=dom('div','corrige',`<b>Note provisoire : ${dsNote(note,total)}</b> (${score} résultat${score>1?'s':''} juste${score>1?'s':''} sur ${n}).<p>Cette note ne compte que tes résultats. Ta vraie note dépend aussi de ce que tu as écrit sur ta feuille, en particulier les nombres en lettres. Compare ta feuille avec la correction de chaque exercice.</p>`);sum.append(button('Effacer mes réponses et recommencer',()=>{clear();render();window.scrollTo({top:0});},'btn light'));end.replaceWith(sum);paper.prepend(dom('div','corrige',`<b>Note provisoire : ${dsNote(note,total)}</b> (${score} sur ${n} résultats justes). La correction est sous chaque exercice, et le détail en bas de la page.`));});
+ paper.append(end);
+}
+function render(){
+ const main=$('#app');main.innerHTML='';document.querySelectorAll('nav [data-page]').forEach(b=>b.classList.toggle('on',b.dataset.page===VIEW.page));
+ if(VIEW.page==='cours'){main.append(dom('h2','ttl','<span>Cours · Nombres entiers et décimaux</span>'),dom('div','card',$('#course-source').innerHTML));return;}
+ if(VIEW.page==='ds'){renderDS();return;}
+ if(VIEW.page==='home'){main.append(dom('div','retenir','<b>À retenir</b>La place d’un chiffre dans un nombre donne sa valeur. Le tableau de numération aide à lire, à écrire et à décomposer les nombres.'));const grid=dom('div','home');for(const[k,m]of Object.entries(MODULES)){const card=dom('section','card',`<h2>${m.title}</h2><p>${m.desc}</p>`);card.append(dom('p','suivi-st',SUIVI.status(k)),button('Commencer',()=>go(k)));grid.append(card);}const ds=dom('section','card','<h2>6. D.S. blanc</h2><p>Deux sujets différents : tu rédiges sur une feuille, puis tu vérifies tes résultats et tu lis la correction.</p>');ds.append(button('Commencer',()=>go('ds')));grid.append(ds);main.append(grid,SUIVI.box());return;}
+ const mod=MODULES[VIEW.page];main.append(dom('h2','ttl','<span>'+mod.title+'</span>'));modeBar(main);
+ if(VIEW.mode!=='seul'){const part=$('#course-source').content.querySelector(`[data-mod="${VIEW.page}"]`);if(part){const det=dom('details','cours-part','<summary>Relire le cours de cette partie</summary>');det.append(part.cloneNode(true));main.append(det);}main.append(dom('div','retenir','<b>À retenir</b>'+mod.retain));}
+ const levels=dom('div','levels');mod.types.forEach(([label],n)=>levels.append(button((n+1)+'. '+label,()=>{VIEW.lv[VIEW.page]=n;render();},VIEW.lv[VIEW.page]===n?'on':'')));main.append(levels);
+ const panel=dom('div','card');main.append(panel);renderExercise(panel,mod.types[VIEW.lv[VIEW.page]][1](VIEW.mode==='exemple'));
+}
+document.querySelectorAll('nav [data-page]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));render();
+})();
+</script><script>
+/* Charte : dans le texte courant, la lettre x (seule ou après un chiffre : 3x, x²),
+   la lettre f seule et g, h, p suivies d'une parenthèse sont des lettres mathématiques.
+   On les affiche en italique STIX pour ne pas confondre x avec le signe ×.
+   Le texte déjà en italique (<i>), le SVG et les champs de saisie ne sont pas touchés. */
+(() => {
+  "use strict";
+  const RE = /(^|[^\p{L}\p{M}])(x|f|[ghp](?=\())(?![\p{L}\p{M}])/gu;
+  const SKIP = "i, em, svg, code, pre, script, style, textarea, select, option, title, [contenteditable], .no-math";
+  function fix(text) {
+    const parent = text.parentElement;
+    if (!parent || parent.closest(SKIP)) return;
+    const value = text.data;
+    RE.lastIndex = 0;
+    if (!RE.test(value)) return;
+    const frag = document.createDocumentFragment();
+    let last = 0;
+    value.replace(RE, (all, before, letter, offset) => {
+      const start = offset + before.length;
+      if (start > last) frag.append(value.slice(last, start));
+      const i = document.createElement("i");
+      i.className = "m";
+      i.textContent = letter;
+      frag.append(i);
+      last = start + letter.length;
+      return all;
+    });
+    if (last < value.length) frag.append(value.slice(last));
+    text.replaceWith(frag);
+  }
+  function scan(root) {
+    if (root.nodeType === Node.TEXT_NODE) { fix(root); return; }
+    if (root.nodeType !== Node.ELEMENT_NODE || root.closest(SKIP)) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const texts = [];
+    while (walker.nextNode()) texts.push(walker.currentNode);
+    texts.forEach(fix);
+  }
+  scan(document.body);
+  new MutationObserver((records) => {
+    for (const r of records) {
+      if (r.type === "characterData") fix(r.target);
+      else r.addedNodes.forEach(scan);
+    }
+  }).observe(document.body, { childList: true, subtree: true, characterData: true });
+})();
+</script>
+</body></html>
