@@ -169,6 +169,7 @@ details.cours-part{background:var(--card);border:1px solid #e2e6ef;border-radius
 .rac{white-space:nowrap}.rac>span{border-top:1.5px solid currentColor;padding:0 .12em;margin-left:.04em}
 svg.fig.tri{max-width:340px}svg.fig text.pt{font-family:"STIX Two Text",Cambria,serif;font-style:italic;font-size:19px;fill:#1d3a8a}svg.fig text.lg{font-family:"STIX Two Text",Cambria,serif;font-size:16px;fill:#1b2333}
 .seyes .mg{position:absolute;left:4px;width:44px;font-family:"Atkinson Hyperlegible",sans-serif;font-size:10px;line-height:32px;color:#b8322a;overflow:visible;white-space:nowrap}
+h4.cahier{color:var(--ink);margin:1.4em 0 .3em}
 .seyes .small{font-family:"Atkinson Hyperlegible","STIX Two Text",sans-serif}
 </style></head><body><div class="wrap"><header><a class="back-home" href="../4e/">← Toutes les applications</a><h1><span>Chapitre 4 : Pythagore et racine carrée</span></h1><p>Je prépare mon D.S. de fin de chapitre.</p><nav aria-label="Parcours du chapitre"><button type="button" data-page="home" class="on">Sommaire</button><button type="button" data-page="cours">Cours</button><button type="button" data-page="sq">1. Carrés et racines</button><button type="button" data-page="voc">2. Hypoténuse</button><button type="button" data-page="hyp">3. Calculer l’hypoténuse</button><button type="button" data-page="side">4. Calculer un côté</button><button type="button" data-page="ds">5. D.S. blanc</button></nav></header><main id="app"></main><footer>Collège La Rochefoucauld · Mathématiques 4<sup>e</sup></footer></div><template id="course-source"></template><script>(() => {
 'use strict';
@@ -323,21 +324,30 @@ function course(){
 <p>Dans un triangle rectangle, le côté le plus long, opposé à l’angle droit, s’appelle l’<b>hypoténuse</b>.</p>
 ${triFig(tri('ABC',0),{BC:'hypoténuse'},3,2.2,{th:0,mir:0,d:30})}
 <div class="retenir"><b>Théorème de Pythagore</b>Si ABC est un triangle rectangle en A, alors AB² + AC² = BC².</div>
-<p>Le théorème de Pythagore sert uniquement à calculer une longueur dans un triangle rectangle.</p></section>
+<p>Le théorème de Pythagore sert uniquement à calculer une longueur dans un triangle rectangle.</p>
+<div class="retenir"><b>Astuce pour écrire l’égalité</b>La lettre de l’angle droit est dans les deux côtés de l’angle droit, jamais dans l’hypoténuse. Dans MAT rectangle en A : MT² = MA² + AT². On peut écrire l’égalité dans un sens ou dans l’autre : MT² = MA² + AT² ou MA² + AT² = MT².</div></section>
 <section data-mod="hyp"><h3>3. Calculer l’hypoténuse</h3>
 <p>Le triangle ABC est rectangle en B, avec AB = 12 cm et BC = 5 cm. On calcule AC.</p>${triFig(tA,{AB:'12 cm',BC:'5 cm',AC:'?'},12,5,{th:0,mir:1})}
 <div class="seyes"><h4>Exemple 1</h4>${ex1.html}</div>
 <p>Quand le résultat ne tombe pas juste, on donne la valeur exacte avec √, puis une valeur arrondie. Avec AB = 2 cm et BC = 5 cm :</p>
-<div class="seyes"><h4>Exemple 2</h4>${ex3.html}</div></section>
+<div class="seyes"><h4>Exemple 2</h4>${ex3.html}</div>
+<h4 class="cahier">Exercice fait en classe</h4>
+<p><i>DEF est un triangle rectangle en D tel que DE = 8 cm et DF = 15 cm. Calculer EF.</i></p>
+<div class="seyes"><h4>Exercice 6 p. 137</h4><p>Je sais que le triangle DEF est rectangle en D.</p><p>Le théorème de Pythagore me permet d’écrire :</p><p>EF² = ED² + DF²</p><p><span class="mg">D’où :</span>EF² = 8 cm × 8 cm + 15 cm × 15 cm</p><p>EF² = 64 cm² + 225 cm²</p><p>EF² = 289 cm²</p><p>Enfin, la seule solution possible est EF = ${rad('289 cm²')}.</p><p><span class="box">EF = 17 cm</span></p></div></section>
 <section data-mod="side"><h3>4. Calculer un côté de l’angle droit</h3>
 <p>Le triangle ABC est rectangle en C, avec AB = 17 m et CA = 15 m. On calcule BC.</p>${triFig(tB,{AC:'15 m',AB:'17 m',BC:'?'},15,8,{th:0,mir:1})}
 <div class="seyes"><h4>Exemple 3</h4>${ex2.html}</div>
-<p>On écrit l’égalité de Pythagore de la même façon. Comme l’hypoténuse est connue, on termine par une soustraction.</p></section>`;
+<p>On écrit l’égalité de Pythagore de la même façon. Comme l’hypoténuse est connue, on termine par une soustraction.</p>
+<h4 class="cahier">Exercices faits en classe</h4>
+<p><i>MAT est un triangle rectangle en A tel que MT = 12,5 cm et AT = 7,5 cm. Calculer MA.</i></p>
+<div class="seyes"><h4>Exercice 7 p. 137</h4><p>Je sais que MAT est un triangle rectangle en <span class="op">A</span>.</p><p>Le théorème de Pythagore me permet d’écrire :</p><p>MT² = M<span class="op">A</span>² + <span class="op">A</span>T²</p><p><span class="mg">D’où :</span>12,5 cm × 12,5 cm = MA² + 7,5 cm × 7,5 cm</p><p>156,25 cm² = MA² + 56,25 cm²</p><p>MA² = 156,25 cm² − 56,25 cm²</p><p>MA² = 100 cm²</p><p>Enfin, la seule solution possible est MA = ${rad('100 cm²')}.</p><p><span class="box">MA = 10 cm</span></p></div>
+<p><i>RST est un triangle rectangle en R tel que ST = 3 m et SR = 2 m. Calculer RT, arrondi au dixième si nécessaire.</i></p>
+<div class="seyes"><h4>Exercice 8 p. 137</h4><p>Je sais que RST est un triangle rectangle en <span class="op">R</span>.</p><p>Le théorème de Pythagore me permet d’écrire :</p><p>ST² = S<span class="op">R</span>² + <span class="op">R</span>T²</p><p><span class="mg">D’où :</span>3 m × 3 m = 2 m × 2 m + RT²</p><p>9 m² = 4 m² + RT²</p><p>RT² = 9 m² − 4 m²</p><p>RT² = 5 m²</p><p>Enfin, la seule solution possible est RT = ${rad('5 m²')}.</p><p><span class="box">RT = ${rad('5')} m</span></p><p>RT ≈ 2,2 m (arrondi au dixième)</p></div></section>`;
 }
 
 const MODULES={
  sq:{title:'1. Carrés et racines carrées',desc:'Calculer un carré, la racine carrée d’un carré parfait, puis une valeur approchée à la calculatrice.',retain:'Le carré d’un nombre, c’est ce nombre multiplié par lui-même : 6² = 6 × 6 = 36. La racine carrée d’un nombre positif est le nombre positif dont le carré est ce nombre : √36 = 6.',gen:sqExercise,levels:[[1,'1. Carré d’un nombre'],[2,'2. Racine d’un carré parfait'],[3,'3. Valeur approchée']]},
- voc:{title:'2. Hypoténuse et égalité de Pythagore',desc:'Repérer l’angle droit et l’hypoténuse, puis écrire l’égalité de Pythagore.',retain:'L’hypoténuse est le côté opposé à l’angle droit. Si ABC est rectangle en A, alors AB² + AC² = BC² : le carré de l’hypoténuse est seul d’un côté du signe =.',gen:vocExercise,levels:[[1,'1. Avec une figure codée'],[2,'2. Avec l’énoncé seul']]},
+ voc:{title:'2. Hypoténuse et égalité de Pythagore',desc:'Repérer l’angle droit et l’hypoténuse, puis écrire l’égalité de Pythagore.',retain:'L’hypoténuse est le côté opposé à l’angle droit. Si ABC est rectangle en A, alors AB² + AC² = BC² : le carré de l’hypoténuse est seul d’un côté du signe =. La lettre de l’angle droit est dans les deux autres côtés, jamais dans l’hypoténuse.',gen:vocExercise,levels:[[1,'1. Avec une figure codée'],[2,'2. Avec l’énoncé seul']]},
  hyp:{title:'3. Calculer l’hypoténuse',desc:'On connaît les deux côtés de l’angle droit : on additionne leurs carrés.',retain:'On écrit « Je sais que… », puis l’égalité de Pythagore. On remplace par les longueurs, on calcule, puis on prend la racine carrée.',gen:hypExercise,levels:[[1,'1. Le résultat tombe juste'],[2,'2. Valeur exacte et arrondi']]},
  side:{title:'4. Calculer un côté de l’angle droit',desc:'On connaît l’hypoténuse et un autre côté : on termine par une soustraction.',retain:'On écrit l’égalité de Pythagore avec la longueur cherchée en premier. Pour trouver son carré, on soustrait : carré de l’hypoténuse moins carré du côté connu.',gen:sideExercise,levels:[[1,'1. Le résultat tombe juste'],[2,'2. Valeur exacte et arrondi']]}
 };
